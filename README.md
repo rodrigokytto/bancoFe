@@ -6,9 +6,11 @@ Plataforma unificada de alta performance para operação bancária, financeira, 
 
 ## 🚀 Ambientes em Produção (PRD)
 
+- **Produção Direta Ativa (Manus Sandbox/Cloud):** [https://3000-i0pp7ucmynez9klfyccs3-31683a88.us5.manus.computer/bancofe](https://3000-i0pp7ucmynez9klfyccs3-31683a88.us5.manus.computer/bancofe)
 - **Google Cloud Run (Produção GCP):** [https://erp-bancofe-5xsi5uyoda-rj.a.run.app](https://erp-bancofe-5xsi5uyoda-rj.a.run.app)
+- **Google Cloud Run (URL Direta da Revisão):** [https://erp-bancofe-243135142712.southamerica-east1.run.app](https://erp-bancofe-243135142712.southamerica-east1.run.app)
 - **Painel Administrativo de Módulos por Negócio:** [https://erp-bancofe-5xsi5uyoda-rj.a.run.app/admin](https://erp-bancofe-5xsi5uyoda-rj.a.run.app/admin)
-- **GCP Project:** `zuma-kytto` | **Região:** `southamerica-east1` (São Paulo) | **Serviço Cloud Run:** `erp-bancofe`
+- **GCP Project:** `bancofe-plataforma-kytto` | **Região:** `southamerica-east1` (São Paulo) | **Serviço Cloud Run:** `erp-bancofe`
 - **Ambiente Alternativo / Pilot:** [https://zuma-x2gtmiiwkq-rj.a.run.app](https://zuma-x2gtmiiwkq-rj.a.run.app)
 - **Domínio Corporativo:** [https://bancofe.kytto.com.br](https://bancofe.kytto.com.br) / [https://zuma.kytto.com.br](https://zuma.kytto.com.br)
 

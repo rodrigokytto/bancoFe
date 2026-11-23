@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_ID: zuma-kytto
+  PROJECT_ID: bancofe-plataforma-kytto
   GAR_LOCATION: southamerica-east1
-  REPOSITORY: zuma-repo
+  REPOSITORY: bancofe-repo
   SERVICE: erp-bancofe
   REGION: southamerica-east1
 

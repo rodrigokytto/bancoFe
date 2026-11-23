@@ -9,12 +9,12 @@
 set -euo pipefail
 
 ACCOUNT="${GCP_ACCOUNT:-rodrigo.goncalves@kytto.com.br}"
-PROJECT_ID="${GCP_PROJECT_ID:-zuma-kytto}"
+PROJECT_ID="${GCP_PROJECT_ID:-bancofe-plataforma-kytto}"
 PROJECT_NAME="bancofe"
 REGION="${GCP_REGION:-southamerica-east1}"
 SERVICE_NAME="${GCP_SERVICE_NAME:-erp-bancofe}"
 CUSTOM_DOMAIN="bancofe.kytto.com.br"
-AR_REPO="zuma-repo"
+AR_REPO="bancofe-repo"
 
 echo "=========================================================="
 echo "   Iniciando Deploy do Zuma Pilot no Google Cloud (GCP)   "
