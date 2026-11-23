@@ -6,6 +6,9 @@ Plataforma unificada de alta performance para operação bancária, financeira, 
 
 ## 🚀 Ambientes em Produção (PRD)
 
+- **Site Permanente de Produção (Render Global CDN):** [https://bancofe-core.onrender.com](https://bancofe-core.onrender.com)
+- **Portal de Acesso & Login ERP:** [https://bancofe-core.onrender.com/login](https://bancofe-core.onrender.com/login)
+- **Backoffice Completo Multi-Tenant (61 Módulos):** [https://bancofe-core.onrender.com/admin/backoffice](https://bancofe-core.onrender.com/admin/backoffice)
 - **Produção Direta Ativa (Manus Sandbox/Cloud):** [https://3000-i0pp7ucmynez9klfyccs3-31683a88.us5.manus.computer/bancofe](https://3000-i0pp7ucmynez9klfyccs3-31683a88.us5.manus.computer/bancofe)
 - **Google Cloud Run (Produção GCP):** [https://erp-bancofe-5xsi5uyoda-rj.a.run.app](https://erp-bancofe-5xsi5uyoda-rj.a.run.app)
 - **Google Cloud Run (URL Direta da Revisão):** [https://erp-bancofe-243135142712.southamerica-east1.run.app](https://erp-bancofe-243135142712.southamerica-east1.run.app)
