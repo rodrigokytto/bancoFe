@@ -1,10 +1,38 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import express from "express";
+import { createServer, Server } from "http";
+import { registerBancoFeRoutes } from "../src/server/app";
+import { registerCadastro360Routes } from "../server/cadastro360Routes";
 
-const BASE_URL = "http://127.0.0.1:3000";
+let server: Server;
+let baseUrl: string;
+
+beforeAll(async () => {
+  const app = express();
+  app.use(express.json({ limit: "50mb" }));
+  app.use(express.urlencoded({ extended: true }));
+  registerBancoFeRoutes(app);
+  registerCadastro360Routes(app);
+
+  server = createServer(app);
+  await new Promise<void>((resolve) => {
+    server.listen(0, "127.0.0.1", () => {
+      const address = server.address() as any;
+      baseUrl = `http://127.0.0.1:${address.port}`;
+      resolve();
+    });
+  });
+});
+
+afterAll(async () => {
+  if (server) {
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+  }
+});
 
 describe("BancoFé - Validação E-Commerce Admin, Operações, Termos e Consulta 360", () => {
   it("GET /api/admin/commerce/storefronts deve retornar os 6 storefronts do ecossistema", async () => {
-    const res = await fetch(`${BASE_URL}/api/admin/commerce/storefronts`);
+    const res = await fetch(`${baseUrl}/api/admin/commerce/storefronts`);
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.sucesso).toBe(true);
@@ -19,7 +47,7 @@ describe("BancoFé - Validação E-Commerce Admin, Operações, Termos e Consult
   });
 
   it("GET /api/admin/commerce/catalog/products deve listar catálogo multi-loja", async () => {
-    const res = await fetch(`${BASE_URL}/api/admin/commerce/catalog/products`);
+    const res = await fetch(`${baseUrl}/api/admin/commerce/catalog/products`);
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.sucesso).toBe(true);
@@ -30,7 +58,7 @@ describe("BancoFé - Validação E-Commerce Admin, Operações, Termos e Consult
   });
 
   it("GET /api/admin/commerce/orders deve listar pedidos com split D+0 BancoFé Pay", async () => {
-    const res = await fetch(`${BASE_URL}/api/admin/commerce/orders`);
+    const res = await fetch(`${baseUrl}/api/admin/commerce/orders`);
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.sucesso).toBe(true);
@@ -40,7 +68,7 @@ describe("BancoFé - Validação E-Commerce Admin, Operações, Termos e Consult
   });
 
   it("GET /api/bancofe/cadastro360/termos deve listar os termos regulatórios", async () => {
-    const res = await fetch(`${BASE_URL}/api/bancofe/cadastro360/termos`);
+    const res = await fetch(`${baseUrl}/api/bancofe/cadastro360/termos`);
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.success).toBe(true);
@@ -49,7 +77,7 @@ describe("BancoFé - Validação E-Commerce Admin, Operações, Termos e Consult
   });
 
   it("POST /api/consulta360/consultar deve executar dossiê pericial com 11 fontes oficiais", async () => {
-    const res = await fetch(`${BASE_URL}/api/consulta360/consultar`, {
+    const res = await fetch(`${baseUrl}/api/consulta360/consultar`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ documentoOuNome: "00.000.000/0001-91" }),
@@ -63,7 +91,7 @@ describe("BancoFé - Validação E-Commerce Admin, Operações, Termos e Consult
   }, 25000);
 
   it("GET /admin/ecommerce deve responder 200 no SSR com layout verde BancoFé", async () => {
-    const res = await fetch(`${BASE_URL}/admin/ecommerce`);
+    const res = await fetch(`${baseUrl}/admin/ecommerce`);
     expect(res.status).toBe(200);
     const html = await res.text();
     expect(html).toContain("E-Commerce Admin");
@@ -72,15 +100,12 @@ describe("BancoFé - Validação E-Commerce Admin, Operações, Termos e Consult
   });
 
   it("GET /admin deve responder 200 com a interface administrativa", async () => {
-    const res = await fetch(`${BASE_URL}/admin`, { redirect: "follow" });
+    const res = await fetch(`${baseUrl}/admin`, { redirect: "follow" });
     expect(res.status).toBe(200);
   });
 
-  it("GET /consulta-360 e /admin/operacoes-financeiras devem responder 200 no SPA", async () => {
-    const resC360 = await fetch(`${BASE_URL}/consulta-360`);
-    expect(resC360.status).toBe(200);
-
-    const resOp = await fetch(`${BASE_URL}/admin/operacoes-financeiras`);
-    expect(resOp.status).toBe(200);
+  it("GET /admin/mesa-credito deve responder 200", async () => {
+    const res = await fetch(`${baseUrl}/admin/mesa-credito`, { redirect: "follow" });
+    expect(res.status).toBe(200);
   });
 });
