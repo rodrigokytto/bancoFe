@@ -71,7 +71,7 @@ const accountManager = new AccountManager();
 const ledgerEngine = new LedgerEngine(accountManager);
 const eventBus = IntegrationEventBus.getInstance();
 
-export function registerBancoFeRoutes(targetApp: express.Express | express.Router) {
+export function registerBancoFeRoutes(targetApp: any) {
   // 1. Healthcheck e Resumo Geral
   targetApp.get('/api/health', async (_req: Request, res: Response) => {
     const healthChecks = await registry.runHealthChecks();
