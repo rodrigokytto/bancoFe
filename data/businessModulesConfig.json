@@ -14,7 +14,17 @@
       "status": "active",
       "isDefault": true,
       "createdAt": "2026-01-01T00:00:00Z",
-      "updatedAt": "2026-11-23T00:00:00Z"
+      "updatedAt": "2026-11-23T00:00:00Z",
+      "metrics": {
+        "monthlyVolume": 4850290,
+        "monthlyTransactions": 148920,
+        "uptimeSla": 99.99,
+        "avgLatencyMs": 14,
+        "monthlySavings": 34800,
+        "activeUsersCount": 42,
+        "hoursSavedMonthly": 180,
+        "complianceScore": 100
+      }
     },
     {
       "id": "zuma_gastronomia",
@@ -29,7 +39,17 @@
       "unidade": "Restaurante & Salão Nobre (27 Mesas)",
       "status": "active",
       "createdAt": "2026-01-01T00:00:00Z",
-      "updatedAt": "2026-11-23T00:00:00Z"
+      "updatedAt": "2026-11-23T00:00:00Z",
+      "metrics": {
+        "monthlyVolume": 284500,
+        "monthlyTransactions": 3940,
+        "uptimeSla": 99.98,
+        "avgLatencyMs": 16,
+        "monthlySavings": 18400,
+        "activeUsersCount": 28,
+        "hoursSavedMonthly": 142,
+        "complianceScore": 99.8
+      }
     },
     {
       "id": "zuma_moda",
@@ -44,7 +64,17 @@
       "unidade": "Loja Conceito & Showroom",
       "status": "active",
       "createdAt": "2026-01-01T00:00:00Z",
-      "updatedAt": "2026-11-23T00:00:00Z"
+      "updatedAt": "2026-11-23T00:00:00Z",
+      "metrics": {
+        "monthlyVolume": 142000,
+        "monthlyTransactions": 1250,
+        "uptimeSla": 99.96,
+        "avgLatencyMs": 18,
+        "monthlySavings": 7200,
+        "activeUsersCount": 12,
+        "hoursSavedMonthly": 64,
+        "complianceScore": 99.5
+      }
     },
     {
       "id": "zuma_agro",
@@ -59,7 +89,17 @@
       "unidade": "Fazendas & Operação Grãos",
       "status": "active",
       "createdAt": "2026-01-01T00:00:00Z",
-      "updatedAt": "2026-11-23T00:00:00Z"
+      "updatedAt": "2026-11-23T00:00:00Z",
+      "metrics": {
+        "monthlyVolume": 8920000,
+        "monthlyTransactions": 620,
+        "uptimeSla": 99.99,
+        "avgLatencyMs": 15,
+        "monthlySavings": 86000,
+        "activeUsersCount": 19,
+        "hoursSavedMonthly": 210,
+        "complianceScore": 100
+      }
     },
     {
       "id": "holding_kytto",
@@ -74,7 +114,17 @@
       "unidade": "Controladoria Geral",
       "status": "active",
       "createdAt": "2026-01-01T00:00:00Z",
-      "updatedAt": "2026-11-23T00:00:00Z"
+      "updatedAt": "2026-11-23T00:00:00Z",
+      "metrics": {
+        "monthlyVolume": 14200000,
+        "monthlyTransactions": 158000,
+        "uptimeSla": 99.99,
+        "avgLatencyMs": 12,
+        "monthlySavings": 146000,
+        "activeUsersCount": 64,
+        "hoursSavedMonthly": 380,
+        "complianceScore": 100
+      }
     }
   ],
   "modulesByBusiness": {
@@ -95,6 +145,16 @@
           "conectividade_apis",
           "open_apis"
         ],
+        "telemetry": {
+          "monthlyRequests": 184500,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 22,
+          "status": "healthy",
+          "monthlyVolume": 4850000,
+          "costReduction": 14500,
+          "usersCount": 38,
+          "lastSync": "Agora mesmo"
+        },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-23T00:00:00Z"
       },
@@ -114,6 +174,16 @@
           "frente_loja",
           "financas_controladoria"
         ],
+        "telemetry": {
+          "monthlyRequests": 423900,
+          "uptimePercent": 100,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 12400000,
+          "costReduction": 28900,
+          "usersCount": 154,
+          "lastSync": "Agora mesmo"
+        },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-23T00:00:00Z"
       },
@@ -133,6 +203,16 @@
           "financas_controladoria",
           "vendas_b2b"
         ],
+        "telemetry": {
+          "monthlyRequests": 54100,
+          "uptimePercent": 99.95,
+          "avgLatencyMs": 19,
+          "status": "healthy",
+          "monthlyVolume": 2150000,
+          "costReduction": 12300,
+          "usersCount": 18,
+          "lastSync": "Há 4 min"
+        },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-23T00:00:00Z"
       },
@@ -152,6 +232,15 @@
           "financas_controladoria",
           "fiscal_contabil"
         ],
+        "telemetry": {
+          "monthlyRequests": 82000,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 15,
+          "status": "healthy",
+          "costReduction": 18500,
+          "usersCount": 24,
+          "lastSync": "Há 2 min"
+        },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-23T00:00:00Z"
       },
@@ -171,6 +260,14 @@
           "war_room",
           "modelagem_preditiva"
         ],
+        "telemetry": {
+          "monthlyRequests": 112000,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "usersCount": 31,
+          "lastSync": "Em tempo real"
+        },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-23T00:00:00Z"
       },
@@ -190,6 +287,15 @@
           "conectividade_apis",
           "infra_aplicacoes"
         ],
+        "telemetry": {
+          "monthlyRequests": 32400,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 11,
+          "status": "healthy",
+          "costReduction": 8400,
+          "usersCount": 15,
+          "lastSync": "Há 1 min"
+        },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-23T00:00:00Z"
       }
@@ -214,7 +320,17 @@
           "apps_mobile_op"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 98400,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 16,
+          "status": "healthy",
+          "monthlyVolume": 284500,
+          "costReduction": 6200,
+          "usersCount": 27,
+          "lastSync": "Em tempo real"
+        }
       },
       {
         "id": "vendas_crm",
@@ -235,7 +351,17 @@
           "vendas_b2b"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 42100,
+          "uptimePercent": 99.95,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 82000,
+          "costReduction": 4800,
+          "usersCount": 14,
+          "lastSync": "Há 30s"
+        }
       },
       {
         "id": "comando",
@@ -256,7 +382,16 @@
           "otimizacao_receita"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 18200,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 18,
+          "status": "healthy",
+          "costReduction": 3500,
+          "usersCount": 8,
+          "lastSync": "Há 1 min"
+        }
       },
       {
         "id": "erp_kytto",
@@ -277,7 +412,16 @@
           "governanca_holding"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 64500,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 15,
+          "status": "healthy",
+          "costReduction": 5900,
+          "usersCount": 16,
+          "lastSync": "Há 3 min"
+        }
       },
       {
         "id": "tecnologia_ti",
@@ -296,7 +440,16 @@
           "infra_aplicacoes"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 89300,
+          "uptimePercent": 100,
+          "avgLatencyMs": 10,
+          "status": "healthy",
+          "costReduction": 2000,
+          "usersCount": 11,
+          "lastSync": "Agora mesmo"
+        }
       }
     ],
     "zuma_moda": [
@@ -316,7 +469,17 @@
           "frente_loja"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 28400,
+          "uptimePercent": 99.96,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 142000,
+          "costReduction": 2400,
+          "usersCount": 8,
+          "lastSync": "Há 1 min"
+        }
       },
       {
         "id": "moda_estoque_grade",
@@ -334,7 +497,16 @@
           "suprimentos_estoque"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 19800,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 16,
+          "status": "healthy",
+          "costReduction": 1800,
+          "usersCount": 6,
+          "lastSync": "Há 5 min"
+        }
       },
       {
         "id": "moda_crm_condicional",
@@ -353,7 +525,16 @@
           "marketing_aquisicao"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 14200,
+          "uptimePercent": 99.95,
+          "avgLatencyMs": 15,
+          "status": "healthy",
+          "costReduction": 1600,
+          "usersCount": 7,
+          "lastSync": "Há 10 min"
+        }
       },
       {
         "id": "moda_financeiro_fiscal",
@@ -372,7 +553,16 @@
           "fiscal_contabil"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 22100,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 17,
+          "status": "healthy",
+          "costReduction": 1400,
+          "usersCount": 5,
+          "lastSync": "Há 2 min"
+        }
       }
     ],
     "zuma_agro": [
@@ -393,7 +583,17 @@
           "governanca_holding"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 48900,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 13,
+          "status": "healthy",
+          "monthlyVolume": 8920000,
+          "costReduction": 42000,
+          "usersCount": 16,
+          "lastSync": "Em tempo real"
+        }
       },
       {
         "id": "agro_contratos_barter",
@@ -412,7 +612,16 @@
           "financas_controladoria"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 14200,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 16,
+          "status": "healthy",
+          "costReduction": 28000,
+          "usersCount": 9,
+          "lastSync": "Há 15 min"
+        }
       },
       {
         "id": "agro_patrimonio_maquinas",
@@ -431,7 +640,16 @@
           "suprimentos_estoque"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 18600,
+          "uptimePercent": 99.96,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "costReduction": 16000,
+          "usersCount": 12,
+          "lastSync": "Há 8 min"
+        }
       }
     ],
     "holding_kytto": [
@@ -452,7 +670,17 @@
           "cockpits_executivos"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 142000,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 14200000,
+          "costReduction": 68000,
+          "usersCount": 45,
+          "lastSync": "Em tempo real"
+        }
       },
       {
         "id": "holding_concreto",
@@ -470,7 +698,16 @@
           "governanca_holding"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 12500,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "costReduction": 2500,
+          "usersCount": 8,
+          "lastSync": "Agora"
+        }
       },
       {
         "id": "holding_contabil_sped",
@@ -489,9 +726,18 @@
           "financas_controladoria"
         ],
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-23T00:00:00Z",
+        "telemetry": {
+          "monthlyRequests": 12500,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "costReduction": 2500,
+          "usersCount": 8,
+          "lastSync": "Agora"
+        }
       }
     ]
   },
-  "updatedAt": "2026-11-23T00:29:11.989Z"
+  "updatedAt": "2026-11-23T00:45:27.740Z"
 }

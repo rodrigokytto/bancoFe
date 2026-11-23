@@ -66,6 +66,13 @@ export const adminRouter = router({
       return businessModuleStore.getModulesByBusiness(input.businessId);
     }),
 
+  // Retorna métricas e cálculos agregados em tempo real de um negócio
+  getBusinessMetrics: publicProcedure
+    .input(z.object({ businessId: z.string() }))
+    .query(async ({ input }) => {
+      return businessModuleStore.getCalculatedMetrics(input.businessId);
+    }),
+
   // Adicionar ou Modificar Módulo
   saveModule: publicProcedure
     .input(
@@ -82,11 +89,21 @@ export const adminRouter = router({
         active: z.boolean().default(true),
         permission: z.enum(["admin", "user", "all"]).default("all"),
         domains: z.array(z.string()).default([]),
+        telemetry: z.object({
+          monthlyRequests: z.number().optional(),
+          uptimePercent: z.number().optional(),
+          avgLatencyMs: z.number().optional(),
+          status: z.enum(["healthy", "warning", "idle"]).optional(),
+          monthlyVolume: z.number().optional(),
+          costReduction: z.number().optional(),
+          usersCount: z.number().optional(),
+          lastSync: z.string().optional(),
+        }).optional(),
       })
     )
     .mutation(async ({ input }) => {
       const { businessId, ...moduleData } = input;
-      const saved = businessModuleStore.saveModule(businessId, moduleData);
+      const saved = businessModuleStore.saveModule(businessId, moduleData as any);
       return { success: true, module: saved };
     }),
 
@@ -148,7 +165,7 @@ export const adminRouter = router({
     .input(
       z.object({
         businesses: z.array(z.any()),
-        modulesByBusiness: z.record(z.array(z.any())),
+        modulesByBusiness: z.record(z.string(), z.array(z.any())),
       })
     )
     .mutation(async ({ input }) => {

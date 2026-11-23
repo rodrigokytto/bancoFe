@@ -31,7 +31,8 @@ import {
   FileCheck,
   Nfc,
   Keyboard,
-  Share2
+  Share2,
+  RefreshCw
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatBrl } from "../../../../shared/zumaData";
@@ -137,6 +138,8 @@ export const ModalPagamentoMesa: React.FC<ModalPagamentoMesaProps> = ({
   const [modoContingenciaManual, setModoContingenciaManual] = useState(false);
   const [manualCardLast4, setManualCardLast4] = useState("");
   const [manualAuthCode, setManualAuthCode] = useState("");
+  const [manualNsu, setManualNsu] = useState("");
+  const [manualAdquirente, setManualAdquirente] = useState<any>("Stone");
   const [manualMotivo, setManualMotivo] = useState("Falha temporária de rede/sinal no salão");
 
   // Modos de Captura do Cartão na Mesa:
@@ -561,7 +564,7 @@ export const ModalPagamentoMesa: React.FC<ModalPagamentoMesaProps> = ({
           codigo: "CONT-MANUAL",
           adquirente: manualAdquirente,
           modelo: "Terminal Offline de Contingência",
-          conexao: "POS 4G Independente"
+          conexao: "4G Multi-Operadora"
         },
         valorTotal: totalLiquido,
         modalidade: metodo === "voucher" ? "voucher" : tipoCartao,
