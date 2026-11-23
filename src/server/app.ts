@@ -124,7 +124,7 @@ app.get('/api/ledger/audit', (_req: Request, res: Response) => {
 });
 
 // Servir frontend compilado em produção / preview
-const distPath = path.resolve(__dirname, '../../dist');
+const distPath = path.resolve(process.cwd(), 'dist');
 app.use(express.static(distPath));
 
 app.get('*', (req: Request, res: Response, next) => {
