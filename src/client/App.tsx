@@ -15,6 +15,8 @@ import { Consulta360Terminal } from './components/Consulta360Terminal';
 import { PreCadastroProdutosTerminal } from './components/PreCadastroProdutosTerminal';
 import { RadarProspeccaoTerminal } from './components/RadarProspeccaoTerminal';
 import { AdminModulosTerminal } from './components/AdminModulosTerminal';
+import { PortalClienteTerminal } from './components/PortalClienteTerminal';
+import { GestaoEmprestimosAdminTerminal } from './components/GestaoEmprestimosAdminTerminal';
 import { IntegrationRegistry } from '../integrations/registry';
 
 export const App: React.FC = () => {
@@ -97,6 +99,10 @@ export const App: React.FC = () => {
             onSelectAction={handleSelectAction}
           />
         )}
+
+        {activeTab === 'portal-cliente' && <PortalClienteTerminal />}
+
+        {activeTab === 'gestao-emprestimos' && <GestaoEmprestimosAdminTerminal />}
 
         {activeTab === 'consulta360' && <Consulta360Terminal />}
 

@@ -15,6 +15,8 @@ import {
   Calculator,
   Target,
   Settings,
+  Users,
+  Banknote,
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -34,6 +36,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const tabs = [
     { id: 'cockpit', label: 'Hub Geral', icon: Activity },
+    { id: 'portal-cliente', label: 'Portal do Cliente', icon: Users, highlight: true },
+    { id: 'gestao-emprestimos', label: 'Gestão Empréstimos', icon: Banknote, highlight: true },
     { id: 'consulta360', label: 'Consulta 360° CPF/CNPJ', icon: Search, highlight: true },
     { id: 'precadastro', label: 'Pré-Cadastro 10x', icon: Calculator, highlight: true },
     { id: 'radar', label: 'Radar MT & Empresas', icon: Target, highlight: true },

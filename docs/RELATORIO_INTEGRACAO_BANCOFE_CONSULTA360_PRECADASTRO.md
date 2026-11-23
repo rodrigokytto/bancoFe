@@ -241,6 +241,23 @@ Para proporcionar uma experiência visual e operacional no estado da arte para e
 5. **Integração na Navegação do Ecossistema (`client/src/navigation.config.ts`)**:
    - O módulo **BancoFé Banking & Crédito** foi incorporado à barra de navegação global com o selo institucional **ISPB 799**, permitindo transição fluida entre as ferramentas de gestão comercial, CRM e as operações bancárias periciais.
 
+### 4.5. Controle Completo de Empréstimos e Financiamentos de Toda a Carteira
+
+Para atender aos requisitos de auditoria e governança financeira institucional, foi integrado o **Motor de Gestão de Contratos de Empréstimo e Amortização** (`src/credito/gestao-contratos-emprestimos.ts`) e o terminal administrativo de controle (`src/client/components/GestaoEmprestimosAdminTerminal.tsx`):
+1. **Modelos de Amortização Price e SAC**: Cálculo automatizado de cronograma parcela a parcela, segregando cota de amortização, juros contratuais e saldo devedor remanescente;
+2. **Emissão de Cobrança Nível Bancário**: Geração de linha digitável FEBRABAN padrão BancoFé (ISPB 799) e Pix Copia e Cola dinâmico (padrão EMVCo Bacen SPI) para cada parcela individual;
+3. **Mesa de Conciliação Operacional**: Fila de aprovação de comprovantes recebidos do Portal do Cliente, com auditoria de valores, baixa automática de parcelas e recálculo instantâneo do saldo devedor da carteira;
+4. **Painel de Indicadores da Carteira**: Rastreamento em tempo real do total concedido (R$ 3,4M+), saldo devedor ativo, total liquidado e índice de inadimplência.
+
+### 4.6. Portal do Cliente de Autoatendimento (Internet Banking BancoFé)
+
+Disponibilizado o ambiente oficial do cliente (`src/portal-cliente/portal-cliente.service.ts` e `src/client/components/PortalClienteTerminal.tsx`):
+1. **Visão 360° de Dívidas e Limites**: Acesso seguro com CPF/CNPJ, exibindo todos os contratos ativos, parcelas abertas, limite pré-aprovado para novos empréstimos e histórico de amortizações;
+2. **Segunda Via de Boletos e Pix Copia e Cola**: Emissão instantânea do boleto bancário e QR Code Pix Copia e Cola com 1 clique para pagamento imediato;
+3. **Envio de Comprovante de Pagamento com Conciliação**: Formulário de upload de recibos e comprovantes Pix com envio para a mesa operacional e protocolo de acompanhamento;
+4. **Simulação e Quitação Antecipada (Art. 52, § 2º do CDC)**: Cálculo a valor presente com expurgo dos juros futuros, garantindo o direito do consumidor de liquidação antecipada com desconto integral;
+5. **Declaração Anual de Quitação de Débitos (Lei Federal 12.007/2009)**: Emissão automatizada da certidão formal de quitação anual com código de autenticidade criptográfico e protocolo rastreável.
+
 ---
 
 ## 5. Conclusão

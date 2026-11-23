@@ -22,6 +22,8 @@ import { GestorModulosNegocioBancoFe } from "../admin/gestor-modulos-negocio";
 import { CONFIG_OFICIAL_BANCOFE } from "../config";
 import { ConectorBureausCredito } from "../bureaus-credito";
 import { ValidadorIntegracoesCompletas } from "../validador-integracoes";
+import { MotorGestaoEmprestimosBancoFe } from "../credito/gestao-contratos-emprestimos";
+import { PortalClienteService } from "../portal-cliente/portal-cliente.service";
 
 /**
  * Registra todas as rotas Web e APIs REST da Plataforma BancoFé, Casanova Kytto,
@@ -118,6 +120,14 @@ export function registerPlataformaWebAndApis(app: any) {
   app.get("/admin", authMiddleware, (_req: Request, res: Response) => {
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.send(renderizarHtmlAdminModulos());
+  });
+
+  app.get("/portal-cliente", (_req: Request, res: Response) => {
+    res.redirect("/?tab=portal-cliente");
+  });
+
+  app.get("/gestao-emprestimos", authMiddleware, (_req: Request, res: Response) => {
+    res.redirect("/?tab=gestao-emprestimos");
   });
 
   app.get("/consulta-360", authMiddleware, (_req: Request, res: Response) => {
@@ -506,5 +516,127 @@ export function registerPlataformaWebAndApis(app: any) {
         timestamp: new Date().toISOString()
       });
     }
+  });
+
+  // ==========================================
+  // 7. PORTAL DO CLIENTE (AUTOATENDIMENTO, BOLETOS, PIX, COMPROVANTES, QUITAÇÃO CDC)
+  // ==========================================
+  app.get("/api/v1/portal-cliente/cliente/:cpf", (req: Request, res: Response) => {
+    try {
+      const painel = PortalClienteService.obterPainelCliente(req.params.cpf);
+      res.json(painel);
+    } catch (e: any) {
+      res.status(500).json({ erro: e.message });
+    }
+  });
+
+  app.get("/api/v1/portal-cliente/boleto/:contratoId/:numeroParcela", (req: Request, res: Response) => {
+    const contrato = MotorGestaoEmprestimosBancoFe.obterPorId(req.params.contratoId);
+    if (!contrato) return res.status(404).json({ erro: "Contrato não encontrado." });
+    const parcela = contrato.parcelas.find((p) => p.numero === Number(req.params.numeroParcela));
+    if (!parcela) return res.status(404).json({ erro: "Parcela não encontrada." });
+    res.json({
+      contratoId: contrato.id,
+      numeroParcela: parcela.numero,
+      cliente: contrato.clienteNome,
+      cpfCnpj: contrato.clienteCpfCnpj,
+      vencimento: parcela.vencimento,
+      valor: parcela.valorParcela,
+      linhaDigitavel: parcela.boletoLinhaDigitavel,
+      codigoBarras: parcela.boletoCodigoBarras,
+      beneficiario: "BANCOFE S.A. - ISPB 799",
+      chavePix: "financeiro@bancofe.com.br",
+    });
+  });
+
+  app.get("/api/v1/portal-cliente/pix/:contratoId/:numeroParcela", (req: Request, res: Response) => {
+    const contrato = MotorGestaoEmprestimosBancoFe.obterPorId(req.params.contratoId);
+    if (!contrato) return res.status(404).json({ erro: "Contrato não encontrado." });
+    const parcela = contrato.parcelas.find((p) => p.numero === Number(req.params.numeroParcela));
+    if (!parcela) return res.status(404).json({ erro: "Parcela não encontrada." });
+    res.json({
+      contratoId: contrato.id,
+      numeroParcela: parcela.numero,
+      valor: parcela.valorParcela,
+      pixCopiaECola: parcela.pixCopiaECola,
+      pixQrCodeBase64: parcela.pixQrCodeBase64,
+    });
+  });
+
+  app.post("/api/v1/portal-cliente/enviar-comprovante", (req: Request, res: Response) => {
+    try {
+      const { contratoId, numeroParcela, arquivoUrl, observacao } = req.body;
+      if (!contratoId || !numeroParcela) {
+        return res.status(400).json({ erro: "contratoId e numeroParcela são obrigatórios." });
+      }
+      const resultado = PortalClienteService.enviarComprovantePagamento(
+        contratoId,
+        Number(numeroParcela),
+        arquivoUrl || "https://bancofe.kytto.com.br/uploads/comprovante_pix.pdf",
+        observacao
+      );
+      res.json(resultado);
+    } catch (e: any) {
+      res.status(400).json({ erro: e.message });
+    }
+  });
+
+  app.get("/api/v1/portal-cliente/simular-quitacao/:contratoId", (req: Request, res: Response) => {
+    try {
+      const simulacao = PortalClienteService.simularQuitacaoAntecipada(req.params.contratoId);
+      res.json(simulacao);
+    } catch (e: any) {
+      res.status(400).json({ erro: e.message });
+    }
+  });
+
+  app.post("/api/v1/portal-cliente/solicitar-quitacao", (req: Request, res: Response) => {
+    try {
+      const { contratoId, canalConfirmacao } = req.body;
+      const solicitacao = PortalClienteService.solicitarQuitacaoAntecipada(contratoId, canalConfirmacao);
+      res.json(solicitacao);
+    } catch (e: any) {
+      res.status(400).json({ erro: e.message });
+    }
+  });
+
+  app.get("/api/v1/portal-cliente/declaracao-quitacao/:contratoId", (req: Request, res: Response) => {
+    try {
+      const declaracao = PortalClienteService.gerarDeclaracaoQuitacaoAnual(req.params.contratoId);
+      res.json(declaracao);
+    } catch (e: any) {
+      res.status(400).json({ erro: e.message });
+    }
+  });
+
+  // ==========================================
+  // 8. GESTÃO DE EMPRÉSTIMOS (MESA DE CRÉDITO & COBRANÇA)
+  // ==========================================
+  app.get("/api/v1/emprestimos/metricas", (_req: Request, res: Response) => {
+    res.json(MotorGestaoEmprestimosBancoFe.obterMetricasCarteira());
+  });
+
+  app.get("/api/v1/emprestimos/contratos", (_req: Request, res: Response) => {
+    res.json(MotorGestaoEmprestimosBancoFe.listarTodos());
+  });
+
+  app.get("/api/v1/emprestimos/contrato/:id", (req: Request, res: Response) => {
+    const c = MotorGestaoEmprestimosBancoFe.obterPorId(req.params.id);
+    if (!c) return res.status(404).json({ erro: "Contrato não encontrado." });
+    res.json(c);
+  });
+
+  app.post("/api/v1/emprestimos/conciliar-comprovante", (req: Request, res: Response) => {
+    const { contratoId, numeroParcela, aprovar, observacaoMesa } = req.body;
+    if (!contratoId || numeroParcela === undefined || aprovar === undefined) {
+      return res.status(400).json({ erro: "contratoId, numeroParcela e aprovar são obrigatórios." });
+    }
+    const sucesso = MotorGestaoEmprestimosBancoFe.conciliarComprovanteMesa(
+      contratoId,
+      Number(numeroParcela),
+      Boolean(aprovar),
+      observacaoMesa
+    );
+    res.json({ sucesso, contratoId, numeroParcela, status: aprovar ? "APROVADO_PAGA" : "REJEITADO" });
   });
 }

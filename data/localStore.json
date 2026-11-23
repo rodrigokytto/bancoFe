@@ -599,6 +599,47 @@
   ],
   "orders": [
     {
+      "id": 320,
+      "orderNumber": 320,
+      "createdAt": "2026-11-23T13:45:22.379Z",
+      "channel": "Mesa 7 (Salão)",
+      "reference": "Mesa 7 · Matheus Silva (Garçom)",
+      "customerName": "Dr. Alexandre Parecis",
+      "neighborhood": "Salão Zuma",
+      "status": "entregue",
+      "paymentMethod": "Sicredi Pix Direto MT",
+      "payments": [
+        {
+          "method": "pix",
+          "amount": 140.8
+        }
+      ],
+      "subtotal": "128.00",
+      "discount": "0.00",
+      "total": "140.80",
+      "nfcNumber": 6904,
+      "nfcStatus": "autorizada",
+      "operator": "Matheus Silva (Garçom)",
+      "items": [
+        {
+          "itemName": "Hot Roll Especial Trufado",
+          "quantity": 2,
+          "unitPrice": 38,
+          "station": "Fritadeira",
+          "adicionais": [],
+          "observacoes": ""
+        },
+        {
+          "itemName": "Sashimi Salmão Maçaricado (10 Pçs)",
+          "quantity": 1,
+          "unitPrice": 52,
+          "station": "Sushibar",
+          "adicionais": [],
+          "observacoes": ""
+        }
+      ]
+    },
+    {
       "id": 319,
       "orderNumber": 319,
       "createdAt": "2026-11-23T00:56:48.723Z",
@@ -1735,6 +1776,781 @@
   "reservations": [],
   "leads": [],
   "webhookLogs": [
+    {
+      "id": "wh_1795441573886_64lqs",
+      "source": "Google Maps Routes (GCP kytto-514916)",
+      "event": "ataque_mercado.anti_atraso_pico.google_maps",
+      "statusCode": 200,
+      "latencyMs": 34,
+      "payload": {
+        "eixo": "anti_atraso_pico",
+        "titulo": "Operação Cavalo de Troia no Pico de Fim de Semana",
+        "alvo": "Bonsai Sushi Bar",
+        "bairros": [
+          "Jardim Europa",
+          "Centro"
+        ],
+        "cupom": "ZUMAEXPRESS30",
+        "orcamentoDiario": 150,
+        "timestamp": "2026-11-23T13:46:13.886Z"
+      },
+      "timestamp": "2026-11-23T13:46:13.886Z"
+    },
+    {
+      "id": "wh_1795441573879_c43fi",
+      "source": "WhatsApp Cloud API (Zumi Copilot)",
+      "event": "ataque_mercado.anti_atraso_pico.whatsapp_zumi",
+      "statusCode": 200,
+      "latencyMs": 33,
+      "payload": {
+        "eixo": "anti_atraso_pico",
+        "titulo": "Operação Cavalo de Troia no Pico de Fim de Semana",
+        "alvo": "Bonsai Sushi Bar",
+        "bairros": [
+          "Jardim Europa",
+          "Centro"
+        ],
+        "cupom": "ZUMAEXPRESS30",
+        "orcamentoDiario": 150,
+        "timestamp": "2026-11-23T13:46:13.879Z"
+      },
+      "timestamp": "2026-11-23T13:46:13.879Z"
+    },
+    {
+      "id": "wh_1795441573871_rijnz",
+      "source": "Meta Ads (Instagram / Facebook Graph API)",
+      "event": "ataque_mercado.anti_atraso_pico.meta_ads",
+      "statusCode": 200,
+      "latencyMs": 20,
+      "payload": {
+        "eixo": "anti_atraso_pico",
+        "titulo": "Operação Cavalo de Troia no Pico de Fim de Semana",
+        "alvo": "Bonsai Sushi Bar",
+        "bairros": [
+          "Jardim Europa",
+          "Centro"
+        ],
+        "cupom": "ZUMAEXPRESS30",
+        "orcamentoDiario": 150,
+        "timestamp": "2026-11-23T13:46:13.871Z"
+      },
+      "timestamp": "2026-11-23T13:46:13.871Z"
+    },
+    {
+      "id": "wh_1795441573863_zqy1t",
+      "source": "Zumi IA War Room",
+      "event": "DISPARO_ACAO_CONCORRENCIA (Operação Cavalo de Troia no Pico de Fim de Semana)",
+      "statusCode": 200,
+      "latencyMs": 15,
+      "payload": {
+        "actionId": "act-1795441573855",
+        "titulo": "Operação Cavalo de Troia no Pico de Fim de Semana",
+        "alvo": "Bonsai Sushi Bar",
+        "canal": "whatsapp",
+        "cupom": "ZUMAEXPRESS30",
+        "status": "ativa",
+        "timestamp": "2026-11-23T13:46:13.863Z"
+      },
+      "timestamp": "2026-11-23T13:46:13.863Z"
+    },
+    {
+      "id": "wh_1795441524138_mt476",
+      "source": "UltraSync Internal Event Bus",
+      "event": "NOSSA_GENTE -> ULTRA_SISTEMA [COLABORADOR_ENTRADA_DETECTADA]",
+      "statusCode": 200,
+      "latencyMs": 3,
+      "payload": {
+        "eventId": "evt_1795441524138_hb9c",
+        "summary": "Reconhecimento facial com 99.4% de confiança.",
+        "collaborator": "Takeshi Sato",
+        "checksum": "sha256_1a208a77daa_466e8d",
+        "payload": {
+          "camera": "CAM-01 (Entrada Cozinha)",
+          "timestamp": "2026-11-23T13:45:24.138Z"
+        }
+      },
+      "timestamp": "2026-11-23T13:45:24.138Z"
+    },
+    {
+      "id": "wh_1795441524132_vrumo",
+      "source": "Nossa Gente RH PubSub",
+      "event": "COLABORADOR_ENTRADA_DETECTADA",
+      "statusCode": 200,
+      "latencyMs": 2,
+      "payload": {
+        "collaborator": "Takeshi Sato",
+        "category": "Ponto Eletrônico",
+        "notes": "Reconhecimento facial com 99.4% de confiança.",
+        "timestamp": "2026-11-23T13:45:24.132Z"
+      },
+      "timestamp": "2026-11-23T13:45:24.132Z"
+    },
+    {
+      "id": "wh_1795441524118_tnwzp",
+      "source": "Saipos Bridge",
+      "event": "SAIPOS_CATALOG_IMPORTED",
+      "statusCode": 200,
+      "latencyMs": 45,
+      "payload": {
+        "count": 1,
+        "operator": "Auditor",
+        "timestamp": "2026-11-23T13:45:24.118Z"
+      },
+      "timestamp": "2026-11-23T13:45:24.118Z"
+    },
+    {
+      "id": "wh_1795441524104_bud24",
+      "source": "Saipos Bridge",
+      "event": "SAIPOS_SYNC_COMPLETED",
+      "statusCode": 200,
+      "latencyMs": 38,
+      "payload": {
+        "syncId": "sync_1795441524104",
+        "skus": 151,
+        "ordersAdded": 7,
+        "revenueAdded": 608.89,
+        "operator": "Teste Automatizado",
+        "timestamp": "2026-11-23T13:45:24.104Z"
+      },
+      "timestamp": "2026-11-23T13:45:24.104Z"
+    },
+    {
+      "id": "wh_1795441524088_m2xd4",
+      "source": "Saipos Bridge",
+      "event": "SAIPOS_SYNC_COMPLETED",
+      "statusCode": 200,
+      "latencyMs": 38,
+      "payload": {
+        "syncId": "sync_1795441524088",
+        "skus": 151,
+        "ordersAdded": 9,
+        "revenueAdded": 661.48,
+        "operator": "Sincronizador Automático",
+        "timestamp": "2026-11-23T13:45:24.088Z"
+      },
+      "timestamp": "2026-11-23T13:45:24.088Z"
+    },
+    {
+      "id": "wh_1795441524057_ya42o",
+      "source": "SEFAZ-MT NFC-e",
+      "event": "MANUAL_SYNC_TRIGGERED",
+      "statusCode": 200,
+      "latencyMs": 25,
+      "payload": {
+        "channel": "SEFAZ-MT NFC-e",
+        "syncedAt": "2026-11-23T13:45:24.057Z",
+        "autorizador": "SEFAZ-MT Cuiabá",
+        "modelo": 65,
+        "status": "100 - Autorizado"
+      },
+      "timestamp": "2026-11-23T13:45:24.057Z"
+    },
+    {
+      "id": "wh_1795441524044_h65q0",
+      "source": "Sicredi Pix MT",
+      "event": "MANUAL_SYNC_TRIGGERED",
+      "statusCode": 200,
+      "latencyMs": 12,
+      "payload": {
+        "channel": "Sicredi Pix MT",
+        "syncedAt": "2026-11-23T13:45:24.044Z",
+        "cooperativa": "Sicredi União MT/PA",
+        "tarifa": "R$ 0,00"
+      },
+      "timestamp": "2026-11-23T13:45:24.044Z"
+    },
+    {
+      "id": "wh_1795441524029_4xmvy",
+      "source": "Open Delivery Abrasel",
+      "event": "MANUAL_SYNC_TRIGGERED",
+      "statusCode": 200,
+      "latencyMs": 27,
+      "payload": {
+        "channel": "Open Delivery Abrasel",
+        "syncedAt": "2026-11-23T13:45:24.029Z",
+        "standard": "Open Delivery v1.0",
+        "channels": [
+          "Aiqfome Tangará",
+          "99Food MT"
+        ]
+      },
+      "timestamp": "2026-11-23T13:45:24.029Z"
+    },
+    {
+      "id": "wh_1795441524016_hsew9",
+      "source": "WAHA WhatsApp",
+      "event": "MANUAL_SYNC_TRIGGERED",
+      "statusCode": 200,
+      "latencyMs": 14,
+      "payload": {
+        "channel": "WAHA WhatsApp",
+        "syncedAt": "2026-11-23T13:45:24.016Z",
+        "session": "default",
+        "phone": "+55 (65) 99645-8910",
+        "status": "WORKING"
+      },
+      "timestamp": "2026-11-23T13:45:24.016Z"
+    },
+    {
+      "id": "wh_1795441523996_ubz4s",
+      "source": "Keeto POS",
+      "event": "MANUAL_SYNC_TRIGGERED",
+      "statusCode": 200,
+      "latencyMs": 22,
+      "payload": {
+        "channel": "Keeto POS",
+        "syncedAt": "2026-11-23T13:45:23.996Z",
+        "tables": 16,
+        "waiters": 4
+      },
+      "timestamp": "2026-11-23T13:45:23.996Z"
+    },
+    {
+      "id": "wh_1795441523983_2oe25",
+      "source": "iFood Merchant v2",
+      "event": "MANUAL_SYNC_TRIGGERED",
+      "statusCode": 200,
+      "latencyMs": 38,
+      "payload": {
+        "channel": "iFood Merchant v2",
+        "syncedAt": "2026-11-23T13:45:23.983Z",
+        "catalogSkus": 151,
+        "merchantStatus": "ABERTO",
+        "merchantId": "83921-zuma-tga"
+      },
+      "timestamp": "2026-11-23T13:45:23.983Z"
+    },
+    {
+      "id": "wh_1795441523970_xbo0v",
+      "source": "WAHA",
+      "event": "MANUAL_SYNC_TRIGGERED",
+      "statusCode": 200,
+      "latencyMs": 14,
+      "payload": {
+        "channel": "WAHA",
+        "syncedAt": "2026-11-23T13:45:23.970Z",
+        "session": "default",
+        "phone": "+55 (65) 99645-8910",
+        "status": "WORKING"
+      },
+      "timestamp": "2026-11-23T13:45:23.970Z"
+    },
+    {
+      "id": "wh_1795441523963_pespe",
+      "source": "iFood",
+      "event": "CONNECTION_TEST_PASSED",
+      "statusCode": 200,
+      "latencyMs": 34,
+      "payload": {
+        "channel": "iFood",
+        "status": "HEALTHY",
+        "latency": 34,
+        "protocol": "OAuth 2.0 / HTTPS TLS 1.3",
+        "message": "Conexão com iFood Merchant API v2 ativa. Loja ABERTA.",
+        "timestamp": "2026-11-23T13:45:23.962Z"
+      },
+      "timestamp": "2026-11-23T13:45:23.963Z"
+    },
+    {
+      "id": "wh_1795441523947_4zsi4",
+      "source": "ifood",
+      "event": "CREDENTIALS_UPDATED",
+      "statusCode": 200,
+      "latencyMs": 15,
+      "payload": {
+        "channel": "ifood",
+        "updatedFields": [
+          "clientId",
+          "merchantId"
+        ],
+        "updatedAt": "2026-11-23T13:45:23.947Z"
+      },
+      "timestamp": "2026-11-23T13:45:23.947Z"
+    },
+    {
+      "id": "wh_1795441522455_qjcrq",
+      "source": "Sicredi Pix MT",
+      "event": "PIX_TABLE_SETTLED",
+      "statusCode": 200,
+      "latencyMs": 14,
+      "payload": {
+        "tableNumber": 7,
+        "paymentMethod": "Sicredi Pix Direto MT",
+        "subtotal": 128,
+        "total": 140.8,
+        "splitCount": 2,
+        "nfcNumber": 6904,
+        "chavePixCooperativa": "36.296.848/0001-57"
+      },
+      "timestamp": "2026-11-23T13:45:22.455Z"
+    },
+    {
+      "id": "wh_1795441522417_l4taj",
+      "source": "Zuma ERP Suprimentos",
+      "event": "ESTOQUE_BAIXA_BOM (Pedido #320)",
+      "statusCode": 200,
+      "latencyMs": 14,
+      "payload": {
+        "orderNumber": 320,
+        "deductions": {
+          "SALM-01": 0.55,
+          "CRM-01": 0.08,
+          "PANK-01": 0.06,
+          "OLEO-01": 0.1,
+          "ARR-01": 0.12,
+          "NORI-01": 1.5
+        },
+        "channel": "Mesa 7 (Salão)",
+        "timestamp": "2026-11-23T13:45:22.417Z"
+      },
+      "timestamp": "2026-11-23T13:45:22.417Z"
+    },
+    {
+      "id": "wh_1795441521360_j4rsl",
+      "source": "UltraSync Internal Event Bus",
+      "event": "ULTRA_SISTEMA -> NOSSA_GENTE [TRIGGER_METEOROLOGIA_DR_CLIMA]",
+      "statusCode": 200,
+      "latencyMs": 3,
+      "payload": {
+        "eventId": "evt_1795441521360_gn90",
+        "summary": "[Gatilho Automático Executado] Operação Tempestade Dr. Clima Tangará da Serra",
+        "checksum": "sha256_1a208a772d0_ee397b",
+        "payload": {
+          "ruleId": "trig_dr_clima_chuva",
+          "categoria": "METEOROLOGIA_DR_CLIMA",
+          "condicao": "Precipitação acumulada > 15mm/h ou probabilidade de chuva torrencial > 85%",
+          "acao": "Acresce +12 min na estimativa do delivery, bonifica taxa de chuva aos motoboys e dispara push de combinados quentes e lámen",
+          "severidade": "OPERACIONAL",
+          "timestamp": "2026-11-23T13:45:21.360Z"
+        }
+      },
+      "timestamp": "2026-11-23T13:45:21.360Z"
+    },
+    {
+      "id": "wh_1795441521311_50l6f",
+      "source": "UltraSync Internal Event Bus",
+      "event": "ULTRA_SISTEMA -> NOSSA_GENTE [CHECKLIST_CONFORME_ANVISA]",
+      "statusCode": 200,
+      "latencyMs": 3,
+      "payload": {
+        "eventId": "evt_1795441521311_8g9y",
+        "summary": "Inspeção ANVISA registrada: Lote Salmão Chileno Premium Lote #SALM-2026-11 (CONFORME) por Mariana Alencar",
+        "collaborator": "Mariana Alencar",
+        "checksum": "sha256_1a208a7729f_453ff5",
+        "payload": {
+          "inspectionId": "insp_1795441521311_acyd",
+          "category": "RECEBIMENTO_PEIXE",
+          "status": "CONFORME",
+          "measured": "1.2°C",
+          "hash": "sec_anvisa_1a208a7729f_d688c0c3"
+        }
+      },
+      "timestamp": "2026-11-23T13:45:21.311Z"
+    },
+    {
+      "id": "wh_1795441521294_zuw3q",
+      "source": "UltraSync Internal Event Bus",
+      "event": "NOSSA_GENTE -> ULTRA_SISTEMA [ESCALA_ENTRADA_TURNO]",
+      "statusCode": 200,
+      "latencyMs": 3,
+      "payload": {
+        "eventId": "evt_1795441521294_i2wf",
+        "summary": "Kenji Sato iniciou turno no Sushibar Nobre",
+        "collaborator": "Kenji Sato",
+        "checksum": "sha256_1a208a7728e_719857",
+        "payload": {
+          "station": "st_sushibar",
+          "shift": "Jantar (17:30 - 23:30)",
+          "badge": "COL-01"
+        }
+      },
+      "timestamp": "2026-11-23T13:45:21.294Z"
+    },
+    {
+      "id": "wh_1795441520847_m3kgb",
+      "source": "UltraSync Internal Event Bus",
+      "event": "ZUMA_PWA_CLIENTE -> KDS_COZINHA [PEDIDO_MESA_CLIENTE_QRCODE]",
+      "statusCode": 200,
+      "latencyMs": 3,
+      "payload": {
+        "eventId": "evt_1795441520847_q9f4",
+        "summary": "Autoatendimento: Família Silva QR Code lançou 2 pratos na Mesa 9",
+        "checksum": "sha256_1a208a770cf_220289",
+        "payload": {
+          "tableNumber": 9,
+          "customerName": "Família Silva QR Code",
+          "items": [
+            {
+              "itemName": "Barca Zuma Premium (42 peças)",
+              "quantity": 1,
+              "unitPrice": 189.9,
+              "station": "sushibar"
+            },
+            {
+              "itemName": "Guioza Suíno Artesanal no Vapor (6 un)",
+              "quantity": 2,
+              "unitPrice": 29.9,
+              "station": "cozinha_quente"
+            }
+          ]
+        }
+      },
+      "timestamp": "2026-11-23T13:45:20.847Z"
+    },
+    {
+      "id": "wh_1795441520756_ryp4b",
+      "source": "UltraSync Internal Event Bus",
+      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [LOTE_CONTINGENCIA_SINCRONIZADO]",
+      "statusCode": 200,
+      "latencyMs": 3,
+      "payload": {
+        "eventId": "evt_1795441520756_6ec7",
+        "summary": "Lote de 2 NFC-e emitidas em contingência transmitido e homologado na SEFAZ-MT!",
+        "checksum": "sha256_1a208a77074_eaf9b7",
+        "payload": {
+          "totalNotas": 2,
+          "protocols": {
+            "nfce_1795441520706_4940": "1512600453189",
+            "nfce_1795441520661_4939": "1512600480028"
+          }
+        }
+      },
+      "timestamp": "2026-11-23T13:45:20.756Z"
+    },
+    {
+      "id": "wh_1795441520713_fd0md",
+      "source": "UltraSync Internal Event Bus",
+      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [NFCE_CONTINGENCIA_OFFLINE_GERADA]",
+      "statusCode": 200,
+      "latencyMs": 3,
+      "payload": {
+        "eventId": "evt_1795441520713_rf37",
+        "summary": "NFC-e #4940 emitida em CONTINGÊNCIA OFFLINE (Chave: 512611362968...)",
+        "checksum": "sha256_1a208a77049_a6553c",
+        "payload": {
+          "nfcNumber": 4940,
+          "chaveAcesso": "51261136296848000157650010000049409210300352",
+          "tipoEmissao": "contingencia_offline",
+          "total": 65
+        }
+      },
+      "timestamp": "2026-11-23T13:45:20.713Z"
+    },
+    {
+      "id": "wh_1795441520669_wdrvs",
+      "source": "UltraSync Internal Event Bus",
+      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [NFCE_CONTINGENCIA_OFFLINE_GERADA]",
+      "statusCode": 200,
+      "latencyMs": 3,
+      "payload": {
+        "eventId": "evt_1795441520669_4dka",
+        "summary": "NFC-e #4939 emitida em CONTINGÊNCIA OFFLINE (Chave: 512611362968...)",
+        "checksum": "sha256_1a208a7701d_3293a1",
+        "payload": {
+          "nfcNumber": 4939,
+          "chaveAcesso": "51261136296848000157650010000049399987690475",
+          "tipoEmissao": "contingencia_offline",
+          "total": 95
+        }
+      },
+      "timestamp": "2026-11-23T13:45:20.669Z"
+    },
+    {
+      "id": "wh_1795441520623_7z9a8",
+      "source": "UltraSync Internal Event Bus",
+      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [NFCE_AUTORIZADA_SEFAZ]",
+      "statusCode": 200,
+      "latencyMs": 3,
+      "payload": {
+        "eventId": "evt_1795441520623_mpdz",
+        "summary": "NFC-e #4938 AUTORIZADA pela SEFAZ-MT (R$ 189,90)",
+        "checksum": "sha256_1a208a76fef_299574",
+        "payload": {
+          "nfcNumber": 4938,
+          "chaveAcesso": "51261136296848000157650010000049381319464356",
+          "tipoEmissao": "normal",
+          "total": 189.9
+        }
+      },
+      "timestamp": "2026-11-23T13:45:20.623Z"
+    },
+    {
+      "id": "wh_1795441520564_mt2l3",
+      "source": "UltraSync Internal Event Bus",
+      "event": "ZUMA_PILOT -> ESTOQUE_CENTRAL [ESTOQUE_BAIXA_FICHA_TECNICA]",
+      "statusCode": 200,
+      "latencyMs": 3,
+      "payload": {
+        "eventId": "evt_1795441520564_cxr3",
+        "summary": "Baixa de estoque por ficha técnica: 2x Barco Zuma Nobre 40 Peças (CMV: R$ 90,96)",
+        "checksum": "sha256_1a208a76fb4_5fb8cc",
+        "payload": {
+          "dishName": "Barco Zuma Nobre 40 Peças",
+          "quantity": 2,
+          "totalCost": 90.96000000000001,
+          "origin": "KDS Expedição",
+          "ingredientsDeducted": [
+            {
+              "code": "SALM-01",
+              "name": "Salmão fresco nobre",
+              "quantity": 0.76,
+              "unit": "kg",
+              "cost": 52.06
+            },
+            {
+              "code": "ATUM-01",
+              "name": "Atum fresco Maguro",
+              "quantity": 0.16,
+              "unit": "kg",
+              "cost": 12.64
+            },
+            {
+              "code": "ARR-01",
+              "name": "Arroz japonês cozido",
+              "quantity": 0.96,
+              "unit": "kg",
+              "cost": 9.4
+            },
+            {
+              "code": "NORI-01",
+              "name": "Alga nori",
+              "quantity": 9,
+              "unit": "folhas",
+              "cost": 4.96
+            },
+            {
+              "code": "CRM-01",
+              "name": "Cream cheese Philadelphia",
+              "quantity": 0.14,
+              "unit": "kg",
+              "cost": 4.7
+            },
+            {
+              "code": "EMB-COMB",
+              "name": "Embalagem Barco Luxo",
+              "quantity": 2,
+              "unit": "un",
+              "cost": 5
+            },
+            {
+              "code": "EMB-HASHI",
+              "name": "Hashi embalado",
+              "quantity": 4,
+              "unit": "pares",
+              "cost": 1
+            },
+            {
+              "code": "SHOY-01",
+              "name": "Shoyu tradicional",
+              "quantity": 0.1,
+              "unit": "L",
+              "cost": 1.2
+            }
+          ]
+        }
+      },
+      "timestamp": "2026-11-23T13:45:20.564Z"
+    },
+    {
+      "id": "wh_1795441517784_34rz6",
+      "source": "Decision Intelligence Hub",
+      "event": "DECISION_ACTION_EXECUTED (act_chuva)",
+      "statusCode": 200,
+      "latencyMs": 22,
+      "payload": {
+        "actionId": "act_chuva",
+        "operator": "Rodrigo (Admin)",
+        "titulo": "Radar Meteorológico: Pancadas de Chuva (22mm) previstas para às 19h",
+        "impactoEsperado": "+R$ 2.450,00 no faturamento do delivery e zero atrasos na entrega.",
+        "executedAt": "2026-11-23T13:45:17.784Z"
+      },
+      "timestamp": "2026-11-23T13:45:17.784Z"
+    },
+    {
+      "id": "wh_1795441517775_e1oo2",
+      "source": "Zuma MCP Server",
+      "event": "MCP_TOOL_CALLED (zuma_optimize_delivery_batch)",
+      "statusCode": 200,
+      "latencyMs": 1,
+      "payload": {
+        "toolName": "zuma_optimize_delivery_batch",
+        "args": {
+          "latAtual": -14.622915,
+          "lngAtual": -57.493922,
+          "pedidos": [
+            {
+              "id": "1",
+              "pedidoId": "P1",
+              "clienteNome": "Cli 1",
+              "endereco": "Taruma",
+              "bairro": "Tarumã",
+              "lat": -14.6415,
+              "lng": -57.502,
+              "taxaEntrega": 8
+            },
+            {
+              "id": "2",
+              "pedidoId": "P2",
+              "clienteNome": "Cli 2",
+              "endereco": "Centro",
+              "bairro": "Centro",
+              "lat": -14.6235,
+              "lng": -57.493,
+              "taxaEntrega": 6
+            }
+          ]
+        },
+        "callerAgent": "Manus / Claude",
+        "durationMs": 1
+      },
+      "timestamp": "2026-11-23T13:45:17.775Z"
+    },
+    {
+      "id": "wh_1795441517766_z51oo",
+      "source": "Zuma MCP Server",
+      "event": "MCP_TOOL_CALLED (zuma_calculate_optimal_route)",
+      "statusCode": 200,
+      "latencyMs": 0,
+      "payload": {
+        "toolName": "zuma_calculate_optimal_route",
+        "args": {
+          "origemLat": -14.622915,
+          "origemLng": -57.493922,
+          "destinoLat": -14.636,
+          "destinoLng": -57.4985,
+          "perfil": "mais_rapida"
+        },
+        "callerAgent": "Manus / Claude",
+        "durationMs": 0
+      },
+      "timestamp": "2026-11-23T13:45:17.766Z"
+    },
+    {
+      "id": "wh_1795441517759_vnbbc",
+      "source": "Zuma MCP Server",
+      "event": "MCP_TOOL_CALLED (zuma_get_salmon_stock)",
+      "statusCode": 200,
+      "latencyMs": 0,
+      "payload": {
+        "toolName": "zuma_get_salmon_stock",
+        "args": {},
+        "callerAgent": "Manus / Claude",
+        "durationMs": 0
+      },
+      "timestamp": "2026-11-23T13:45:17.759Z"
+    },
+    {
+      "id": "wh_1795441517747_c0ha5",
+      "source": "Zuma MCP Server",
+      "event": "MCP_TOOL_CALLED (zuma_list_tables)",
+      "statusCode": 200,
+      "latencyMs": 1,
+      "payload": {
+        "toolName": "zuma_list_tables",
+        "args": {
+          "setor": "todos"
+        },
+        "callerAgent": "Manus / Claude",
+        "durationMs": 1
+      },
+      "timestamp": "2026-11-23T13:45:17.747Z"
+    },
+    {
+      "id": "wh_1795441517740_hr4tm",
+      "source": "Zuma MCP Server",
+      "event": "MCP_TOOL_CALLED (zuma_get_live_kpi)",
+      "statusCode": 200,
+      "latencyMs": 0,
+      "payload": {
+        "toolName": "zuma_get_live_kpi",
+        "args": {},
+        "callerAgent": "Manus Test Agent",
+        "durationMs": 0
+      },
+      "timestamp": "2026-11-23T13:45:17.740Z"
+    },
+    {
+      "id": "wh_1795441517731_v2ds3",
+      "source": "Git & Backup Engine",
+      "event": "DATABASE_SNAPSHOT_CREATED",
+      "statusCode": 200,
+      "latencyMs": 32,
+      "payload": {
+        "snapshotId": "snap_20261123134517.",
+        "operator": "Vitest Test Operator",
+        "sizeKb": 1450,
+        "sha256": "z1gv5e6c98qnxu6qgojgh"
+      },
+      "timestamp": "2026-11-23T13:45:17.731Z"
+    },
+    {
+      "id": "wh_1795441517722_m53d5",
+      "source": "TEF IP (Stone Hub)",
+      "event": "TEF_TRANSACAO_CREDITO",
+      "statusCode": 200,
+      "latencyMs": 14,
+      "payload": {
+        "amount": 189.9,
+        "feeAmount": 3.39921,
+        "netAmount": 186.50079,
+        "nsu": "NSU_298812",
+        "authCode": "AUTH_9P222G",
+        "method": "credito",
+        "acquirer": "Stone Hub",
+        "terminal": "GPOS700 Caixa 01",
+        "timestamp": "2026-11-23T13:45:17.722Z"
+      },
+      "timestamp": "2026-11-23T13:45:17.722Z"
+    },
+    {
+      "id": "wh_1795441517714_9kv3n",
+      "source": "Conciliador Bancário & TEF",
+      "event": "CONCILIACAO_EXECUTADA_D0",
+      "statusCode": 200,
+      "latencyMs": 18,
+      "payload": {
+        "totalVendasPdv": 3421.5599999999995,
+        "repassesLiquidos": 3372.9738479999996,
+        "divergencias": 0,
+        "status": "100% CONCILIADO",
+        "bancosSincronizados": [
+          "Sicredi MT",
+          "Sicoob MT",
+          "Banco do Brasil",
+          "Itaú"
+        ],
+        "timestamp": "2026-11-23T13:45:17.713Z"
+      },
+      "timestamp": "2026-11-23T13:45:17.714Z"
+    },
+    {
+      "id": "wh_1795441517704_0lhfx",
+      "source": "Google Reviews API",
+      "event": "REVIEW_REPLY_PUBLISHED",
+      "statusCode": 200,
+      "latencyMs": 28,
+      "payload": {
+        "reviewId": "rev_03",
+        "replyText": "Obrigado pela sua avaliação! Nossa equipe preza pela máxima qualidade no sashimi de salmão.",
+        "author": "Marcos Vinicius Rezende",
+        "publishedAt": "2026-11-23T13:45:17.704Z"
+      },
+      "timestamp": "2026-11-23T13:45:17.704Z"
+    },
+    {
+      "id": "wh_1795441517696_zrmvn",
+      "source": "Google Workspace & Cloud",
+      "event": "GOOGLE_EXPORT_SHEETS_DRE",
+      "statusCode": 200,
+      "latencyMs": 38,
+      "payload": {
+        "type": "sheets_dre",
+        "status": "SUCCESS",
+        "timestamp": "2026-11-23T13:45:17.696Z",
+        "durationMs": 0
+      },
+      "timestamp": "2026-11-23T13:45:17.696Z"
+    },
     {
       "id": "wh_1795395408804_hv6qq",
       "source": "Sicredi Pix MT",
@@ -4840,810 +5656,207 @@
         }
       },
       "timestamp": "2026-11-22T20:37:55.907Z"
-    },
-    {
-      "id": "wh_1795379875835_vwt5v",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [LOTE_CONTINGENCIA_SINCRONIZADO]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379875835_s2e5",
-        "summary": "Lote de 2 NFC-e emitidas em contingência transmitido e homologado na SEFAZ-MT!",
-        "checksum": "sha256_1a204facffb_08cc8d",
-        "payload": {
-          "totalNotas": 2,
-          "protocols": {
-            "nfce_1795379875797_4910": "1512600118067",
-            "nfce_1795379875764_4909": "1512600830994"
-          }
-        }
-      },
-      "timestamp": "2026-11-22T20:37:55.835Z"
-    },
-    {
-      "id": "wh_1795379875803_khvi3",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [NFCE_CONTINGENCIA_OFFLINE_GERADA]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379875803_e5ds",
-        "summary": "NFC-e #4910 emitida em CONTINGÊNCIA OFFLINE (Chave: 512611362968...)",
-        "checksum": "sha256_1a204facfdb_520ee0",
-        "payload": {
-          "nfcNumber": 4910,
-          "chaveAcesso": "51261136296848000157650010000049109154830909",
-          "tipoEmissao": "contingencia_offline",
-          "total": 65
-        }
-      },
-      "timestamp": "2026-11-22T20:37:55.803Z"
-    },
-    {
-      "id": "wh_1795379875769_7i6cv",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [NFCE_CONTINGENCIA_OFFLINE_GERADA]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379875769_s2xj",
-        "summary": "NFC-e #4909 emitida em CONTINGÊNCIA OFFLINE (Chave: 512611362968...)",
-        "checksum": "sha256_1a204facfb9_332531",
-        "payload": {
-          "nfcNumber": 4909,
-          "chaveAcesso": "51261136296848000157650010000049099865247225",
-          "tipoEmissao": "contingencia_offline",
-          "total": 95
-        }
-      },
-      "timestamp": "2026-11-22T20:37:55.769Z"
-    },
-    {
-      "id": "wh_1795379875735_3jqtb",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [NFCE_AUTORIZADA_SEFAZ]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379875735_79vv",
-        "summary": "NFC-e #4908 AUTORIZADA pela SEFAZ-MT (R$ 189,90)",
-        "checksum": "sha256_1a204facf97_d26f32",
-        "payload": {
-          "nfcNumber": 4908,
-          "chaveAcesso": "51261136296848000157650010000049081477285470",
-          "tipoEmissao": "normal",
-          "total": 189.9
-        }
-      },
-      "timestamp": "2026-11-22T20:37:55.735Z"
-    },
-    {
-      "id": "wh_1795379875693_d3q5o",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PILOT -> ESTOQUE_CENTRAL [ESTOQUE_BAIXA_FICHA_TECNICA]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379875693_s07g",
-        "summary": "Baixa de estoque por ficha técnica: 2x Barco Zuma Nobre 40 Peças (CMV: R$ 90,96)",
-        "checksum": "sha256_1a204facf6d_5d9a73",
-        "payload": {
-          "dishName": "Barco Zuma Nobre 40 Peças",
-          "quantity": 2,
-          "totalCost": 90.96000000000001,
-          "origin": "KDS Expedição",
-          "ingredientsDeducted": [
-            {
-              "code": "SALM-01",
-              "name": "Salmão fresco nobre",
-              "quantity": 0.76,
-              "unit": "kg",
-              "cost": 52.06
-            },
-            {
-              "code": "ATUM-01",
-              "name": "Atum fresco Maguro",
-              "quantity": 0.16,
-              "unit": "kg",
-              "cost": 12.64
-            },
-            {
-              "code": "ARR-01",
-              "name": "Arroz japonês cozido",
-              "quantity": 0.96,
-              "unit": "kg",
-              "cost": 9.4
-            },
-            {
-              "code": "NORI-01",
-              "name": "Alga nori",
-              "quantity": 9,
-              "unit": "folhas",
-              "cost": 4.96
-            },
-            {
-              "code": "CRM-01",
-              "name": "Cream cheese Philadelphia",
-              "quantity": 0.14,
-              "unit": "kg",
-              "cost": 4.7
-            },
-            {
-              "code": "EMB-COMB",
-              "name": "Embalagem Barco Luxo",
-              "quantity": 2,
-              "unit": "un",
-              "cost": 5
-            },
-            {
-              "code": "EMB-HASHI",
-              "name": "Hashi embalado",
-              "quantity": 4,
-              "unit": "pares",
-              "cost": 1
-            },
-            {
-              "code": "SHOY-01",
-              "name": "Shoyu tradicional",
-              "quantity": 0.1,
-              "unit": "L",
-              "cost": 1.2
-            }
-          ]
-        }
-      },
-      "timestamp": "2026-11-22T20:37:55.693Z"
-    },
-    {
-      "id": "wh_1795379667328_8mz66",
-      "source": "UltraSync Internal Event Bus",
-      "event": "NOSSA_GENTE -> ULTRA_SISTEMA [COLABORADOR_ENTRADA_DETECTADA]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379667328_zlnh",
-        "summary": "Reconhecimento facial com 99.4% de confiança.",
-        "collaborator": "Takeshi Sato",
-        "checksum": "sha256_1a204f7a180_d03436",
-        "payload": {
-          "camera": "CAM-01 (Entrada Cozinha)",
-          "timestamp": "2026-11-22T20:34:27.328Z"
-        }
-      },
-      "timestamp": "2026-11-22T20:34:27.328Z"
-    },
-    {
-      "id": "wh_1795379667323_fbvou",
-      "source": "Nossa Gente RH PubSub",
-      "event": "COLABORADOR_ENTRADA_DETECTADA",
-      "statusCode": 200,
-      "latencyMs": 2,
-      "payload": {
-        "collaborator": "Takeshi Sato",
-        "category": "Ponto Eletrônico",
-        "notes": "Reconhecimento facial com 99.4% de confiança.",
-        "timestamp": "2026-11-22T20:34:27.323Z"
-      },
-      "timestamp": "2026-11-22T20:34:27.323Z"
-    },
-    {
-      "id": "wh_1795379667305_6e9nb",
-      "source": "Saipos Bridge",
-      "event": "SAIPOS_CATALOG_IMPORTED",
-      "statusCode": 200,
-      "latencyMs": 45,
-      "payload": {
-        "count": 1,
-        "operator": "Auditor",
-        "timestamp": "2026-11-22T20:34:27.305Z"
-      },
-      "timestamp": "2026-11-22T20:34:27.305Z"
-    },
-    {
-      "id": "wh_1795379667294_ztkps",
-      "source": "Saipos Bridge",
-      "event": "SAIPOS_SYNC_COMPLETED",
-      "statusCode": 200,
-      "latencyMs": 38,
-      "payload": {
-        "syncId": "sync_1795379667294",
-        "skus": 123,
-        "ordersAdded": 9,
-        "revenueAdded": 884.12,
-        "operator": "Teste Automatizado",
-        "timestamp": "2026-11-22T20:34:27.294Z"
-      },
-      "timestamp": "2026-11-22T20:34:27.294Z"
-    },
-    {
-      "id": "wh_1795379667281_c7iyc",
-      "source": "Saipos Bridge",
-      "event": "SAIPOS_SYNC_COMPLETED",
-      "statusCode": 200,
-      "latencyMs": 38,
-      "payload": {
-        "syncId": "sync_1795379667281",
-        "skus": 123,
-        "ordersAdded": 12,
-        "revenueAdded": 1126.13,
-        "operator": "Sincronizador Automático",
-        "timestamp": "2026-11-22T20:34:27.259Z"
-      },
-      "timestamp": "2026-11-22T20:34:27.281Z"
-    },
-    {
-      "id": "wh_1795379667250_93o8x",
-      "source": "SEFAZ-MT NFC-e",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 25,
-      "payload": {
-        "channel": "SEFAZ-MT NFC-e",
-        "syncedAt": "2026-11-22T20:34:27.249Z",
-        "autorizador": "SEFAZ-MT Cuiabá",
-        "modelo": 65,
-        "status": "100 - Autorizado"
-      },
-      "timestamp": "2026-11-22T20:34:27.250Z"
-    },
-    {
-      "id": "wh_1795379667241_e3if3",
-      "source": "Sicredi Pix MT",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 12,
-      "payload": {
-        "channel": "Sicredi Pix MT",
-        "syncedAt": "2026-11-22T20:34:27.240Z",
-        "cooperativa": "Sicredi União MT/PA",
-        "tarifa": "R$ 0,00"
-      },
-      "timestamp": "2026-11-22T20:34:27.241Z"
-    },
-    {
-      "id": "wh_1795379667231_zfqqf",
-      "source": "Open Delivery Abrasel",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 27,
-      "payload": {
-        "channel": "Open Delivery Abrasel",
-        "syncedAt": "2026-11-22T20:34:27.231Z",
-        "standard": "Open Delivery v1.0",
-        "channels": [
-          "Aiqfome Tangará",
-          "99Food MT"
-        ]
-      },
-      "timestamp": "2026-11-22T20:34:27.231Z"
-    },
-    {
-      "id": "wh_1795379667216_u04o9",
-      "source": "WAHA WhatsApp",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 14,
-      "payload": {
-        "channel": "WAHA WhatsApp",
-        "syncedAt": "2026-11-22T20:34:27.216Z",
-        "session": "default",
-        "phone": "+55 (65) 99645-8910",
-        "status": "WORKING"
-      },
-      "timestamp": "2026-11-22T20:34:27.216Z"
-    },
-    {
-      "id": "wh_1795379667206_058eg",
-      "source": "Keeto POS",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 22,
-      "payload": {
-        "channel": "Keeto POS",
-        "syncedAt": "2026-11-22T20:34:27.206Z",
-        "tables": 16,
-        "waiters": 4
-      },
-      "timestamp": "2026-11-22T20:34:27.206Z"
-    },
-    {
-      "id": "wh_1795379667196_6jnwb",
-      "source": "iFood Merchant v2",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 38,
-      "payload": {
-        "channel": "iFood Merchant v2",
-        "syncedAt": "2026-11-22T20:34:27.196Z",
-        "catalogSkus": 123,
-        "merchantStatus": "ABERTO",
-        "merchantId": "83921-zuma-tga"
-      },
-      "timestamp": "2026-11-22T20:34:27.196Z"
-    },
-    {
-      "id": "wh_1795379667184_8ikg3",
-      "source": "WAHA",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 14,
-      "payload": {
-        "channel": "WAHA",
-        "syncedAt": "2026-11-22T20:34:27.184Z",
-        "session": "default",
-        "phone": "+55 (65) 99645-8910",
-        "status": "WORKING"
-      },
-      "timestamp": "2026-11-22T20:34:27.184Z"
-    },
-    {
-      "id": "wh_1795379667175_7ydyk",
-      "source": "iFood",
-      "event": "CONNECTION_TEST_PASSED",
-      "statusCode": 200,
-      "latencyMs": 34,
-      "payload": {
-        "channel": "iFood",
-        "status": "HEALTHY",
-        "latency": 34,
-        "protocol": "OAuth 2.0 / HTTPS TLS 1.3",
-        "message": "Conexão com iFood Merchant API v2 ativa. Loja ABERTA.",
-        "timestamp": "2026-11-22T20:34:27.175Z"
-      },
-      "timestamp": "2026-11-22T20:34:27.175Z"
-    },
-    {
-      "id": "wh_1795379667163_vlu9s",
-      "source": "ifood",
-      "event": "CREDENTIALS_UPDATED",
-      "statusCode": 200,
-      "latencyMs": 15,
-      "payload": {
-        "channel": "ifood",
-        "updatedFields": [
-          "clientId",
-          "merchantId"
-        ],
-        "updatedAt": "2026-11-22T20:34:27.163Z"
-      },
-      "timestamp": "2026-11-22T20:34:27.164Z"
-    },
-    {
-      "id": "wh_1795379665926_ta71p",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PWA_CLIENTE -> KDS_COZINHA [PEDIDO_MESA_CLIENTE_QRCODE]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379665926_m1uy",
-        "summary": "Autoatendimento: Família Silva QR Code lançou 2 pratos na Mesa 9",
-        "checksum": "sha256_1a204f79c06_8c5e73",
-        "payload": {
-          "tableNumber": 9,
-          "customerName": "Família Silva QR Code",
-          "items": [
-            {
-              "itemName": "Barca Zuma Premium (42 peças)",
-              "quantity": 1,
-              "unitPrice": 189.9,
-              "station": "sushibar"
-            },
-            {
-              "itemName": "Guioza Suíno Artesanal no Vapor (6 un)",
-              "quantity": 2,
-              "unitPrice": 29.9,
-              "station": "cozinha_quente"
-            }
-          ]
-        }
-      },
-      "timestamp": "2026-11-22T20:34:25.926Z"
-    },
-    {
-      "id": "wh_1795379665855_jlzwd",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [LOTE_CONTINGENCIA_SINCRONIZADO]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379665855_kcek",
-        "summary": "Lote de 2 NFC-e emitidas em contingência transmitido e homologado na SEFAZ-MT!",
-        "checksum": "sha256_1a204f79bbf_e9b88c",
-        "payload": {
-          "totalNotas": 2,
-          "protocols": {
-            "nfce_1795379665817_4907": "1512600490746",
-            "nfce_1795379665783_4906": "1512600889718"
-          }
-        }
-      },
-      "timestamp": "2026-11-22T20:34:25.855Z"
-    },
-    {
-      "id": "wh_1795379665822_4b2t7",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [NFCE_CONTINGENCIA_OFFLINE_GERADA]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379665822_ii6b",
-        "summary": "NFC-e #4907 emitida em CONTINGÊNCIA OFFLINE (Chave: 512611362968...)",
-        "checksum": "sha256_1a204f79b9e_3dca44",
-        "payload": {
-          "nfcNumber": 4907,
-          "chaveAcesso": "51261136296848000157650010000049079930640912",
-          "tipoEmissao": "contingencia_offline",
-          "total": 65
-        }
-      },
-      "timestamp": "2026-11-22T20:34:25.822Z"
-    },
-    {
-      "id": "wh_1795379665789_th69f",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [NFCE_CONTINGENCIA_OFFLINE_GERADA]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379665788_zspw",
-        "summary": "NFC-e #4906 emitida em CONTINGÊNCIA OFFLINE (Chave: 512611362968...)",
-        "checksum": "sha256_1a204f79b7d_4ac7bd",
-        "payload": {
-          "nfcNumber": 4906,
-          "chaveAcesso": "51261136296848000157650010000049069101774742",
-          "tipoEmissao": "contingencia_offline",
-          "total": 95
-        }
-      },
-      "timestamp": "2026-11-22T20:34:25.789Z"
-    },
-    {
-      "id": "wh_1795379665754_iqo9p",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PILOT -> SEFAZ_MT_RECEITA [NFCE_AUTORIZADA_SEFAZ]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379665754_d92n",
-        "summary": "NFC-e #4905 AUTORIZADA pela SEFAZ-MT (R$ 189,90)",
-        "checksum": "sha256_1a204f79b5a_4bc3bc",
-        "payload": {
-          "nfcNumber": 4905,
-          "chaveAcesso": "51261136296848000157650010000049051700457431",
-          "tipoEmissao": "normal",
-          "total": 189.9
-        }
-      },
-      "timestamp": "2026-11-22T20:34:25.754Z"
-    },
-    {
-      "id": "wh_1795379665712_7ks84",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PILOT -> ESTOQUE_CENTRAL [ESTOQUE_BAIXA_FICHA_TECNICA]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795379665712_xd9j",
-        "summary": "Baixa de estoque por ficha técnica: 2x Barco Zuma Nobre 40 Peças (CMV: R$ 90,96)",
-        "checksum": "sha256_1a204f79b30_20b34e",
-        "payload": {
-          "dishName": "Barco Zuma Nobre 40 Peças",
-          "quantity": 2,
-          "totalCost": 90.96000000000001,
-          "origin": "KDS Expedição",
-          "ingredientsDeducted": [
-            {
-              "code": "SALM-01",
-              "name": "Salmão fresco nobre",
-              "quantity": 0.76,
-              "unit": "kg",
-              "cost": 52.06
-            },
-            {
-              "code": "ATUM-01",
-              "name": "Atum fresco Maguro",
-              "quantity": 0.16,
-              "unit": "kg",
-              "cost": 12.64
-            },
-            {
-              "code": "ARR-01",
-              "name": "Arroz japonês cozido",
-              "quantity": 0.96,
-              "unit": "kg",
-              "cost": 9.4
-            },
-            {
-              "code": "NORI-01",
-              "name": "Alga nori",
-              "quantity": 9,
-              "unit": "folhas",
-              "cost": 4.96
-            },
-            {
-              "code": "CRM-01",
-              "name": "Cream cheese Philadelphia",
-              "quantity": 0.14,
-              "unit": "kg",
-              "cost": 4.7
-            },
-            {
-              "code": "EMB-COMB",
-              "name": "Embalagem Barco Luxo",
-              "quantity": 2,
-              "unit": "un",
-              "cost": 5
-            },
-            {
-              "code": "EMB-HASHI",
-              "name": "Hashi embalado",
-              "quantity": 4,
-              "unit": "pares",
-              "cost": 1
-            },
-            {
-              "code": "SHOY-01",
-              "name": "Shoyu tradicional",
-              "quantity": 0.1,
-              "unit": "L",
-              "cost": 1.2
-            }
-          ]
-        }
-      },
-      "timestamp": "2026-11-22T20:34:25.712Z"
-    },
-    {
-      "id": "wh_1795376342287_qr56z",
-      "source": "UltraSync Internal Event Bus",
-      "event": "NOSSA_GENTE -> ULTRA_SISTEMA [COLABORADOR_ENTRADA_DETECTADA]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795376342287_fgeh",
-        "summary": "Reconhecimento facial com 99.4% de confiança.",
-        "collaborator": "Takeshi Sato",
-        "checksum": "sha256_1a204c4e50f_4d7c4f",
-        "payload": {
-          "camera": "CAM-01 (Entrada Cozinha)",
-          "timestamp": "2026-11-22T19:39:02.287Z"
-        }
-      },
-      "timestamp": "2026-11-22T19:39:02.287Z"
-    },
-    {
-      "id": "wh_1795376342282_u9jmd",
-      "source": "Nossa Gente RH PubSub",
-      "event": "COLABORADOR_ENTRADA_DETECTADA",
-      "statusCode": 200,
-      "latencyMs": 2,
-      "payload": {
-        "collaborator": "Takeshi Sato",
-        "category": "Ponto Eletrônico",
-        "notes": "Reconhecimento facial com 99.4% de confiança.",
-        "timestamp": "2026-11-22T19:39:02.282Z"
-      },
-      "timestamp": "2026-11-22T19:39:02.282Z"
-    },
-    {
-      "id": "wh_1795376342263_ryx6a",
-      "source": "Saipos Bridge",
-      "event": "SAIPOS_CATALOG_IMPORTED",
-      "statusCode": 200,
-      "latencyMs": 45,
-      "payload": {
-        "count": 1,
-        "operator": "Auditor",
-        "timestamp": "2026-11-22T19:39:02.263Z"
-      },
-      "timestamp": "2026-11-22T19:39:02.263Z"
-    },
-    {
-      "id": "wh_1795376342252_nw2m4",
-      "source": "Saipos Bridge",
-      "event": "SAIPOS_SYNC_COMPLETED",
-      "statusCode": 200,
-      "latencyMs": 38,
-      "payload": {
-        "syncId": "sync_1795376342252",
-        "skus": 123,
-        "ordersAdded": 8,
-        "revenueAdded": 731.69,
-        "operator": "Teste Automatizado",
-        "timestamp": "2026-11-22T19:39:02.251Z"
-      },
-      "timestamp": "2026-11-22T19:39:02.252Z"
-    },
-    {
-      "id": "wh_1795376342239_8fh38",
-      "source": "Saipos Bridge",
-      "event": "SAIPOS_SYNC_COMPLETED",
-      "statusCode": 200,
-      "latencyMs": 38,
-      "payload": {
-        "syncId": "sync_1795376342239",
-        "skus": 123,
-        "ordersAdded": 12,
-        "revenueAdded": 1084.8,
-        "operator": "Sincronizador Automático",
-        "timestamp": "2026-11-22T19:39:02.217Z"
-      },
-      "timestamp": "2026-11-22T19:39:02.239Z"
-    },
-    {
-      "id": "wh_1795376342207_zn56j",
-      "source": "SEFAZ-MT NFC-e",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 25,
-      "payload": {
-        "channel": "SEFAZ-MT NFC-e",
-        "syncedAt": "2026-11-22T19:39:02.207Z",
-        "autorizador": "SEFAZ-MT Cuiabá",
-        "modelo": 65,
-        "status": "100 - Autorizado"
-      },
-      "timestamp": "2026-11-22T19:39:02.207Z"
-    },
-    {
-      "id": "wh_1795376342198_v66xx",
-      "source": "Sicredi Pix MT",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 12,
-      "payload": {
-        "channel": "Sicredi Pix MT",
-        "syncedAt": "2026-11-22T19:39:02.198Z",
-        "cooperativa": "Sicredi União MT/PA",
-        "tarifa": "R$ 0,00"
-      },
-      "timestamp": "2026-11-22T19:39:02.198Z"
-    },
-    {
-      "id": "wh_1795376342189_j5yf3",
-      "source": "Open Delivery Abrasel",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 27,
-      "payload": {
-        "channel": "Open Delivery Abrasel",
-        "syncedAt": "2026-11-22T19:39:02.189Z",
-        "standard": "Open Delivery v1.0",
-        "channels": [
-          "Aiqfome Tangará",
-          "99Food MT"
-        ]
-      },
-      "timestamp": "2026-11-22T19:39:02.189Z"
-    },
-    {
-      "id": "wh_1795376342169_n969s",
-      "source": "WAHA WhatsApp",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 14,
-      "payload": {
-        "channel": "WAHA WhatsApp",
-        "syncedAt": "2026-11-22T19:39:02.169Z",
-        "session": "default",
-        "phone": "+55 (65) 99645-8910",
-        "status": "WORKING"
-      },
-      "timestamp": "2026-11-22T19:39:02.169Z"
-    },
-    {
-      "id": "wh_1795376342159_zisxb",
-      "source": "Keeto POS",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 22,
-      "payload": {
-        "channel": "Keeto POS",
-        "syncedAt": "2026-11-22T19:39:02.159Z",
-        "tables": 16,
-        "waiters": 4
-      },
-      "timestamp": "2026-11-22T19:39:02.160Z"
-    },
-    {
-      "id": "wh_1795376342150_2fa3a",
-      "source": "iFood Merchant v2",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 38,
-      "payload": {
-        "channel": "iFood Merchant v2",
-        "syncedAt": "2026-11-22T19:39:02.149Z",
-        "catalogSkus": 123,
-        "merchantStatus": "ABERTO",
-        "merchantId": "83921-zuma-tga"
-      },
-      "timestamp": "2026-11-22T19:39:02.150Z"
-    },
-    {
-      "id": "wh_1795376342138_opaf1",
-      "source": "WAHA",
-      "event": "MANUAL_SYNC_TRIGGERED",
-      "statusCode": 200,
-      "latencyMs": 14,
-      "payload": {
-        "channel": "WAHA",
-        "syncedAt": "2026-11-22T19:39:02.138Z",
-        "session": "default",
-        "phone": "+55 (65) 99645-8910",
-        "status": "WORKING"
-      },
-      "timestamp": "2026-11-22T19:39:02.138Z"
-    },
-    {
-      "id": "wh_1795376342131_8o02f",
-      "source": "iFood",
-      "event": "CONNECTION_TEST_PASSED",
-      "statusCode": 200,
-      "latencyMs": 34,
-      "payload": {
-        "channel": "iFood",
-        "status": "HEALTHY",
-        "latency": 34,
-        "protocol": "OAuth 2.0 / HTTPS TLS 1.3",
-        "message": "Conexão com iFood Merchant API v2 ativa. Loja ABERTA.",
-        "timestamp": "2026-11-22T19:39:02.131Z"
-      },
-      "timestamp": "2026-11-22T19:39:02.131Z"
-    },
-    {
-      "id": "wh_1795376342119_6ea7p",
-      "source": "ifood",
-      "event": "CREDENTIALS_UPDATED",
-      "statusCode": 200,
-      "latencyMs": 15,
-      "payload": {
-        "channel": "ifood",
-        "updatedFields": [
-          "clientId",
-          "merchantId"
-        ],
-        "updatedAt": "2026-11-22T19:39:02.119Z"
-      },
-      "timestamp": "2026-11-22T19:39:02.119Z"
-    },
-    {
-      "id": "wh_1795376340798_0lbon",
-      "source": "UltraSync Internal Event Bus",
-      "event": "ZUMA_PWA_CLIENTE -> KDS_COZINHA [PEDIDO_MESA_CLIENTE_QRCODE]",
-      "statusCode": 200,
-      "latencyMs": 3,
-      "payload": {
-        "eventId": "evt_1795376340798_2oi7",
-        "summary": "Autoatendimento: Família Silva QR Code lançou 2 pratos na Mesa 9",
-        "checksum": "sha256_1a204c4df3e_6742ef",
-        "payload": {
-          "tableNumber": 9,
-          "customerName": "Família Silva QR Code",
-          "items": [
-            {
-              "itemName": "Barca Zuma Premium (42 peças)",
-              "quantity": 1,
-              "unitPrice": 189.9,
-              "station": "sushibar"
-            },
-            {
-              "itemName": "Guioza Suíno Artesanal no Vapor (6 un)",
-              "quantity": 2,
-              "unitPrice": 29.9,
-              "station": "cozinha_quente"
-            }
-          ]
-        }
-      },
-      "timestamp": "2026-11-22T19:39:00.798Z"
     }
   ],
   "cashRegisters": [
     {
-      "id": "cx_mwsihbyn",
+      "id": "cx_mwtbiwzo",
       "status": "aberto",
+      "openedAt": "2026-11-23T13:45:22.308Z",
+      "operator": "Frente de Caixa Balcão",
+      "initialCash": 250,
+      "cashIn": 250,
+      "cashOut": 0,
+      "totalsByMethod": {
+        "dinheiro": 0,
+        "pix": 140.8,
+        "credito": 0,
+        "debito": 0,
+        "apple_pay": 0
+      },
+      "movements": [
+        {
+          "id": "mov_1795441522308",
+          "type": "suprimento",
+          "amount": 250,
+          "reason": "Fundo de troco inicial de abertura de caixa",
+          "timestamp": "2026-11-23T13:45:22.308Z",
+          "operator": "Frente de Caixa Balcão"
+        }
+      ]
+    },
+    {
+      "id": "cx_mwtbiuzb",
+      "status": "fechado",
+      "openedAt": "2026-11-23T13:45:19.703Z",
+      "operator": "Mariana (Frente de Caixa Balcão)",
+      "initialCash": 250,
+      "cashIn": 250,
+      "cashOut": 0,
+      "totalsByMethod": {
+        "dinheiro": 0,
+        "pix": 0,
+        "credito": 0,
+        "debito": 0,
+        "apple_pay": 0
+      },
+      "movements": [
+        {
+          "id": "mov_1795441519703",
+          "type": "suprimento",
+          "amount": 250,
+          "reason": "Fundo de troco inicial de abertura de caixa",
+          "timestamp": "2026-11-23T13:45:19.703Z",
+          "operator": "Mariana (Frente de Caixa Balcão)"
+        }
+      ],
+      "closedAt": "2026-11-23T13:45:22.308Z"
+    },
+    {
+      "id": "cx_mwtbiuy2",
+      "status": "fechado",
+      "openedAt": "2026-11-23T13:45:19.658Z",
+      "operator": "Mariana (Frente de Caixa)",
+      "initialCash": 250,
+      "cashIn": 250,
+      "cashOut": 0,
+      "totalsByMethod": {
+        "dinheiro": 0,
+        "pix": 0,
+        "credito": 0,
+        "debito": 0,
+        "apple_pay": 0
+      },
+      "movements": [
+        {
+          "id": "mov_1795441519658",
+          "type": "suprimento",
+          "amount": 250,
+          "reason": "Fundo de troco inicial de abertura de caixa",
+          "timestamp": "2026-11-23T13:45:19.658Z",
+          "operator": "Mariana (Frente de Caixa Balcão)"
+        }
+      ],
+      "closedAt": "2026-11-23T13:45:19.703Z"
+    },
+    {
+      "id": "cx_mwtbiuwy",
+      "status": "fechado",
+      "openedAt": "2026-11-23T13:45:19.618Z",
+      "operator": "Mariana (Frente de Caixa Balcão)",
+      "initialCash": 250,
+      "cashIn": 250,
+      "cashOut": 0,
+      "totalsByMethod": {
+        "dinheiro": 0,
+        "pix": 0,
+        "credito": 0,
+        "debito": 0,
+        "apple_pay": 0
+      },
+      "movements": [
+        {
+          "id": "mov_1795441519618",
+          "type": "suprimento",
+          "amount": 250,
+          "reason": "Fundo de troco inicial de abertura de caixa",
+          "timestamp": "2026-11-23T13:45:19.618Z",
+          "operator": "Mariana (Frente de Caixa Balcão)"
+        }
+      ],
+      "breakageAdjustment": {
+        "adjustedAt": "2026-11-23T13:45:19.645Z",
+        "type": "sobra",
+        "amount": 8,
+        "reason": "Sobra de moedas não reclamada por clientes no turno",
+        "supervisor": "Rodrigo R. Gonçalves (Supervisor)"
+      },
+      "closedAt": "2026-11-23T13:45:19.658Z"
+    },
+    {
+      "id": "cx_mwtbiuv8",
+      "status": "fechado",
+      "openedAt": "2026-11-23T13:45:19.556Z",
+      "operator": "Mariana (Frente de Caixa Balcão)",
+      "initialCash": 250,
+      "cashIn": 250,
+      "cashOut": 0,
+      "totalsByMethod": {
+        "dinheiro": 0,
+        "pix": 0,
+        "credito": 0,
+        "debito": 0,
+        "apple_pay": 0
+      },
+      "movements": [
+        {
+          "id": "mov_1795441519557",
+          "type": "suprimento",
+          "amount": 250,
+          "reason": "Fundo de troco inicial de abertura de caixa",
+          "timestamp": "2026-11-23T13:45:19.557Z",
+          "operator": "Mariana (Frente de Caixa Balcão)"
+        }
+      ],
+      "closedAt": "2026-11-23T13:45:19.618Z"
+    },
+    {
+      "id": "cx_mwtbiutq",
+      "status": "fechado",
+      "openedAt": "2026-11-23T13:45:19.502Z",
+      "operator": "Mariana (Frente de Caixa Balcão)",
+      "initialCash": 250,
+      "cashIn": 250,
+      "cashOut": 0,
+      "totalsByMethod": {
+        "dinheiro": 0,
+        "pix": 0,
+        "credito": 150,
+        "debito": 0,
+        "apple_pay": 0
+      },
+      "movements": [
+        {
+          "id": "mov_1795441519502",
+          "type": "suprimento",
+          "amount": 250,
+          "reason": "Fundo de troco inicial de abertura de caixa",
+          "timestamp": "2026-11-23T13:45:19.502Z",
+          "operator": "Mariana (Frente de Caixa Balcão)"
+        }
+      ],
+      "closedAt": "2026-11-23T13:45:19.557Z"
+    },
+    {
+      "id": "cx_mwtbiut1",
+      "status": "fechado",
+      "openedAt": "2026-11-23T13:45:19.477Z",
+      "operator": "Mariana (Frente de Caixa Balcão)",
+      "initialCash": 250,
+      "cashIn": 250,
+      "cashOut": 0,
+      "totalsByMethod": {
+        "dinheiro": 0,
+        "pix": 0,
+        "credito": 0,
+        "debito": 0,
+        "apple_pay": 0
+      },
+      "movements": [
+        {
+          "id": "mov_1795441519477",
+          "type": "suprimento",
+          "amount": 250,
+          "reason": "Fundo de troco inicial de abertura de caixa",
+          "timestamp": "2026-11-23T13:45:19.477Z",
+          "operator": "Mariana (Frente de Caixa Balcão)"
+        }
+      ],
+      "closedAt": "2026-11-23T13:45:19.502Z"
+    },
+    {
+      "id": "cx_mwsihbyn",
+      "status": "fechado",
       "openedAt": "2026-11-23T00:12:19.535Z",
       "operator": "Frente de Caixa Balcão",
       "initialCash": 250,
@@ -5665,7 +5878,8 @@
           "timestamp": "2026-11-23T00:12:19.535Z",
           "operator": "Frente de Caixa Balcão"
         }
-      ]
+      ],
+      "closedAt": "2026-11-23T13:45:19.477Z"
     },
     {
       "id": "cx_mwsihb9t",
@@ -7030,11 +7244,33 @@
           "adicionais": [],
           "observacoes": "",
           "status": "em_preparo"
+        },
+        {
+          "id": "it_1795441520796_ce9m",
+          "itemName": "Barca Zuma Premium (42 peças)",
+          "quantity": 1,
+          "unitPrice": 189.9,
+          "orderedAt": "2026-11-23T13:45:20.796Z",
+          "station": "sushibar",
+          "adicionais": [],
+          "observacoes": "",
+          "status": "em_preparo"
+        },
+        {
+          "id": "it_1795441520810_d19y",
+          "itemName": "Guioza Suíno Artesanal no Vapor (6 un)",
+          "quantity": 2,
+          "unitPrice": 29.9,
+          "orderedAt": "2026-11-23T13:45:20.810Z",
+          "station": "cozinha_quente",
+          "adicionais": [],
+          "observacoes": "",
+          "status": "em_preparo"
         }
       ],
-      "subtotal": 6492.200000000001,
+      "subtotal": 6741.900000000001,
       "serviceFeePercent": 10,
-      "total": 7141.42,
+      "total": 7416.09,
       "openedAt": "2026-11-22T17:29:24.214Z",
       "customerCount": 2,
       "customerName": "Família Silva QR Code",
@@ -7042,8 +7278,8 @@
       "discountAmount": 0,
       "expeditionChecked": false,
       "splitCount": 2,
-      "splitPerPerson": 3570.71,
-      "kdsSentAt": "2026-11-23T00:56:48.086Z"
+      "splitPerPerson": 3708.05,
+      "kdsSentAt": "2026-11-23T13:45:20.825Z"
     },
     {
       "tableNumber": 15,
@@ -7156,6 +7392,17 @@
       "completedToday": 0,
       "accumulatedDeliveryFees": 0,
       "shiftSettled": false
+    },
+    {
+      "id": "moto_1795441580821",
+      "name": "Rodrigo Piloto Tangará",
+      "phone": "(65) 99988-7766",
+      "plate": "MT-ZUM2026 (Honda Sahara 300)",
+      "status": "disponivel",
+      "currentOrdersCount": 0,
+      "completedToday": 0,
+      "accumulatedDeliveryFees": 0,
+      "shiftSettled": false
     }
   ],
   "autoAcceptConfig": {
@@ -7175,7 +7422,7 @@
       "conversionFactor": 1,
       "yieldPercent": 58,
       "lossPercent": 42,
-      "currentStock": 443.4,
+      "currentStock": 442.09,
       "minStock": 45,
       "unitCost": 68.5,
       "idealLot": 180,
@@ -7194,7 +7441,7 @@
       "conversionFactor": 1,
       "yieldPercent": 88,
       "lossPercent": 12,
-      "currentStock": 4.2,
+      "currentStock": 4.04,
       "minStock": 10,
       "unitCost": 79,
       "idealLot": 25,
@@ -7251,7 +7498,7 @@
       "conversionFactor": 25,
       "yieldPercent": 220,
       "lossPercent": 0,
-      "currentStock": 40.76,
+      "currentStock": 39.68,
       "minStock": 60,
       "unitCost": 9.8,
       "idealLot": 150,
@@ -7270,7 +7517,7 @@
       "conversionFactor": 500,
       "yieldPercent": 99,
       "lossPercent": 1,
-      "currentStock": 222,
+      "currentStock": 211.5,
       "minStock": 500,
       "unitCost": 0.55,
       "idealLot": 1500,
@@ -7289,7 +7536,7 @@
       "conversionFactor": 3.6,
       "yieldPercent": 98,
       "lossPercent": 2,
-      "currentStock": 8.34,
+      "currentStock": 8.12,
       "minStock": 15,
       "unitCost": 33.5,
       "idealLot": 36,
@@ -7308,7 +7555,7 @@
       "conversionFactor": 20,
       "yieldPercent": 100,
       "lossPercent": 0,
-      "currentStock": 32.5,
+      "currentStock": 32.4,
       "minStock": 40,
       "unitCost": 12,
       "idealLot": 80,
@@ -7327,7 +7574,7 @@
       "conversionFactor": 20,
       "yieldPercent": 90,
       "lossPercent": 10,
-      "currentStock": 24.8,
+      "currentStock": 24.7,
       "minStock": 30,
       "unitCost": 8.9,
       "idealLot": 60,
@@ -7346,7 +7593,7 @@
       "conversionFactor": 10,
       "yieldPercent": 95,
       "lossPercent": 5,
-      "currentStock": 13.88,
+      "currentStock": 13.82,
       "minStock": 15,
       "unitCost": 19.5,
       "idealLot": 40,
@@ -7422,7 +7669,7 @@
       "conversionFactor": 100,
       "yieldPercent": 100,
       "lossPercent": 0,
-      "currentStock": 170,
+      "currentStock": 168,
       "minStock": 300,
       "unitCost": 1.95,
       "idealLot": 800,
@@ -7441,7 +7688,7 @@
       "conversionFactor": 1000,
       "yieldPercent": 100,
       "lossPercent": 0,
-      "currentStock": 750,
+      "currentStock": 746,
       "minStock": 1000,
       "unitCost": 0.25,
       "idealLot": 3000,
@@ -8609,6 +8856,240 @@
     }
   ],
   "ultraSyncEvents": [
+    {
+      "id": "evt_1795441524138_hb9c",
+      "timestamp": "2026-11-23T13:45:24.138Z",
+      "type": "COLABORADOR_ENTRADA_DETECTADA",
+      "originSystem": "NOSSA_GENTE",
+      "targetSystem": "ULTRA_SISTEMA",
+      "status": "PROCESSADO",
+      "summary": "Reconhecimento facial com 99.4% de confiança.",
+      "payload": {
+        "camera": "CAM-01 (Entrada Cozinha)",
+        "timestamp": "2026-11-23T13:45:24.138Z"
+      },
+      "collaboratorName": "Takeshi Sato",
+      "internalChecksum": "sha256_1a208a77daa_466e8d"
+    },
+    {
+      "id": "evt_1795441521360_gn90",
+      "timestamp": "2026-11-23T13:45:21.360Z",
+      "type": "TRIGGER_METEOROLOGIA_DR_CLIMA",
+      "originSystem": "ULTRA_SISTEMA",
+      "targetSystem": "NOSSA_GENTE",
+      "status": "PROCESSADO",
+      "summary": "[Gatilho Automático Executado] Operação Tempestade Dr. Clima Tangará da Serra",
+      "payload": {
+        "ruleId": "trig_dr_clima_chuva",
+        "categoria": "METEOROLOGIA_DR_CLIMA",
+        "condicao": "Precipitação acumulada > 15mm/h ou probabilidade de chuva torrencial > 85%",
+        "acao": "Acresce +12 min na estimativa do delivery, bonifica taxa de chuva aos motoboys e dispara push de combinados quentes e lámen",
+        "severidade": "OPERACIONAL",
+        "timestamp": "2026-11-23T13:45:21.360Z"
+      },
+      "internalChecksum": "sha256_1a208a772d0_ee397b"
+    },
+    {
+      "id": "evt_1795441521311_8g9y",
+      "timestamp": "2026-11-23T13:45:21.311Z",
+      "type": "CHECKLIST_CONFORME_ANVISA",
+      "originSystem": "ULTRA_SISTEMA",
+      "targetSystem": "NOSSA_GENTE",
+      "status": "PROCESSADO",
+      "summary": "Inspeção ANVISA registrada: Lote Salmão Chileno Premium Lote #SALM-2026-11 (CONFORME) por Mariana Alencar",
+      "payload": {
+        "inspectionId": "insp_1795441521311_acyd",
+        "category": "RECEBIMENTO_PEIXE",
+        "status": "CONFORME",
+        "measured": "1.2°C",
+        "hash": "sec_anvisa_1a208a7729f_d688c0c3"
+      },
+      "collaboratorName": "Mariana Alencar",
+      "internalChecksum": "sha256_1a208a7729f_453ff5"
+    },
+    {
+      "id": "evt_1795441521294_i2wf",
+      "timestamp": "2026-11-23T13:45:21.294Z",
+      "type": "ESCALA_ENTRADA_TURNO",
+      "originSystem": "NOSSA_GENTE",
+      "targetSystem": "ULTRA_SISTEMA",
+      "status": "PROCESSADO",
+      "summary": "Kenji Sato iniciou turno no Sushibar Nobre",
+      "payload": {
+        "station": "st_sushibar",
+        "shift": "Jantar (17:30 - 23:30)",
+        "badge": "COL-01"
+      },
+      "collaboratorName": "Kenji Sato",
+      "internalChecksum": "sha256_1a208a7728e_719857"
+    },
+    {
+      "id": "evt_1795441520847_q9f4",
+      "timestamp": "2026-11-23T13:45:20.847Z",
+      "type": "PEDIDO_MESA_CLIENTE_QRCODE",
+      "originSystem": "ZUMA_PWA_CLIENTE",
+      "targetSystem": "KDS_COZINHA",
+      "status": "PROCESSADO",
+      "summary": "Autoatendimento: Família Silva QR Code lançou 2 pratos na Mesa 9",
+      "payload": {
+        "tableNumber": 9,
+        "customerName": "Família Silva QR Code",
+        "items": [
+          {
+            "itemName": "Barca Zuma Premium (42 peças)",
+            "quantity": 1,
+            "unitPrice": 189.9,
+            "station": "sushibar"
+          },
+          {
+            "itemName": "Guioza Suíno Artesanal no Vapor (6 un)",
+            "quantity": 2,
+            "unitPrice": 29.9,
+            "station": "cozinha_quente"
+          }
+        ]
+      },
+      "internalChecksum": "sha256_1a208a770cf_220289"
+    },
+    {
+      "id": "evt_1795441520756_6ec7",
+      "timestamp": "2026-11-23T13:45:20.756Z",
+      "type": "LOTE_CONTINGENCIA_SINCRONIZADO",
+      "originSystem": "ZUMA_PILOT",
+      "targetSystem": "SEFAZ_MT_RECEITA",
+      "status": "PROCESSADO",
+      "summary": "Lote de 2 NFC-e emitidas em contingência transmitido e homologado na SEFAZ-MT!",
+      "payload": {
+        "totalNotas": 2,
+        "protocols": {
+          "nfce_1795441520706_4940": "1512600453189",
+          "nfce_1795441520661_4939": "1512600480028"
+        }
+      },
+      "internalChecksum": "sha256_1a208a77074_eaf9b7"
+    },
+    {
+      "id": "evt_1795441520713_rf37",
+      "timestamp": "2026-11-23T13:45:20.713Z",
+      "type": "NFCE_CONTINGENCIA_OFFLINE_GERADA",
+      "originSystem": "ZUMA_PILOT",
+      "targetSystem": "SEFAZ_MT_RECEITA",
+      "status": "PROCESSADO",
+      "summary": "NFC-e #4940 emitida em CONTINGÊNCIA OFFLINE (Chave: 512611362968...)",
+      "payload": {
+        "nfcNumber": 4940,
+        "chaveAcesso": "51261136296848000157650010000049409210300352",
+        "tipoEmissao": "contingencia_offline",
+        "total": 65
+      },
+      "internalChecksum": "sha256_1a208a77049_a6553c"
+    },
+    {
+      "id": "evt_1795441520669_4dka",
+      "timestamp": "2026-11-23T13:45:20.669Z",
+      "type": "NFCE_CONTINGENCIA_OFFLINE_GERADA",
+      "originSystem": "ZUMA_PILOT",
+      "targetSystem": "SEFAZ_MT_RECEITA",
+      "status": "PROCESSADO",
+      "summary": "NFC-e #4939 emitida em CONTINGÊNCIA OFFLINE (Chave: 512611362968...)",
+      "payload": {
+        "nfcNumber": 4939,
+        "chaveAcesso": "51261136296848000157650010000049399987690475",
+        "tipoEmissao": "contingencia_offline",
+        "total": 95
+      },
+      "internalChecksum": "sha256_1a208a7701d_3293a1"
+    },
+    {
+      "id": "evt_1795441520623_mpdz",
+      "timestamp": "2026-11-23T13:45:20.623Z",
+      "type": "NFCE_AUTORIZADA_SEFAZ",
+      "originSystem": "ZUMA_PILOT",
+      "targetSystem": "SEFAZ_MT_RECEITA",
+      "status": "PROCESSADO",
+      "summary": "NFC-e #4938 AUTORIZADA pela SEFAZ-MT (R$ 189,90)",
+      "payload": {
+        "nfcNumber": 4938,
+        "chaveAcesso": "51261136296848000157650010000049381319464356",
+        "tipoEmissao": "normal",
+        "total": 189.9
+      },
+      "internalChecksum": "sha256_1a208a76fef_299574"
+    },
+    {
+      "id": "evt_1795441520564_cxr3",
+      "timestamp": "2026-11-23T13:45:20.564Z",
+      "type": "ESTOQUE_BAIXA_FICHA_TECNICA",
+      "originSystem": "ZUMA_PILOT",
+      "targetSystem": "ESTOQUE_CENTRAL",
+      "status": "PROCESSADO",
+      "summary": "Baixa de estoque por ficha técnica: 2x Barco Zuma Nobre 40 Peças (CMV: R$ 90,96)",
+      "payload": {
+        "dishName": "Barco Zuma Nobre 40 Peças",
+        "quantity": 2,
+        "totalCost": 90.96000000000001,
+        "origin": "KDS Expedição",
+        "ingredientsDeducted": [
+          {
+            "code": "SALM-01",
+            "name": "Salmão fresco nobre",
+            "quantity": 0.76,
+            "unit": "kg",
+            "cost": 52.06
+          },
+          {
+            "code": "ATUM-01",
+            "name": "Atum fresco Maguro",
+            "quantity": 0.16,
+            "unit": "kg",
+            "cost": 12.64
+          },
+          {
+            "code": "ARR-01",
+            "name": "Arroz japonês cozido",
+            "quantity": 0.96,
+            "unit": "kg",
+            "cost": 9.4
+          },
+          {
+            "code": "NORI-01",
+            "name": "Alga nori",
+            "quantity": 9,
+            "unit": "folhas",
+            "cost": 4.96
+          },
+          {
+            "code": "CRM-01",
+            "name": "Cream cheese Philadelphia",
+            "quantity": 0.14,
+            "unit": "kg",
+            "cost": 4.7
+          },
+          {
+            "code": "EMB-COMB",
+            "name": "Embalagem Barco Luxo",
+            "quantity": 2,
+            "unit": "un",
+            "cost": 5
+          },
+          {
+            "code": "EMB-HASHI",
+            "name": "Hashi embalado",
+            "quantity": 4,
+            "unit": "pares",
+            "cost": 1
+          },
+          {
+            "code": "SHOY-01",
+            "name": "Shoyu tradicional",
+            "quantity": 0.1,
+            "unit": "L",
+            "cost": 1.2
+          }
+        ]
+      },
+      "internalChecksum": "sha256_1a208a76fb4_5fb8cc"
+    },
     {
       "id": "evt_1795395408597_s8rh",
       "timestamp": "2026-11-23T00:56:48.597Z",
@@ -14279,6 +14760,22 @@
   ],
   "ultraInspections": [
     {
+      "id": "insp_1795441521311_acyd",
+      "timestamp": "2026-11-23T13:45:21.311Z",
+      "category": "RECEBIMENTO_PEIXE",
+      "itemEvaluated": "Lote Salmão Chileno Premium Lote #SALM-2026-11",
+      "stationId": "st_sushibar",
+      "inspectorName": "Mariana Alencar",
+      "status": "CONFORME",
+      "valueMeasured": "1.2°C",
+      "targetStandard": "0.0°C a +2.0°C",
+      "notes": "Peixe com olhos convexos brilhantes, guelras vermelhas e odor fresco. Aprovado.",
+      "photoUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=800&q=80",
+      "photoDescription": "Registro seguro de recebimento de filé de salmão fresco",
+      "secureStorageHash": "sec_anvisa_1a208a7729f_d688c0c3",
+      "anvisaStandardCode": "RDC 216 / CVS 5"
+    },
+    {
       "id": "insp_1795392738746_rlkv",
       "timestamp": "2026-11-23T00:12:18.746Z",
       "category": "RECEBIMENTO_PEIXE",
@@ -14877,8 +15374,8 @@
       "condicaoDisparo": "Precipitação acumulada > 15mm/h ou probabilidade de chuva torrencial > 85%",
       "acaoAutomatica": "Acresce +12 min na estimativa do delivery, bonifica taxa de chuva aos motoboys e dispara push de combinados quentes e lámen",
       "ativo": true,
-      "ultimoDisparo": "Disparado manualmente às 00:12",
-      "totalDisparosHoje": 21,
+      "ultimoDisparo": "Disparado manualmente às 13:45",
+      "totalDisparosHoje": 22,
       "severidade": "OPERACIONAL",
       "icone": "CloudRain",
       "logRecente": "Ação executada com sucesso: Acresce +12 min na estimativa do delivery, bonifica taxa de chuva aos motoboys e dispara push de combinados quentes e lámen"
@@ -16073,6 +16570,18 @@
   ],
   "tipDistributions": [
     {
+      "id": "tip_1795441522441_7",
+      "date": "2026-11-23T13:45:22.441Z",
+      "shiftId": "cx_mwtbiwzo",
+      "orderId": 320,
+      "totalTipCollected": 12.8,
+      "waiterShare": 8.96,
+      "kitchenShare": 2.56,
+      "barShare": 1.28,
+      "waiterName": "Matheus Silva (Garçom)",
+      "tableNumber": 7
+    },
+    {
       "id": "tip_1795395408783_4",
       "date": "2026-11-23T00:56:48.783Z",
       "shiftId": "cx_mwsihbyn",
@@ -16567,14 +17076,14 @@
       "pollingIntervalSec": 15,
       "autoKitchenGuard": true,
       "autoStockOutagePause": true,
-      "lastSyncAt": "2026-11-23T00:12:20.222Z"
+      "lastSyncAt": "2026-11-23T13:45:23.983Z"
     },
     "keeto": {
       "active": true,
       "status": "ONLINE",
       "tablesCount": 16,
       "connectedWaiters": 4,
-      "lastSyncAt": "2026-11-23T00:12:20.233Z"
+      "lastSyncAt": "2026-11-23T13:45:23.996Z"
     },
     "openDelivery": {
       "active": true,
@@ -16583,20 +17092,20 @@
         "Aiqfome Tangará",
         "99Food MT"
       ],
-      "lastSyncAt": "2026-11-23T00:12:20.266Z"
+      "lastSyncAt": "2026-11-23T13:45:24.029Z"
     },
     "waha": {
       "active": true,
       "sessionName": "default",
       "phone": "+55 (65) 99645-8910",
       "autoAiVoiceTranscription": true,
-      "lastSyncAt": "2026-11-23T00:12:20.254Z"
+      "lastSyncAt": "2026-11-23T13:45:24.016Z"
     },
     "sicrediPix": {
       "active": true,
       "instantConciliation": true,
       "txFeeBrl": 0,
-      "lastSyncAt": "2026-11-23T00:12:20.277Z"
+      "lastSyncAt": "2026-11-23T13:45:24.044Z"
     },
     "tefPos": {
       "active": true,
@@ -16607,7 +17116,7 @@
       "active": true,
       "contingencyMode": "AUTOMATICA",
       "certificateValidUntil": "2027-11-20",
-      "lastSyncAt": "2026-11-23T00:12:20.289Z"
+      "lastSyncAt": "2026-11-23T13:45:24.057Z"
     },
     "thermalPrinters": {
       "active": true,
@@ -16622,12 +17131,39 @@
     },
     "saiposSync": {
       "active": true,
-      "lastSyncAt": "2026-11-23T00:12:20.325Z",
+      "lastSyncAt": "2026-11-23T13:45:24.104Z",
       "syncedSkus": 151,
       "syncedClients": 3420,
-      "syncedOrders": 8924,
-      "syncedRevenueBrl": 517917.14999999997,
+      "syncedOrders": 8940,
+      "syncedRevenueBrl": 519187.51999999996,
       "syncHistory": [
+        {
+          "id": "import_1795441524118",
+          "timestamp": "Hoje às 13:45",
+          "type": "IMPORT_CATALOGO",
+          "itemsCount": 1,
+          "status": "SUCESSO",
+          "details": "Importação de cardápio legado Saipos: 1 itens processados e mapeados para o Zuma.",
+          "operator": "Auditor"
+        },
+        {
+          "id": "sync_1795441524104",
+          "timestamp": "Hoje às 13:45",
+          "type": "FULL_SYNC",
+          "itemsCount": 151,
+          "status": "SUCESSO",
+          "details": "Reconciliação com sucesso: 151 SKUs validados, +7 pedidos recentes Saipos e R$ 608.89 integrados ao DRE Zuma.",
+          "operator": "Teste Automatizado"
+        },
+        {
+          "id": "sync_1795441524088",
+          "timestamp": "Hoje às 13:45",
+          "type": "API_SYNC",
+          "itemsCount": 151,
+          "status": "SUCESSO",
+          "details": "Reconciliação com sucesso: 151 SKUs validados, +9 pedidos recentes Saipos e R$ 661.48 integrados ao DRE Zuma.",
+          "operator": "Sincronizador Automático"
+        },
         {
           "id": "import_1795392740339",
           "timestamp": "Hoje às 00:12",
@@ -16789,33 +17325,6 @@
           "status": "SUCESSO",
           "details": "Reconciliação com sucesso: 123 SKUs validados, +6 pedidos recentes Saipos e R$ 1202.83 integrados ao DRE Zuma.",
           "operator": "Sincronizador Automático"
-        },
-        {
-          "id": "import_1795379667305",
-          "timestamp": "Hoje às 20:34",
-          "type": "IMPORT_CATALOGO",
-          "itemsCount": 1,
-          "status": "SUCESSO",
-          "details": "Importação de cardápio legado Saipos: 1 itens processados e mapeados para o Zuma.",
-          "operator": "Auditor"
-        },
-        {
-          "id": "sync_1795379667294",
-          "timestamp": "Hoje às 20:34",
-          "type": "FULL_SYNC",
-          "itemsCount": 123,
-          "status": "SUCESSO",
-          "details": "Reconciliação com sucesso: 123 SKUs validados, +9 pedidos recentes Saipos e R$ 884.12 integrados ao DRE Zuma.",
-          "operator": "Teste Automatizado"
-        },
-        {
-          "id": "sync_1795379667281",
-          "timestamp": "Hoje às 20:34",
-          "type": "API_SYNC",
-          "itemsCount": 123,
-          "status": "SUCESSO",
-          "details": "Reconciliação com sucesso: 123 SKUs validados, +12 pedidos recentes Saipos e R$ 1126.13 integrados ao DRE Zuma.",
-          "operator": "Sincronizador Automático"
         }
       ]
     },
@@ -16858,6 +17367,516 @@
     }
   },
   "auditEvents": [
+    {
+      "id": "aud_1795441522476_6h5o",
+      "timestamp": "2026-11-23T13:45:22.476Z",
+      "action": "TITULO_PAGAR_LIQUIDADO",
+      "actor": "Rodrigo Ribeiro Gonçalves",
+      "role": "administrador",
+      "details": {
+        "id": "PAG-102",
+        "fornecedor": "Grãos Nobres Alimentos (Arroz Shari)",
+        "valor": 2130
+      },
+      "operator": "Rodrigo Ribeiro Gonçalves"
+    },
+    {
+      "id": "aud_1795441522448_lano",
+      "timestamp": "2026-11-23T13:45:22.448Z",
+      "orderId": 320,
+      "tableNumber": 7,
+      "action": "MESA_ENCERRADA",
+      "actor": "Matheus Silva (Garçom)",
+      "role": "garcom",
+      "details": {
+        "finalTotal": 140.8,
+        "paymentMethod": "Sicredi Pix Direto MT",
+        "nfcNumber": 6904,
+        "canal": "App do Garçom Móvel",
+        "fechadoPor": "Matheus Silva (Garçom)"
+      },
+      "operator": "Matheus Silva (Garçom)"
+    },
+    {
+      "id": "aud_1795441522441_em2e",
+      "timestamp": "2026-11-23T13:45:22.441Z",
+      "orderId": 320,
+      "tableNumber": 7,
+      "action": "fechamento_comanda",
+      "actor": "Matheus Silva (Garçom)",
+      "role": "garcom",
+      "details": {
+        "finalTotal": 140.8,
+        "paymentMethod": "Sicredi Pix Direto MT",
+        "payments": [
+          {
+            "method": "pix",
+            "amount": 140.8
+          }
+        ],
+        "discountAmount": 0,
+        "nfcNumber": 6904,
+        "splitCount": 2,
+        "canal": "App do Garçom Móvel",
+        "fechadoPor": "Matheus Silva (Garçom)",
+        "horaFechamento": "13:45"
+      },
+      "operator": "Matheus Silva (Garçom)"
+    },
+    {
+      "id": "aud_1795441522354_txdn",
+      "timestamp": "2026-11-23T13:45:22.354Z",
+      "tableNumber": 7,
+      "action": "item_adicionado",
+      "actor": "Matheus Silva (Garçom)",
+      "role": "garcom",
+      "station": "Sushibar",
+      "details": {
+        "itemId": "it_1795441522354_ue48",
+        "itemName": "Sashimi Salmão Maçaricado (10 Pçs)",
+        "quantity": 1,
+        "unitPrice": 52
+      },
+      "operator": "Matheus Silva (Garçom)"
+    },
+    {
+      "id": "aud_1795441522340_kzyo",
+      "timestamp": "2026-11-23T13:45:22.340Z",
+      "tableNumber": 7,
+      "action": "item_adicionado",
+      "actor": "Matheus Silva (Garçom)",
+      "role": "garcom",
+      "station": "Fritadeira",
+      "details": {
+        "itemId": "it_1795441522340_tk72",
+        "itemName": "Hot Roll Especial Trufado",
+        "quantity": 2,
+        "unitPrice": 38
+      },
+      "operator": "Matheus Silva (Garçom)"
+    },
+    {
+      "id": "aud_1795441522326_1erf",
+      "timestamp": "2026-11-23T13:45:22.326Z",
+      "tableNumber": 7,
+      "action": "abertura_comanda",
+      "actor": "Matheus Silva (Garçom)",
+      "role": "garcom",
+      "details": {
+        "customerCount": 2,
+        "customerName": "Dr. Alexandre Parecis"
+      },
+      "operator": "Matheus Silva (Garçom)"
+    },
+    {
+      "id": "aud_1795441522308_bsnw",
+      "timestamp": "2026-11-23T13:45:22.308Z",
+      "action": "suprimento_caixa",
+      "actor": "Frente de Caixa Balcão",
+      "role": "caixa",
+      "details": {
+        "initialCash": 250,
+        "registerId": "cx_mwtbiwzo"
+      },
+      "operator": "Frente de Caixa Balcão"
+    },
+    {
+      "id": "aud_1795441520839_3uox",
+      "timestamp": "2026-11-23T13:45:20.839Z",
+      "tableNumber": 9,
+      "action": "pedido_cliente_qrcode",
+      "actor": "Família Silva QR Code",
+      "role": "cliente",
+      "details": {
+        "itemsCount": 2,
+        "itemsSummary": "1x Barca Zuma Premium (42 peças), 2x Guioza Suíno Artesanal no Vapor (6 un)"
+      },
+      "operator": "Família Silva QR Code"
+    },
+    {
+      "id": "aud_1795441520825_wr4a",
+      "timestamp": "2026-11-23T13:45:20.825Z",
+      "tableNumber": 9,
+      "action": "pedido_enviado_kds",
+      "actor": "Família Silva QR Code",
+      "role": "garcom",
+      "details": {
+        "ticketCount": 2,
+        "stations": [
+          "sushibar",
+          "cozinha_quente"
+        ],
+        "items": [
+          {
+            "name": "Barca Zuma Premium (42 peças)",
+            "q": 1,
+            "station": "sushibar",
+            "obs": ""
+          },
+          {
+            "name": "Guioza Suíno Artesanal no Vapor (6 un)",
+            "q": 2,
+            "station": "cozinha_quente",
+            "obs": ""
+          }
+        ]
+      },
+      "operator": "Família Silva QR Code"
+    },
+    {
+      "id": "aud_1795441520810_l8hf",
+      "timestamp": "2026-11-23T13:45:20.810Z",
+      "tableNumber": 9,
+      "action": "item_adicionado",
+      "actor": "Família Silva QR Code",
+      "role": "garcom",
+      "station": "cozinha_quente",
+      "details": {
+        "itemId": "it_1795441520810_d19y",
+        "itemName": "Guioza Suíno Artesanal no Vapor (6 un)",
+        "quantity": 2,
+        "unitPrice": 29.9
+      },
+      "operator": "Família Silva QR Code"
+    },
+    {
+      "id": "aud_1795441520796_h6is",
+      "timestamp": "2026-11-23T13:45:20.796Z",
+      "tableNumber": 9,
+      "action": "item_adicionado",
+      "actor": "Família Silva QR Code",
+      "role": "garcom",
+      "station": "sushibar",
+      "details": {
+        "itemId": "it_1795441520796_ce9m",
+        "itemName": "Barca Zuma Premium (42 peças)",
+        "quantity": 1,
+        "unitPrice": 189.9
+      },
+      "operator": "Família Silva QR Code"
+    },
+    {
+      "id": "aud_1795441520748_9lz7",
+      "timestamp": "2026-11-23T13:45:20.748Z",
+      "tableNumber": 5,
+      "orderId": 9002,
+      "action": "nfce_contingencia_sincronizada",
+      "actor": "Sincronizador Fiscal SEFAZ-MT",
+      "role": "fiscal",
+      "details": {
+        "nfcNumber": 4939,
+        "chaveAcesso": "51261136296848000157650010000049399987690475",
+        "protocolo": "1512600480028",
+        "sincronizadoEm": "2026-11-23T13:45:20.741Z"
+      },
+      "operator": "Sincronizador Fiscal SEFAZ-MT"
+    },
+    {
+      "id": "aud_1795441520742_crwh",
+      "timestamp": "2026-11-23T13:45:20.742Z",
+      "orderId": 9003,
+      "action": "nfce_contingencia_sincronizada",
+      "actor": "Sincronizador Fiscal SEFAZ-MT",
+      "role": "fiscal",
+      "details": {
+        "nfcNumber": 4940,
+        "chaveAcesso": "51261136296848000157650010000049409210300352",
+        "protocolo": "1512600453189",
+        "sincronizadoEm": "2026-11-23T13:45:20.741Z"
+      },
+      "operator": "Sincronizador Fiscal SEFAZ-MT"
+    },
+    {
+      "id": "aud_1795441520706_1wj4",
+      "timestamp": "2026-11-23T13:45:20.706Z",
+      "orderId": 9003,
+      "action": "nfce_contingencia_gerada",
+      "actor": "Transmissor Fiscal SEFAZ-MT",
+      "role": "fiscal",
+      "details": {
+        "nfcNumber": 4940,
+        "chaveAcesso": "51261136296848000157650010000049409210300352",
+        "tipoEmissao": "contingencia_offline",
+        "status": "pendente_contingencia",
+        "totalAmount": 65
+      },
+      "operator": "Transmissor Fiscal SEFAZ-MT"
+    },
+    {
+      "id": "aud_1795441520661_kbak",
+      "timestamp": "2026-11-23T13:45:20.661Z",
+      "tableNumber": 5,
+      "orderId": 9002,
+      "action": "nfce_contingencia_gerada",
+      "actor": "Transmissor Fiscal SEFAZ-MT",
+      "role": "fiscal",
+      "details": {
+        "nfcNumber": 4939,
+        "chaveAcesso": "51261136296848000157650010000049399987690475",
+        "tipoEmissao": "contingencia_offline",
+        "status": "pendente_contingencia",
+        "totalAmount": 95
+      },
+      "operator": "Transmissor Fiscal SEFAZ-MT"
+    },
+    {
+      "id": "aud_1795441520616_pamq",
+      "timestamp": "2026-11-23T13:45:20.616Z",
+      "tableNumber": 3,
+      "orderId": 9001,
+      "action": "fechamento_comanda",
+      "actor": "Transmissor Fiscal SEFAZ-MT",
+      "role": "fiscal",
+      "details": {
+        "nfcNumber": 4938,
+        "chaveAcesso": "51261136296848000157650010000049381319464356",
+        "tipoEmissao": "normal",
+        "status": "autorizada",
+        "totalAmount": 189.9
+      },
+      "operator": "Transmissor Fiscal SEFAZ-MT"
+    },
+    {
+      "id": "aud_1795441520579_lr8c",
+      "timestamp": "2026-11-23T13:45:20.579Z",
+      "action": "baixa_estoque_receita",
+      "actor": "Sistema KDS & Estoque",
+      "role": "producao",
+      "details": {
+        "dishName": "Barco Zuma Nobre 40 Peças",
+        "quantity": 2,
+        "totalCmv": 90.96000000000001,
+        "origin": "KDS Expedição",
+        "ingredientsCount": 8
+      },
+      "operator": "Sistema KDS & Estoque"
+    },
+    {
+      "id": "aud_1795441519703_5aam",
+      "timestamp": "2026-11-23T13:45:19.703Z",
+      "action": "suprimento_caixa",
+      "actor": "Mariana (Frente de Caixa Balcão)",
+      "role": "caixa",
+      "details": {
+        "initialCash": 250,
+        "registerId": "cx_mwtbiuzb"
+      },
+      "operator": "Mariana (Frente de Caixa Balcão)"
+    },
+    {
+      "id": "aud_1795441519688_ll9x",
+      "timestamp": "2026-11-23T13:45:19.688Z",
+      "action": "reabertura_caixa",
+      "actor": "Rodrigo R. Gonçalves (Supervisor Geral)",
+      "operator": "Rodrigo R. Gonçalves (Supervisor Geral)",
+      "role": "supervisor",
+      "reason": "Necessidade de retificação em comanda do salão pós-fechamento",
+      "details": {
+        "registerId": "cx_mwtbiuy2",
+        "action": "reabertura",
+        "reason": "Necessidade de retificação em comanda do salão pós-fechamento"
+      }
+    },
+    {
+      "id": "aud_1795441519674_46t0",
+      "timestamp": "2026-11-23T13:45:19.674Z",
+      "action": "fechamento_turno",
+      "actor": "Mariana (Frente de Caixa)",
+      "role": "caixa",
+      "details": {
+        "operator": "Mariana (Frente de Caixa)",
+        "countedCash": 450,
+        "expectedCash": 250,
+        "difference": 200,
+        "totalsByMethod": {
+          "dinheiro": 0,
+          "pix": 0,
+          "credito": 0,
+          "debito": 0,
+          "apple_pay": 0
+        },
+        "cashOut": 0,
+        "cashIn": 250,
+        "notes": "Encerramento para teste de reabertura"
+      },
+      "operator": "Mariana (Frente de Caixa)"
+    },
+    {
+      "id": "aud_1795441519658_cnkp",
+      "timestamp": "2026-11-23T13:45:19.658Z",
+      "action": "suprimento_caixa",
+      "actor": "Mariana (Frente de Caixa Balcão)",
+      "role": "caixa",
+      "details": {
+        "initialCash": 250,
+        "registerId": "cx_mwtbiuy2"
+      },
+      "operator": "Mariana (Frente de Caixa Balcão)"
+    },
+    {
+      "id": "aud_1795441519645_eoqy",
+      "timestamp": "2026-11-23T13:45:19.645Z",
+      "action": "ajuste_quebra_caixa",
+      "actor": "Rodrigo R. Gonçalves (Supervisor)",
+      "role": "supervisor",
+      "reason": "Sobra de moedas não reclamada por clientes no turno",
+      "details": {
+        "registerId": "shift_current",
+        "tipo": "sobra",
+        "valor": 8,
+        "justificativa": "Sobra de moedas não reclamada por clientes no turno"
+      },
+      "operator": "Rodrigo R. Gonçalves (Supervisor)"
+    },
+    {
+      "id": "aud_1795441519632_98ft",
+      "timestamp": "2026-11-23T13:45:19.632Z",
+      "action": "ajuste_quebra_caixa",
+      "actor": "Rodrigo R. Gonçalves (Supervisor)",
+      "role": "supervisor",
+      "reason": "Diferença não localizada no troco de encerramento do almoço",
+      "details": {
+        "registerId": "shift_current",
+        "tipo": "falta",
+        "valor": 15.5,
+        "justificativa": "Diferença não localizada no troco de encerramento do almoço"
+      },
+      "operator": "Rodrigo R. Gonçalves (Supervisor)"
+    },
+    {
+      "id": "aud_1795441519618_h6m2",
+      "timestamp": "2026-11-23T13:45:19.618Z",
+      "action": "suprimento_caixa",
+      "actor": "Mariana (Frente de Caixa Balcão)",
+      "role": "caixa",
+      "details": {
+        "initialCash": 250,
+        "registerId": "cx_mwtbiuwy"
+      },
+      "operator": "Mariana (Frente de Caixa Balcão)"
+    },
+    {
+      "id": "aud_1795441519600_tz3i",
+      "timestamp": "2026-11-23T13:45:19.600Z",
+      "action": "exclusao_movimento_caixa",
+      "actor": "Rodrigo R. Gonçalves (Supervisor)",
+      "operator": "Rodrigo R. Gonçalves (Supervisor)",
+      "role": "supervisor",
+      "reason": "Sangria duplicada cancelada pela gerência",
+      "details": {
+        "movementId": "mov_1795441519570",
+        "type": "sangria",
+        "amount": 180,
+        "valorEstornado": 180,
+        "reason": "Correção de valor: R$ 20 foram mantidos na gaveta para troco"
+      }
+    },
+    {
+      "id": "aud_1795441519585_r6vo",
+      "timestamp": "2026-11-23T13:45:19.585Z",
+      "action": "edicao_movimento_caixa",
+      "actor": "Mariana (Frente de Caixa)",
+      "operator": "Mariana (Frente de Caixa)",
+      "role": "supervisor",
+      "reason": "Correção de valor: R$ 20 foram mantidos na gaveta para troco",
+      "details": {
+        "movementId": "mov_1795441519570",
+        "type": "sangria",
+        "oldAmount": 200,
+        "newAmount": 180,
+        "valorAnterior": 200,
+        "novoValor": 180,
+        "delta": -20
+      }
+    },
+    {
+      "id": "aud_1795441519571_zztd",
+      "timestamp": "2026-11-23T13:45:19.571Z",
+      "action": "sangria_caixa",
+      "actor": "Mariana (Frente de Caixa Balcão)",
+      "role": "caixa",
+      "reason": "Sangria para cofre de segurança",
+      "details": {
+        "amount": 200,
+        "type": "sangria"
+      },
+      "operator": "Mariana (Frente de Caixa Balcão)"
+    },
+    {
+      "id": "aud_1795441519557_ziqf",
+      "timestamp": "2026-11-23T13:45:19.557Z",
+      "action": "suprimento_caixa",
+      "actor": "Mariana (Frente de Caixa Balcão)",
+      "role": "caixa",
+      "details": {
+        "initialCash": 250,
+        "registerId": "cx_mwtbiuv8"
+      },
+      "operator": "Mariana (Frente de Caixa Balcão)"
+    },
+    {
+      "id": "aud_1795441519536_ypx8",
+      "timestamp": "2026-11-23T13:45:19.536Z",
+      "action": "correcao_pagamento",
+      "actor": "Rodrigo R. Gonçalves (Supervisor)",
+      "operator": "Rodrigo R. Gonçalves (Supervisor)",
+      "role": "supervisor",
+      "reason": "Cliente passou cartão Stone de última hora após operador selecionar dinheiro por engano",
+      "details": {
+        "paymentId": "PAG-55242",
+        "oldMeio": "dinheiro",
+        "newMeio": "cartao_credito",
+        "formaAnterior": "dinheiro",
+        "novaForma": "cartao_credito",
+        "oldValor": 150,
+        "newValor": 150,
+        "valorAnterior": 150,
+        "novoValor": 150,
+        "motivo": "Cliente passou cartão Stone de última hora após operador selecionar dinheiro por engano"
+      }
+    },
+    {
+      "id": "aud_1795441519520_siez",
+      "timestamp": "2026-11-23T13:45:19.520Z",
+      "action": "pagamento_registrado",
+      "actor": "Mariana (Frente de Caixa)",
+      "role": "caixa",
+      "details": {
+        "paymentId": "PAG-55242",
+        "valorBruto": 150,
+        "forma": "dinheiro",
+        "nsu": "40931107",
+        "autorizacao": "AUT-2762",
+        "canal": "Salão",
+        "cliente": "Sr. Geraldo Tangará",
+        "nfceNumero": 6164
+      },
+      "operator": "Mariana (Frente de Caixa)"
+    },
+    {
+      "id": "aud_1795441519502_1ng4",
+      "timestamp": "2026-11-23T13:45:19.502Z",
+      "action": "suprimento_caixa",
+      "actor": "Mariana (Frente de Caixa Balcão)",
+      "role": "caixa",
+      "details": {
+        "initialCash": 250,
+        "registerId": "cx_mwtbiutq"
+      },
+      "operator": "Mariana (Frente de Caixa Balcão)"
+    },
+    {
+      "id": "aud_1795441519477_ruyl",
+      "timestamp": "2026-11-23T13:45:19.477Z",
+      "action": "suprimento_caixa",
+      "actor": "Mariana (Frente de Caixa Balcão)",
+      "role": "caixa",
+      "details": {
+        "initialCash": 250,
+        "registerId": "cx_mwtbiut1"
+      },
+      "operator": "Mariana (Frente de Caixa Balcão)"
+    },
     {
       "id": "aud_1795395408791_vvm5",
       "timestamp": "2026-11-23T00:56:48.791Z",
@@ -24809,6 +25828,42 @@
   ],
   "kitchenTickets": [
     {
+      "id": "tk_1795441520825_cozinha_quente_85j",
+      "tableNumber": 9,
+      "channel": "Mesa 9 (Salão)",
+      "station": "cozinha_quente",
+      "items": [
+        {
+          "id": "it_1795441520810_d19y",
+          "itemName": "Guioza Suíno Artesanal no Vapor (6 un)",
+          "quantity": 2,
+          "adicionais": [],
+          "observacoes": "",
+          "status": "em_preparo"
+        }
+      ],
+      "status": "em_preparo",
+      "createdAt": "2026-11-23T13:45:20.825Z"
+    },
+    {
+      "id": "tk_1795441520825_sushibar_vg5",
+      "tableNumber": 9,
+      "channel": "Mesa 9 (Salão)",
+      "station": "sushibar",
+      "items": [
+        {
+          "id": "it_1795441520796_ce9m",
+          "itemName": "Barca Zuma Premium (42 peças)",
+          "quantity": 1,
+          "adicionais": [],
+          "observacoes": "",
+          "status": "em_preparo"
+        }
+      ],
+      "status": "em_preparo",
+      "createdAt": "2026-11-23T13:45:20.825Z"
+    },
+    {
       "id": "tk_1795395408086_cozinha_quente_ljt",
       "tableNumber": 9,
       "channel": "Mesa 9 (Salão)",
@@ -26503,6 +27558,159 @@
   ],
   "offlineModeEnabled": false,
   "fiscalInvoices": [
+    {
+      "id": "nfce_6904_1795441522440",
+      "nfcNumber": 6904,
+      "serie": 1,
+      "chaveAcesso": "51261136296848000157650010000069041893728192",
+      "tipoEmissao": "normal",
+      "status": "autorizada",
+      "dataEmissao": "2026-11-23T13:45:22.440Z",
+      "orderId": 320,
+      "tableNumber": 7,
+      "customerName": "Dr. Alexandre Parecis",
+      "totalAmount": 140.8,
+      "icmsBase": 98.56,
+      "icmsValor": 16.76,
+      "protocoloAutorizacao": "1512600438898763",
+      "qrCodeUrl": "https://www.sefaz.mt.gov.br/nfce/consultanfce?p=51261136296848000157650010000069041893728192|2|1|1|1512600438898763",
+      "itens": [
+        {
+          "itemName": "Hot Roll Especial Trufado",
+          "quantity": 2,
+          "unitPrice": 38,
+          "total": 76
+        },
+        {
+          "itemName": "Sashimi Salmão Maçaricado (10 Pçs)",
+          "quantity": 1,
+          "unitPrice": 52,
+          "total": 52
+        }
+      ],
+      "payments": [
+        {
+          "method": "pix",
+          "amount": 140.8
+        }
+      ],
+      "empresa": "gastronomia",
+      "cnpjEmitente": "36.296.848/0001-57",
+      "razaoSocialEmitente": "ZUMA GASTRONOMIA ORIENTAL LTDA"
+    },
+    {
+      "id": "nfce_1795441520706_4940",
+      "nfcNumber": 4940,
+      "serie": 1,
+      "chaveAcesso": "51261136296848000157650010000049409210300352",
+      "tipoEmissao": "contingencia_offline",
+      "status": "transmitida",
+      "dataEmissao": "2026-11-23T13:45:20.705Z",
+      "dataTransmissao": "2026-11-23T13:45:20.741Z",
+      "orderId": 9003,
+      "customerName": "Cliente Fila Teste",
+      "totalAmount": 65,
+      "icmsBase": 57.2,
+      "icmsValor": 9.72,
+      "motivoContingencia": "Contingência Offline SEFAZ-MT: Indisponibilidade temporária de internet em Tangará da Serra",
+      "protocoloAutorizacao": "1512600453189",
+      "qrCodeUrl": "https://www.sefaz.mt.gov.br/nfce/consultaqr?p=51261136296848000157650010000049409210300352|2|1|1|2",
+      "itens": [
+        {
+          "itemName": "Hot Filadélfia Trufado",
+          "quantity": 2,
+          "unitPrice": 32.5,
+          "total": 65
+        }
+      ],
+      "payments": [
+        {
+          "method": "pix",
+          "amount": 65
+        }
+      ],
+      "empresa": "gastronomia",
+      "cnpjEmitente": "36296848000157",
+      "razaoSocialEmitente": "Zuma Gastronomia Oriental Ltda."
+    },
+    {
+      "id": "nfce_1795441520661_4939",
+      "nfcNumber": 4939,
+      "serie": 1,
+      "chaveAcesso": "51261136296848000157650010000049399987690475",
+      "tipoEmissao": "contingencia_offline",
+      "status": "transmitida",
+      "dataEmissao": "2026-11-23T13:45:20.660Z",
+      "dataTransmissao": "2026-11-23T13:45:20.741Z",
+      "orderId": 9002,
+      "tableNumber": 5,
+      "customerName": "Cliente Salão",
+      "totalAmount": 95,
+      "icmsBase": 83.6,
+      "icmsValor": 14.21,
+      "motivoContingencia": "Contingência Offline SEFAZ-MT: Indisponibilidade temporária de internet em Tangará da Serra",
+      "protocoloAutorizacao": "1512600480028",
+      "qrCodeUrl": "https://www.sefaz.mt.gov.br/nfce/consultaqr?p=51261136296848000157650010000049399987690475|2|1|1|5",
+      "itens": [
+        {
+          "itemName": "Sashimi Salmão Fresco Especial (10 un)",
+          "quantity": 1,
+          "unitPrice": 49.9,
+          "total": 49.9
+        },
+        {
+          "itemName": "Uramaki Ebi Especial (8 un)",
+          "quantity": 1,
+          "unitPrice": 44.9,
+          "total": 44.9
+        }
+      ],
+      "payments": [
+        {
+          "method": "credito",
+          "amount": 95
+        }
+      ],
+      "empresa": "gastronomia",
+      "cnpjEmitente": "36296848000157",
+      "razaoSocialEmitente": "Zuma Gastronomia Oriental Ltda."
+    },
+    {
+      "id": "nfce_1795441520615_4938",
+      "nfcNumber": 4938,
+      "serie": 1,
+      "chaveAcesso": "51261136296848000157650010000049381319464356",
+      "tipoEmissao": "normal",
+      "status": "autorizada",
+      "dataEmissao": "2026-11-23T13:45:20.615Z",
+      "dataTransmissao": "2026-11-23T13:45:20.615Z",
+      "orderId": 9001,
+      "tableNumber": 3,
+      "customerName": "Rodrigo Gonçalves",
+      "cpf": "123.456.789-00",
+      "totalAmount": 189.9,
+      "icmsBase": 167.11,
+      "icmsValor": 28.41,
+      "protocoloAutorizacao": "1512600358648",
+      "qrCodeUrl": "https://www.sefaz.mt.gov.br/nfce/consultaqr?p=51261136296848000157650010000049381319464356|2|1|1|6",
+      "itens": [
+        {
+          "itemName": "Barca Zuma Premium (42 peças)",
+          "quantity": 1,
+          "unitPrice": 189.9,
+          "total": 189.9
+        }
+      ],
+      "payments": [
+        {
+          "method": "pix",
+          "amount": 189.9
+        }
+      ],
+      "empresa": "gastronomia",
+      "cnpjEmitente": "36296848000157",
+      "razaoSocialEmitente": "Zuma Gastronomia Oriental Ltda."
+    },
     {
       "id": "nfce_6903_1795395408783",
       "nfcNumber": 6903,
@@ -29600,6 +30808,56 @@
   ],
   "payments": [
     {
+      "id": "PAG-10911",
+      "txid": "ZUMTX1795441522440908",
+      "dataHora": "2026-11-23T13:45:22.440Z",
+      "pedidoId": 320,
+      "tableNumber": 7,
+      "canal": "Salão (Mesa 07)",
+      "cliente": "Dr. Alexandre Parecis",
+      "forma": "pix",
+      "formaLabel": "Pix Sicredi Direto MT",
+      "bandeira": "Sicredi Pix MT",
+      "parcelas": 1,
+      "valorBruto": 140.8,
+      "taxaAdquirentePct": 0.99,
+      "valorTaxa": 1.39,
+      "valorLiquido": 139.41,
+      "status": "aprovado",
+      "nsu": "NSU-443641",
+      "autorizacao": "AUT-191314",
+      "operador": "Matheus Silva (Garçom)",
+      "terminal": "SmartPOS Stone P2 Garçom Móvel",
+      "nfceEmitida": true,
+      "nfceChaveAcesso": "51261136296848000157650010000069041893728192",
+      "detalhes": "Fechamento Salão · Mesa 07 · Garçom Matheus Silva (Garçom) · NFC-e #6904"
+    },
+    {
+      "id": "PAG-55242",
+      "txid": "ZUMMWTBIUU8",
+      "dataHora": "2026-11-23T13:45:19.520Z",
+      "pedidoId": "BAL-878",
+      "canal": "Salão",
+      "cliente": "Sr. Geraldo Tangará",
+      "forma": "cartao_credito",
+      "formaLabel": "Cartão de Crédito Stone",
+      "parcelas": 1,
+      "valorBruto": 150,
+      "taxaAdquirentePct": 2.45,
+      "valorTaxa": 3.68,
+      "valorLiquido": 146.32,
+      "trocoPara": 150,
+      "status": "aprovado",
+      "nsu": "40931107",
+      "autorizacao": "AUT-2762",
+      "operador": "Mariana (Frente de Caixa)",
+      "terminal": "PDV Balcão 01",
+      "detalhes": "Recebimento aprovado via Dinheiro em Espécie [CORRIGIDO: De dinheiro para cartao_credito por Rodrigo R. Gonçalves (Supervisor) em 13:45:19: Cliente passou cartão Stone de última hora após operador selecionar dinheiro por engano]",
+      "nfceEmitida": true,
+      "nfceNumero": 6164,
+      "nfceChaveAcesso": "5126113629684800015765001000000061641894239850"
+    },
+    {
       "id": "PAG-10909",
       "txid": "ZUMTX1795395408783429",
       "dataHora": "2026-11-23T00:56:48.783Z",
@@ -29832,6 +31090,22 @@
   ],
   "contasPagar": [
     {
+      "id": "CP_QUEBRA_1795441519632",
+      "fornecedor": "Despesa Operacional · Quebra de Caixa",
+      "documento": "QUEBRA-CX-urrent",
+      "categoria": "Quebra de Caixa",
+      "vencimento": "23/11/2026",
+      "valorOriginal": 15.5,
+      "retencaoImpostos": 0,
+      "valorLiquido": 15.5,
+      "chavePix": "financeiro@zuma.com.br",
+      "status": "Liquidado",
+      "origem": "Ajuste Contábil / Gaveta",
+      "dataLiquidacao": "23/11/2026",
+      "comprovanteLiquidacao": "AJUSTE-QUEBRA-1795441519632",
+      "createdAt": "2026-11-23T13:45:19.632Z"
+    },
+    {
       "id": "PAG-101",
       "fornecedor": "Pescados Pantanal & Salmão Chileno",
       "categoria": "Insumos (Salmão Nobre Premium)",
@@ -29854,8 +31128,10 @@
       "valorOriginal": 2130,
       "retencaoImpostos": 0,
       "valorLiquido": 2130,
-      "status": "Pendente",
-      "chavePix": "financeiro@graosnobres.com.br"
+      "status": "Liquidado",
+      "chavePix": "financeiro@graosnobres.com.br",
+      "dataLiquidacao": "23/11/2026",
+      "comprovanteLiquidacao": "SICREDI-PIX-PAY-1795441522476"
     },
     {
       "id": "PAG-103",
@@ -29895,6 +31171,22 @@
     }
   ],
   "contasReceber": [
+    {
+      "id": "REC-206",
+      "cliente": "Dr. Alexandre Parecis",
+      "cnpjCpf": "Consumidor Final Salão",
+      "origem": "Mesa 07 · Sicredi Pix Direto MT",
+      "documento": "NFC-e #6904",
+      "vencimento": "23/11/2026",
+      "valor": 140.8,
+      "forma": "Pix",
+      "status": "Recebido",
+      "nfcNumber": 6904,
+      "tableNumber": 7,
+      "orderId": 320,
+      "createdAt": "2026-11-23T13:45:22.441Z",
+      "dataRecebimento": "23/11/2026"
+    },
     {
       "id": "REC-205",
       "cliente": "Dr. Roberto Tangará",
@@ -29966,6 +31258,50 @@
   ],
   "extratoBancario": [
     {
+      "id": "EXT-PAG-1795441522476",
+      "data": "23/11/2026",
+      "descricao": "PAGTO FORNECEDOR GRÃOS NOBRES ALIMENTOS (ARROZ SHARI) (NF-e 18321)",
+      "valor": -2130,
+      "tipo": "debito",
+      "banco": "Sicredi",
+      "status": "conciliado",
+      "origem": "Contas a Pagar (ERP)",
+      "documento": "NF-e 18321"
+    },
+    {
+      "id": "EXT-1795441522441-42",
+      "data": "23/11/2026",
+      "descricao": "RECEBIMENTO PIX SICREDI MESA 07 (CHAVE 36.296.848/0001-57)",
+      "valor": 140.8,
+      "tipo": "credito",
+      "banco": "Sicredi",
+      "status": "conciliado",
+      "origem": "Mesa 07 (Salão)",
+      "documento": "NFC-e #6904"
+    },
+    {
+      "id": "EXT-SOBRA-1795441519645",
+      "data": "23/11/2026",
+      "descricao": "AJUSTE SOBRA DE CAIXA EXTRAORDINARIA - TURNO urrent: Sobra de moedas não reclamada por clientes no turno",
+      "valor": 8,
+      "tipo": "credito",
+      "banco": "Sicredi",
+      "status": "conciliado",
+      "origem": "Ajuste de Caixa",
+      "documento": "AJUSTE-SOBRA-urrent"
+    },
+    {
+      "id": "EXT-QUEBRA-1795441519632",
+      "data": "23/11/2026",
+      "descricao": "AJUSTE QUEBRA DE CAIXA (FALTA) - TURNO urrent: Diferença não localizada no troco de encerramento do almoço",
+      "valor": -15.5,
+      "tipo": "debito",
+      "banco": "Sicredi",
+      "status": "conciliado",
+      "origem": "Ajuste de Caixa",
+      "documento": "AJUSTE-FALTA-urrent"
+    },
+    {
       "id": "EXT-1795395408783-590",
       "data": "23/11/2026",
       "descricao": "RECEBIMENTO PIX SICREDI MESA 04 (CHAVE 36.296.848/0001-57)",
@@ -30036,6 +31372,27 @@
     }
   ],
   "marketActions": [
+    {
+      "id": "act-1795441573855",
+      "status": "ativa",
+      "dataDisparo": "Hoje, às 13:46",
+      "alcanceEst": 2532,
+      "conversaoEst": 132,
+      "receitaGerada": 13319,
+      "roi": "6.3x",
+      "titulo": "Operação Cavalo de Troia no Pico de Fim de Semana",
+      "alvoId": "bonsai",
+      "alvoNome": "Bonsai Sushi Bar",
+      "tipo": "whatsapp",
+      "bairros": [
+        "Jardim Europa",
+        "Centro"
+      ],
+      "gatilho": "Disparo tático manual autorizado pelo gestor para contra-atacar Bonsai Sushi Bar",
+      "estrategia": "Campanha geolocalizada no Jardim Europa e Centro: 'Seu sushi na mesa em até 30 min ou 50% de cashback no Clube Zumi'.",
+      "cupom": "ZUMAEXPRESS30",
+      "descontoDesc": "Cupom ZUMAEXPRESS30 com cashback no Clube Zumi"
+    },
     {
       "id": "act-1795391825047",
       "status": "ativa",
