@@ -60,6 +60,8 @@ import { Ultra } from "./pages/Ultra";
 import { NossaGenteRh } from "./pages/NossaGenteRh";
 import { PassaporteSalmaoPublico } from "./pages/PassaporteSalmaoPublico";
 import { MapaMesasSalao } from "./pages/MapaMesasSalao";
+import { BancoFeHub } from "./pages/BancoFeHub";
+
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -219,6 +221,9 @@ function Router() {
             <Route path="/ia-mercado" component={MercadoBenchmark} />
             <Route path="/ia-e-mercado" component={MercadoBenchmark} />
             <Route path="/integracoes" component={Integracoes} />
+            <Route path="/bancofe" component={BancoFeHub} />
+            <Route path="/banking" component={BancoFeHub} />
+            <Route path="/bancofe-core" component={BancoFeHub} />
             <Route path="/comparativo-saipos" component={ComparativoSaipos} />
             <Route path="/saipos" component={ComparativoSaipos} />
             <Route path="/ultra-vision" component={UltraVisionAi} />

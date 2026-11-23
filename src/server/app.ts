@@ -71,37 +71,61 @@ const accountManager = new AccountManager();
 const ledgerEngine = new LedgerEngine(accountManager);
 const eventBus = IntegrationEventBus.getInstance();
 
-// 1. Healthcheck e Resumo Geral
-app.get('/api/health', async (_req: Request, res: Response) => {
-  const healthChecks = await registry.runHealthChecks();
-  const summary = registry.getSummary();
-  const audit = ledgerEngine.auditLedger();
+export function registerBancoFeRoutes(targetApp: express.Express | express.Router) {
+  // 1. Healthcheck e Resumo Geral
+  targetApp.get('/api/health', async (_req: Request, res: Response) => {
+    const healthChecks = await registry.runHealthChecks();
+    const summary = registry.getSummary();
+    const audit = ledgerEngine.auditLedger();
 
-  res.json({
-    status: 'ONLINE',
-    environment: process.env.NODE_ENV || 'production',
-    name: 'BancoFe Banking Engine & Integration Hub',
-    version: '1.0.0',
-    uptimeSeconds: Math.floor((Date.now() - startTime) / 1000),
-    timestamp: new Date().toISOString(),
-    summary,
-    healthChecks,
-    ledgerAudit: {
-      isValid: audit.isValid,
-      accountingEquationBalanced: audit.accountingEquationBalanced,
-      totalAssetsBrl: (audit.totalAssets / 100).toFixed(2),
-      totalLiabilitiesBrl: (audit.totalLiabilities / 100).toFixed(2),
-    },
+    res.json({
+      status: 'ONLINE',
+      environment: process.env.NODE_ENV || 'production',
+      name: 'BancoFe Banking Engine & Integration Hub',
+      version: '1.0.0',
+      uptimeSeconds: Math.floor((Date.now() - startTime) / 1000),
+      timestamp: new Date().toISOString(),
+      summary,
+      healthChecks,
+      ledgerAudit: {
+        isValid: audit.isValid,
+        accountingEquationBalanced: audit.accountingEquationBalanced,
+        totalAssetsBrl: (audit.totalAssets / 100).toFixed(2),
+        totalLiabilitiesBrl: (audit.totalLiabilities / 100).toFixed(2),
+      },
+    });
   });
-});
 
-// 2. Métricas no formato Prometheus
-app.get('/metrics', async (_req: Request, res: Response) => {
-  const audit = ledgerEngine.auditLedger();
-  const mem = process.memoryUsage();
-  const uptime = Math.floor((Date.now() - startTime) / 1000);
+  targetApp.get('/api/bancofe/health', async (_req: Request, res: Response) => {
+    const healthChecks = await registry.runHealthChecks();
+    const summary = registry.getSummary();
+    const audit = ledgerEngine.auditLedger();
 
-  const metrics = `
+    res.json({
+      status: 'ONLINE',
+      environment: process.env.NODE_ENV || 'production',
+      name: 'BancoFe Banking Engine & Integration Hub',
+      version: '1.0.0',
+      uptimeSeconds: Math.floor((Date.now() - startTime) / 1000),
+      timestamp: new Date().toISOString(),
+      summary,
+      healthChecks,
+      ledgerAudit: {
+        isValid: audit.isValid,
+        accountingEquationBalanced: audit.accountingEquationBalanced,
+        totalAssetsBrl: (audit.totalAssets / 100).toFixed(2),
+        totalLiabilitiesBrl: (audit.totalLiabilities / 100).toFixed(2),
+      },
+    });
+  });
+
+  // 2. Métricas no formato Prometheus
+  targetApp.get('/metrics', async (_req: Request, res: Response) => {
+    const audit = ledgerEngine.auditLedger();
+    const mem = process.memoryUsage();
+    const uptime = Math.floor((Date.now() - startTime) / 1000);
+
+    const metrics = `
 # HELP bancofe_uptime_seconds Tempo de atividade da aplicacao em segundos
 # TYPE bancofe_uptime_seconds gauge
 bancofe_uptime_seconds ${uptime}
@@ -127,151 +151,151 @@ bancofe_ledger_liabilities_cents ${audit.totalLiabilities}
 bancofe_active_integrations ${registry.listAdapters().length}
 `.trim();
 
-  res.setHeader('Content-Type', 'text/plain; version=0.0.4');
-  res.send(metrics);
-});
-
-// 3. Catálogo e Status do Módulo de Integrações
-app.get('/api/integrations', async (_req: Request, res: Response) => {
-  const adapters = registry.listAdapters();
-  const healthChecks = await registry.runHealthChecks();
-
-  const formatted = adapters.map((a) => ({
-    id: a.id,
-    name: a.name,
-    version: a.version,
-    category: a.category,
-    description: a.description,
-    tags: a.tags,
-    capabilities: a.capabilities,
-    health: healthChecks[a.id] || { status: 'UNKNOWN' },
-  }));
-
-  res.json({
-    total: adapters.length,
-    integrations: formatted,
-    recentEvents: eventBus.getRecentEvents(10),
+    res.setHeader('Content-Type', 'text/plain; version=0.0.4');
+    res.send(metrics);
   });
-});
 
-// 4. Execução Universal de Ações de Integração
-app.post('/api/integrations/execute', async (req: Request, res: Response) => {
-  const { adapterId, action, payload } = req.body;
-  if (!adapterId || !action) {
-    return res.status(400).json({ error: 'Campos "adapterId" e "action" são obrigatórios.' });
-  }
+  // 3. Catálogo e Status do Módulo de Integrações
+  targetApp.get('/api/integrations', async (_req: Request, res: Response) => {
+    const adapters = registry.listAdapters();
+    const healthChecks = await registry.runHealthChecks();
 
-  try {
-    const result = await registry.executeIntegrationAction(adapterId, action, payload || {});
-    res.json(result);
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      error: err?.message || 'Erro ao executar integração',
+    const formatted = adapters.map((a) => ({
+      id: a.id,
+      name: a.name,
+      version: a.version,
+      category: a.category,
+      description: a.description,
+      tags: a.tags,
+      capabilities: a.capabilities,
+      health: healthChecks[a.id] || { status: 'UNKNOWN' },
+    }));
+
+    res.json({
+      total: adapters.length,
+      integrations: formatted,
+      recentEvents: eventBus.getRecentEvents(10),
     });
-  }
-});
-
-// 5. Endpoint Oficial do Protocolo MCP (JSON-RPC 2.0)
-app.post('/api/mcp/rpc', (req: Request, res: Response) => {
-  const rpcRequest = req.body;
-  const rpcResponse = BancoFeMCPServer.handleRequest(rpcRequest);
-  res.json(rpcResponse);
-});
-
-// 6. Endpoint SSE (Server-Sent Events) para MCP Clients
-app.get('/api/mcp/sse', (req: Request, res: Response) => {
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
-
-  res.write(`event: endpoint\ndata: /api/mcp/rpc\n\n`);
-
-  const keepAlive = setInterval(() => {
-    res.write(': keepalive\n\n');
-  }, 15000);
-
-  req.on('close', () => {
-    clearInterval(keepAlive);
   });
-});
 
-// 7. Auditoria do Livro Razão Contábil
-app.get('/api/ledger/audit', (_req: Request, res: Response) => {
-  const audit = ledgerEngine.auditLedger();
-  const accounts = accountManager.listAccounts();
-  const journal = ledgerEngine.getJournal();
+  // 4. Execução Universal de Ações de Integração
+  targetApp.post('/api/integrations/execute', async (req: Request, res: Response) => {
+    const { adapterId, action, payload } = req.body;
+    if (!adapterId || !action) {
+      return res.status(400).json({ error: 'Campos "adapterId" e "action" são obrigatórios.' });
+    }
 
-  res.json({
-    audit,
-    accountsCount: accounts.length,
-    journalEntriesCount: journal.length,
-    accounts: accounts.map((a) => ({
-      ...a,
-      balanceFormatted: (a.balance / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-    })),
-    recentJournal: journal.slice(-10),
+    try {
+      const result = await registry.executeIntegrationAction(adapterId, action, payload || {});
+      res.json(result);
+    } catch (err: any) {
+      res.status(500).json({
+        success: false,
+        error: err?.message || 'Erro ao executar integração',
+      });
+    }
   });
-});
 
-// 8. Especificação OpenAPI 3.0
-app.get('/api/openapi.json', (_req: Request, res: Response) => {
-  res.json({
-    openapi: '3.0.3',
-    info: {
-      title: 'BancoFe API & Integration Engine',
-      version: '1.0.0',
-      description: 'API Bancária institucional com suporte a Pix BACEN, Boletos FEBRABAN, Open Finance, Model Context Protocol (MCP) e Skills de IA.',
-      contact: {
-        name: 'BancoFe Suporte Técnico',
-        email: 'dev@bancofe.com.br',
-      },
-    },
-    servers: [
-      { url: '/', description: 'Servidor Atual (Produção)' },
-    ],
-    paths: {
-      '/api/health': {
-        get: {
-          summary: 'Status de saúde e integridade contábil',
-          responses: { '200': { description: 'Status operacional retornado com sucesso' } },
+  // 5. Endpoint Oficial do Protocolo MCP (JSON-RPC 2.0)
+  targetApp.post('/api/mcp/rpc', (req: Request, res: Response) => {
+    const rpcRequest = req.body;
+    const rpcResponse = BancoFeMCPServer.handleRequest(rpcRequest);
+    res.json(rpcResponse);
+  });
+
+  // 6. Endpoint SSE (Server-Sent Events) para MCP Clients
+  targetApp.get('/api/mcp/sse', (req: Request, res: Response) => {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    res.write(`event: endpoint\ndata: /api/mcp/rpc\n\n`);
+
+    const keepAlive = setInterval(() => {
+      res.write(': keepalive\n\n');
+    }, 15000);
+
+    req.on('close', () => {
+      clearInterval(keepAlive);
+    });
+  });
+
+  // 7. Auditoria do Livro Razão Contábil
+  targetApp.get('/api/ledger/audit', (_req: Request, res: Response) => {
+    const audit = ledgerEngine.auditLedger();
+    const accounts = accountManager.listAccounts();
+    const journal = ledgerEngine.getJournal();
+
+    res.json({
+      audit,
+      accountsCount: accounts.length,
+      journalEntriesCount: journal.length,
+      accounts: accounts.map((a) => ({
+        ...a,
+        balanceFormatted: (a.balance / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+      })),
+      recentJournal: journal.slice(-10),
+    });
+  });
+
+  // 8. Especificação OpenAPI 3.0
+  targetApp.get('/api/openapi.json', (_req: Request, res: Response) => {
+    res.json({
+      openapi: '3.0.3',
+      info: {
+        title: 'BancoFe API & Integration Engine',
+        version: '1.0.0',
+        description: 'API Bancária institucional com suporte a Pix BACEN, Boletos FEBRABAN, Open Finance, Model Context Protocol (MCP) e Skills de IA.',
+        contact: {
+          name: 'BancoFe Suporte Técnico',
+          email: 'dev@bancofe.com.br',
         },
       },
-      '/api/integrations': {
-        get: {
-          summary: 'Catálogo de todos os adaptadores de integração',
-          responses: { '200': { description: 'Lista de adaptadores e status' } },
-        },
-      },
-      '/api/integrations/execute': {
-        post: {
-          summary: 'Executa uma ação em um adaptador de integração',
-          requestBody: {
-            required: true,
-            content: { 'application/json': { schema: { type: 'object' } } },
+      servers: [
+        { url: '/', description: 'Servidor Atual (Produção)' },
+      ],
+      paths: {
+        '/api/health': {
+          get: {
+            summary: 'Status de saúde e integridade contábil',
+            responses: { '200': { description: 'Status operacional retornado com sucesso' } },
           },
-          responses: { '200': { description: 'Resultado da execução' } },
+        },
+        '/api/integrations': {
+          get: {
+            summary: 'Catálogo de todos os adaptadores de integração',
+            responses: { '200': { description: 'Lista de adaptadores e status' } },
+          },
+        },
+        '/api/integrations/execute': {
+          post: {
+            summary: 'Executa uma ação em um adaptador de integração',
+            requestBody: {
+              required: true,
+              content: { 'application/json': { schema: { type: 'object' } } },
+            },
+            responses: { '200': { description: 'Resultado da execução' } },
+          },
+        },
+        '/api/mcp/rpc': {
+          post: {
+            summary: 'Endpoint JSON-RPC 2.0 do Protocolo MCP',
+            responses: { '200': { description: 'Resposta JSON-RPC 2.0' } },
+          },
+        },
+        '/metrics': {
+          get: {
+            summary: 'Métricas para Prometheus / Grafana',
+            responses: { '200': { description: 'Métricas em texto puro' } },
+          },
         },
       },
-      '/api/mcp/rpc': {
-        post: {
-          summary: 'Endpoint JSON-RPC 2.0 do Protocolo MCP',
-          responses: { '200': { description: 'Resposta JSON-RPC 2.0' } },
-        },
-      },
-      '/metrics': {
-        get: {
-          summary: 'Métricas para Prometheus / Grafana',
-          responses: { '200': { description: 'Métricas em texto puro' } },
-        },
-      },
-    },
+    });
   });
-});
 
-// 9. Documentação Swagger / OpenAPI Interativa
-app.get('/api/docs', (_req: Request, res: Response) => {
-  res.send(`
+  // 9. Documentação Swagger / OpenAPI Interativa
+  targetApp.get('/api/docs', (_req: Request, res: Response) => {
+    res.send(`
 <!DOCTYPE html>
 <html>
 <head>
@@ -293,8 +317,12 @@ app.get('/api/docs', (_req: Request, res: Response) => {
   </script>
 </body>
 </html>
-  `);
-});
+    `);
+  });
+}
+
+// Registra as rotas na aplicação local do BancoFe
+registerBancoFeRoutes(app);
 
 // Servir frontend compilado em produção / preview
 const distPath = path.resolve(process.cwd(), 'dist');
@@ -307,7 +335,8 @@ app.get('*', (req: Request, res: Response, next) => {
 
 // Inicialização e Graceful Shutdown
 let serverInstance: any = null;
-if (process.env.NODE_ENV !== 'test') {
+const isDirectExecution = process.argv[1]?.includes('src/server/app') || process.env.STANDALONE_BANCOFE === 'true';
+if (process.env.NODE_ENV !== 'test' && isDirectExecution) {
   serverInstance = app.listen(port, () => {
     console.log(`[BancoFe PRD] Servidor HTTP operando na porta ${port}`);
     console.log(`[BancoFe PRD] Módulo de Integrações carregado com ${registry.listAdapters().length} adaptadores.`);

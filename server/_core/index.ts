@@ -8,6 +8,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { registerIntegrationRoutes } from "../integrationsService";
+import { registerBancoFeRoutes } from "../../src/server/app";
 
 async function startServer() {
   const app = express();
@@ -15,7 +16,6 @@ async function startServer() {
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  app.get("/api/health", (_req, res) => res.json({ status: "ok", timestamp: new Date().toISOString() }));
   app.get("/healthz", (_req, res) => res.status(200).send("OK"));
   app.get("/api/status", (_req, res) => {
     res.json({
@@ -30,6 +30,7 @@ async function startServer() {
   app.get("/api/platform/config.js", (_req, res) => {
     res.set("Cache-Control", "no-store").type("application/javascript").send(publicPlatformScript());
   });
+  registerBancoFeRoutes(app);
   registerOAuthRoutes(app);
   registerIntegrationRoutes(app);
   // tRPC API
