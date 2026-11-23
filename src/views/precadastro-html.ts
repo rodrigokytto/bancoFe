@@ -59,6 +59,9 @@ export function renderizarHtmlPreCadastro(): string {
         <a href="/plataforma/carteira" class="px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-emerald-950/50 transition">
           <i class="fa-solid fa-wallet mr-1.5 text-emerald-400"></i> Carteira PIX
         </a>
+        <a href="/admin/backoffice" class="px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-emerald-950/50 transition">
+          <i class="fa-solid fa-chart-pie mr-1.5 text-emerald-400"></i> ERP Backoffice
+        </a>
       </nav>
 
       <!-- USUÁRIO LOGADO -->
@@ -81,15 +84,22 @@ export function renderizarHtmlPreCadastro(): string {
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
       <div>
         <div class="flex items-center gap-2">
-          <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded bg-emerald-100 text-emerald-800">Esteira de Onboarding</span>
-          <span class="text-xs text-slate-500">• Reconciliação Contínua & LGPD</span>
+          <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded bg-emerald-950 text-emerald-200 border border-emerald-700/60">
+            <i class="fa-solid fa-landmark mr-1 text-emerald-400"></i> Módulo BancoFé Operações Financeiras
+          </span>
+          <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded bg-blue-950 text-blue-200 border border-blue-700/60">
+            <i class="fa-solid fa-house-chimney mr-1 text-blue-400"></i> Base Integrada Casa Nova (casanova.kytto.com.br)
+          </span>
         </div>
         <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">Pré-Cadastro 360 BancoFé</h1>
         <p class="text-sm text-slate-600 mt-1">
-          Transforme o primeiro contato em uma operação de crédito pré-qualificada com simulação SAC/Price, enquadramento de capacidade e certificação autônoma.
+          Módulo operacional de onboarding e concessão de crédito sob governança do <strong>BancoFé Operações Financeiras</strong>. Consolida 100% dos proponentes, compradores e interessados migrados da base da Casa Nova Imóveis.
         </p>
       </div>
       <div class="flex items-center gap-3">
+        <a href="/admin/backoffice" class="px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl shadow-sm transition flex items-center gap-2 text-xs">
+          <i class="fa-solid fa-arrow-left"></i> Cockpit ERP
+        </a>
         <button onclick="abrirModalNovoPreCadastro()" class="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold rounded-xl shadow-sm transition flex items-center gap-2 text-sm">
           <i class="fa-solid fa-plus"></i> Novo Pré-Cadastro
         </button>
@@ -369,7 +379,10 @@ export function renderizarHtmlPreCadastro(): string {
               <p class="text-slate-500 font-mono text-[11px]">\${item.titular.cpfOuCnpj} • \${item.titular.cidade}/\${item.titular.uf}</p>
             </td>
             <td class="py-3 px-4 text-slate-600 font-medium">
-              <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700">\${item.empresaParceira || 'Direto'}</span>
+              <span class="px-2 py-0.5 rounded font-semibold text-[11px] bg-blue-50 text-blue-800 border border-blue-200">
+                <i class="fa-solid fa-house-chimney text-blue-600 mr-1"></i>\${item.empresaParceira || 'Casa Nova Imóveis'}
+              </span>
+              <p class="text-[10px] text-slate-400 mt-0.5">Origem: \${item.canalOrigem || 'crm_casanova'}</p>
             </td>
             <td class="py-3 px-4">
               <p class="font-bold text-emerald-800">\${valorSol}</p>

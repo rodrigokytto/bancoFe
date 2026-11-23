@@ -77,6 +77,9 @@ export interface RegistroPreCadastroBancoFe {
     cep?: string;
   };
   empresaParceira?: string; // Casa Nova Imóveis, UISA, Dino, Ultra, etc.
+  empresaGestora?: string; // BancoFé Operações Financeiras
+  moduloGestor?: string; // Módulo de Operações Financeiras BancoFé
+  canalOrigem?: string; // crm_casanova, imobiliaria, meta-leads, corban_multibancos
   autorizacaoLgpd: boolean;
   scoreSerasaEstimado?: number;
   dados360Enriquecidos?: Partial<DadosCpfEnriquecidos>;
@@ -111,6 +114,9 @@ export const CriarPreCadastroSchema = z.object({
     "cpr_digital_agro_barter",
   ]),
   empresaParceira: z.string().optional(),
+  empresaGestora: z.string().optional().default("BancoFé Operações Financeiras"),
+  moduloGestor: z.string().optional().default("Módulo de Operações Financeiras BancoFé"),
+  canalOrigem: z.string().optional().default("crm_casanova"),
   valorPretendido: z.number().optional().default(100000),
   prazoMeses: z.number().optional().default(120),
   sistemaAmortizacao: z.enum(["SAC", "PRICE"]).optional().default("SAC"),

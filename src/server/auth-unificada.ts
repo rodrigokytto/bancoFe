@@ -77,6 +77,16 @@ const USUARIOS_AUTORIZADOS: Record<string, Partial<UsuarioSessao>> = {
     ativo: true,
     platformAdmin: true,
   },
+  "rodrigo": {
+    id: "usr-rodrigo-direto",
+    nome: "Rodrigo Ribeiro Gonçalves",
+    email: "rodrigo.goncalves@kytto.com.br",
+    username: "rodrigo",
+    cpf: "305.871.628-13",
+    role: "admin",
+    ativo: true,
+    platformAdmin: true,
+  },
   "30587162813": {
     id: "usr-rodrigo-cpf",
     nome: "Rodrigo Ribeiro Gonçalves",

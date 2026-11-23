@@ -47,7 +47,7 @@ export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/admin
       <h1 class="text-2xl font-extrabold text-white tracking-tight flex items-center justify-center gap-2">
         BancoFé <span class="text-emerald-400">Core PRD</span>
       </h1>
-      <p class="text-xs text-slate-400 mt-1">Holding & Negócios • Google Cloud & Render Global</p>
+      <p class="text-xs text-slate-400 mt-1">Holding & Negócios • Casanova DataGraph • Google Cloud & Render Global</p>
       
       <!-- Badge Institucional Kytto -->
       <div class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/70 border border-emerald-800/60 text-[11px] text-emerald-300">

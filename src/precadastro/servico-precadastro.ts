@@ -22,7 +22,9 @@ export class ServicoPreCadastroBancoFe {
   }
 
   /**
-   * Inicializa a esteira com os cadastros iniciais reais do ecossistema BancoFé, Casanova e UISA
+   * Inicializa a esteira com todos os cadastros reais e potenciais do ecossistema
+   * Casa Nova Imóveis (casanova.kytto.com.br), centralizados e geridos sob o módulo
+   * operacional do BancoFé Operações Financeiras.
    */
   private inicializarBasePreCadastros() {
     const dadosIniciais = [
@@ -46,6 +48,7 @@ export class ServicoPreCadastroBancoFe {
           cep: "78300-112",
         },
         empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "crm_casanova",
         autorizacaoLgpd: true,
         scoreSerasaEstimado: 890,
         valorPretendido: 850000,
@@ -70,7 +73,8 @@ export class ServicoPreCadastroBancoFe {
           logradouro: "Rua Elias Barbosa da Silva, 833",
           cep: "19.262-070",
         },
-        empresaParceira: "Estância Gonçalves / UISA",
+        empresaParceira: "Casa Nova Imóveis & Estância Gonçalves",
+        canalOrigem: "crm_casanova",
         autorizacaoLgpd: true,
         scoreSerasaEstimado: 960,
         valorPretendido: 1500000,
@@ -96,6 +100,7 @@ export class ServicoPreCadastroBancoFe {
           cep: "78300-000",
         },
         empresaParceira: "Casa Nova Imóveis (MCMV)",
+        canalOrigem: "meta-leads",
         autorizacaoLgpd: true,
         scoreSerasaEstimado: 780,
         valorPretendido: 280000,
@@ -120,7 +125,8 @@ export class ServicoPreCadastroBancoFe {
           logradouro: "Rua Antonio Hortolani, Centro",
           cep: "78300-000",
         },
-        empresaParceira: "Dino Barbearia / Kytto",
+        empresaParceira: "Casa Nova Imóveis (Ponto Comercial)",
+        canalOrigem: "crm_casanova",
         autorizacaoLgpd: true,
         scoreSerasaEstimado: 850,
         valorPretendido: 80000,
@@ -145,7 +151,8 @@ export class ServicoPreCadastroBancoFe {
           logradouro: "Centro",
           cep: "78370-000",
         },
-        empresaParceira: "UISA Biorrefinaria",
+        empresaParceira: "Casa Nova Imóveis & UISA",
+        canalOrigem: "crm_casanova",
         autorizacaoLgpd: true,
         scoreSerasaEstimado: 760,
         valorPretendido: 45000,
@@ -170,7 +177,8 @@ export class ServicoPreCadastroBancoFe {
           logradouro: "Jardim Europa",
           cep: "78300-000",
         },
-        empresaParceira: "Construtora Ultra",
+        empresaParceira: "Casa Nova Imóveis & Construtora Ultra",
+        canalOrigem: "crm_casanova",
         autorizacaoLgpd: true,
         scoreSerasaEstimado: 920,
         valorPretendido: 350000,
@@ -195,7 +203,8 @@ export class ServicoPreCadastroBancoFe {
           logradouro: "Rua Elias Barbosa da Silva, 833",
           cep: "19.262-070",
         },
-        empresaParceira: "Kytto Tecnologia",
+        empresaParceira: "Casa Nova Imóveis (Alto Padrão)",
+        canalOrigem: "corban_multibancos",
         autorizacaoLgpd: true,
         scoreSerasaEstimado: 940,
         valorPretendido: 450000,
@@ -220,11 +229,325 @@ export class ServicoPreCadastroBancoFe {
           logradouro: "Zona Rural / Rodovia MT-235",
           cep: "78360-000",
         },
-        empresaParceira: "UISA Barter & BancoFé Agro",
+        empresaParceira: "Casa Nova Imóveis & BancoFé Agro",
+        canalOrigem: "crm_casanova",
         autorizacaoLgpd: true,
         scoreSerasaEstimado: 950,
         valorPretendido: 2500000,
         prazoMeses: 36,
+      },
+      // --- CADASTROS INTEGRADOS DA BASE VIVA CASA NOVA IMÓVEIS (casanova.kytto.com.br) ---
+      {
+        id: "pre-cnv-009",
+        codigoProtocolo: "BFE-PRE-2026-08499",
+        dataCriacao: "2026-11-22T15:00:00.000Z",
+        dataAtualizacao: "2026-11-23T09:10:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "financiamento_imobiliario" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "MARIANA ALENCAR VIEIRA",
+          cpfOuCnpj: "000.000.010-82",
+          cpfLimpo: "00000001082",
+          email: "mariana.alencar@clinicavieira.com.br",
+          telefone: "(65) 99654-2201",
+          rendaMensalDeclarada: 22000,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Rua Sebastião Barreto, Jardim Europa",
+          cep: "78300-000",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "crm_casanova",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 840,
+        valorPretendido: 420000,
+        prazoMeses: 360,
+      },
+      {
+        id: "pre-cnv-010",
+        codigoProtocolo: "BFE-PRE-2026-08500",
+        dataCriacao: "2026-11-22T16:15:00.000Z",
+        dataAtualizacao: "2026-11-23T10:00:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "financiamento_lotes_ultra" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "ROBERTO MENDES DE OLIVEIRA",
+          cpfOuCnpj: "000.000.006-04",
+          cpfLimpo: "00000000604",
+          email: "roberto.mendes@mendesengenharia.com.br",
+          telefone: "(65) 99988-3322",
+          rendaMensalDeclarada: 54000,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Avenida Tancredo Neves, Centro",
+          cep: "78300-050",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "imobiliaria",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 915,
+        valorPretendido: 680000,
+        prazoMeses: 180,
+      },
+      {
+        id: "pre-cnv-011",
+        codigoProtocolo: "BFE-PRE-2026-08501",
+        dataCriacao: "2026-11-22T17:20:00.000Z",
+        dataAtualizacao: "2026-11-23T10:30:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "financiamento_imobiliario" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "LUCAS DIAS DA SILVA",
+          cpfOuCnpj: "000.000.002-72",
+          cpfLimpo: "00000000272",
+          email: "lucas.dias@silvaadvocacia.com.br",
+          telefone: "(65) 99822-1100",
+          rendaMensalDeclarada: 35000,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Rua José Corsino, Tarumã",
+          cep: "78300-000",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "crm_casanova",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 880,
+        valorPretendido: 580000,
+        prazoMeses: 360,
+      },
+      {
+        id: "pre-cnv-012",
+        codigoProtocolo: "BFE-PRE-2026-08502",
+        dataCriacao: "2026-11-22T18:00:00.000Z",
+        dataAtualizacao: "2026-11-23T11:00:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "mcmv_habitacional_popular" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "FERNANDO SILVEIRA",
+          cpfOuCnpj: "000.000.012-44",
+          cpfLimpo: "00000001244",
+          email: "fernando.silveira@agropecuariamt.com.br",
+          telefone: "(65) 99733-4411",
+          rendaMensalDeclarada: 8500,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Bairro Alto da Boa Vista",
+          cep: "78300-000",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "imobiliaria",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 750,
+        valorPretendido: 195000,
+        prazoMeses: 360,
+      },
+      {
+        id: "pre-cnv-013",
+        codigoProtocolo: "BFE-PRE-2026-08503",
+        dataCriacao: "2026-11-22T19:30:00.000Z",
+        dataAtualizacao: "2026-11-23T11:30:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "financiamento_imobiliario" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "DRA. PATRICIA MENDES",
+          cpfOuCnpj: "000.000.014-06",
+          cpfLimpo: "00000001406",
+          email: "patricia.mendes@odontotangara.com.br",
+          telefone: "(65) 99612-8877",
+          rendaMensalDeclarada: 18200,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Rua Celso Rosa Lima, Centro",
+          cep: "78300-000",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "crm_casanova",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 820,
+        valorPretendido: 390000,
+        prazoMeses: 240,
+      },
+      {
+        id: "pre-cnv-014",
+        codigoProtocolo: "BFE-PRE-2026-08504",
+        dataCriacao: "2026-11-22T20:10:00.000Z",
+        dataAtualizacao: "2026-11-23T12:00:00.000Z",
+        status: "em_qualificacao" as StatusPreCadastro,
+        produtoPretendido: "mcmv_habitacional_popular" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "CAUÃ ANGELOTTI GONÇALVES",
+          cpfOuCnpj: "000.000.005-15",
+          cpfLimpo: "00000000515",
+          email: "caua.goncalves@estudante.ufmt.br",
+          telefone: "(65) 99933-2211",
+          rendaMensalDeclarada: 3500,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Bairro Vila Alta",
+          cep: "78300-000",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "meta-leads",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 710,
+        valorPretendido: 140000,
+        prazoMeses: 360,
+      },
+      {
+        id: "pre-cnv-015",
+        codigoProtocolo: "BFE-PRE-2026-08505",
+        dataCriacao: "2026-11-22T21:00:00.000Z",
+        dataAtualizacao: "2026-11-23T12:15:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "financiamento_imobiliario" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "JOISE CRISTIANE ANGELOTTI",
+          cpfOuCnpj: "000.000.003-53",
+          cpfLimpo: "00000000353",
+          email: "joise.angelotti@tangaraeduc.gov.br",
+          telefone: "(65) 99877-5544",
+          rendaMensalDeclarada: 14500,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Rua Manoel Dionísio Sobrinho",
+          cep: "78300-000",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "crm_casanova",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 810,
+        valorPretendido: 260000,
+        prazoMeses: 240,
+      },
+      {
+        id: "pre-cnv-016",
+        codigoProtocolo: "BFE-PRE-2026-08506",
+        dataCriacao: "2026-11-22T22:00:00.000Z",
+        dataAtualizacao: "2026-11-23T13:00:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "financiamento_imobiliario" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "LUCAS DOS PASSOS SILVA",
+          cpfOuCnpj: "069.887.226-61",
+          cpfLimpo: "06988722661",
+          email: "lucas.passos@consultoriams.com.br",
+          telefone: "(65) 99911-7788",
+          rendaMensalDeclarada: 45000,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Rua Lions Internacional, Centro",
+          cep: "78300-000",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "corban_multibancos",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 930,
+        valorPretendido: 620000,
+        prazoMeses: 360,
+      },
+      {
+        id: "pre-cnv-017",
+        codigoProtocolo: "BFE-PRE-2026-08507",
+        dataCriacao: "2026-11-23T07:45:00.000Z",
+        dataAtualizacao: "2026-11-23T13:30:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "financiamento_lotes_ultra" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "MARCOS VINÍCIUS DE ALMEIDA",
+          cpfOuCnpj: "234.567.890-12",
+          cpfLimpo: "23456789012",
+          email: "marcos.almeida@transnorte.com.br",
+          telefone: "(65) 99833-4455",
+          rendaMensalDeclarada: 16800,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Bairro Jardim dos Ipês",
+          cep: "78300-000",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "imobiliaria",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 835,
+        valorPretendido: 320000,
+        prazoMeses: 180,
+      },
+      {
+        id: "pre-cnv-018",
+        codigoProtocolo: "BFE-PRE-2026-08508",
+        dataCriacao: "2026-11-23T08:15:00.000Z",
+        dataAtualizacao: "2026-11-23T14:00:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "financiamento_imobiliario" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "JULIANA FERREIRA LIMA",
+          cpfOuCnpj: "567.890.123-45",
+          cpfLimpo: "56789012345",
+          email: "juliana.lima@arquiteturamt.com.br",
+          telefone: "(65) 99622-3344",
+          rendaMensalDeclarada: 12500,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Residencial Manacá",
+          cep: "78300-000",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "crm_casanova",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 815,
+        valorPretendido: 295000,
+        prazoMeses: 300,
+      },
+      {
+        id: "pre-cnv-019",
+        codigoProtocolo: "BFE-PRE-2026-08509",
+        dataCriacao: "2026-11-23T08:45:00.000Z",
+        dataAtualizacao: "2026-11-23T14:30:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "capital_giro_pj" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "CASANOVA EMPREENDIMENTOS IMOBILIÁRIOS LTDA",
+          cpfOuCnpj: "18.987.654/0001-99",
+          cpfLimpo: "18987654000199",
+          email: "diretoria@casanova.kytto.com.br",
+          telefone: "(65) 99988-1001",
+          rendaMensalDeclarada: 4500000,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Avenida Brasil, Centro",
+          cep: "78300-000",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "crm_casanova",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 920,
+        valorPretendido: 4500000,
+        prazoMeses: 36,
+      },
+      {
+        id: "pre-cnv-020",
+        codigoProtocolo: "BFE-PRE-2026-08510",
+        dataCriacao: "2026-11-23T09:10:00.000Z",
+        dataAtualizacao: "2026-11-23T15:00:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "capital_giro_pj" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "CONSTRUTORA CASA NOVA IMÓVEIS LTDA",
+          cpfOuCnpj: "03.456.789/0001-88",
+          cpfLimpo: "03456789000188",
+          email: "contato@casanovaimoveis.com.br",
+          telefone: "(65) 3326-1020",
+          rendaMensalDeclarada: 3200000,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Avenida Brasil, Centro",
+          cep: "78300-000",
+        },
+        empresaParceira: "Casa Nova Imóveis",
+        canalOrigem: "corban_multibancos",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 890,
+        valorPretendido: 3200000,
+        prazoMeses: 48,
       },
     ];
 
@@ -257,6 +580,9 @@ export class ServicoPreCadastroBancoFe {
         produtoPretendido: d.produtoPretendido,
         titular: d.titular,
         empresaParceira: d.empresaParceira,
+        empresaGestora: "BancoFé Operações Financeiras",
+        moduloGestor: "Módulo de Operações Financeiras BancoFé",
+        canalOrigem: (d as any).canalOrigem || "crm_casanova",
         autorizacaoLgpd: d.autorizacaoLgpd,
         scoreSerasaEstimado: d.scoreSerasaEstimado,
         dados360Enriquecidos: obterClientePorCpf(d.titular.cpfLimpo) || undefined,
@@ -266,8 +592,8 @@ export class ServicoPreCadastroBancoFe {
         historicoNotas: [
           {
             data: d.dataCriacao,
-            autor: "Sistema Automático BancoFé",
-            nota: `Pré-cadastro registrado via canal ${d.empresaParceira}. Enriquecimento cadastral 360, SCR Bacen e Mesa de Risco executados.`,
+            autor: "BancoFé Operações Financeiras • Motor de Crédito",
+            nota: `Pré-cadastro importado e consolidado da base Casa Nova Imóveis (${(d as any).canalOrigem || "crm_casanova"}). Gestão direta sob a vertical BancoFé Operações Financeiras.`,
           },
         ],
       };
@@ -298,92 +624,85 @@ export class ServicoPreCadastroBancoFe {
       docs.push({ id: "doc-12", descricao: "Certidão de Inteiro Teor da Matrícula do Imóvel com Negativa de Ônus (< 30 dias)", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
       docs.push({ id: "doc-13", descricao: "Laudo de Avaliação Mercadológica de Engenharia", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
     } else if (produto === "financiamento_lotes_ultra") {
-      docs.push({ id: "doc-14", descricao: "Quadro Resumo de Reserva do Lote / Construtora Ultra", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
+      docs.push({ id: "doc-14", descricao: "Certidão de Regularidade Urbanística e Matrícula Individualizada do Lote", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
+      docs.push({ id: "doc-15", descricao: "Memorial Descritivo do Loteamento e Termo de Vistoria", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
     }
 
     return docs;
   }
 
+  /**
+   * Cálculo de amortização SAC ou Price com enquadramento de margem de 30% da renda líquida
+   */
   public calcularSimulacaoCredito(
-    valor: number,
+    valorSolicitado: number,
     prazoMeses: number,
-    sistema: "SAC" | "PRICE",
+    sistemaAmortizacao: "SAC" | "PRICE" = "SAC",
     rendaMensal: number,
-    score = 800,
-    registroId = "pre-auto",
-    nomeTitular = "Cliente BancoFé",
-    produto: ProdutoPretendidoBancoFe = "financiamento_imobiliario"
+    scoreSerasaEstimado: number = 750,
+    preCadastroId?: string,
+    nomeTitular?: string,
+    produtoPretendido: ProdutoPretendidoBancoFe = "financiamento_imobiliario"
   ): SimulacaoCreditoPreCadastro {
-    // Taxa base adaptativa por produto e score
-    let taxaMensal = 0.89; // padrão
-
-    if (produto === "mcmv_habitacional_popular") {
-      taxaMensal = 0.58; // MCMV subsidiado
-    } else if (produto === "emprestimo_consignado") {
-      taxaMensal = 0.79; // Consignado folha
-    } else if (produto === "credito_rural_agro" || produto === "cpr_digital_agro_barter") {
-      taxaMensal = 0.75; // Agro Custeio / CPR
-    } else if (produto === "home_equity_garantia_imovel") {
-      taxaMensal = 0.85; // Home Equity com garantia real
-    } else if (produto === "financiamento_lotes_ultra") {
-      taxaMensal = 0.95; // Lotes até 180 meses
-    } else if (produto === "capital_giro_pj") {
-      taxaMensal = 1.15; // Giro PJ
-    } else {
-      // Financiamento Imobiliário SBPE
-      if (score >= 900) taxaMensal = 0.79;
-      else if (score >= 800) taxaMensal = 0.85;
-      else if (score >= 700) taxaMensal = 0.99;
-      else taxaMensal = 1.15;
+    let taxaMensal = 0.0095; // 0.95% a.m. padrão
+    if (produtoPretendido === "mcmv_habitacional_popular") {
+      taxaMensal = 0.0058;
+    } else if (produtoPretendido === "credito_rural_agro" || produtoPretendido === "cpr_digital_agro_barter") {
+      taxaMensal = 0.0075;
+    } else if (produtoPretendido === "capital_giro_pj") {
+      taxaMensal = 0.0125;
+    } else if (produtoPretendido === "emprestimo_consignado") {
+      taxaMensal = 0.0155;
+    } else if (produtoPretendido === "cartao_credito_black") {
+      taxaMensal = 0.0195;
+    } else if (produtoPretendido === "home_equity_garantia_imovel") {
+      taxaMensal = 0.0085;
+    } else if (produtoPretendido === "financiamento_lotes_ultra") {
+      taxaMensal = 0.0095;
     }
-
     let primeiraParcela = 0;
-    if (sistema === "SAC") {
-      const amortizacao = valor / prazoMeses;
-      const jurosInicial = valor * (taxaMensal / 100);
-      primeiraParcela = amortizacao + jurosInicial;
+
+    if (sistemaAmortizacao === "SAC") {
+      const amortizacaoConstante = valorSolicitado / prazoMeses;
+      const jurosPrimeiroMes = valorSolicitado * taxaMensal;
+      primeiraParcela = Math.round((amortizacaoConstante + jurosPrimeiroMes) * 100) / 100;
     } else {
-      // PRICE: P = V * (i * (1+i)^n) / ((1+i)^n - 1)
-      const i = taxaMensal / 100;
-      const n = prazoMeses;
-      const fator = Math.pow(1 + i, n);
-      primeiraParcela = valor * ((i * fator) / (fator - 1));
+      const fator = Math.pow(1 + taxaMensal, prazoMeses);
+      primeiraParcela = Math.round((valorSolicitado * ((taxaMensal * fator) / (fator - 1))) * 100) / 100;
     }
 
-    const capacidade30 = rendaMensal * 0.3;
-    const comprometimento = Math.round((primeiraParcela / (rendaMensal || 1)) * 1000) / 10;
-    const aprovado = primeiraParcela <= capacidade30 && score >= 700;
+    const capacidade30 = Math.round(rendaMensal * 0.3 * 100) / 100;
+    const comprometimento = Math.round((primeiraParcela / rendaMensal) * 1000) / 10;
+    const aprovado = primeiraParcela <= capacidade30 && scoreSerasaEstimado >= 650;
 
     let certificado: CertificadoAprovacaoAutonoma | undefined = undefined;
     if (aprovado) {
-      const hash = createHash("sha256")
-        .update(`${registroId}:${valor}:${prazoMeses}:${taxaMensal}:${produto}:BANCOFE_2026`)
-        .digest("hex")
-        .toUpperCase()
-        .slice(0, 32);
+      const payloadCertificado = `${nomeTitular || "TITULAR"}|${valorSolicitado}|${prazoMeses}|${sistemaAmortizacao}|${new Date().toISOString()}`;
+      const hash = `SHA256:${createHash("sha256").update(payloadCertificado).digest("hex")}`;
+      const codCert = `CERT-BFE-${Date.now().toString(36).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
 
       certificado = {
-        codigoCertificado: `CERT-BFE-${new Date().getFullYear()}-${hash.slice(0, 8)}`,
+        codigoCertificado: codCert,
         emitidoEm: new Date().toISOString(),
-        hashSha256: `SHA256:${hash}`,
-        limiteAprovado: valor,
+        hashSha256: hash,
+        limiteAprovado: valorSolicitado,
         prazoMesesAprovado: prazoMeses,
-        sistema,
-        taxaJurosMensal: taxaMensal,
+        sistema: sistemaAmortizacao,
+        taxaJurosMensal: Math.round(taxaMensal * 10000) / 100,
         validadeDias: 60,
-        instituicaoEmissora: "BANCO FÉ - CRÉDITO INTELIGENTE 360",
-        produtoNome: produto.replace(/_/g, " ").toUpperCase(),
-        qrCodeValidacao: `https://bancofe.com.br/validar/${hash.slice(0, 12)}`,
+        instituicaoEmissora: "BancoFé Operações Financeiras & Correspondente Bacen",
+        produtoNome: produtoPretendido.replace(/_/g, " ").toUpperCase(),
+        qrCodeValidacao: `https://erp-bancofe-5xsi5uyoda-rj.a.run.app/validar-certificado?cod=${codCert}&hash=${hash.slice(7, 23)}`,
       };
     }
 
     return {
-      valorSolicitado: valor,
+      valorSolicitado,
       prazoMeses,
-      sistemaAmortizacao: sistema,
-      taxaJurosMensal: taxaMensal,
-      valorPrimeiraParcela: Math.round(primeiraParcela * 100) / 100,
-      capacidadeParcela30Pct: Math.round(capacidade30 * 100) / 100,
+      sistemaAmortizacao,
+      taxaJurosMensal: Math.round(taxaMensal * 10000) / 100,
+      valorPrimeiraParcela: primeiraParcela,
+      capacidadeParcela30Pct: capacidade30,
       comprometimentoRendaPct: comprometimento,
       aprovadoAutomaticamente: aprovado,
       motivoStatus: aprovado
@@ -397,6 +716,7 @@ export class ServicoPreCadastroBancoFe {
     status?: StatusPreCadastro;
     produto?: ProdutoPretendidoBancoFe;
     termo?: string;
+    origem?: string;
   }): RegistroPreCadastroBancoFe[] {
     let lista = Array.from(this.registros.values());
     if (!filtros) return lista;
@@ -407,6 +727,14 @@ export class ServicoPreCadastroBancoFe {
     if (filtros.produto) {
       lista = lista.filter((r) => r.produtoPretendido === filtros.produto);
     }
+    if (filtros.origem) {
+      const o = filtros.origem.toLowerCase().trim();
+      lista = lista.filter(
+        (r) =>
+          (r.empresaParceira && r.empresaParceira.toLowerCase().includes(o)) ||
+          (r.canalOrigem && r.canalOrigem.toLowerCase().includes(o))
+      );
+    }
     if (filtros.termo) {
       const t = filtros.termo.toLowerCase().trim();
       lista = lista.filter(
@@ -414,7 +742,9 @@ export class ServicoPreCadastroBancoFe {
           r.titular.nomeCompleto.toLowerCase().includes(t) ||
           r.titular.cpfOuCnpj.includes(t) ||
           r.codigoProtocolo.toLowerCase().includes(t) ||
-          r.titular.cidade.toLowerCase().includes(t)
+          r.titular.cidade.toLowerCase().includes(t) ||
+          (r.empresaParceira && r.empresaParceira.toLowerCase().includes(t)) ||
+          (r.canalOrigem && r.canalOrigem.toLowerCase().includes(t))
       );
     }
 
@@ -464,18 +794,18 @@ export class ServicoPreCadastroBancoFe {
       scoreBureauReferencia: scoreSerasa,
     });
 
-    const statusInicial: StatusPreCadastro = simulacao.aprovadoAutomaticamente && parecerMesa.decisaoFinal !== "RECUSADO_POLITICA_RISCO" && parecerMesa.decisaoFinal !== "CONDICIONADO_AVALISTA_OU_GARANTIA"
+    const status: StatusPreCadastro = simulacao.aprovadoAutomaticamente
       ? "aprovado_autonomo"
-      : "em_qualificacao";
+      : "mesa_credito";
 
-    const pendencias = this.gerarPendenciasPadrao(validado.produtoPretendido, statusInicial);
+    const pendencias = this.gerarPendenciasPadrao(validado.produtoPretendido, status);
 
-    const novo: RegistroPreCadastroBancoFe = {
+    const item: RegistroPreCadastroBancoFe = {
       id,
       codigoProtocolo,
       dataCriacao: new Date().toISOString(),
       dataAtualizacao: new Date().toISOString(),
-      status: statusInicial,
+      status,
       produtoPretendido: validado.produtoPretendido,
       titular: {
         nomeCompleto: validado.nomeCompleto,
@@ -487,7 +817,10 @@ export class ServicoPreCadastroBancoFe {
         cidade: validado.cidade,
         uf: validado.uf,
       },
-      empresaParceira: validado.empresaParceira || "BancoFé Direto",
+      empresaParceira: validado.empresaParceira || "Casa Nova Imóveis",
+      empresaGestora: "BancoFé Operações Financeiras",
+      moduloGestor: "Módulo de Operações Financeiras BancoFé",
+      canalOrigem: validado.canalOrigem || "crm_casanova",
       autorizacaoLgpd: validado.autorizacaoLgpd,
       scoreSerasaEstimado: scoreSerasa,
       dados360Enriquecidos: dossie360 || undefined,
@@ -497,14 +830,14 @@ export class ServicoPreCadastroBancoFe {
       historicoNotas: [
         {
           data: new Date().toISOString(),
-          autor: "Portal Pré-Cadastro BancoFé",
-          nota: `Entrada de proposta registrada. Rating BancoFé ${parecerMesa.ratingBancoFe} (Score ${parecerMesa.scoreBancoFe}) com decisão: ${parecerMesa.decisaoFinal}.`,
+          autor: "BancoFé Operações Financeiras • Motor de Crédito",
+          nota: `Proponente cadastrado na esteira operacional de BancoFé Operações Financeiras (origem: ${validado.empresaParceira || "Casa Nova Imóveis"}). Dossiê 360, SCR Bacen e motor de scoring ativados.`,
         },
       ],
     };
 
-    this.registros.set(id, novo);
-    return novo;
+    this.registros.set(id, item);
+    return item;
   }
 
   public atualizarStatus(id: string, novoStatus: StatusPreCadastro, nota?: string): RegistroPreCadastroBancoFe | null {
@@ -516,7 +849,7 @@ export class ServicoPreCadastroBancoFe {
     if (nota) {
       r.historicoNotas.push({
         data: new Date().toISOString(),
-        autor: "Comitê de Crédito BancoFé",
+        autor: "BancoFé Operações Financeiras • Comitê de Crédito",
         nota,
       });
     }
@@ -552,15 +885,27 @@ export class ServicoPreCadastroBancoFe {
       .filter((r) => r.status === "aprovado_autonomo")
       .reduce((acc, r) => acc + (r.simulacao?.certificado?.limiteAprovado || 0), 0);
 
+    const cadastrosCasaNova = todos.filter(
+      (r) => (r.empresaParceira && r.empresaParceira.includes("Casa Nova")) || (r.canalOrigem && r.canalOrigem.includes("casanova"))
+    ).length;
+
+    const volumeCasaNova = todos
+      .filter((r) => (r.empresaParceira && r.empresaParceira.includes("Casa Nova")) || (r.canalOrigem && r.canalOrigem.includes("casanova")))
+      .reduce((acc, r) => acc + (r.simulacao?.valorSolicitado || 0), 0);
+
     return {
       totalCadastrados: total,
       totalPreCadastros: total,
+      totalCasaNova: cadastrosCasaNova,
+      volumeTotalSolicitado,
+      volumeTotalAprovado,
+      volumeCasaNova,
       aprovados,
       emQualificacao,
       pendentesDocumentos: pendentes,
       taxaAprovacao: total > 0 ? Math.round((aprovados / total) * 100) : 0,
-      volumeTotalSolicitado,
-      volumeTotalAprovado,
+      empresaGestora: "BancoFé Operações Financeiras",
+      moduloGestor: "Módulo de Operações Financeiras BancoFé",
     };
   }
 }

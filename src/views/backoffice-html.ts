@@ -184,19 +184,28 @@ export function renderizarHtmlBackoffice(usuario?: any): string {
                 <i class="fa-solid fa-landmark"></i>
               </div>
               <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-700/60 uppercase">
-                Financeira & CDC
+                Financeira & Hub de Crédito
               </span>
             </div>
             <h3 class="text-lg font-bold text-white">BancoFé Operações Financeiras</h3>
             <p class="text-xs text-slate-300 mt-1">
-              Motor de crédito completo: simulação de empréstimos CDC, gestão de parcelas, emissão de boletos bancários com código de barras, PIX Copia e Cola, e quitação antecipada.
+              Vertical bancária e de crédito da holding: opera a Esteira Oficial de Pré-Cadastro (integrada com 100% da base de interessados e proponentes de Casa Nova Imóveis), Gestão de Empréstimos CDC, Boletos com Código de Barras, DICT Pix e Vault Seguro.
             </p>
             <div class="mt-4 pt-4 border-t border-slate-800 space-y-2">
+              <a href="/plataforma/precadastro" class="block w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition">
+                <i class="fa-solid fa-user-check mr-1.5"></i> Esteira de Pré-Cadastro (Base Casa Nova)
+              </a>
               <a href="/gestao-emprestimos" class="block w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition">
                 <i class="fa-solid fa-sliders mr-1.5"></i> Gestão de Empréstimos & Contratos
               </a>
+              <a href="/plataforma/consulta-cpf" class="block w-full py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs text-center border border-slate-700 transition">
+                <i class="fa-solid fa-magnifying-glass mr-1.5"></i> Consulta 360 CPF & Bureaus
+              </a>
               <a href="/portal-cliente" class="block w-full py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs text-center border border-slate-700 transition">
-                <i class="fa-solid fa-user mr-1.5"></i> Acessar Portal do Cliente
+                <i class="fa-solid fa-user mr-1.5"></i> Portal do Cliente & Boletos
+              </a>
+              <a href="/termos-digitais" class="block w-full py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs text-center border border-slate-700 transition">
+                <i class="fa-solid fa-file-contract mr-1.5"></i> Central de Termos & Vault Seguro
               </a>
             </div>
           </div>
@@ -236,16 +245,16 @@ export function renderizarHtmlBackoffice(usuario?: any): string {
                 <i class="fa-solid fa-house-chimney"></i>
               </div>
               <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-950 text-blue-300 border border-blue-700/60 uppercase">
-                Imobiliária & Leads
+                Imobiliária & Lançamentos
               </span>
             </div>
-            <h3 class="text-lg font-bold text-white">Casa Nova & Base Pré-Cadastro</h3>
+            <h3 class="text-lg font-bold text-white">Casa Nova Imóveis & Construtora</h3>
             <p class="text-xs text-slate-300 mt-1">
-              Base viva de clientes potenciais migrada da Casa Nova Imóveis. Gestão de oportunidades de financiamento imobiliário e checklist documental completo de 13 itens.
+              Imobiliária, Incorporadora e Construtora: captação de imóveis, loteamentos em Tangará da Serra e originação contínua de cadastros e leads imobiliários, processados e financiados diretamente pelo módulo do BancoFé Operações Financeiras.
             </p>
             <div class="mt-4 pt-4 border-t border-slate-800 space-y-2">
               <a href="/plataforma/precadastro" class="block w-full py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs text-center transition">
-                <i class="fa-solid fa-user-check mr-1.5"></i> Pré-Cadastros & Oportunidades
+                <i class="fa-solid fa-users-viewfinder mr-1.5"></i> Ver Cadastros de Casa Nova no BancoFé
               </a>
               <a href="/plataforma/clientes-potenciais" class="block w-full py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs text-center border border-slate-700 transition">
                 <i class="fa-solid fa-crosshairs mr-1.5"></i> Radar de Prospecção Regional
@@ -363,7 +372,7 @@ export function renderizarHtmlBackoffice(usuario?: any): string {
               <td class="py-3 px-4 font-mono text-xs">53.338.003/0001-04</td>
               <td class="py-3 px-4">Operações Financeiras & Crédito</td>
               <td class="py-3 px-4">Nova Olímpia / Tangará - MT</td>
-              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-xs bg-emerald-950 text-emerald-300">Todos (100%)</span></td>
+              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-xs bg-emerald-950 text-emerald-300">Pré-Cadastro Casa Nova, CDC, 360, Vault</span></td>
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs bg-emerald-500/20 text-emerald-400 font-bold">No Ar</span></td>
             </tr>
             <tr class="hover:bg-slate-800/40 transition">
@@ -381,9 +390,9 @@ export function renderizarHtmlBackoffice(usuario?: any): string {
                 <i class="fa-solid fa-building text-blue-400"></i> Casa Nova Imóveis & Construtora
               </td>
               <td class="py-3 px-4 font-mono text-xs">03.882.498/0001-10</td>
-              <td class="py-3 px-4">Imobiliária & Pré-Cadastro</td>
+              <td class="py-3 px-4">Imobiliária & Lançamentos</td>
               <td class="py-3 px-4">Tangará da Serra - MT</td>
-              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-xs bg-emerald-950 text-emerald-300">CRM, 360, Leads</span></td>
+              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-xs bg-emerald-950 text-emerald-300">CRM, Imóveis, Roleta Leads</span></td>
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs bg-emerald-500/20 text-emerald-400 font-bold">No Ar</span></td>
             </tr>
             <tr class="hover:bg-slate-800/40 transition">
