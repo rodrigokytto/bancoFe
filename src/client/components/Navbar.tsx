@@ -11,6 +11,10 @@ import {
   Sprout,
   Coins,
   UserCheck,
+  Search,
+  Calculator,
+  Target,
+  Settings,
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -30,6 +34,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const tabs = [
     { id: 'cockpit', label: 'Hub Geral', icon: Activity },
+    { id: 'consulta360', label: 'Consulta 360° CPF/CNPJ', icon: Search, highlight: true },
+    { id: 'precadastro', label: 'Pré-Cadastro 10x', icon: Calculator, highlight: true },
+    { id: 'radar', label: 'Radar MT & Empresas', icon: Target, highlight: true },
     { id: 'pix', label: 'Pix & DICT', icon: Sparkles },
     { id: 'boletos', label: 'Boletos/CNAB', icon: Landmark },
     { id: 'open-finance', label: 'Open Finance', icon: Share2 },
@@ -37,6 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'agro', label: 'Agro CPR', icon: Sprout },
     { id: 'drex', label: 'Web3 Drex', icon: Coins },
     { id: 'bureau', label: 'Bureau Crédito', icon: UserCheck },
+    { id: 'admin-modulos', label: 'Gestão de Módulos', icon: Settings },
     { id: 'mcp', label: 'MCP Protocol', icon: Cpu },
     { id: 'skills', label: 'Skills de IA', icon: ShieldCheck },
     { id: 'ledger', label: 'Livro Razão', icon: Landmark },
@@ -100,6 +108,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
                   isActive
                     ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20 font-bold'
+                    : (tab as any).highlight
+                    ? 'bg-slate-800/80 text-emerald-300 border border-emerald-500/30 hover:bg-slate-800'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
                 }`}
               >

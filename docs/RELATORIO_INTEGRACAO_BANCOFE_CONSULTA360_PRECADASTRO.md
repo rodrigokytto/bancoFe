@@ -214,6 +214,33 @@ A plataforma dispõe de dois mecanismos complementares de deploy em produção:
 1. **Script de Deploy Automatizado (`deploy_gcp.sh`)**: Executável local ou via terminal com login autenticado em `rodrigo.goncalves@kytto.com.br`, criação automática de repositórios no Artifact Registry e deploy com flags de produção.
 2. **Pipeline de Integração Contínua GitHub Actions (`.github/workflows/deploy-gcp.yml`)**: Disparo automático a cada push na branch `main`, com compilação Vite/esbuild, testes unitários prévios e publicação segura no Cloud Run.
 
+### 4.4. Evolução da Experiência do Usuário (UX/UI Fintech Luxury & Mobile First)
+
+Para proporcionar uma experiência visual e operacional no estado da arte para executivos, analistas de crédito e clientes em dispositivos móveis (incluindo o app móvel Manus iPhone), a camada frontend do BancoFé foi enriquecida com quatro novos módulos React interativos:
+
+1. **`Consulta360Terminal.tsx`**:
+   - Dossiê 360° interativo com alternância dinâmica entre as abas Cadastro, SICAR Ambiental ESG, SCR Bacen Registrato, Protestos CENPROT / Matrículas ONR e Mesa de Crédito Algorítmica;
+   - Indicador visual animado de Score (0 a 1000) e Rating Institucional (AAA a D);
+   - Checagem automática de Reserva Legal (35% no bioma Cerrado) e embargos IBAMA/SEMA-MT;
+   - Ação rápida de exportação do Laudo Pericial em PDF formatado e consulta direta à API REST JSON.
+
+2. **`PreCadastroProdutosTerminal.tsx`**:
+   - Simulador interativo em tempo real para as 10 modalidades de produtos de crédito (MCMV 0,58%, Consignado 0,79%, Agro CPR 0,75%, Habitacional 0,85%, Home Equity 0,85%, Veículos 1,10%, Giro PJ 1,15%, Grãos 0,80%, Solar 0,89%, Microcrédito 0,99%);
+   - Sliders táteis de valor pretendido e prazo de amortização com cálculo instantâneo da parcela (Tabela Price), juros totais e comprometimento prudencial de renda (máximo 35%);
+   - Emissão instantânea de Certificado Digital de Pré-Aprovação com protocolo e parecer da mesa.
+
+3. **`RadarProspeccaoTerminal.tsx`**:
+   - Cockpit de prospecção comercial com os 26 perfis qualificados e o catálogo das 20 grandes companhias de Tangará da Serra e Mato Grosso (UISA, Coprodia, JBS, Amaggi, Sicredi, Agro Baggio, Bom Futuro, Cargill, etc.);
+   - Filtros dinâmicos por segmento (Agro, Usinas, PME, Servidores, Aposentados INSS, Alta Renda) e ordenação por Probabilidade de Conversão Comercial;
+   - Disparo integrado de abordagem via WhatsApp institucional.
+
+4. **`AdminModulosTerminal.tsx`**:
+   - Painel de governança e controle de microsserviços com switches e toggles em tempo real;
+   - Monitoramento de latência em milissegundos e conformidade regulatória com o Banco Central e LGPD.
+
+5. **Integração na Navegação do Ecossistema (`client/src/navigation.config.ts`)**:
+   - O módulo **BancoFé Banking & Crédito** foi incorporado à barra de navegação global com o selo institucional **ISPB 799**, permitindo transição fluida entre as ferramentas de gestão comercial, CRM e as operações bancárias periciais.
+
 ---
 
 ## 5. Conclusão

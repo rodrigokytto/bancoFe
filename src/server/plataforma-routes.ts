@@ -118,6 +118,120 @@ export function registerPlataformaWebAndApis(app: any) {
     res.send(renderizarHtmlAdminModulos());
   });
 
+  app.get("/consulta-360", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlConsultaCpf());
+  });
+
+  app.get("/consulta-360-completa", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlConsultaCpf());
+  });
+
+  app.get("/consulta-360-visual", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlConsultaCpf());
+  });
+
+  app.get("/precadastro", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlPreCadastro());
+  });
+
+  app.get("/precadastro-produtos", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlPreCadastro());
+  });
+
+  app.get("/radar-prospeccao", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlClientesPotenciais());
+  });
+
+  app.get("/empresas-regiao", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlClientesPotenciais());
+  });
+
+  app.get("/admin/modulos", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlAdminModulos());
+  });
+
+  app.get("/admin/configuracoes", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlAdminModulos());
+  });
+
+  app.get("/api/v1/compliance/sicar/resumo", (_req: Request, res: Response) => {
+    res.json({
+      modulo: "Compliance Ambiental SICAR / SEMA-MT / ESG",
+      reservaLegalObrigatoriaCerradoPct: 35.0,
+      fontesIntegradas: ["SICAR Federal", "SEMA-MT", "IBAMA Embargos", "CGFE Trabalho Escravo", "Moratória da Soja"],
+      status: "ONLINE",
+    });
+  });
+
+  app.get("/api/v1/credito/scr/resumo", (_req: Request, res: Response) => {
+    res.json({
+      modulo: "SCR Bacen / Registrato Analítico",
+      resolucaoCMN: "2.682/1999",
+      ratingsSuportados: ["AA", "A", "B", "C", "D", "E", "F", "G", "H"],
+      faixasVencimento: ["a_vencer", "15_a_30_dias", "31_a_60_dias", "61_a_90_dias", "prejuizo"],
+      status: "ONLINE",
+    });
+  });
+
+  app.get("/api/v1/credito/cartorios/resumo", (_req: Request, res: Response) => {
+    res.json({
+      modulo: "Central de Protestos CENPROT & Matrículas ONR",
+      sistemasIntegrados: ["IEPTB / CENPROT", "ONR Registro Imobiliário Eletrônico", "SREI"],
+      homeEquityElegivelMaxLtv: 0.60,
+      status: "ONLINE",
+    });
+  });
+
+  app.get("/api/v1/credito/mesa/analisar", (req: Request, res: Response) => {
+    const doc = (req.query.cpfOuCnpj as string) || "04596128000144";
+    const parecer = executarAnaliseMesaCredito({ cpfCnpj: doc });
+    res.json(parecer);
+  });
+
+  app.get("/api/v1/precadastro/produtos", (_req: Request, res: Response) => {
+    res.json({
+      total: 10,
+      produtos: [
+        { id: "mcmv", nome: "Minha Casa Minha Vida", taxaMensal: 0.58, garantia: "Alienação Fiduciária" },
+        { id: "consignado", nome: "Crédito Consignado INSS/Servidores", taxaMensal: 0.79, garantia: "Desconto em Folha" },
+        { id: "agro_cpr", nome: "Crédito Rural CPR Física e Financeira", taxaMensal: 0.75, garantia: "Penhor de Safra" },
+        { id: "habitacional", nome: "Financiamento Habitacional SBPE", taxaMensal: 0.85, garantia: "Imóvel Residencial/Comercial" },
+        { id: "home_equity", nome: "Home Equity Giro com Garantia Imóvel", taxaMensal: 0.85, garantia: "Imóvel livre de ônus (LTV até 60%)" },
+        { id: "veiculos", nome: "Financiamento Veicular & Frotas", taxaMensal: 1.10, garantia: "Gravame Renavam" },
+        { id: "giro_pj", nome: "Capital de Giro PJ / FGI Peac", taxaMensal: 1.15, garantia: "Aval dos Sócios" },
+        { id: "graos", nome: "Garantia de Safra / Grãos Armazenados", taxaMensal: 0.80, garantia: "CDA / WA Armazém Conab" },
+        { id: "solar", nome: "Financiamento de Energia Solar", taxaMensal: 0.89, garantia: "Equipamento Fotovoltaico" },
+        { id: "microcredito", nome: "Microcrédito Produtivo Orientado", taxaMensal: 0.99, garantia: "Aval Solidário / MEI" },
+      ],
+    });
+  });
+
+  app.get("/api/v1/precadastro/simular", (req: Request, res: Response) => {
+    const valor = Number(req.query.valor) || 150000;
+    const prazo = Number(req.query.prazoMeses) || 120;
+    const taxa = Number(req.query.taxaMensal) || 0.75;
+    const i = taxa / 100;
+    const parcela = (valor * (i * Math.pow(1 + i, prazo))) / (Math.pow(1 + i, prazo) - 1);
+    res.json({
+      valorSolicitado: valor,
+      prazoMeses: prazo,
+      taxaMensalPct: taxa,
+      parcelaMensalEstimada: Number(parcela.toFixed(2)),
+      totalEstimado: Number((parcela * prazo).toFixed(2)),
+      cetAnualEstimado: Number((Math.pow(1 + i, 12) - 1) * 100).toFixed(2) + "%",
+      status: "SIMULACAO_DISPONIVEL",
+    });
+  });
+
   // ==========================================
   // 2. APIS DE COMPLIANCE & CRÉDITO 360
   // ==========================================

@@ -11,6 +11,10 @@ import { BureauTerminal } from './components/BureauTerminal';
 import { McpCockpit } from './components/McpCockpit';
 import { SkillRunner } from './components/SkillRunner';
 import { LedgerExplorer } from './components/LedgerExplorer';
+import { Consulta360Terminal } from './components/Consulta360Terminal';
+import { PreCadastroProdutosTerminal } from './components/PreCadastroProdutosTerminal';
+import { RadarProspeccaoTerminal } from './components/RadarProspeccaoTerminal';
+import { AdminModulosTerminal } from './components/AdminModulosTerminal';
 import { IntegrationRegistry } from '../integrations/registry';
 
 export const App: React.FC = () => {
@@ -94,6 +98,12 @@ export const App: React.FC = () => {
           />
         )}
 
+        {activeTab === 'consulta360' && <Consulta360Terminal />}
+
+        {activeTab === 'precadastro' && <PreCadastroProdutosTerminal />}
+
+        {activeTab === 'radar' && <RadarProspeccaoTerminal />}
+
         {activeTab === 'pix' && <PixTerminal />}
 
         {activeTab === 'boletos' && <BoletoTerminal />}
@@ -107,6 +117,8 @@ export const App: React.FC = () => {
         {activeTab === 'drex' && <Web3DrexTerminal />}
 
         {activeTab === 'bureau' && <BureauTerminal />}
+
+        {activeTab === 'admin-modulos' && <AdminModulosTerminal />}
 
         {activeTab === 'mcp' && <McpCockpit />}
 

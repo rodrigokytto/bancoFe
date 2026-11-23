@@ -45,6 +45,8 @@ import {
   Compass,
   Activity,
   Shirt,
+  Landmark,
+  Search,
 } from "lucide-react";
 
 export type IconType = React.ComponentType<{ className?: string }>;
@@ -95,6 +97,17 @@ export interface NavModule {
 
 export const SECTIONS: Record<string, NavSection> = {
   // ---- MÓDULO 1: OPERAÇÃO & SALÃO ----
+  bancofe_core_sec: {
+    id: "bancofe_core_sec",
+    label: "BancoFé Core Bancário & Liquidação",
+    icon: Landmark,
+    items: [
+      { id: "bancofe_hub", path: "/bancofe", label: "BancoFé Hub Geral (PRD)", icon: Landmark, badge: "ISPB 799", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_consulta360", path: "/bancofe", label: "Consulta 360° CPF/CNPJ", icon: Search, badge: "11 Abas", badgeColor: "bg-cyan-600 text-white", highlight: true },
+      { id: "bancofe_precadastro", path: "/bancofe", label: "Pré-Cadastro 10x Produtos", icon: Calculator, badge: "Simulador", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_radar", path: "/bancofe", label: "Radar MT & 20 Empresas", icon: Target, badge: "Tangará", highlight: true },
+    ],
+  },
   mesas_balcao: {
     id: "mesas_balcao",
     label: "Atendimento de Mesas & Balcão",
@@ -412,6 +425,12 @@ export const SECTIONS: Record<string, NavSection> = {
    ========================================================================== */
 
 export const MENU_DOMAINS: NavDomain[] = [
+  {
+    id: "bancofe_core_domain",
+    label: "BancoFé Banking & Crédito",
+    icon: Landmark,
+    sections: ["bancofe_core_sec"],
+  },
   // ---- OPERAÇÃO & SALÃO ----
   {
     id: "frente_loja",
@@ -536,6 +555,16 @@ export const MENU_DOMAINS: NavDomain[] = [
    ========================================================================== */
 
 export const MODULES: NavModule[] = [
+  {
+    id: "bancofe_banking",
+    label: "BancoFé Banking & Crédito",
+    icon: Landmark,
+    badge: "ISPB 799",
+    badgeColor: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+    defaultPath: "/bancofe",
+    description: "Consulta 360° CPF/CNPJ, esteira de pré-cadastro de 10 produtos, radar regional MT, Pix DICT, Open Finance e Mesa Algorítmica.",
+    domains: ["bancofe_core_domain"],
+  },
   {
     id: "operacao",
     label: "Operação & Salão",
