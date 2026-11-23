@@ -7,6 +7,7 @@ import { renderizarHtmlCarteiraDigital } from "../views/carteira-html";
 import { renderizarHtmlLogin } from "../views/login-html";
 import { renderizarHtmlBackoffice } from "../views/backoffice-html";
 import { renderizarHtmlMesaCredito } from "../views/mesa-credito-html";
+import { renderizarHtmlHomeBancoFe } from "../views/home-bancofe-html";
 import { ServicoMesaCredito } from "../credito/servico-mesa-credito";
 import { ServicoConsulta360 } from "../servico";
 import { ServicoPreCadastroBancoFe } from "../precadastro/servico-precadastro";
@@ -373,6 +374,29 @@ export function registerPlataformaWebAndApis(app: any) {
   app.get("/plataforma", authMiddleware, (_req: Request, res: Response) => {
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.send(renderizarHtmlConsultaCpf());
+  });
+
+  // ==========================================
+  // PÁGINA INICIAL & PORTAL EXECUTIVO BANCOFÉ 360°
+  // ==========================================
+  app.get("/", authMiddleware, (req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlHomeBancoFe((req as any).usuario));
+  });
+
+  app.get("/home", authMiddleware, (req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlHomeBancoFe((req as any).usuario));
+  });
+
+  app.get("/bancofe", authMiddleware, (req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlHomeBancoFe((req as any).usuario));
+  });
+
+  app.get("/cockpit-geral", authMiddleware, (req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlHomeBancoFe((req as any).usuario));
   });
 
   app.get("/plataforma/consulta-cpf", authMiddleware, (_req: Request, res: Response) => {
