@@ -64,6 +64,7 @@ import { PassaporteSalmaoPublico } from "./pages/PassaporteSalmaoPublico";
 import { MapaMesasSalao } from "./pages/MapaMesasSalao";
 import { BancoFeHub } from "./pages/BancoFeHub";
 import { EcommerceAdminPage } from "./pages/EcommerceAdminPage";
+import PortalClientePage from "./pages/PortalClientePage";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -110,6 +111,9 @@ function Router() {
     location.startsWith("/cadastro") ||
     location.startsWith("/termos") ||
     location.startsWith("/documentos") ||
+    location.startsWith("/portal") ||
+    location.startsWith("/minha-conta") ||
+    location.startsWith("/gestao-emprestimos") ||
     location.startsWith("/fechamento");
 
   if (!isAuthenticated && !isPublicClientRoute) {
@@ -185,6 +189,14 @@ function Router() {
             <Route path="/operacoes" component={CrmFinanceiraPage} />
             <Route path="/crm-financeira" component={CrmFinanceiraPage} />
             <Route path="/operacoes-financeiras" component={CrmFinanceiraPage} />
+            <Route path="/admin/gestao-emprestimos" component={CrmFinanceiraPage} />
+            <Route path="/gestao-emprestimos" component={CrmFinanceiraPage} />
+
+            {/* BancoFe — Portal do Cliente (Autoatendimento, Pix, Boletos & Quitação) */}
+            <Route path="/portal-cliente" component={PortalClientePage} />
+            <Route path="/portal" component={PortalClientePage} />
+            <Route path="/minha-conta" component={PortalClientePage} />
+            <Route path="/admin/portal-cliente" component={PortalClientePage} />
 
             {/* BancoFe — Cadastro 360°, Pré-Cadastro & Central de Termos */}
             <Route path="/admin/cadastro-360" component={Cadastro360BancoFePage} />

@@ -44,6 +44,8 @@ import {
   Scale
 } from "lucide-react";
 import { toast } from "sonner";
+import PortalClientePage from "./PortalClientePage";
+import { Banknote, UploadCloud, QrCode } from "lucide-react";
 
 // Interface dos tipos de operações
 export interface OportunidadeOperacaoFinanceira {
@@ -153,7 +155,7 @@ export const CrmFinanceiraPage: React.FC = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Aba ativa: kanban | mesa | simulador | ccb | termos | consulta360 | carteira | antecipacao
-  const [activeTab, setActiveTab] = useState<"kanban" | "mesa" | "simulador" | "ccb" | "termos" | "consulta360" | "carteira" | "antecipacao">("kanban");
+  const [activeTab, setActiveTab] = useState<"kanban" | "mesa" | "simulador" | "ccb" | "termos" | "consulta360" | "carteira" | "antecipacao" | "gestao_emprestimos" | "portal_cliente">("kanban");
 
   // Estado da Central de Termos Digitais & SCR Bacen
   const [termos, setTermos] = useState<any[]>([]);
@@ -213,10 +215,14 @@ export const CrmFinanceiraPage: React.FC = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const tab = urlParams.get("tab");
-    if (tab && ["kanban", "mesa", "simulador", "ccb", "termos", "consulta360", "carteira", "antecipacao"].includes(tab)) {
+    if (tab && ["kanban", "mesa", "simulador", "ccb", "termos", "consulta360", "carteira", "antecipacao", "gestao_emprestimos", "portal_cliente"].includes(tab)) {
       setActiveTab(tab as any);
     } else if (window.location.pathname.includes("mesa")) {
       setActiveTab("mesa");
+    } else if (window.location.pathname.includes("gestao-emprestimos")) {
+      setActiveTab("gestao_emprestimos");
+    } else if (window.location.pathname.includes("portal-cliente")) {
+      setActiveTab("portal_cliente");
     }
   }, []);
 
@@ -604,6 +610,8 @@ export const CrmFinanceiraPage: React.FC = () => {
         <div className="flex items-center gap-1.5 overflow-x-auto py-4 scrollbar-none border-b border-slate-200 dark:border-slate-800">
           {[
             { id: "kanban", label: "Pipeline Kanban", icon: Layers, badge: `${oportunidades.length}` },
+            { id: "gestao_emprestimos", label: "Gestão Empréstimos & Boletos", icon: Landmark, badge: "Mesa Fila" },
+            { id: "portal_cliente", label: "Portal do Cliente (Visão Cliente)", icon: CreditCard, badge: "Pix & Boletos" },
             { id: "mesa", label: "Mesa de Crédito & SCR", icon: ShieldCheck, badge: "Alçadas" },
             { id: "simulador", label: "Simulador SAC & PRICE", icon: Calculator, badge: "Tempo Real" },
             { id: "ccb", label: "Formalização CCB Digital", icon: FileCheck2, badge: "ICP-Brasil" },
@@ -1733,7 +1741,228 @@ export const CrmFinanceiraPage: React.FC = () => {
         </div>
       )}
 
+            {/* =========================================================================
+          CONTEÚDO DA ABA: GESTÃO DE EMPRÉSTIMOS & CONCILIAÇÃO DE COMPROVANTES
+          ========================================================================= */}
+      {activeTab === "gestao_emprestimos" && (
+        <div className="max-w-7xl mx-auto space-y-6">
+          {/* Header e KPIs de Crédito e Fila de Conciliação */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-mono font-bold">
+                    MESA DE CRÉDITO BANCOFÉ • ISPB 799
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-600 text-xs font-mono font-bold">
+                    Conciliação D+0
+                  </span>
+                </div>
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mt-1">
+                  Gestão de Empréstimos, Financiamentos &amp; Conciliação de Comprovantes
+                </h2>
+                <p className="text-xs text-slate-500">
+                  Acompanhamento de contratos ativos, baixas de parcelas via Pix e Boleto, e deliberação de comprovantes enviados pelo Portal do Cliente.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setActiveTab("portal_cliente")}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shadow-xs cursor-pointer"
+                >
+                  <CreditCard className="w-3.5 h-3.5" />
+                  <span>Acessar Portal do Cliente</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Fila de Comprovantes Pendentes de Deliberação */}
+            <div className="mt-6 space-y-3">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-amber-500" />
+                  Fila de Conciliação Imediata (Comprovantes Recebidos do Portal)
+                </h3>
+                <span className="text-xs font-bold text-amber-600 bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-full border border-amber-200 dark:border-amber-800">
+                  2 Comprovantes em Análise
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl border border-amber-200 dark:border-amber-800/80 bg-amber-50/40 dark:bg-amber-950/20 space-y-3">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <span className="text-[10px] font-mono font-bold text-amber-600 dark:text-amber-400 block">CTR-2026-069-001 • Parcela 8/24</span>
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">Rodrigo Ribeiro Gonçalves</h4>
+                      <span className="text-xs text-slate-500">Doc: 069.887.226-61</span>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold text-[10px]">
+                      Aguardando Mesa
+                    </span>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-amber-100 dark:border-amber-900/40 text-xs space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Valor Parcela:</span>
+                      <strong className="text-slate-900 dark:text-white font-mono">R$ 13.820,50</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Canal:</span>
+                      <strong className="text-emerald-600 font-mono">Pix Instantâneo (ISPB 799)</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">ID End-to-End:</span>
+                      <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">E7990000020261123P99887766</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Arquivo:</span>
+                      <span className="text-emerald-600 font-mono text-[11px]">comprovante_pix_ted_bancofe.pdf</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 pt-1">
+                    <button
+                      onClick={() => toast.success("Parcela 8 do contrato CTR-2026-069-001 baixada e liquidada com sucesso D+0!")}
+                      className="flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer shadow-xs"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Aprovar &amp; Baixar D+0</span>
+                    </button>
+                    <button
+                      onClick={() => toast.info("Comprovante rejeitado com apontamento de divergência enviado ao cliente.")}
+                      className="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold text-xs cursor-pointer"
+                    >
+                      Recusar
+                    </button>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 space-y-3">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <span className="text-[10px] font-mono font-bold text-cyan-600 dark:text-cyan-400 block">CTR-2026-362-003 • Parcela 3/18</span>
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">Zuma Gastronomia &amp; Alimentos Ltda</h4>
+                      <span className="text-xs text-slate-500">CNPJ: 36.296.848/0001-57</span>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold text-[10px]">
+                      Aguardando Mesa
+                    </span>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Valor Parcela:</span>
+                      <strong className="text-slate-900 dark:text-white font-mono">R$ 16.450,00</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Canal:</span>
+                      <strong className="text-cyan-600 font-mono">Boleto Febraban Registrado</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Autenticação:</span>
+                      <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">AUTH.CIP.799.20261123.88371</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Arquivo:</span>
+                      <span className="text-cyan-600 font-mono text-[11px]">boleto_quitado_bancofe.pdf</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 pt-1">
+                    <button
+                      onClick={() => toast.success("Parcela 3 do contrato CTR-2026-362-003 baixada e liquidada com sucesso D+0!")}
+                      className="flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer shadow-xs"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Aprovar &amp; Baixar D+0</span>
+                    </button>
+                    <button
+                      onClick={() => toast.info("Comprovante rejeitado com apontamento de divergência enviado ao cliente.")}
+                      className="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold text-xs cursor-pointer"
+                    >
+                      Recusar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Carteira Completa de Empréstimos & Financiamentos */}
+            <div className="mt-8 space-y-3">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Landmark className="w-4 h-4 text-emerald-600" />
+                Carteira Consolidada de Empréstimos BancoFé (142 Contratos Ativos)
+              </h3>
+
+              <div className="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-2xl">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 uppercase text-[10px]">
+                    <tr>
+                      <th className="p-3">Contrato ID</th>
+                      <th className="p-3">Cliente / Tomador</th>
+                      <th className="p-3">Linha de Crédito</th>
+                      <th className="p-3">Valor Concedido</th>
+                      <th className="p-3">Saldo Devedor</th>
+                      <th className="p-3">Amortização</th>
+                      <th className="p-3">Status</th>
+                      <th className="p-3 text-right">Ação</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                    {[
+                      { id: "CTR-2026-069-001", tomador: "Rodrigo Ribeiro Gonçalves", doc: "069.887.226-61", linha: "Capital de Giro PJ Estruturado", total: "R$ 510.000,00", saldo: "R$ 331.500,00", parcelas: "8 de 24 (33%)", status: "ATIVO" },
+                      { id: "CTR-2026-512-002", tomador: "Dr. Valdomiro Parecis de Andrade", doc: "512.984.101-53", linha: "CPR Verde Sustentável Safra 2026", total: "R$ 875.000,00", saldo: "R$ 875.000,00", parcelas: "2 de 12 (17%)", status: "ATIVO" },
+                      { id: "CTR-2026-362-003", tomador: "Zuma Gastronomia & Alimentos", doc: "36.296.848/0001-57", linha: "Giro Expansão Comercial", total: "R$ 270.000,00", saldo: "R$ 225.000,00", parcelas: "3 de 18 (17%)", status: "ATIVO" },
+                      { id: "CTR-2026-045-004", tomador: "UISA - Usinas Itamarati S/A", doc: "04.596.128/0001-44", linha: "Fomento Industrial & Bioenergia", total: "R$ 7.200.000,00", saldo: "R$ 4.800.000,00", parcelas: "12 de 36 (33%)", status: "ATIVO" },
+                    ].map((row, idx) => (
+                      <tr key={idx} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+                        <td className="p-3 font-mono font-bold text-emerald-600">{row.id}</td>
+                        <td className="p-3">
+                          <strong className="block text-slate-800 dark:text-slate-200">{row.tomador}</strong>
+                          <span className="font-mono text-[10px] text-slate-400">{row.doc}</span>
+                        </td>
+                        <td className="p-3 text-slate-600 dark:text-slate-400">{row.linha}</td>
+                        <td className="p-3 font-mono font-bold text-slate-900 dark:text-white">{row.total}</td>
+                        <td className="p-3 font-mono font-bold text-amber-600 dark:text-amber-400">{row.saldo}</td>
+                        <td className="p-3 text-slate-600 dark:text-slate-400">{row.parcelas}</td>
+                        <td className="p-3">
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 font-bold text-[10px]">
+                            {row.status}
+                          </span>
+                        </td>
+                        <td className="p-3 text-right">
+                          <button
+                            onClick={() => {
+                              setActiveTab("portal_cliente");
+                              toast.info(`Abrindo visão do cliente para ${row.tomador}`);
+                            }}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-[11px] cursor-pointer"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                            <span>Ver no Portal</span>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* =========================================================================
+          CONTEÚDO DA ABA: PORTAL DO CLIENTE (VISÃO CLIENTE INTEGRADA)
+          ========================================================================= */}
+      {activeTab === "portal_cliente" && (
+        <div className="max-w-7xl mx-auto rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl">
+          <PortalClientePage />
+        </div>
+      )}
+
+{/* =========================================================================
           MODAL 1: NOVA OPERAÇÃO NO FUNIL
           ========================================================================= */}
       {isNovoModalOpen && (

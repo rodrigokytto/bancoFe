@@ -877,12 +877,14 @@ export function registerPlataformaWebAndApis(app: any) {
     res.send(renderizarHtmlBackoffice((req as any).usuario));
   });
 
-  app.get("/portal-cliente", (_req: Request, res: Response) => {
-    res.redirect("/?tab=portal-cliente");
+  app.get("/portal-cliente", (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.tab) return res.redirect("/?tab=" + req.query.tab);
+    next();
   });
 
-  app.get("/gestao-emprestimos", authMiddleware, (_req: Request, res: Response) => {
-    res.redirect("/?tab=gestao-emprestimos");
+  app.get("/gestao-emprestimos", (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.tab) return res.redirect("/?tab=" + req.query.tab);
+    next();
   });
 
   app.get("/git", (_req: Request, res: Response) => {

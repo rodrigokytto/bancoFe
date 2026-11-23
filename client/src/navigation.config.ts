@@ -47,6 +47,7 @@ import {
   Shirt,
   Landmark,
   Search,
+  Banknote,
 } from "lucide-react";
 
 export type IconType = React.ComponentType<{ className?: string }>;
@@ -103,6 +104,9 @@ export const SECTIONS: Record<string, NavSection> = {
     icon: Landmark,
     items: [
       { id: "bancofe_hub", path: "/bancofe", label: "BancoFé Hub Geral (PRD)", icon: Landmark, badge: "ISPB 799", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_portal_cliente", path: "/portal-cliente", label: "Portal do Cliente (Pix & Boletos)", icon: CreditCard, badge: "Autoatendimento", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_mesa_operacoes", path: "/admin/mesa-operacoes", label: "Mesa de Operações & Crédito", icon: ShieldCheck, badge: "Alçadas", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_gestao_emprestimos", path: "/admin/gestao-emprestimos", label: "Gestão Empréstimos & Conciliação", icon: Banknote, badge: "Comprovantes", badgeColor: "bg-emerald-600 text-white", highlight: true },
       { id: "bancofe_consulta360", path: "/consulta-360", label: "Consulta 360° CPF/CNPJ", icon: Search, badge: "11 Abas", badgeColor: "bg-cyan-600 text-white", highlight: true },
       { id: "bancofe_operacoes", path: "/admin/operacoes-financeiras", label: "Operações & Termos SCR", icon: Building2, badge: "Crédito 360°", badgeColor: "bg-emerald-600 text-white", highlight: true },
       { id: "bancofe_ecommerce", path: "/admin/ecommerce", label: "E-Commerce & Omnichannel", icon: Store, badge: "Multi-Loja", badgeColor: "bg-emerald-600 text-white", highlight: true },
