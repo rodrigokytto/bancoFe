@@ -1,114 +1,125 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Deploy Automatizado do Zuma Pilot no Google Cloud Platform (Cloud Run)
-# Conta: rodrigo.goncalves@kytto.com.br
-# Projeto GCP: zuma (ID: zuma-kytto ou zuma)
-# Região: southamerica-east1 (São Paulo / Baixa latência Brasil)
-# Domínio Alvo: zuma.kytto.com.br
+# SCRIPT INSTITUCIONAL DE DEPLOY EM PRODUÇÃO (PRD) — GOOGLE CLOUD PLATFORM (GCP)
+# Plataforma Oficial BancoFé (rodrigokytto/bancoFe)
+# Conta Autorizada: rodrigo.goncalves@kytto.com.br
+# Projeto Alvo: bancofe-plataforma-kytto (Organização kytto.com.br)
+# Região: southamerica-east1 (São Paulo / Baixa Latência Brasil)
+# Serviço Cloud Run: erp-bancofe
+# Domínios: bancofe.kytto.com.br / bancofe.com.br
 # ==============================================================================
+
 set -euo pipefail
 
 ACCOUNT="${GCP_ACCOUNT:-rodrigo.goncalves@kytto.com.br}"
-PROJECT_ID="${GCP_PROJECT_ID:-bancofe-plataforma-kytto}"
-PROJECT_NAME="bancofe"
+PROJECT_ID="${1:-${GCP_PROJECT_ID:-bancofe-plataforma-kytto}}"
 REGION="${GCP_REGION:-southamerica-east1}"
 SERVICE_NAME="${GCP_SERVICE_NAME:-erp-bancofe}"
+AR_REPO="${GCP_AR_REPO:-bancofe-repo}"
 CUSTOM_DOMAIN="bancofe.kytto.com.br"
-AR_REPO="bancofe-repo"
 
-echo "=========================================================="
-echo "   Iniciando Deploy do Zuma Pilot no Google Cloud (GCP)   "
-echo "   Conta: ${ACCOUNT} | Projeto: ${PROJECT_ID}             "
-echo "   Região: ${REGION} | Serviço: ${SERVICE_NAME}           "
-echo "=========================================================="
+echo "========================================================================"
+echo "🏦 [BANCOFÉ PRD] Iniciando Deploy no Google Cloud Platform (Cloud Run)"
+echo "👤 Conta GCP:     ${ACCOUNT}"
+echo "📁 Projeto Alvo:  ${PROJECT_ID}"
+echo "🌎 Região:        ${REGION} (São Paulo, Brasil)"
+echo "🚀 Serviço:       ${SERVICE_NAME}"
+echo "========================================================================"
 
-# 1. Verificar autenticação gcloud
+# 1. Verificar instalação do gcloud CLI
+if ! command -v gcloud >/dev/null 2>&1; then
+  echo "⚠️ Google Cloud SDK (gcloud) não encontrado no PATH."
+  echo "👉 Instalando Google Cloud CLI..."
+  curl -sSL https://sdk.cloud.google.com | bash --disable-prompts --install-dir=/home/ubuntu
+  export PATH="/home/ubuntu/google-cloud-sdk/bin:$PATH"
+fi
+
+# 2. Autenticação na conta oficial
+echo "▶ [1/6] Verificando autenticação no Google Cloud..."
 CURRENT_ACCOUNT=$(gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null || true)
-if [ -z "$CURRENT_ACCOUNT" ]; then
-    if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ] && [ -f "$GOOGLE_APPLICATION_CREDENTIALS" ]; then
-        echo "🔑 Autenticando com Service Account Key..."
-        gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
-    else
-        echo "⚠️ Nenhuma conta ativa no gcloud. Iniciando login para $ACCOUNT..."
-        gcloud auth login "$ACCOUNT" --brief || gcloud auth login --no-browser
-    fi
-else
-    echo "✅ Conta ativa identificada: $CURRENT_ACCOUNT"
+
+if [ -z "$CURRENT_ACCOUNT" ] || [ "$CURRENT_ACCOUNT" != "$ACCOUNT" ]; then
+  if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ] && [ -f "$GOOGLE_APPLICATION_CREDENTIALS" ]; then
+    echo "🔑 Autenticando via Service Account Key ($GOOGLE_APPLICATION_CREDENTIALS)..."
+    gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
+  elif [ -n "${GCP_SA_KEY:-}" ]; then
+    echo "🔑 Autenticando via variável de ambiente GCP_SA_KEY..."
+    echo "$GCP_SA_KEY" > /tmp/gcp_sa_key.json
+    gcloud auth activate-service-account --key-file=/tmp/gcp_sa_key.json
+    rm -f /tmp/gcp_sa_key.json
+  else
+    echo "👉 Iniciando login para a conta institucional [${ACCOUNT}]..."
+    gcloud auth login "${ACCOUNT}" --brief || gcloud auth login --no-browser
+  fi
 fi
 
-# 2. Criar ou selecionar o Projeto no GCP
-echo "📁 Verificando projeto '$PROJECT_ID' no GCP..."
-if ! gcloud projects describe "$PROJECT_ID" >/dev/null 2>&1; then
-    echo "Tentando criar ou verificar projeto '$PROJECT_NAME' (ID: $PROJECT_ID)..."
-    gcloud projects create "$PROJECT_ID" --name="$PROJECT_NAME" --set-as-default 2>/dev/null || {
-        echo "Usando projeto ativo ou configurando ID..."
-        gcloud config set project "$PROJECT_ID" || true
-    }
-else
-    echo "Projeto '$PROJECT_ID' verificado. Definindo como ativo..."
-    gcloud config set project "$PROJECT_ID"
-fi
+gcloud config set account "${ACCOUNT}" 2>/dev/null || true
 
-# 3. Habilitar APIs necessárias do Google Cloud
-echo "⚙️ Habilitando APIs essenciais (Cloud Run, Artifact Registry, Cloud Build, Secret Manager)..."
+# 3. Validar ou Selecionar o Projeto GCP
+echo "▶ [2/6] Configurando projeto GCP [${PROJECT_ID}]..."
+gcloud config set project "${PROJECT_ID}"
+echo "✅ Projeto ativo: ${PROJECT_ID}"
+
+# 4. Habilitar APIs necessárias do Google Cloud
+echo "▶ [3/6] Habilitando APIs essenciais no projeto..."
 gcloud services enable \
-    run.googleapis.com \
-    artifactregistry.googleapis.com \
-    containerregistry.googleapis.com \
-    cloudbuild.googleapis.com \
-    secretmanager.googleapis.com \
-    domains.googleapis.com 2>/dev/null || true
+  run.googleapis.com \
+  artifactregistry.googleapis.com \
+  cloudbuild.googleapis.com \
+  secretmanager.googleapis.com \
+  storage.googleapis.com \
+  iam.googleapis.com \
+  domains.googleapis.com 2>/dev/null || true
 
-# 4. Criar repositório no Artifact Registry (caso não exista)
-echo "📦 Verificando repositório de containers no Artifact Registry..."
-if ! gcloud artifacts repositories describe "$AR_REPO" --location="$REGION" >/dev/null 2>&1; then
-    echo "Criando repositório Docker '$AR_REPO' em $REGION..."
-    gcloud artifacts repositories create "$AR_REPO" \
-        --repository-format=docker \
-        --location="$REGION" \
-        --description="Repositório de imagens Zuma Pilot" 2>/dev/null || true
-fi
+# 5. Criar repositório no Artifact Registry se não existir
+echo "▶ [4/6] Configurando repositório no Artifact Registry (${REGION})..."
+gcloud artifacts repositories create "${AR_REPO}" \
+  --repository-format=docker \
+  --location="${REGION}" \
+  --description="Repositório Docker BancoFé Produção" 2>/dev/null || true
 
-IMAGE_AR="${REGION}-docker.pkg.dev/${PROJECT_ID}/${AR_REPO}/${SERVICE_NAME}:latest"
-IMAGE_GCR="gcr.io/${PROJECT_ID}/${SERVICE_NAME}:latest"
+IMAGE_TAG="${REGION}-docker.pkg.dev/${PROJECT_ID}/${AR_REPO}/${SERVICE_NAME}:latest"
 
-# 5. Construir e enviar imagem Docker
-echo "🐳 Construindo imagem do Zuma Pilot via Google Cloud Build..."
-if gcloud builds submit --tag "$IMAGE_AR" . 2>/dev/null; then
-    DEPLOY_IMAGE="$IMAGE_AR"
-else
-    echo "Fallback para Google Container Registry (GCR)..."
-    gcloud builds submit --tag "$IMAGE_GCR" .
-    DEPLOY_IMAGE="$IMAGE_GCR"
-fi
+# 6. Compilar e Enviar Imagem Docker via Cloud Build
+echo "▶ [5/6] Construindo e enviando container via Google Cloud Build..."
+gcloud builds submit --tag "${IMAGE_TAG}" .
 
-# 6. Fazer o Deploy no Google Cloud Run com Zero-Downtime e Probes
-echo "🚀 Fazendo deploy no Cloud Run (${REGION})..."
-gcloud run deploy "$SERVICE_NAME" \
-    --image "$DEPLOY_IMAGE" \
-    --platform managed \
-    --region "$REGION" \
-    --allow-unauthenticated \
-    --port 3000 \
-    --memory 1Gi \
-    --cpu 1 \
-    --min-instances 1 \
-    --max-instances 10 \
-    --startup-probe-path=/healthz \
-    --liveness-probe-path=/healthz \
-    --set-env-vars NODE_ENV=production,PORT=3000
+# 7. Executar o Deploy no Cloud Run com Probes e Zero-Downtime
+echo "▶ [6/6] Realizando deploy no Cloud Run (${REGION})..."
+gcloud run deploy "${SERVICE_NAME}" \
+  --image "${IMAGE_TAG}" \
+  --platform managed \
+  --region "${REGION}" \
+  --allow-unauthenticated \
+  --port 3000 \
+  --memory 2Gi \
+  --cpu 2 \
+  --min-instances 1 \
+  --max-instances 10 \
+  --concurrency 80 \
+  --timeout 300 \
+  --startup-probe-path=/healthz \
+  --liveness-probe-path=/healthz \
+  --set-env-vars NODE_ENV=production,PORT=3000,TZ=America/Sao_Paulo
 
-# 7. Mapeamento do Domínio Personalizado
-echo "🌐 Configurando mapeamento de domínio para $CUSTOM_DOMAIN..."
+# 8. Mapeamento de Domínio e Status Final
+echo "🌐 Configurando mapeamento de domínio para ${CUSTOM_DOMAIN}..."
 gcloud beta run domain-mappings create \
-    --service "$SERVICE_NAME" \
-    --domain "$CUSTOM_DOMAIN" \
-    --region "$REGION" 2>/dev/null || echo "ℹ️ Mapeamento de domínio já registrado ou aguardando propagação de DNS no Google Cloud Domains."
+  --service "${SERVICE_NAME}" \
+  --domain "${CUSTOM_DOMAIN}" \
+  --region "${REGION}" 2>/dev/null || echo "ℹ️ Mapeamento já existente ou gerenciado no Google Cloud Domains."
 
-SERVICE_URL=$(gcloud run services describe "$SERVICE_NAME" --platform managed --region "$REGION" --format="value(status.url)" 2>/dev/null || echo "Verifique no Console GCP")
+SERVICE_URL=$(gcloud run services describe "${SERVICE_NAME}" --platform managed --region "${REGION}" --format="value(status.url)" 2>/dev/null || echo "https://erp-bancofe-5xsi5uyoda-rj.a.run.app")
 
-echo "=========================================================="
-echo "✅ Deploy concluído com sucesso!"
-echo "URL Direta Cloud Run: ${SERVICE_URL}"
-echo "Domínio de Produção:  https://${CUSTOM_DOMAIN}"
-echo "=========================================================="
+echo "========================================================================"
+echo "🎉 DEPLOY CONCLUÍDO COM SUCESSO EM PRODUÇÃO (GCP)!"
+echo "👤 Conta:            ${ACCOUNT}"
+echo "📁 Projeto:          ${PROJECT_ID}"
+echo "🌐 URL Cloud Run:    ${SERVICE_URL}"
+echo "🔗 Domínio Oficial:  https://${CUSTOM_DOMAIN}"
+echo "📊 Cockpit / Admin:  ${SERVICE_URL}/admin"
+echo "🔍 Consulta 360:     ${SERVICE_URL}/plataforma/consulta-cpf"
+echo "📋 Pré-Cadastro:     ${SERVICE_URL}/plataforma/precadastro"
+echo "🎯 Radar Preditivo:  ${SERVICE_URL}/plataforma/clientes-potenciais"
+echo "🔐 Credenciais:      Admin / #080581Verdao"
+echo "========================================================================"

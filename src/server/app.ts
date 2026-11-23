@@ -11,6 +11,7 @@ import { BANCOFE_MCP_TOOLS } from '../integrations/mcps/server/tools';
 import { AccountManager } from '../core/ledger/accounts';
 import { LedgerEngine } from '../core/ledger/ledger.engine';
 import { IntegrationEventBus } from '../integrations/event-bus';
+import { registerPlataformaWebAndApis } from './plataforma-routes';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -319,6 +320,9 @@ bancofe_active_integrations ${registry.listAdapters().length}
 </html>
     `);
   });
+
+  // 10. Módulos Oficiais Consulta 360, Pré-Cadastro, Radar e Admin
+  registerPlataformaWebAndApis(targetApp);
 }
 
 // Registra as rotas na aplicação local do BancoFe

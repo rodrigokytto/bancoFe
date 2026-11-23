@@ -1,10 +1,11 @@
-import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { publicPlatformScript } from "./server/_core/publicConfig";
+
+const jsxLocPlugin = () => ({ name: "jsx-loc-noop" } as Plugin);
 
 // =============================================================================
 // Manus Debug Collector - Vite Plugin

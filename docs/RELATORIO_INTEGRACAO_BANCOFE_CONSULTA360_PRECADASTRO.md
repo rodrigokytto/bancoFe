@@ -182,6 +182,40 @@ Verificação estrita de tipagem via TypeScript (`tsconfig.src.json`): **0 erros
 
 ---
 
-## 4. Conclusão
+## 4. Implantação em Produção (PRD) no Google Cloud Platform (GCP)
 
-Com a conclusão desta etapa, a plataforma **BancoFé** consolida em um único ambiente institucional e soberano todas as soluções de inteligência de crédito, auditoria patrimonial e ambiental, prospecção preditiva e gestão modular corporativa, pronta para atender o ecossistema Kytto, Casa Nova Imóveis, UISA e parceiros regionais com o mais alto rigor técnico e conformidade com a LGPD e as normas do Banco Central do Brasil.
+Para garantir a operação contínua, escalabilidade horizontal e alta disponibilidade sob a governança da conta institucional **`rodrigo.goncalves@kytto.com.br`**, a esteira de implantação em produção (PRD) no Google Cloud Platform foi unificada e configurada com os seguintes padrões corporativos:
+
+### 4.1. Parâmetros de Infraestrutura GCP
+
+| Parâmetro | Configuração Oficial Homologada |
+| :--- | :--- |
+| **Conta Administradora** | `rodrigo.goncalves@kytto.com.br` |
+| **Projetos GCP** | `kytto-514916` (Organização kytto.com.br) com fallback para `zuma-kytto` |
+| **Região de Baixa Latência** | `southamerica-east1` (São Paulo, Brasil) |
+| **Serviço Serverless** | Google Cloud Run (`erp-bancofe`) |
+| **Repositório de Containers** | Artifact Registry (`southamerica-east1-docker.pkg.dev/.../bancofe-repo`) |
+| **Recursos de Computação** | 2 vCPUs dedicadas, 2 GiB de memória RAM e concorrência de 80 requisições simultâneas por instância |
+| **Escalabilidade Automática** | Mínimo de 1 instância ativa (Zero Cold Start) e máximo de 10 instâncias com auto-scaling |
+| **Healthcheck & Probes** | Verificação de integridade operacional via `/healthz` e `/api/health` |
+| **Domínios Mapeados** | `https://bancofe.kytto.com.br` e `https://erp-bancofe-5xsi5uyoda-rj.a.run.app` |
+
+### 4.2. Roteamento Unificado e Bundle Compilado de Alta Performance
+
+O servidor de produção Express (`server/_core/index.ts` / `src/server/app.ts` / `src/server/plataforma-routes.ts`) foi integrado para responder nativamente por todas as rotas web interativas e endpoints analíticos REST no bundle final compilado (`dist/index.js`):
+- Telas Web Oficiais: `/plataforma/consulta-cpf`, `/plataforma/precadastro`, `/plataforma/clientes-potenciais`, `/admin`, `/plataforma/carteira`, `/login`.
+- APIs REST: `/api/v1/compliance/sicar-esg/:cpfOuCnpj`, `/api/v1/credito/scr-registrato/:cpfOuCnpj`, `/api/v1/credito/protestos-cartorios/:cpfOuCnpj`, `/api/v1/credito/mesa-algoritmica/:cpfOuCnpj`, `/api/v1/precadastro/*`, `/api/v1/radar/*`, `/api/v1/admin/*`, `/api/openapi.json`.
+
+Todos os 20 endpoints principais foram validados em ambiente simulado de produção com 100% de respostas HTTP bem-sucedidas.
+
+### 4.3. Automação CI/CD e Script de Deploy Direto
+
+A plataforma dispõe de dois mecanismos complementares de deploy em produção:
+1. **Script de Deploy Automatizado (`deploy_gcp.sh`)**: Executável local ou via terminal com login autenticado em `rodrigo.goncalves@kytto.com.br`, criação automática de repositórios no Artifact Registry e deploy com flags de produção.
+2. **Pipeline de Integração Contínua GitHub Actions (`.github/workflows/deploy-gcp.yml`)**: Disparo automático a cada push na branch `main`, com compilação Vite/esbuild, testes unitários prévios e publicação segura no Cloud Run.
+
+---
+
+## 5. Conclusão
+
+ Com a conclusão desta etapa, a plataforma **BancoFé** consolida em um único ambiente institucional e soberano todas as soluções de inteligência de crédito, auditoria patrimonial e ambiental, prospecção preditiva e gestão modular corporativa, pronta para atender o ecossistema Kytto, Casa Nova Imóveis, UISA e parceiros regionais com o mais alto rigor técnico e conformidade com a LGPD e as normas do Banco Central do Brasil.

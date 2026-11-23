@@ -7,6 +7,10 @@ on:
       - prd
   workflow_dispatch:
 
+concurrency:
+  group: deploy-gcp-bancofe
+  cancel-in-progress: true
+
 env:
   PROJECT_ID: bancofe-plataforma-kytto
   GAR_LOCATION: southamerica-east1
@@ -16,7 +20,7 @@ env:
 
 jobs:
   deploy:
-    name: Build & Deploy Cloud Run
+    name: Build & Deploy Cloud Run (GCP São Paulo)
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -42,7 +46,15 @@ jobs:
       - name: Autenticar Docker com Artifact Registry
         if: steps.auth.outcome == 'success'
         run: |-
-          gcloud auth configure-docker ${{ env.GAR_LOCATION }}-docker.pkg.dev
+          gcloud auth configure-docker ${{ env.GAR_LOCATION }}-docker.pkg.dev --quiet
+
+      - name: Garantir Repositório no Artifact Registry
+        if: steps.auth.outcome == 'success'
+        run: |-
+          gcloud artifacts repositories create ${{ env.REPOSITORY }} \
+            --repository-format=docker \
+            --location=${{ env.GAR_LOCATION }} \
+            --description="Repositorio Docker BancoFe PRD" --quiet 2>/dev/null || true
 
       - name: Build e Push da Imagem Docker
         if: steps.auth.outcome == 'success'
@@ -62,9 +74,12 @@ jobs:
             --platform managed \
             --allow-unauthenticated \
             --port 3000 \
-            --memory 1Gi \
-            --cpu 1 \
+            --memory 2Gi \
+            --cpu 2 \
             --min-instances 1 \
             --max-instances 10 \
+            --concurrency 80 \
+            --timeout 300 \
             --startup-probe-path=/healthz \
-            --liveness-probe-path=/healthz
+            --liveness-probe-path=/healthz \
+            --set-env-vars NODE_ENV=production,PORT=3000,TZ=America/Sao_Paulo
