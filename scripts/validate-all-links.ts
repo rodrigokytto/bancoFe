@@ -68,7 +68,7 @@ const ROUTES = [
   { path: "/login", type: "frontend", desc: "Portal de Autenticação / Login" },
 
   // APIs do Backend & Healthchecks
-  { path: "/healthz", type: "api", desc: "Healthcheck TCP/HTTP do Cloud Run" },
+  { path: "/api/health", type: "api", desc: "Healthcheck Oficial do BancoFe Engine" },
   { path: "/api/status", type: "api", desc: "Status de Operação e Uptime da Engine" },
   { path: "/api/platform/config.js", type: "static", desc: "Script de Configuração Pública da Plataforma" },
   { path: "/api/v1/bancofe/config", type: "api", desc: "Configurações Oficiais BancoFe" },
@@ -107,9 +107,14 @@ async function runValidation() {
     const url = `${BASE_URL}${route.path}`;
     const start = Date.now();
     const timeoutMs = route.path.includes("validar-todas") ? 35000 : 8000;
+    const headers: Record<string, string> = {};
+    if (process.env.AUTH_TOKEN) {
+      headers["Authorization"] = `Bearer ${process.env.AUTH_TOKEN}`;
+    }
     try {
       const res = await axios.get(url, {
         timeout: timeoutMs,
+        headers,
         validateStatus: () => true, // Captura qualquer status code
       });
       const latency = Date.now() - start;
