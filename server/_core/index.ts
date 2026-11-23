@@ -10,6 +10,7 @@ import { serveStatic, setupVite } from "./vite";
 import { registerIntegrationRoutes } from "../integrationsService";
 import { registerBancoFeRoutes } from "../../src/server/app";
 import { registerCrmFinanceiraRoutes } from "../crmFinanceiraRoutes";
+import { registerCadastro360Routes } from "../cadastro360Routes";
 
 async function startServer() {
   const app = express();
@@ -35,6 +36,7 @@ async function startServer() {
   registerOAuthRoutes(app);
   registerIntegrationRoutes(app);
   registerCrmFinanceiraRoutes(app);
+  registerCadastro360Routes(app);
   // tRPC API
   app.use(
     "/api/trpc",

@@ -283,7 +283,11 @@ export function registerPlataformaWebAndApis(app: any) {
 
   app.get("/api/v1/credito/mesa/analisar", (req: Request, res: Response) => {
     const doc = (req.query.cpfOuCnpj as string) || "04596128000144";
-    const parecer = executarAnaliseMesaCredito({ cpfCnpj: doc });
+    const parecer = executarAnaliseMesaCredito({
+      cpfCnpj: doc,
+      nomeCliente: (req.query.nome as string) || "Cliente Proponente",
+      rendaMensalDeclarada: Number(req.query.renda || 15000),
+    });
     res.json(parecer);
   });
 

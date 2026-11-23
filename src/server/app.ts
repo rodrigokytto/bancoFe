@@ -13,6 +13,7 @@ import { LedgerEngine } from '../core/ledger/ledger.engine';
 import { IntegrationEventBus } from '../integrations/event-bus';
 import { registerPlataformaWebAndApis } from './plataforma-routes';
 import { registerCrmFinanceiraRoutes } from '../../server/crmFinanceiraRoutes';
+import { registerCadastro360Routes } from '../../server/cadastro360Routes';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -325,6 +326,7 @@ bancofe_active_integrations ${registry.listAdapters().length}
   // 10. Módulos Oficiais Consulta 360, Pré-Cadastro, Radar e Admin
   registerPlataformaWebAndApis(targetApp);
   registerCrmFinanceiraRoutes(targetApp);
+  registerCadastro360Routes(targetApp);
 }
 
 // Registra as rotas na aplicação local do BancoFe

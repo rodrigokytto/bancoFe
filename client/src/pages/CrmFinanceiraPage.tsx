@@ -39,7 +39,9 @@ import {
   CreditCard,
   Briefcase,
   AlertTriangle,
-  Receipt
+  Receipt,
+  Boxes,
+  Scale
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -432,6 +434,14 @@ export const CrmFinanceiraPage: React.FC = () => {
               <span>Simulador de Taxas</span>
             </button>
 
+            <a
+              href="/admin/cadastro-360"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-[#820AD1]/10 border border-[#820AD1]/30 text-[#820AD1] dark:text-purple-300 hover:bg-[#820AD1]/20 text-xs font-semibold shadow-xs transition-all cursor-pointer"
+            >
+              <Users className="w-3.5 h-3.5" />
+              <span>Cadastro 360° & Termos</span>
+            </a>
+
             <button
               onClick={() => setIsNovoModalOpen(true)}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#820AD1] hover:bg-[#7009b5] text-white text-xs font-bold shadow-md shadow-purple-500/20 transition-all cursor-pointer active:scale-98"
@@ -511,13 +521,23 @@ export const CrmFinanceiraPage: React.FC = () => {
             { id: "ccb", label: "Formalização CCB Digital", icon: FileCheck2, badge: "ICP-Brasil" },
             { id: "carteira", label: "Gestão Carteira & PDD", icon: PieChart, badge: "CMN 2.682" },
             { id: "antecipacao", label: "Antecipação NF-e SEFAZ", icon: Receipt, badge: "D+0 Pix" },
+            { id: "cadastro360", label: "Cadastro 360° & KYB", icon: Users, badge: "8 Empresas" },
+            { id: "vault", label: "Vault Documental", icon: Boxes, badge: "13 Docs" },
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => {
+                  if (tab.id === "cadastro360") {
+                    window.location.href = "/admin/cadastro-360";
+                  } else if (tab.id === "vault") {
+                    window.location.href = "/admin/pre-cadastro";
+                  } else {
+                    setActiveTab(tab.id as any);
+                  }
+                }}
                 className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   isActive
                     ? "bg-[#820AD1] text-white shadow-sm shadow-purple-500/25"

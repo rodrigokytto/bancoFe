@@ -81,6 +81,12 @@ export class BusinessModuleStore {
     for (const [bizId, defMods] of Object.entries(INITIAL_MODULES_BY_BUSINESS)) {
       if (!this.modulesByBusiness[bizId] || this.modulesByBusiness[bizId].length === 0) {
         this.modulesByBusiness[bizId] = JSON.parse(JSON.stringify(defMods));
+      } else {
+        for (const defMod of defMods) {
+          if (!this.modulesByBusiness[bizId].some((m) => m.id === defMod.id)) {
+            this.modulesByBusiness[bizId].push(JSON.parse(JSON.stringify(defMod)));
+          }
+        }
       }
     }
 

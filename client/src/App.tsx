@@ -18,6 +18,7 @@ import { WhatsAppZumi } from "./pages/WhatsAppZumi";
 import { AdminWaha } from "./pages/AdminWaha";
 import { AdminModulosPage } from "./pages/AdminModulosPage";
 import { CrmFinanceiraPage } from "./pages/CrmFinanceiraPage";
+import Cadastro360BancoFePage from "./pages/Cadastro360BancoFePage";
 import { EngenhariaCardapio } from "./pages/EngenhariaCardapio";
 import { Reputacao } from "./pages/Reputacao";
 import { Campanhas } from "./pages/Campanhas";
@@ -145,6 +146,16 @@ function Router() {
             <Route path="/admin/operacoes-financeiras" component={CrmFinanceiraPage} />
             <Route path="/crm-financeira" component={CrmFinanceiraPage} />
             <Route path="/operacoes-financeiras" component={CrmFinanceiraPage} />
+
+            {/* BancoFe — Cadastro 360°, Pré-Cadastro & Central de Termos */}
+            <Route path="/admin/cadastro-360" component={Cadastro360BancoFePage} />
+            <Route path="/admin/pre-cadastro" component={Cadastro360BancoFePage} />
+            <Route path="/admin/documentos" component={Cadastro360BancoFePage} />
+            <Route path="/admin/termos" component={Cadastro360BancoFePage} />
+            <Route path="/cadastro-360" component={Cadastro360BancoFePage} />
+            <Route path="/pre-cadastro" component={Cadastro360BancoFePage} />
+            <Route path="/documentos" component={Cadastro360BancoFePage} />
+            <Route path="/termos" component={Cadastro360BancoFePage} />
 
             {/* Vendas & Apps */}
             <Route path="/" component={Cockpit} />

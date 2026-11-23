@@ -11,6 +11,14 @@ const ROUTES = [
   { path: "/admin/operacoes-financeiras", type: "frontend", desc: "Alias direto Operações Financeiras" },
   { path: "/crm-financeira", type: "frontend", desc: "Rota amigável CRM Financeira" },
   { path: "/operacoes-financeiras", type: "frontend", desc: "Rota amigável Operações Financeiras" },
+  { path: "/admin/cadastro-360", type: "frontend", desc: "Painel BancoFe — Cadastro 360° Corporativo" },
+  { path: "/admin/pre-cadastro", type: "frontend", desc: "Painel BancoFe — Pré-Cadastro & Vault Documental" },
+  { path: "/admin/documentos", type: "frontend", desc: "Painel BancoFe — Dossiê Documental" },
+  { path: "/admin/termos", type: "frontend", desc: "Painel BancoFe — Central de Termos & SCR" },
+  { path: "/cadastro-360", type: "frontend", desc: "Rota amigável Cadastro 360°" },
+  { path: "/pre-cadastro", type: "frontend", desc: "Rota amigável Pré-Cadastro" },
+  { path: "/documentos", type: "frontend", desc: "Rota amigável Documentos" },
+  { path: "/termos", type: "frontend", desc: "Rota amigável Termos" },
   { path: "/administracao", type: "frontend", desc: "Painel Administrativo" },
   { path: "/bancofe", type: "frontend", desc: "BancoFe Hub & Banking Core" },
   { path: "/banking", type: "frontend", desc: "Open Finance & Serviços Bancários" },
@@ -90,6 +98,8 @@ const ROUTES = [
   { path: "/api/v1/compliance-ambiental/53338003000104", type: "api", desc: "Consulta Compliance SEMA/CAR" },
   { path: "/api/v1/scr-bacen/53338003000104", type: "api", desc: "Consulta SCR Bacen Registrato" },
   { path: "/api/v1/cartorios-protestos/53338003000104", type: "api", desc: "Consulta Cartórios & Protestos IEPTB" },
+  { path: "/api/bancofe/cadastro360/metricas", type: "api", desc: "API Métricas Executivas do Cadastro 360" },
+  { path: "/api/bancofe/cadastro360/clientes", type: "api", desc: "API Listagem de Clientes 360 com Filtros" },
 ];
 
 async function runValidation() {
