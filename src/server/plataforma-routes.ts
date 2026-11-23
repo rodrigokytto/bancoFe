@@ -160,7 +160,11 @@ export function registerPlataformaWebAndApis(app: any) {
 
   app.get("/api/v1/credito/mesa-algoritmica/:cpfOuCnpj", async (req: Request, res: Response) => {
     try {
-      const parecer = executarAnaliseMesaCredito({ cpfCnpj: req.params.cpfOuCnpj });
+      const parecer = executarAnaliseMesaCredito({
+        cpfCnpj: req.params.cpfOuCnpj,
+        nomeCliente: (req.query?.nome as string) || "Cliente Proponente",
+        rendaMensalDeclarada: Number(req.query?.renda || 10000),
+      });
       res.json(parecer);
     } catch (e: any) {
       res.status(500).json({ erro: e.message });
@@ -171,10 +175,10 @@ export function registerPlataformaWebAndApis(app: any) {
     try {
       const parecer = executarAnaliseMesaCredito({
         cpfCnpj: req.body?.cpfOuCnpj || "30587162813",
-        produto: req.body?.produto,
-        valorPretendido: req.body?.valorSolicitado,
-        prazoMeses: req.body?.prazoMeses,
-        rendaComprovada: req.body?.rendaComprovada,
+        nomeCliente: req.body?.nomeCliente || "Cliente Proponente",
+        rendaMensalDeclarada: Number(req.body?.rendaComprovada || req.body?.rendaMensalDeclarada || 10000),
+        scoreBureauReferencia: req.body?.scoreBureauReferencia ? Number(req.body.scoreBureauReferencia) : undefined,
+        valorPatrimonioDeclarado: req.body?.valorPatrimonioDeclarado ? Number(req.body.valorPatrimonioDeclarado) : undefined,
       });
       res.json(parecer);
     } catch (e: any) {
@@ -188,7 +192,16 @@ export function registerPlataformaWebAndApis(app: any) {
 
   app.post("/api/v1/precadastro/simular", async (req: Request, res: Response) => {
     try {
-      const sim = servicoPrecadastro.simularCredito(req.body);
+      const sim = servicoPrecadastro.calcularSimulacaoCredito(
+        Number(req.body?.valorSolicitado || 150000),
+        Number(req.body?.prazoMeses || 240),
+        (req.body?.sistemaAmortizacao as any) || "SAC",
+        Number(req.body?.rendaMensal || 5000),
+        Number(req.body?.scoreSerasaEstimado || 750),
+        "pre-auto",
+        req.body?.nomeTitular || "Cliente BancoFé",
+        (req.body?.produto as any) || "financiamento_imobiliario"
+      );
       res.json(sim);
     } catch (e: any) {
       res.status(400).json({ erro: e.message });
@@ -197,7 +210,7 @@ export function registerPlataformaWebAndApis(app: any) {
 
   const handleCriarPrecadastro = async (req: Request, res: Response) => {
     try {
-      const resultado = await servicoPrecadastro.criarPreCadastro(req.body);
+      const resultado = servicoPrecadastro.criar(req.body);
       res.status(201).json(resultado);
     } catch (e: any) {
       res.status(400).json({ sucesso: false, erro: e.message });
@@ -209,7 +222,7 @@ export function registerPlataformaWebAndApis(app: any) {
   const handleListarPrecadastro = async (req: Request, res: Response) => {
     try {
       const { status, produto, termo } = req.query as Record<string, string>;
-      const itens = servicoPrecadastro.listarPreCadastros({
+      const itens = servicoPrecadastro.listar({
         status: status as any,
         produto: produto as any,
         termo,
@@ -234,9 +247,9 @@ export function registerPlataformaWebAndApis(app: any) {
   });
 
   app.get("/api/v1/precadastro/:id/certificado", (req: Request, res: Response) => {
-    const cert = servicoPrecadastro.emitirCertificadoDigital(req.params.id);
+    const cert = servicoPrecadastro.obterPorId(req.params.id);
     if (!cert) return res.status(404).json({ erro: "Certificado não elegível ou cadastro não encontrado." });
-    res.json(cert);
+    res.json({ id: cert.id, status: cert.status, titular: cert.titular, protocoladoEm: cert.dataCriacao });
   });
 
   // ==========================================
@@ -302,8 +315,7 @@ export function registerPlataformaWebAndApis(app: any) {
     try {
       const modulo = gestorModulos.alternarStatusModulo(
         req.params.negocioId as any,
-        req.params.moduloId,
-        req.body?.ativo
+        req.params.moduloId
       );
       res.json(modulo);
     } catch (e: any) {
@@ -330,7 +342,7 @@ export function registerPlataformaWebAndApis(app: any) {
 
   app.get("/api/v1/bureaus/score/:cpf", async (req: Request, res: Response) => {
     try {
-      const score = await conectorBureaus.consultarScoreSerasa(req.params.cpf);
+      const score = await conectorBureaus.consultarBureaus(req.params.cpf);
       res.json(score);
     } catch (e: any) {
       res.status(500).json({ erro: e.message });

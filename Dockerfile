@@ -22,9 +22,6 @@ COPY . .
 # Compilação de produção (Vite e backend esbuild)
 RUN pnpm build
 
-# Limpa dependências de desenvolvimento para reduzir a imagem final
-RUN pnpm prune --prod
-
 # ==============================================================================
 # Estágio 2: Imagem Final de Execução (Minimal & Hardened)
 # ==============================================================================
