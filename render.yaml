@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: bancofe-prd
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: pnpm install && pnpm build
+    startCommand: pnpm server
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: BACEN_ISPB
+        value: "00000799"
+      - key: LOG_LEVEL
+        value: INFO

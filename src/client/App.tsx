@@ -3,6 +3,11 @@ import { Navbar } from './components/Navbar';
 import { IntegrationsHub } from './components/IntegrationsHub';
 import { PixTerminal } from './components/PixTerminal';
 import { BoletoTerminal } from './components/BoletoTerminal';
+import { OpenFinanceTerminal } from './components/OpenFinanceTerminal';
+import { GatewaysTerminal } from './components/GatewaysTerminal';
+import { AgroFinanceTerminal } from './components/AgroFinanceTerminal';
+import { Web3DrexTerminal } from './components/Web3DrexTerminal';
+import { BureauTerminal } from './components/BureauTerminal';
 import { McpCockpit } from './components/McpCockpit';
 import { SkillRunner } from './components/SkillRunner';
 import { LedgerExplorer } from './components/LedgerExplorer';
@@ -16,7 +21,6 @@ export const App: React.FC = () => {
   const loadIntegrations = async () => {
     setLoading(true);
     try {
-      // Tenta buscar da API backend, com fallback direto ao registry local
       const res = await fetch('/api/integrations').catch(() => null);
       if (res && res.ok) {
         const data = await res.json();
@@ -33,7 +37,7 @@ export const App: React.FC = () => {
           description: a.description,
           tags: a.tags,
           capabilities: a.capabilities,
-          health: checks[a.id] || { status: 'CONNECTED', latencyMs: 5, message: 'Operacional' },
+          health: checks[a.id] || { status: 'CONNECTED', latencyMs: 4, message: 'Operacional' },
         }));
         setIntegrationsList(formatted);
       }
@@ -48,11 +52,21 @@ export const App: React.FC = () => {
     loadIntegrations();
   }, []);
 
-  const handleSelectAction = (adapterId: string, action: string) => {
+  const handleSelectAction = (adapterId: string, _action: string) => {
     if (adapterId.includes('pix')) {
       setActiveTab('pix');
     } else if (adapterId.includes('boleto')) {
       setActiveTab('boletos');
+    } else if (adapterId.includes('open-finance')) {
+      setActiveTab('open-finance');
+    } else if (adapterId.includes('gateway')) {
+      setActiveTab('gateways');
+    } else if (adapterId.includes('agro')) {
+      setActiveTab('agro');
+    } else if (adapterId.includes('drex')) {
+      setActiveTab('drex');
+    } else if (adapterId.includes('bureau')) {
+      setActiveTab('bureau');
     } else if (adapterId.includes('mcp')) {
       setActiveTab('mcp');
     } else if (adapterId.includes('skill')) {
@@ -84,6 +98,16 @@ export const App: React.FC = () => {
 
         {activeTab === 'boletos' && <BoletoTerminal />}
 
+        {activeTab === 'open-finance' && <OpenFinanceTerminal />}
+
+        {activeTab === 'gateways' && <GatewaysTerminal />}
+
+        {activeTab === 'agro' && <AgroFinanceTerminal />}
+
+        {activeTab === 'drex' && <Web3DrexTerminal />}
+
+        {activeTab === 'bureau' && <BureauTerminal />}
+
         {activeTab === 'mcp' && <McpCockpit />}
 
         {activeTab === 'skills' && <SkillRunner />}
@@ -97,14 +121,25 @@ export const App: React.FC = () => {
           <div className="flex items-center space-x-2">
             <span className="font-bold text-slate-300">BancoFe S.A.</span>
             <span>•</span>
-            <span>Instituição de Pagamento & Crédito Agro</span>
+            <span>Instituição de Pagamento & Financiamento Rural</span>
             <span>•</span>
             <span className="font-mono text-emerald-400">ISPB 799</span>
+            <span>•</span>
+            <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-mono">
+              Ambiente PRD
+            </span>
           </div>
           <div className="flex items-center space-x-4 text-[11px] font-mono">
-            <span>Repositório: rodrigokytto/bancoFe</span>
+            <a
+              href="https://github.com/rodrigokytto/bancoFe"
+              target="_blank"
+              rel="noreferrer"
+              className="text-slate-400 hover:text-emerald-400 transition"
+            >
+              github.com/rodrigokytto/bancoFe
+            </a>
             <span>•</span>
-            <span className="text-slate-400">SPI / CIP / FAPI / MCP / Skills</span>
+            <span className="text-slate-400">SPI / CIP / FAPI / MCP / Drex</span>
           </div>
         </div>
       </footer>

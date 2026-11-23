@@ -5,3 +5,9 @@ dist
 .env.*
 .manus-logs
 *.manus-starter-*
+.github
+*.log
+.DS_Store
+tests
+coverage
+docs
