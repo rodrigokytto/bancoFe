@@ -504,6 +504,15 @@ export function renderizarHtmlConsultaCpf(): string {
           <button onclick="alternarAba('aba-integracoes')" id="tab-btn-integracoes" class="py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
             <i class="fa-solid fa-network-wired text-emerald-600"></i> Diagnóstico das 48 Integrações
           </button>
+          <button onclick="alternarAba('aba-esg-sicar')" id="tab-btn-esg-sicar" class="py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2 whitespace-nowrap">
+            <i class="fa-solid fa-leaf text-emerald-600"></i> Compliance Ambiental & SICAR
+          </button>
+          <button onclick="alternarAba('aba-scr-bacen')" id="tab-btn-scr-bacen" class="py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2 whitespace-nowrap">
+            <i class="fa-solid fa-landmark text-cyan-600"></i> SCR Bacen & Registrato
+          </button>
+          <button onclick="alternarAba('aba-mesa-credito')" id="tab-btn-mesa-credito" class="py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2 whitespace-nowrap">
+            <i class="fa-solid fa-scale-balanced text-amber-500"></i> Mesa de Crédito BancoFé
+          </button>
         </div>
 
         <!-- ABA 1: DOSSIÊ COMPLETO 360 -->
@@ -1381,6 +1390,285 @@ export function renderizarHtmlConsultaCpf(): string {
           </div>
         </div>
 
+        <!-- ABA 9: COMPLIANCE AMBIENTAL & SICAR ESG -->
+        <div id="aba-esg-sicar" class="hidden space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 gap-4">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold">
+                  <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                    Compliance Ambiental, SICAR & Desmatamento Zero
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                      ESG Score 98/100
+                    </span>
+                  </h3>
+                  <p class="text-xs text-slate-500">Auditoria oficial no Cadastro Ambiental Rural (CAR), IBAMA, SEMA-MT, Moratória da Soja e CGFE</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold flex items-center gap-1.5">
+                  <i class="fa-solid fa-check-double"></i> Conforme para Crédito Rural & CPR
+                </span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 block font-medium">Condição no SICAR:</span>
+                <span class="text-sm font-bold text-emerald-600 flex items-center gap-1 mt-0.5">
+                  <i class="fa-solid fa-circle-check"></i> ATIVO & REGULAR
+                </span>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 block font-medium">Embargos IBAMA / SEMA:</span>
+                <span class="text-sm font-bold text-emerald-600 flex items-center gap-1 mt-0.5">
+                  <i class="fa-solid fa-shield-check"></i> NADA CONSTA
+                </span>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 block font-medium">Moratória da Soja/Carne:</span>
+                <span class="text-sm font-bold text-emerald-600 flex items-center gap-1 mt-0.5">
+                  <i class="fa-solid fa-seedling"></i> CONFORME 100%
+                </span>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 block font-medium">Lista Suja CGFE (Trabalho):</span>
+                <span class="text-sm font-bold text-emerald-600 flex items-center gap-1 mt-0.5">
+                  <i class="fa-solid fa-lock"></i> NENHUM REGISTRO
+                </span>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-mountain-sun text-emerald-600"></i> Imóveis Rurais Homologados no CAR
+              </h4>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr class="border-b border-slate-200 bg-slate-50 text-slate-500 font-semibold">
+                      <th class="py-2.5 px-3">Código CAR</th>
+                      <th class="py-2.5 px-3">Município/UF</th>
+                      <th class="py-2.5 px-3">Área Total</th>
+                      <th class="py-2.5 px-3">Reserva Legal</th>
+                      <th class="py-2.5 px-3">APP</th>
+                      <th class="py-2.5 px-3">Módulos Fiscais</th>
+                      <th class="py-2.5 px-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 text-slate-700 font-medium">
+                    <tr>
+                      <td class="py-2.5 px-3 mono text-[11px] text-emerald-700 font-semibold">MT-5107925-ESTANCIA-GONCALVES</td>
+                      <td class="py-2.5 px-3">Nova Olímpia / MT</td>
+                      <td class="py-2.5 px-3 font-bold">850,40 ha</td>
+                      <td class="py-2.5 px-3 text-emerald-600 font-semibold">297,60 ha (35%)</td>
+                      <td class="py-2.5 px-3">68,20 ha</td>
+                      <td class="py-2.5 px-3">12,1 MF</td>
+                      <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">ATIVO</span></td>
+                    </tr>
+                    <tr>
+                      <td class="py-2.5 px-3 mono text-[11px] text-emerald-700 font-semibold">MT-5107925-VALE-SOL</td>
+                      <td class="py-2.5 px-3">Tangará da Serra / MT</td>
+                      <td class="py-2.5 px-3 font-bold">320,00 ha</td>
+                      <td class="py-2.5 px-3 text-emerald-600 font-semibold">112,00 ha (35%)</td>
+                      <td class="py-2.5 px-3">34,00 ha</td>
+                      <td class="py-2.5 px-3">4,5 MF</td>
+                      <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">ATIVO</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 space-y-1">
+              <span class="font-bold block flex items-center gap-1.5 text-emerald-800">
+                <i class="fa-solid fa-stamp"></i> Parecer Oficial de Sustentabilidade BancoFé Agro
+              </span>
+              <p>Proponente em estrita conformidade com o Código Florestal (Lei nº 12.651/2012). Reserva Legal recuperada e averbada. Autorizado para emissão de CPR Verde e Custeio Safra com taxas subsidiadas ESG.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA 10: SCR BACEN / REGISTRATO & CENTRAL DE PROTESTOS -->
+        <div id="aba-scr-bacen" class="hidden space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 gap-4">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-xl font-bold">
+                  <i class="fa-solid fa-landmark"></i>
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                    Sistema de Informações de Créditos do Bacen (SCR) & Registrato
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-100 text-cyan-800 border border-cyan-200">
+                      Rating Bacen AA (CMN 2.682/99)
+                    </span>
+                  </h3>
+                  <p class="text-xs text-slate-500">Mapeamento pericial de operações no Sistema Financeiro Nacional (SFN) e Central de Protestos CENPROT</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold flex items-center gap-1.5">
+                  <i class="fa-solid fa-check"></i> 100% Pontualidade Histórica
+                </span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 block font-medium">Saldo Devedor Total SFN:</span>
+                <span class="text-base font-extrabold text-slate-900 mono mt-0.5 block">R$ 145.000,00</span>
+                <span class="text-[10px] text-slate-400">Crédito rural e habitacional</span>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 block font-medium">Limites Rotativos Livres:</span>
+                <span class="text-base font-extrabold text-emerald-700 mono mt-0.5 block">R$ 380.000,00</span>
+                <span class="text-[10px] text-slate-400">Cartões e contas garantidas</span>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 block font-medium">Vencidos / Inadimplência:</span>
+                <span class="text-base font-extrabold text-emerald-600 mono mt-0.5 block">R$ 0,00</span>
+                <span class="text-[10px] text-slate-400">Zero apontamento ativo</span>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 block font-medium">Protestos IEPTB Nacional:</span>
+                <span class="text-base font-extrabold text-emerald-600 mono mt-0.5 block">0 Protestos</span>
+                <span class="text-[10px] text-slate-400">Certidão Negativa CENPROT</span>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-list-check text-cyan-600"></i> Operações Registradas no Sistema Financeiro Nacional
+              </h4>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr class="border-b border-slate-200 bg-slate-50 text-slate-500 font-semibold">
+                      <th class="py-2.5 px-3">Instituição Financeira</th>
+                      <th class="py-2.5 px-3">Modalidade</th>
+                      <th class="py-2.5 px-3">Valor Contratado</th>
+                      <th class="py-2.5 px-3">Saldo Devedor</th>
+                      <th class="py-2.5 px-3">Rating Bacen</th>
+                      <th class="py-2.5 px-3">Garantias Constituídas</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 text-slate-700">
+                    <tr>
+                      <td class="py-2.5 px-3 font-semibold text-slate-900">748 - Sicredi Sudoeste MT (Ag. Tangará)</td>
+                      <td class="py-2.5 px-3">Crédito Rural e Custeio Agro</td>
+                      <td class="py-2.5 px-3 mono">R$ 250.000,00</td>
+                      <td class="py-2.5 px-3 mono font-bold text-slate-900">R$ 95.000,00</td>
+                      <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">AA</span></td>
+                      <td class="py-2.5 px-3 text-[11px] text-slate-500">Penhor Agrícola de Safra & CPR</td>
+                    </tr>
+                    <tr>
+                      <td class="py-2.5 px-3 font-semibold text-slate-900">001 - Banco do Brasil S.A.</td>
+                      <td class="py-2.5 px-3">Financiamento Imobiliário SBPE</td>
+                      <td class="py-2.5 px-3 mono">R$ 380.000,00</td>
+                      <td class="py-2.5 px-3 mono font-bold text-slate-900">R$ 50.000,00</td>
+                      <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">AA</span></td>
+                      <td class="py-2.5 px-3 text-[11px] text-slate-500">Alienação Fiduciária de Imóvel</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-house-chimney text-indigo-600"></i> Matrículas de Imóveis & Ônus Reais (ONR / e-Cartório)
+              </h4>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <span class="font-bold text-slate-900">Matrícula nº 18.940 — 1º Ofício de Nova Olímpia/MT</span>
+                    <p class="text-xs text-slate-500">Fazenda Estância Gonçalves (850,4 ha) • Avaliação de Mercado: <span class="font-bold text-emerald-700">R$ 12.500.000,00</span></p>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-bold text-xs">
+                    DESIMPEDIDO / LIVRE DE ÔNUS
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA 11: MESA DE CRÉDITO BANCOFÉ -->
+        <div id="aba-mesa-credito" class="hidden space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 gap-4">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl font-bold">
+                  <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                    Parecer Decisório da Mesa de Crédito BancoFé
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                      Rating BancoFé AAA • Score 960/1000
+                    </span>
+                  </h3>
+                  <p class="text-xs text-slate-500">Motor algorítmico de risco integrando 360 variáveis, DTI, LGD e probabilidade de inadimplência (PD)</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="window.location.href='/plataforma/precadastro'" class="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-md transition flex items-center gap-2">
+                  <i class="fa-solid fa-file-signature"></i> Abrir na Esteira de Pré-Cadastro
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div class="p-4 rounded-xl border border-emerald-200 bg-emerald-50/50">
+                <span class="text-xs text-emerald-800 font-semibold block">Crédito Rural CPR & Barter:</span>
+                <span class="text-xl font-black text-emerald-700 mono mt-1 block">R$ 2.976.400,00</span>
+                <span class="text-[10px] text-emerald-600">Taxa VIP: 0,75% a.m.</span>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 font-semibold block">Financiamento Habitacional SBPE:</span>
+                <span class="text-xl font-black text-slate-900 mono mt-1 block">R$ 4.675.000,00</span>
+                <span class="text-[10px] text-slate-400">Até 420 meses em SAC</span>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 font-semibold block">Home Equity (Garantia Imóvel):</span>
+                <span class="text-xl font-black text-indigo-700 mono mt-1 block">R$ 7.500.000,00</span>
+                <span class="text-[10px] text-slate-400">LTV 60% da Fazenda Estância</span>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 font-semibold block">Capital de Giro Corporativo PJ:</span>
+                <span class="text-xl font-black text-slate-900 mono mt-1 block">R$ 680.000,00</span>
+                <span class="text-[10px] text-slate-400">Taxa bonificada 1,05% a.m.</span>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 font-semibold block">Cartão BancoFé Black VIP:</span>
+                <span class="text-xl font-black text-slate-900 mono mt-1 block">R$ 127.500,00</span>
+                <span class="text-[10px] text-slate-400">Sem anuidade e 2,5 pts/USD</span>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs text-slate-500 font-semibold block">Margem Consignada Desimpedida:</span>
+                <span class="text-xl font-black text-emerald-600 mono mt-1 block">R$ 29.750,00 /mês</span>
+                <span class="text-[10px] text-slate-400">35% da renda executiva livre</span>
+              </div>
+            </div>
+
+            <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-800 text-sm">Decisão da Mesa de Crédito:</span>
+                <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center gap-1">
+                  <i class="fa-solid fa-circle-check"></i> APROVAÇÃO ESTRUTURADA DE ALTO TICKET
+                </span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Proponente de altíssima solvência com renda comprovada de R$ 85.000,00/mês, Rating Bacen AA, certidão nacional negativa de protestos e patrimônio imobiliário rural desimpedido avaliado em R$ 12.500.000,00. Probabilidade de inadimplência (PD) calculada em 0,4%. Limite global de crédito pré-aprovado liberado para formalização de CPR Digital e financiamento habitacional.
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -1439,7 +1727,7 @@ export function renderizarHtmlConsultaCpf(): string {
 
     // Alternar Abas
     function alternarAba(abaId) {
-      ['aba-dossie', 'aba-grafo', 'aba-lancamento', 'aba-bens-osint', 'aba-hobbies-lifestyle', 'aba-bureaus', 'aba-ia', 'aba-integracoes'].forEach(id => {
+      ['aba-dossie', 'aba-grafo', 'aba-lancamento', 'aba-bens-osint', 'aba-hobbies-lifestyle', 'aba-bureaus', 'aba-ia', 'aba-integracoes', 'aba-esg-sicar', 'aba-scr-bacen', 'aba-mesa-credito'].forEach(id => {
         document.getElementById(id).classList.add('hidden');
         const btn = document.getElementById('tab-btn-' + id.replace('aba-', ''));
         if (btn) {

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { DadosCpfEnriquecidos } from "../clientes/clientes-prequalificados.ts";
+import type { ParecerMesaCreditoAlgoritmica } from "../credito/mesa-credito-algoritmica.ts";
 
 export type StatusPreCadastro =
   | "novo"
@@ -15,7 +16,11 @@ export type ProdutoPretendidoBancoFe =
   | "credito_rural_agro"
   | "capital_giro_pj"
   | "emprestimo_consignado"
-  | "cartao_credito_black";
+  | "cartao_credito_black"
+  | "financiamento_lotes_ultra"
+  | "home_equity_garantia_imovel"
+  | "mcmv_habitacional_popular"
+  | "cpr_digital_agro_barter";
 
 export interface ItemPendenciaDocumental {
   id: string;
@@ -34,6 +39,8 @@ export interface CertificadoAprovacaoAutonoma {
   taxaJurosMensal: number;
   validadeDias: number;
   instituicaoEmissora: string;
+  produtoNome: string;
+  qrCodeValidacao: string;
 }
 
 export interface SimulacaoCreditoPreCadastro {
@@ -47,6 +54,7 @@ export interface SimulacaoCreditoPreCadastro {
   aprovadoAutomaticamente: boolean;
   motivoStatus: string;
   certificado?: CertificadoAprovacaoAutonoma;
+  parecerMesaAlgoritmica?: ParecerMesaCreditoAlgoritmica;
 }
 
 export interface RegistroPreCadastroBancoFe {
@@ -73,6 +81,7 @@ export interface RegistroPreCadastroBancoFe {
   scoreSerasaEstimado?: number;
   dados360Enriquecidos?: Partial<DadosCpfEnriquecidos>;
   simulacao?: SimulacaoCreditoPreCadastro;
+  parecerMesaCredito?: ParecerMesaCreditoAlgoritmica;
   pendencias: ItemPendenciaDocumental[];
   historicoNotas: Array<{
     data: string;
@@ -96,6 +105,10 @@ export const CriarPreCadastroSchema = z.object({
     "capital_giro_pj",
     "emprestimo_consignado",
     "cartao_credito_black",
+    "financiamento_lotes_ultra",
+    "home_equity_garantia_imovel",
+    "mcmv_habitacional_popular",
+    "cpr_digital_agro_barter",
   ]),
   empresaParceira: z.string().optional(),
   valorPretendido: z.number().optional().default(100000),
@@ -110,6 +123,7 @@ export const SimulacaoCreditoSchema = z.object({
   sistema: z.enum(["SAC", "PRICE"]),
   rendaMensal: z.number().positive(),
   score: z.number().optional().default(800),
+  produtoPretendido: z.string().optional(),
 });
 
 export const AtualizarStatusPreCadastroSchema = z.object({

@@ -216,12 +216,16 @@ export function renderizarHtmlPreCadastro(): string {
           <div>
             <label class="block font-semibold text-slate-700 mb-1">Produto Pretendido *</label>
             <select name="produtoPretendido" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500">
-              <option value="financiamento_imobiliario">Financiamento Imobiliário (Casa Nova / SBPE)</option>
-              <option value="credito_rural_agro">Crédito Rural & Custeio Safra / Barter (UISA / Agro)</option>
-              <option value="abertura_conta_digital">Abertura de Conta Digital BancoFé</option>
-              <option value="capital_giro_pj">Capital de Giro PJ & Maquininha (Varejo / Dino)</option>
-              <option value="emprestimo_consignado">Empréstimo Consignado em Folha</option>
-              <option value="cartao_credito_black">Cartão de Crédito Internacional Black</option>
+              <option value="minha_casa_minha_vida">Minha Casa Minha Vida / Social (0,58% a.m.)</option>
+              <option value="financiamento_imobiliario" selected>Financiamento Imobiliário SBPE / Casa Nova (0,85% a.m.)</option>
+              <option value="home_equity">Home Equity c/ Garantia de Imóvel (0,85% a.m.)</option>
+              <option value="credito_loteamento">Crédito Terrenos & Lotes Urbanos (0,95% a.m.)</option>
+              <option value="credito_rural_agro">Crédito Rural CPR & Custeio Safra (0,75% a.m.)</option>
+              <option value="emprestimo_consignado">Empréstimo Consignado em Folha (0,79% a.m.)</option>
+              <option value="capital_giro_pj">Capital de Giro PJ & Maquininha (1,15% a.m.)</option>
+              <option value="cartao_credito_black">Cartão de Crédito Black VIP BancoFé</option>
+              <option value="abertura_conta_digital">Abertura de Conta Corrente Digital</option>
+              <option value="investimento_lci_lca">Investimentos Estruturados (LCI / LCA)</option>
             </select>
           </div>
           <div>
@@ -529,6 +533,44 @@ export function renderizarHtmlPreCadastro(): string {
             </div>
           </div>
         </div>
+
+        \${item.analiseMesaCredito ? \`
+          <div class="bg-gradient-to-br from-slate-900 to-emerald-950 text-white p-5 rounded-xl border border-emerald-500/30 shadow-md space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-white/10">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-microchip text-emerald-400"></i>
+                <h5 class="font-bold text-sm tracking-wide text-white">Parecer da Mesa de Crédito Algorítmica BancoFé</h5>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
+                RATING \${item.analiseMesaCredito.rating} • SCORE \${item.analiseMesaCredito.scoreCalculado}/1000
+              </span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+              <div>
+                <span class="text-slate-400 text-[10px] uppercase block">Probab. Inadimplência:</span>
+                <span class="font-bold text-emerald-300 text-sm mono">\${item.analiseMesaCredito.probabilidadeInadimplenciaPct}%</span>
+              </div>
+              <div>
+                <span class="text-slate-400 text-[10px] uppercase block">Decisão do Motor:</span>
+                <span class="font-bold text-white text-xs uppercase">\${(item.analiseMesaCredito.decisao || '').replace(/_/g, ' ')}</span>
+              </div>
+              <div>
+                <span class="text-slate-400 text-[10px] uppercase block">LTV Máximo Imóvel:</span>
+                <span class="font-bold text-emerald-300 text-sm mono">\${item.analiseMesaCredito.limitesCalculados.ltvMaximoPct}%</span>
+              </div>
+              <div>
+                <span class="text-slate-400 text-[10px] uppercase block">Giro PJ Sugerido:</span>
+                <span class="font-bold text-white text-sm mono">R$ \${(item.analiseMesaCredito.limitesCalculados.capitalGiroPj || 0).toLocaleString('pt-BR')}</span>
+              </div>
+            </div>
+            \${item.analiseMesaCredito.fatoresPositivos && item.analiseMesaCredito.fatoresPositivos.length > 0 ? \`
+              <div class="pt-2 text-[11px] text-slate-300 border-t border-white/10 flex items-start gap-1.5">
+                <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+                <span><strong>Pontos Fortes:</strong> \${item.analiseMesaCredito.fatoresPositivos.join(' • ')}</span>
+              </div>
+            \` : ''}
+          </div>
+        \` : ''}
 
         <div>
           <h4 class="font-bold text-slate-800 text-sm mb-2 flex items-center gap-2">

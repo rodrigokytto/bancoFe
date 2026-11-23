@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from "node:crypto";
-import { obterClientePorCpf } from "../clientes/clientes-prequalificados.ts";
+import { obterClientePorCpf } from "../clientes/clientes-prequalificados.js";
 import {
   CriarPreCadastroSchema,
   type ItemPendenciaDocumental,
@@ -7,7 +7,12 @@ import {
   type SimulacaoCreditoPreCadastro,
   type StatusPreCadastro,
   type ProdutoPretendidoBancoFe,
-} from "./tipos-precadastro.ts";
+  type CertificadoAprovacaoAutonoma,
+} from "./tipos-precadastro.js";
+import {
+  executarAnaliseMesaCredito,
+  type ParecerMesaCreditoAlgoritmica,
+} from "../credito/mesa-credito-algoritmica.js";
 
 export class ServicoPreCadastroBancoFe {
   private registros: Map<string, RegistroPreCadastroBancoFe> = new Map();
@@ -77,7 +82,7 @@ export class ServicoPreCadastroBancoFe {
         dataCriacao: "2026-11-21T14:20:00.000Z",
         dataAtualizacao: "2026-11-22T11:10:00.000Z",
         status: "pendente_documentos" as StatusPreCadastro,
-        produtoPretendido: "financiamento_imobiliario" as ProdutoPretendidoBancoFe,
+        produtoPretendido: "mcmv_habitacional_popular" as ProdutoPretendidoBancoFe,
         titular: {
           nomeCompleto: "Juliana Camargo Diniz",
           cpfOuCnpj: "740.***.***-61",
@@ -146,6 +151,81 @@ export class ServicoPreCadastroBancoFe {
         valorPretendido: 45000,
         prazoMeses: 48,
       },
+      {
+        id: "pre-006",
+        codigoProtocolo: "BFE-PRE-2026-08496",
+        dataCriacao: "2026-11-22T11:30:00.000Z",
+        dataAtualizacao: "2026-11-22T18:15:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "financiamento_lotes_ultra" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "ENG. MARCOS AURELIO PRADO",
+          cpfOuCnpj: "000.000.006-04",
+          cpfLimpo: "00000000604",
+          email: "marcos.prado@construtoraultra.com.br",
+          telefone: "(65) 99841-5522",
+          rendaMensalDeclarada: 42000,
+          cidade: "Tangará da Serra",
+          uf: "MT",
+          logradouro: "Jardim Europa",
+          cep: "78300-000",
+        },
+        empresaParceira: "Construtora Ultra",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 920,
+        valorPretendido: 350000,
+        prazoMeses: 144,
+      },
+      {
+        id: "pre-007",
+        codigoProtocolo: "BFE-PRE-2026-08497",
+        dataCriacao: "2026-11-22T13:00:00.000Z",
+        dataAtualizacao: "2026-11-22T19:00:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "home_equity_garantia_imovel" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "PATRÍCIA FERRARI PAULINO GONÇALVES",
+          cpfOuCnpj: "322.855.228-43",
+          cpfLimpo: "32285522843",
+          email: "patricia.goncalves@kytto.com.br",
+          telefone: "(18) 3991-1145",
+          rendaMensalDeclarada: 42000,
+          cidade: "Mirante do Paranapanema",
+          uf: "SP",
+          logradouro: "Rua Elias Barbosa da Silva, 833",
+          cep: "19.262-070",
+        },
+        empresaParceira: "Kytto Tecnologia",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 940,
+        valorPretendido: 450000,
+        prazoMeses: 120,
+      },
+      {
+        id: "pre-008",
+        codigoProtocolo: "BFE-PRE-2026-08498",
+        dataCriacao: "2026-11-22T14:30:00.000Z",
+        dataAtualizacao: "2026-11-22T19:40:00.000Z",
+        status: "aprovado_autonomo" as StatusPreCadastro,
+        produtoPretendido: "cpr_digital_agro_barter" as ProdutoPretendidoBancoFe,
+        titular: {
+          nomeCompleto: "AILTON CESAR ZANATTA",
+          cpfOuCnpj: "000.000.012-44",
+          cpfLimpo: "00000001244",
+          email: "ailton.zanatta@fazendaparecis.com.br",
+          telefone: "(65) 99941-8822",
+          rendaMensalDeclarada: 120000,
+          cidade: "Campo Novo do Parecis",
+          uf: "MT",
+          logradouro: "Zona Rural / Rodovia MT-235",
+          cep: "78360-000",
+        },
+        empresaParceira: "UISA Barter & BancoFé Agro",
+        autorizacaoLgpd: true,
+        scoreSerasaEstimado: 950,
+        valorPretendido: 2500000,
+        prazoMeses: 36,
+      },
     ];
 
     for (const d of dadosIniciais) {
@@ -157,8 +237,16 @@ export class ServicoPreCadastroBancoFe {
         d.titular.rendaMensalDeclarada,
         d.scoreSerasaEstimado,
         d.id,
-        d.titular.nomeCompleto
+        d.titular.nomeCompleto,
+        d.produtoPretendido
       );
+
+      const parecerMesa = executarAnaliseMesaCredito({
+        cpfCnpj: d.titular.cpfLimpo,
+        nomeCliente: d.titular.nomeCompleto,
+        rendaMensalDeclarada: d.titular.rendaMensalDeclarada,
+        scoreBureauReferencia: d.scoreSerasaEstimado,
+      });
 
       const item: RegistroPreCadastroBancoFe = {
         id: d.id,
@@ -173,12 +261,13 @@ export class ServicoPreCadastroBancoFe {
         scoreSerasaEstimado: d.scoreSerasaEstimado,
         dados360Enriquecidos: obterClientePorCpf(d.titular.cpfLimpo) || undefined,
         simulacao,
+        parecerMesaCredito: parecerMesa,
         pendencias,
         historicoNotas: [
           {
             data: d.dataCriacao,
             autor: "Sistema Automático BancoFé",
-            nota: `Pré-cadastro registrado via canal ${d.empresaParceira}. Enriquecimento cadastral 360 associado.`,
+            nota: `Pré-cadastro registrado via canal ${d.empresaParceira}. Enriquecimento cadastral 360, SCR Bacen e Mesa de Risco executados.`,
           },
         ],
       };
@@ -195,15 +284,21 @@ export class ServicoPreCadastroBancoFe {
       { id: "doc-04", descricao: "Autorização de Consulta SCR Bacen e LGPD", obrigatorio: true, status: "aprovado" },
     ];
 
-    if (produto === "financiamento_imobiliario") {
+    if (produto === "financiamento_imobiliario" || produto === "mcmv_habitacional_popular") {
       docs.push({ id: "doc-05", descricao: "Certidão de Estado Civil Notarial (Nascimento/Casamento)", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "pendente" });
       docs.push({ id: "doc-06", descricao: "Extrato Atualizado do FGTS com Carimbo Caixa", obrigatorio: false, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
-    } else if (produto === "credito_rural_agro") {
+    } else if (produto === "credito_rural_agro" || produto === "cpr_digital_agro_barter") {
       docs.push({ id: "doc-07", descricao: "Certificado de Cadastro de Imóvel Rural (CCIR / INCRA)", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
-      docs.push({ id: "doc-08", descricao: "Recibo de Inscrição no CAR (SICAR / Sema-MT)", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
+      docs.push({ id: "doc-08", descricao: "Recibo de Inscrição no CAR (SICAR / Sema-MT) & Desmatamento Zero", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
+      docs.push({ id: "doc-11", descricao: "Laudo de Estimativa de Produtividade da Safra (Barter/CPR)", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
     } else if (produto === "capital_giro_pj") {
       docs.push({ id: "doc-09", descricao: "Contrato Social Consolidado & Cartão CNPJ RFB", obrigatorio: true, status: "aprovado" });
       docs.push({ id: "doc-10", descricao: "Faturamento dos Últimos 12 Meses Assinado por Contador", obrigatorio: true, status: "pendente" });
+    } else if (produto === "home_equity_garantia_imovel") {
+      docs.push({ id: "doc-12", descricao: "Certidão de Inteiro Teor da Matrícula do Imóvel com Negativa de Ônus (< 30 dias)", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
+      docs.push({ id: "doc-13", descricao: "Laudo de Avaliação Mercadológica de Engenharia", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
+    } else if (produto === "financiamento_lotes_ultra") {
+      docs.push({ id: "doc-14", descricao: "Quadro Resumo de Reserva do Lote / Construtora Ultra", obrigatorio: true, status: status === "aprovado_autonomo" ? "aprovado" : "anexado" });
     }
 
     return docs;
@@ -216,14 +311,31 @@ export class ServicoPreCadastroBancoFe {
     rendaMensal: number,
     score = 800,
     registroId = "pre-auto",
-    nomeTitular = "Cliente BancoFé"
+    nomeTitular = "Cliente BancoFé",
+    produto: ProdutoPretendidoBancoFe = "financiamento_imobiliario"
   ): SimulacaoCreditoPreCadastro {
-    // Taxa base dependendo do score e sistema
-    let taxaMensal = 0.89; // 0,89% a.m.
-    if (score >= 900) taxaMensal = 0.79;
-    else if (score >= 800) taxaMensal = 0.85;
-    else if (score >= 700) taxaMensal = 0.99;
-    else taxaMensal = 1.15;
+    // Taxa base adaptativa por produto e score
+    let taxaMensal = 0.89; // padrão
+
+    if (produto === "mcmv_habitacional_popular") {
+      taxaMensal = 0.58; // MCMV subsidiado
+    } else if (produto === "emprestimo_consignado") {
+      taxaMensal = 0.79; // Consignado folha
+    } else if (produto === "credito_rural_agro" || produto === "cpr_digital_agro_barter") {
+      taxaMensal = 0.75; // Agro Custeio / CPR
+    } else if (produto === "home_equity_garantia_imovel") {
+      taxaMensal = 0.85; // Home Equity com garantia real
+    } else if (produto === "financiamento_lotes_ultra") {
+      taxaMensal = 0.95; // Lotes até 180 meses
+    } else if (produto === "capital_giro_pj") {
+      taxaMensal = 1.15; // Giro PJ
+    } else {
+      // Financiamento Imobiliário SBPE
+      if (score >= 900) taxaMensal = 0.79;
+      else if (score >= 800) taxaMensal = 0.85;
+      else if (score >= 700) taxaMensal = 0.99;
+      else taxaMensal = 1.15;
+    }
 
     let primeiraParcela = 0;
     if (sistema === "SAC") {
@@ -242,10 +354,10 @@ export class ServicoPreCadastroBancoFe {
     const comprometimento = Math.round((primeiraParcela / (rendaMensal || 1)) * 1000) / 10;
     const aprovado = primeiraParcela <= capacidade30 && score >= 700;
 
-    let certificado: any = undefined;
+    let certificado: CertificadoAprovacaoAutonoma | undefined = undefined;
     if (aprovado) {
       const hash = createHash("sha256")
-        .update(`${registroId}:${valor}:${prazoMeses}:${taxaMensal}:BANCOFE_2026`)
+        .update(`${registroId}:${valor}:${prazoMeses}:${taxaMensal}:${produto}:BANCOFE_2026`)
         .digest("hex")
         .toUpperCase()
         .slice(0, 32);
@@ -260,6 +372,8 @@ export class ServicoPreCadastroBancoFe {
         taxaJurosMensal: taxaMensal,
         validadeDias: 60,
         instituicaoEmissora: "BANCO FÉ - CRÉDITO INTELIGENTE 360",
+        produtoNome: produto.replace(/_/g, " ").toUpperCase(),
+        qrCodeValidacao: `https://bancofe.com.br/validar/${hash.slice(0, 12)}`,
       };
     }
 
@@ -339,10 +453,18 @@ export class ServicoPreCadastroBancoFe {
       rendaReal,
       scoreSerasa,
       id,
-      validado.nomeCompleto
+      validado.nomeCompleto,
+      validado.produtoPretendido
     );
 
-    const statusInicial: StatusPreCadastro = simulacao.aprovadoAutomaticamente
+    const parecerMesa = executarAnaliseMesaCredito({
+      cpfCnpj: cpfLimpo,
+      nomeCliente: validado.nomeCompleto,
+      rendaMensalDeclarada: rendaReal,
+      scoreBureauReferencia: scoreSerasa,
+    });
+
+    const statusInicial: StatusPreCadastro = simulacao.aprovadoAutomaticamente && parecerMesa.decisaoFinal !== "RECUSADO_POLITICA_RISCO" && parecerMesa.decisaoFinal !== "CONDICIONADO_AVALISTA_OU_GARANTIA"
       ? "aprovado_autonomo"
       : "em_qualificacao";
 
@@ -370,12 +492,13 @@ export class ServicoPreCadastroBancoFe {
       scoreSerasaEstimado: scoreSerasa,
       dados360Enriquecidos: dossie360 || undefined,
       simulacao,
+      parecerMesaCredito: parecerMesa,
       pendencias,
       historicoNotas: [
         {
           data: new Date().toISOString(),
           autor: "Portal Pré-Cadastro BancoFé",
-          nota: `Entrada de proposta registrada com sucesso. Simulação de crédito executada.`,
+          nota: `Entrada de proposta registrada. Rating BancoFé ${parecerMesa.ratingBancoFe} (Score ${parecerMesa.scoreBancoFe}) com decisão: ${parecerMesa.decisaoFinal}.`,
         },
       ],
     };
@@ -430,10 +553,12 @@ export class ServicoPreCadastroBancoFe {
       .reduce((acc, r) => acc + (r.simulacao?.certificado?.limiteAprovado || 0), 0);
 
     return {
+      totalCadastrados: total,
       totalPreCadastros: total,
-      aprovadosAutonomos: aprovados,
+      aprovados,
       emQualificacao,
       pendentesDocumentos: pendentes,
+      taxaAprovacao: total > 0 ? Math.round((aprovados / total) * 100) : 0,
       volumeTotalSolicitado,
       volumeTotalAprovado,
     };

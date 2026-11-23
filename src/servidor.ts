@@ -44,6 +44,10 @@ import { GestorModulosNegocioBancoFe } from "./admin/gestor-modulos-negocio.ts";
 import { renderizarHtmlPreCadastro } from "./views/precadastro-html.ts";
 import { renderizarHtmlClientesPotenciais } from "./views/clientes-potenciais-html.ts";
 import { renderizarHtmlAdminModulos } from "./views/admin-modulos-html.ts";
+import { consultarComplianceAmbiental } from "./compliance/sicar-compliance-ambiental.ts";
+import { consultarSCRBacen } from "./credito/scr-registrato-analitico.ts";
+import { consultarCartoriosEProtestos } from "./credito/cartorios-protestos-onr.ts";
+import { executarAnaliseMesaCredito } from "./credito/mesa-credito-algoritmica.ts";
 
 export function criarServidorConsulta360(porta = 3360, host = "0.0.0.0") {
   const app = Fastify({
@@ -1095,6 +1099,89 @@ export function criarServidorConsulta360(porta = 3360, host = "0.0.0.0") {
       return { erro: "Certificado não localizado ou proposta ainda não aprovada autonomamente" };
     }
     return item.simulacao.certificado;
+  });
+
+  // Parecer Analítico da Mesa de Crédito BancoFé vinculado a uma proposta
+  app.get("/api/v1/precadastro/:id/parecer-mesa", async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const item = servicoPrecadastro.obterPorId(id);
+    if (!item) {
+      reply.status(404);
+      return { erro: "Pré-cadastro não localizado" };
+    }
+    if (item.parecerMesaCredito) {
+      return item.parecerMesaCredito;
+    }
+    const parecer = executarAnaliseMesaCredito({
+      cpfCnpj: item.titular.cpfLimpo,
+      nomeCliente: item.titular.nomeCompleto,
+      rendaMensalDeclarada: item.titular.rendaMensalDeclarada,
+      scoreBureauReferencia: item.scoreSerasaEstimado,
+    });
+    item.parecerMesaCredito = parecer;
+    return parecer;
+  });
+
+  // Dossiê Pericial SICAR & Compliance Ambiental ESG (CAR, Embargos SEMA-MT/IBAMA)
+  app.get("/api/v1/compliance-ambiental/:cpfOuCnpj", async (request) => {
+    const { cpfOuCnpj } = request.params as { cpfOuCnpj: string };
+    const nome = (request.query as any)?.nome;
+    return consultarComplianceAmbiental(cpfOuCnpj, nome);
+  });
+
+  // Dossiê SCR Bacen / Registrato (Rating CMN 2.682 AA a H, Vencidos e Limites SFN)
+  app.get("/api/v1/scr-bacen/:cpfOuCnpj", async (request) => {
+    const { cpfOuCnpj } = request.params as { cpfOuCnpj: string };
+    const { nome, renda } = (request.query as any) || {};
+    return consultarSCRBacen(cpfOuCnpj, nome, renda ? Number(renda) : undefined);
+  });
+
+  // Dossiê Central de Protestos de Títulos (IEPTB/CENPROT) e Matrículas ONR
+  app.get("/api/v1/cartorios-protestos/:cpfOuCnpj", async (request) => {
+    const { cpfOuCnpj } = request.params as { cpfOuCnpj: string };
+    const nome = (request.query as any)?.nome;
+    return consultarCartoriosEProtestos(cpfOuCnpj, nome);
+  });
+
+  // Executar Análise Instantânea da Mesa de Crédito Algorítmica BancoFé
+  app.post("/api/v1/mesa-credito/analisar", async (request, reply) => {
+    try {
+      const body = request.body as any;
+      if (!body?.cpfCnpj) {
+        reply.status(400);
+        return { erro: "CPF ou CNPJ é obrigatório para análise da mesa de crédito" };
+      }
+      return executarAnaliseMesaCredito({
+        cpfCnpj: body.cpfCnpj,
+        nomeCliente: body.nomeCliente || "Cliente Proponente",
+        rendaMensalDeclarada: Number(body.rendaMensalDeclarada || 10000),
+        scoreBureauReferencia: body.scoreBureauReferencia ? Number(body.scoreBureauReferencia) : undefined,
+      });
+    } catch (err: any) {
+      reply.status(400);
+      return { erro: "Falha na análise da mesa de crédito", detalhes: err?.message || err };
+    }
+  });
+
+  // Métricas Consolidadas do Ecossistema Integrado BancoFé
+  app.get("/api/v1/estatisticas-ecossistema", async () => {
+    const precadastroMetricas = servicoPrecadastro.obterMetricas();
+    const radarMetricas = MotorRadarProspeccaoBancoFe.obterEstatisticas();
+    const clientesPrequalificadosEstatisticas = obterEstatisticasClientes();
+    const totalEmpresas = BASE_EMPRESAS_BANCOFE.length;
+    const modulosAdmin = gestorModulosNegocio.obterMetricasAdmin();
+
+    return {
+      instituicao: CONFIG_OFICIAL_BANCOFE.instituicao,
+      precadastro: precadastroMetricas,
+      radarProspeccao: radarMetricas,
+      clientesHomologados: clientesPrequalificadosEstatisticas,
+      empresasCorporativasTga: {
+        totalEmpresas,
+        limiteGiroTotalSugerido: BASE_EMPRESAS_BANCOFE.reduce((acc, e) => acc + e.limiteCapitalGiroSugerido, 0),
+      },
+      gestaoModulosNegocio: modulosAdmin,
+    };
   });
 
   // ==========================================

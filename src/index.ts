@@ -38,9 +38,18 @@ export * from './integrations/skills/adapters/stock-analysis.skill';
 // Consulta 360, Bureaus & Casanova Kytto
 export * from './config';
 export * from './servico';
+export * from './modulo';
 export * from './tipos';
 export * from './validador-integracoes';
 export * from './servidor';
+
+// Compliance Ambiental & SICAR ESG
+export * from './compliance/sicar-compliance-ambiental';
+
+// Motores de Crédito, SCR Bacen & Cartórios
+export * from './credito/scr-registrato-analitico';
+export * from './credito/cartorios-protestos-onr';
+export * from './credito/mesa-credito-algoritmica';
 
 // Pré-Cadastro 360 & Onboarding Bancário
 export * from './precadastro/tipos-precadastro';
