@@ -7,6 +7,10 @@ const ROUTES = [
   { path: "/", type: "frontend", desc: "Cockpit Geral BancoFe / Zuma" },
   { path: "/admin", type: "frontend", desc: "Gestão Multi-Negócio de Módulos (Novo)" },
   { path: "/admin/modulos", type: "frontend", desc: "Alias direto para Gestão de Módulos" },
+  { path: "/admin/crm-financeira", type: "frontend", desc: "Painel BancoFe — Operações Financeiras & CRM 360°" },
+  { path: "/admin/operacoes-financeiras", type: "frontend", desc: "Alias direto Operações Financeiras" },
+  { path: "/crm-financeira", type: "frontend", desc: "Rota amigável CRM Financeira" },
+  { path: "/operacoes-financeiras", type: "frontend", desc: "Rota amigável Operações Financeiras" },
   { path: "/administracao", type: "frontend", desc: "Painel Administrativo" },
   { path: "/bancofe", type: "frontend", desc: "BancoFe Hub & Banking Core" },
   { path: "/banking", type: "frontend", desc: "Open Finance & Serviços Bancários" },
@@ -76,6 +80,10 @@ const ROUTES = [
   { path: "/api/v1/admin/modulos/kytto", type: "api", desc: "Módulos da Kytto Holding" },
   { path: "/api/v1/admin/modulos/logistica", type: "api", desc: "Módulos de Logística & Frotas" },
   { path: "/api/v1/admin/modulos/credito_pj", type: "api", desc: "Módulos de Antecipação & Crédito PJ" },
+  { path: "/api/v1/admin/modulos/operacoes_financeiras_crm", type: "api", desc: "Módulos da Empresa Operações Financeiras & CRM" },
+  { path: "/api/admin/operacoes-financeiras/crm/gestao", type: "api", desc: "API Métricas e Gestão da Mesa de Crédito" },
+  { path: "/api/admin/operacoes-financeiras/crm/oportunidades", type: "api", desc: "API Listagem de Oportunidades do Funil CRM" },
+  { path: "/api/admin/notificacoes", type: "api", desc: "API Central de Notificações em Tempo Real" },
   { path: "/api/v1/precadastro/metricas", type: "api", desc: "Métricas Consolidadas de Pré-Cadastro" },
   { path: "/api/v1/precadastro/listar", type: "api", desc: "Listagem de Propostas de Pré-Cadastro" },
   { path: "/api/v1/integracoes/validar-todas", type: "api", desc: "Diagnóstico Integrado de Conectores" },
@@ -98,9 +106,10 @@ async function runValidation() {
   for (const route of ROUTES) {
     const url = `${BASE_URL}${route.path}`;
     const start = Date.now();
+    const timeoutMs = route.path.includes("validar-todas") ? 35000 : 8000;
     try {
       const res = await axios.get(url, {
-        timeout: 8000,
+        timeout: timeoutMs,
         validateStatus: () => true, // Captura qualquer status code
       });
       const latency = Date.now() - start;
