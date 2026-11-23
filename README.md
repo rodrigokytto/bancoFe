@@ -13,6 +13,13 @@ Plataforma unificada de alta performance para operação bancária, financeira, 
 - **Google Cloud Run (Produção GCP):** [https://erp-bancofe-5xsi5uyoda-rj.a.run.app](https://erp-bancofe-5xsi5uyoda-rj.a.run.app)
 - **Google Cloud Run (URL Direta da Revisão):** [https://erp-bancofe-243135142712.southamerica-east1.run.app](https://erp-bancofe-243135142712.southamerica-east1.run.app)
 - **Painel Administrativo de Módulos por Negócio:** [https://erp-bancofe-5xsi5uyoda-rj.a.run.app/admin](https://erp-bancofe-5xsi5uyoda-rj.a.run.app/admin)
+- **Credenciais de Acesso Administrativo:**
+  - **Usuário 1 (Institucional):** `rodrigo.goncalves@kytto.com.br` | **Senha:** `#080581Verdao`
+  - **Usuário 2 (Root Admin):** `admin` | **Senha:** `#080581Verdao`
+- **Status de Segurança & Acesso:**
+  - Google Cloud IAP desativado com acesso público irrestrito e direto (resolvido Error Code 11).
+  - Banco de Dados PostgreSQL Cloud SQL (`bancofe-pg`) ativo e sincronizado.
+  - Render Core com durabilidade legacy e failover permanente ativo.
 - **GCP Project:** `bancofe-plataforma-kytto` | **Região:** `southamerica-east1` (São Paulo) | **Serviço Cloud Run:** `erp-bancofe`
 - **Ambiente Alternativo / Pilot:** [https://zuma-x2gtmiiwkq-rj.a.run.app](https://zuma-x2gtmiiwkq-rj.a.run.app)
 - **Domínio Corporativo:** [https://bancofe.kytto.com.br](https://bancofe.kytto.com.br) / [https://zuma.kytto.com.br](https://zuma.kytto.com.br)
