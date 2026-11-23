@@ -332,7 +332,7 @@ export default function Cadastro360BancoFePage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#820AD1]/10 text-[#820AD1] dark:bg-[#820AD1]/20 dark:text-purple-300 border border-[#820AD1]/30">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-700/10 text-emerald-600 dark:text-emerald-400 dark:bg-emerald-700/20 dark:text-emerald-300 border border-emerald-600/30">
               <Sparkles className="w-3.5 h-3.5" /> BancoFe 360° Ecosystem
             </span>
             <span className="text-xs text-slate-500">Resolução CMN nº 2.682/99 & BACEN nº 4.571/17</span>
@@ -348,7 +348,7 @@ export default function Cadastro360BancoFePage() {
         <div className="flex items-center gap-2.5 flex-wrap">
           <button
             onClick={() => setModalNovoPreCadastro(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#820AD1] hover:bg-[#6d08b0] text-white shadow-sm transition-all"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm transition-all"
           >
             <Plus className="w-4 h-4" /> Novo Pré-Cadastro
           </button>
@@ -381,13 +381,13 @@ export default function Cadastro360BancoFePage() {
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs">
           <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium">
             <span>Empresas Homologadas</span>
-            <CheckCircle2 className="w-4 h-4 text-[#820AD1]" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
           <div className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mt-1">
             {metricas?.totalEmpresasHomologadas || 0} de {metricas?.totalClientesCadastrados || 0}
           </div>
           <div className="text-xs text-slate-500 mt-1">
-            Completude Média: <strong className="text-purple-600 dark:text-purple-400">{metricas?.taxaMediaCompletudeCadastral || 0}%</strong>
+            Completude Média: <strong className="text-emerald-600 dark:text-emerald-400">{metricas?.taxaMediaCompletudeCadastral || 0}%</strong>
           </div>
         </div>
 
@@ -407,13 +407,13 @@ export default function Cadastro360BancoFePage() {
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs">
           <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium">
             <span>Termos Digitais Assinados</span>
-            <Scale className="w-4 h-4 text-purple-500" />
+            <Scale className="w-4 h-4 text-emerald-500" />
           </div>
           <div className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mt-1">
             {termosCliente.filter((t) => t.status === "assinado").length} de {termosCliente.length || 7}
           </div>
           <div className="text-xs text-slate-500 mt-1 flex items-center gap-1">
-            <Fingerprint className="w-3.5 h-3.5 text-purple-500" />
+            <Fingerprint className="w-3.5 h-3.5 text-emerald-500" />
             <span>Assinatura Lei 14.063/20</span>
           </div>
         </div>
@@ -425,7 +425,7 @@ export default function Cadastro360BancoFePage() {
           onClick={() => setActiveMainTab("visao_360")}
           className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
             activeMainTab === "visao_360"
-              ? "bg-white dark:bg-slate-800 text-[#820AD1] dark:text-purple-300 shadow-xs"
+              ? "bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 dark:text-emerald-300 shadow-xs"
               : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
@@ -436,7 +436,7 @@ export default function Cadastro360BancoFePage() {
           onClick={() => setActiveMainTab("precadastro_vault")}
           className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
             activeMainTab === "precadastro_vault"
-              ? "bg-white dark:bg-slate-800 text-[#820AD1] dark:text-purple-300 shadow-xs"
+              ? "bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 dark:text-emerald-300 shadow-xs"
               : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
@@ -447,7 +447,7 @@ export default function Cadastro360BancoFePage() {
           onClick={() => setActiveMainTab("termos_formais")}
           className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
             activeMainTab === "termos_formais"
-              ? "bg-white dark:bg-slate-800 text-[#820AD1] dark:text-purple-300 shadow-xs"
+              ? "bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 dark:text-emerald-300 shadow-xs"
               : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
@@ -458,7 +458,7 @@ export default function Cadastro360BancoFePage() {
           onClick={() => setActiveMainTab("matriz_empresas")}
           className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
             activeMainTab === "matriz_empresas"
-              ? "bg-white dark:bg-slate-800 text-[#820AD1] dark:text-purple-300 shadow-xs"
+              ? "bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 dark:text-emerald-300 shadow-xs"
               : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
@@ -481,7 +481,7 @@ export default function Cadastro360BancoFePage() {
                   placeholder="Buscar Razão, CNPJ ou Protocolo..."
                   value={buscaTexto}
                   onChange={(e) => setBuscaTexto(e.target.value)}
-                  className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-1 focus:ring-[#820AD1]"
+                  className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-1 focus:ring-emerald-600"
                 />
               </div>
 
@@ -524,7 +524,7 @@ export default function Cadastro360BancoFePage() {
                     onClick={() => setClienteSelecionadoId(cli.id)}
                     className={`p-3.5 rounded-2xl border transition-all cursor-pointer ${
                       isSelected
-                        ? "bg-[#820AD1]/5 dark:bg-[#820AD1]/15 border-[#820AD1] shadow-xs"
+                        ? "bg-emerald-700/5 dark:bg-emerald-700/15 border-emerald-600 shadow-xs"
                         : "bg-white dark:bg-slate-900 border-slate-200/70 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700"
                     }`}
                   >
@@ -556,7 +556,7 @@ export default function Cadastro360BancoFePage() {
 
                     <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
                       <span>Limite: <strong>R$ {(cli.limitesOperacionais.limiteGlobalAprovado / 1000000).toFixed(1)}M</strong></span>
-                      <span className="flex items-center gap-1 font-medium text-[#820AD1] dark:text-purple-300">
+                      <span className="flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400 dark:text-emerald-300">
                         {cli.percentualCompletudeCadastral}% docs <ChevronRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
@@ -577,7 +577,7 @@ export default function Cadastro360BancoFePage() {
                       <span className="text-xs font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold">
                         {clienteAtual.codigo}
                       </span>
-                      <span className="text-xs font-semibold text-[#820AD1] dark:text-purple-400">
+                      <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 dark:text-emerald-400">
                         {clienteAtual.empresaOrigemNome}
                       </span>
                     </div>
@@ -633,7 +633,7 @@ export default function Cadastro360BancoFePage() {
                         onClick={() => setActive360SubTab(sub.id as any)}
                         className={`px-3 py-1.5 rounded-lg font-medium flex items-center gap-1.5 transition-all whitespace-nowrap ${
                           isActive
-                            ? "bg-[#820AD1] text-white shadow-xs"
+                            ? "bg-emerald-700 text-white shadow-xs"
                             : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
                         }`}
                       >
@@ -650,7 +650,7 @@ export default function Cadastro360BancoFePage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800 space-y-2">
                         <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                          <Building2 className="w-4 h-4 text-[#820AD1]" /> Dados na Receita Federal
+                          <Building2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Dados na Receita Federal
                         </h4>
                         <div className="grid grid-cols-2 gap-2 text-xs">
                           <div><span className="text-slate-400">Porte:</span> <strong>{clienteAtual.dadosCadastrais.porte}</strong></div>
@@ -678,7 +678,7 @@ export default function Cadastro360BancoFePage() {
                         </div>
                         <div className="pt-2 text-xs border-t border-slate-200 dark:border-slate-700 flex items-center justify-between">
                           <span>Trava de Domicílio:</span>
-                          <span className="font-bold text-purple-600 dark:text-purple-400">
+                          <span className="font-bold text-emerald-600 dark:text-emerald-400">
                             Registradora {clienteAtual.contaGraficaBancoFe.travaDomicilioBancario.registradora} (100% Retenção)
                           </span>
                         </div>
@@ -721,7 +721,7 @@ export default function Cadastro360BancoFePage() {
                               <td className="p-3 font-semibold text-slate-900 dark:text-white">{soc.nome}</td>
                               <td className="p-3 font-mono">{soc.cpf}</td>
                               <td className="p-3">{soc.cargo}</td>
-                              <td className="p-3 font-bold text-[#820AD1]">{soc.participacaoPercentual}%</td>
+                              <td className="p-3 font-bold text-emerald-600 dark:text-emerald-400">{soc.participacaoPercentual}%</td>
                               <td className="p-3">
                                 <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${soc.pep ? "bg-amber-500/20 text-amber-600" : "bg-slate-100 dark:bg-slate-800 text-slate-500"}`}>
                                   {soc.pep ? "Sim" : "Não"}
@@ -799,7 +799,7 @@ export default function Cadastro360BancoFePage() {
                       </div>
                       <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800">
                         <span className="text-slate-400 text-xs">Rating CMN 2.682</span>
-                        <div className="font-bold text-purple-600 text-base mt-0.5">
+                        <div className="font-bold text-emerald-600 text-base mt-0.5">
                           Rating {clienteAtual.analiseFinanceira.ratingCMN2682} (PDD {clienteAtual.analiseFinanceira.provisaoPddExigida}%)
                         </div>
                       </div>
@@ -829,9 +829,9 @@ export default function Cadastro360BancoFePage() {
                 {/* 5. LIMITES OPERACIONAIS */}
                 {active360SubTab === "limites" && (
                   <div className="space-y-4">
-                    <div className="p-4 rounded-2xl bg-[#820AD1]/10 border border-[#820AD1]/20 flex items-center justify-between">
+                    <div className="p-4 rounded-2xl bg-emerald-700/10 border border-emerald-600/20 flex items-center justify-between">
                       <div>
-                        <span className="text-xs font-semibold text-[#820AD1] dark:text-purple-300">Limite Global Aprovado</span>
+                        <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 dark:text-emerald-300">Limite Global Aprovado</span>
                         <div className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
                           R$ {(clienteAtual.limitesOperacionais.limiteGlobalAprovado / 1000000).toFixed(2)}M
                         </div>
@@ -855,7 +855,7 @@ export default function Cadastro360BancoFePage() {
                               <span className="text-slate-500">Taxa: <strong>{sub.taxaPadraoMes}% a.m.</strong></span>
                             </div>
                             <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden my-1.5">
-                              <div className="h-full bg-[#820AD1]" style={{ width: `${Math.min(100, pct)}%` }} />
+                              <div className="h-full bg-emerald-700" style={{ width: `${Math.min(100, pct)}%` }} />
                             </div>
                             <div className="flex items-center justify-between text-slate-500 text-[11px]">
                               <span>Aprovado: R$ {(sub.limiteAprovado / 1000).toFixed(0)}k</span>
@@ -876,7 +876,7 @@ export default function Cadastro360BancoFePage() {
                       <div key={gar.id} className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-xs space-y-2">
                         <div className="flex items-start justify-between">
                           <div>
-                            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-purple-500/10 text-purple-600">
+                            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600">
                               {gar.tipoGarantia.replace(/_/g, " ")}
                             </span>
                             <h4 className="font-bold text-sm text-slate-900 dark:text-white mt-1">
@@ -954,7 +954,7 @@ export default function Cadastro360BancoFePage() {
                           ) : (
                             <button
                               onClick={() => setModalAssinarTermo({ aberto: true, termo: t, nome: "Rodrigo Ribeiro Gonçalves", cpf: "123.456.789-00" })}
-                              className="px-2.5 py-1 rounded-full bg-[#820AD1] text-white font-semibold text-[11px]"
+                              className="px-2.5 py-1 rounded-full bg-emerald-700 text-white font-semibold text-[11px]"
                             >
                               Assinar
                             </button>
@@ -983,7 +983,7 @@ export default function Cadastro360BancoFePage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <Boxes className="w-5 h-5 text-[#820AD1]" /> Vault Documental & Dossiê de Pré-Cadastro
+                  <Boxes className="w-5 h-5 text-emerald-600 dark:text-emerald-400" /> Vault Documental & Dossiê de Pré-Cadastro
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
                   Checklist normativo de 13 documentos com validação de integridade por Hash SHA-256 e controle de certidões.
@@ -996,7 +996,7 @@ export default function Cadastro360BancoFePage() {
                     <span className="text-xs text-slate-500">Cliente Selecionado:</span>
                     <div className="font-bold text-xs text-slate-900 dark:text-white truncate max-w-xs">{clienteAtual.razaoSocial}</div>
                   </div>
-                  <div className="w-12 h-12 rounded-full border-4 border-[#820AD1] flex items-center justify-center font-bold text-xs text-[#820AD1]">
+                  <div className="w-12 h-12 rounded-full border-4 border-emerald-600 flex items-center justify-center font-bold text-xs text-emerald-600 dark:text-emerald-400">
                     {clienteAtual.percentualCompletudeCadastral}%
                   </div>
                 </div>
@@ -1021,7 +1021,7 @@ export default function Cadastro360BancoFePage() {
                     <tr key={doc.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
                       <td className="p-3">
                         <div className="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
-                          <FileText className="w-3.5 h-3.5 text-[#820AD1]" />
+                          <FileText className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                           {doc.titulo}
                         </div>
                         {doc.justificativaRejeicao && (
@@ -1120,7 +1120,7 @@ export default function Cadastro360BancoFePage() {
           <div className="p-4 md:p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 space-y-4">
             <div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Scale className="w-5 h-5 text-[#820AD1]" /> Central de Termos, Formalização & Consentimentos SCR
+                <Scale className="w-5 h-5 text-emerald-600 dark:text-emerald-400" /> Central de Termos, Formalização & Consentimentos SCR
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
                 Instrumentos jurídicos e regulatórios exigidos pelo Banco Central do Brasil, CMN e Lei Federal nº 10.931/04.
@@ -1134,7 +1134,7 @@ export default function Cadastro360BancoFePage() {
                     <div>
                       <span className="text-[10px] font-mono text-slate-400 font-semibold">{t.codigo}</span>
                       <h4 className="font-bold text-sm text-slate-900 dark:text-white mt-0.5">{t.titulo}</h4>
-                      <p className="text-xs text-[#820AD1] dark:text-purple-300 mt-0.5 font-medium">{t.normativaReferencia}</p>
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400 dark:text-emerald-300 mt-0.5 font-medium">{t.normativaReferencia}</p>
                     </div>
 
                     <span
@@ -1189,7 +1189,7 @@ export default function Cadastro360BancoFePage() {
                     ) : (
                       <button
                         onClick={() => setModalAssinarTermo({ aberto: true, termo: t, nome: "Rodrigo Ribeiro Gonçalves", cpf: "123.456.789-00" })}
-                        className="w-1/2 py-1.5 rounded-xl text-xs font-semibold bg-[#820AD1] text-white flex items-center justify-center gap-1.5"
+                        className="w-1/2 py-1.5 rounded-xl text-xs font-semibold bg-emerald-700 text-white flex items-center justify-center gap-1.5"
                       >
                         <Check className="w-3.5 h-3.5" /> Assinar Digital
                       </button>
@@ -1210,7 +1210,7 @@ export default function Cadastro360BancoFePage() {
           <div className="p-4 md:p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 space-y-4">
             <div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Building2 className="w-5 h-5 text-[#820AD1]" /> Matriz de Limites & Risco das 8 Empresas BancoFe
+                <Building2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" /> Matriz de Limites & Risco das 8 Empresas BancoFe
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
                 Visão executiva comparativa das unidades de negócio, faturamento auditado, alçadas e ratings CMN 2.682/99.
@@ -1243,7 +1243,7 @@ export default function Cadastro360BancoFePage() {
                       <td className="p-3 font-bold text-emerald-600">R$ {(c.limitesOperacionais.limiteGlobalAprovado / 1000000).toFixed(1)}M</td>
                       <td className="p-3 text-rose-500">R$ {(c.limitesOperacionais.limiteUtilizadoTotal / 1000000).toFixed(1)}M</td>
                       <td className="p-3">
-                        <span className="font-bold px-2 py-0.5 rounded bg-purple-500/15 text-purple-600">
+                        <span className="font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600">
                           {c.analiseFinanceira.ratingCMN2682}
                         </span>
                       </td>
@@ -1256,7 +1256,7 @@ export default function Cadastro360BancoFePage() {
                             setClienteSelecionadoId(c.id);
                             setActiveMainTab("visao_360");
                           }}
-                          className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-[#820AD1] text-white hover:bg-[#6d08b0]"
+                          className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-emerald-700 text-white hover:bg-emerald-800"
                         >
                           Ver 360°
                         </button>
@@ -1278,7 +1278,7 @@ export default function Cadastro360BancoFePage() {
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-xl w-full p-6 shadow-2xl space-y-4 my-8">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
               <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
-                <Plus className="w-5 h-5 text-[#820AD1]" /> Novo Pré-Cadastro de Empresa / Cliente
+                <Plus className="w-5 h-5 text-emerald-600 dark:text-emerald-400" /> Novo Pré-Cadastro de Empresa / Cliente
               </h3>
               <button onClick={() => setModalNovoPreCadastro(false)} className="text-slate-400 hover:text-slate-600">
                 <XCircle className="w-5 h-5" />
@@ -1419,7 +1419,7 @@ export default function Cadastro360BancoFePage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#820AD1] text-white font-semibold shadow-xs hover:bg-[#6d08b0]"
+                  className="px-5 py-2 rounded-xl bg-emerald-700 text-white font-semibold shadow-xs hover:bg-emerald-800"
                 >
                   Salvar e Gerar Dossiê
                 </button>
@@ -1435,7 +1435,7 @@ export default function Cadastro360BancoFePage() {
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-md w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
               <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                <UploadCloud className="w-4 h-4 text-[#820AD1]" /> Upload de Documento
+                <UploadCloud className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Upload de Documento
               </h3>
               <button onClick={() => setModalUploadDoc({ aberto: false })} className="text-slate-400">
                 <XCircle className="w-4 h-4" />
@@ -1443,7 +1443,7 @@ export default function Cadastro360BancoFePage() {
             </div>
 
             <div className="p-6 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl text-center space-y-2 bg-slate-50/50 dark:bg-slate-800/20">
-              <FileText className="w-8 h-8 text-[#820AD1] mx-auto opacity-80" />
+              <FileText className="w-8 h-8 text-emerald-600 dark:text-emerald-400 mx-auto opacity-80" />
               <div className="text-xs font-bold text-slate-800 dark:text-slate-200">{modalUploadDoc.titulo}</div>
               <p className="text-[11px] text-slate-500">Arraste e solte o arquivo em PDF ou imagem aqui</p>
             </div>
@@ -1457,7 +1457,7 @@ export default function Cadastro360BancoFePage() {
               </button>
               <button
                 onClick={handleUploadDocumento}
-                className="px-4 py-1.5 rounded-xl bg-[#820AD1] text-white text-xs font-semibold hover:bg-[#6d08b0]"
+                className="px-4 py-1.5 rounded-xl bg-emerald-700 text-white text-xs font-semibold hover:bg-emerald-800"
               >
                 Confirmar Envio
               </button>
@@ -1505,7 +1505,7 @@ export default function Cadastro360BancoFePage() {
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-md w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
               <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                <Fingerprint className="w-4 h-4 text-[#820AD1]" /> Assinatura Eletrônica Avançada
+                <Fingerprint className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Assinatura Eletrônica Avançada
               </h3>
               <button onClick={() => setModalAssinarTermo({ aberto: false, nome: "", cpf: "" })} className="text-slate-400">
                 <XCircle className="w-4 h-4" />
@@ -1547,7 +1547,7 @@ export default function Cadastro360BancoFePage() {
               </button>
               <button
                 onClick={handleAssinarTermo}
-                className="px-4 py-1.5 rounded-xl bg-[#820AD1] text-white text-xs font-semibold hover:bg-[#6d08b0]"
+                className="px-4 py-1.5 rounded-xl bg-emerald-700 text-white text-xs font-semibold hover:bg-emerald-800"
               >
                 Confirmar Assinatura Digital
               </button>

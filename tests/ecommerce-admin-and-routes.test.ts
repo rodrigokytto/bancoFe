@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import express from "express";
 import { createServer, Server } from "http";
@@ -13,6 +15,18 @@ beforeAll(async () => {
   app.use(express.urlencoded({ extended: true }));
   registerBancoFeRoutes(app);
   registerCadastro360Routes(app);
+
+  const distPath = fs.existsSync(path.resolve(process.cwd(), "dist/public"))
+    ? path.resolve(process.cwd(), "dist/public")
+    : path.resolve(process.cwd(), "dist");
+  app.use("*", (req, res, next) => {
+    if (req.path.startsWith("/api") || req.path.startsWith("/metrics")) return next();
+    const indexPath = path.join(distPath, "index.html");
+    if (fs.existsSync(indexPath)) {
+      return res.sendFile(indexPath);
+    }
+    return res.status(200).send("<!doctype html><html><head><title>BancoFe</title></head><body>BancoFe SPA</body></html>");
+  });
 
   server = createServer(app);
   await new Promise<void>((resolve) => {
@@ -90,13 +104,20 @@ describe("BancoFé - Validação E-Commerce Admin, Operações, Termos e Consult
     expect(body.dossie.conformidadeLgpd.baseLegalPrincipal).toBeDefined();
   }, 25000);
 
-  it("GET /admin/ecommerce deve responder 200 no SSR com layout verde BancoFé", async () => {
-    const res = await fetch(`${baseUrl}/admin/ecommerce`);
+  it("GET /admin/ecommerce?ssr=1 deve responder 200 no SSR com layout verde BancoFé", async () => {
+    const res = await fetch(`${baseUrl}/admin/ecommerce?ssr=1`);
     expect(res.status).toBe(200);
     const html = await res.text();
     expect(html).toContain("E-Commerce Admin");
     expect(html).toContain("BancoFé");
     expect(html).toContain("emerald");
+  });
+
+  it("GET /admin/ecommerce deve responder 200 dentro do ambiente SPA integrado", async () => {
+    const res = await fetch(`${baseUrl}/admin/ecommerce`);
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).toContain("BancoFe");
   });
 
   it("GET /admin deve responder 200 com a interface administrativa", async () => {

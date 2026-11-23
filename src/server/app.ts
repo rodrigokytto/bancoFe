@@ -1,3 +1,4 @@
+import fs from 'fs';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -333,12 +334,18 @@ bancofe_active_integrations ${registry.listAdapters().length}
 registerBancoFeRoutes(app);
 
 // Servir frontend compilado em produção / preview
-const distPath = path.resolve(process.cwd(), 'dist');
+const distPath = fs.existsSync(path.resolve(process.cwd(), "dist/public"))
+  ? path.resolve(process.cwd(), "dist/public")
+  : path.resolve(process.cwd(), "dist");
 app.use(express.static(distPath));
 
-app.get('*', (req: Request, res: Response, next) => {
-  if (req.path.startsWith('/api') || req.path.startsWith('/metrics')) return next();
-  res.sendFile(path.join(distPath, 'index.html'));
+app.get("*", (req: Request, res: Response, next) => {
+  if (req.path.startsWith("/api") || req.path.startsWith("/metrics")) return next();
+  const indexPath = path.join(distPath, "index.html");
+  if (fs.existsSync(indexPath)) {
+    return res.sendFile(indexPath);
+  }
+  return res.status(200).send("<!doctype html><html><head><title>BancoFe</title></head><body>BancoFe SPA</body></html>");
 });
 
 // Inicialização e Graceful Shutdown

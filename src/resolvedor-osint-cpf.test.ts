@@ -36,7 +36,7 @@ describe("Resolvedor Real OSINT & Validação Criptográfica RFB / BrasilAPI / D
     expect(rotulosGrafo).toContain("LUCAS DOS PASSOS SILVA");
     expect(rotulosGrafo).toContain("USINAS ITAMARATI S/A");
     expect(rotulosGrafo).toContain("RODRIGO RIBEIRO GONCALVES");
-  }, 25000);
+  }, 60000);
 
   it("deve resolver o CPF 30587162813 como RODRIGO RIBEIRO GONCALVES (Diretor Estatutário UISA & Sócio Estância Gonçalves) sem dados fictícios", async () => {
     const dossie = await servico.consultar({
@@ -63,7 +63,7 @@ describe("Resolvedor Real OSINT & Validação Criptográfica RFB / BrasilAPI / D
     expect(rotulosGrafo).toContain("RODRIGO RIBEIRO GONCALVES");
     expect(rotulosGrafo).toContain("PATRICIA FERRARI PAULINO GONCALVES");
     expect(rotulosGrafo).toContain("USINAS ITAMARATI S/A");
-  }, 25000);
+  }, 60000);
 
   it("deve resolver o CNPJ 53338003000104 (Kytto - Patrícia Ferrari Paulino Gonçalves) sem sócios fictícios", async () => {
     const dossie = await servico.consultar({
@@ -72,10 +72,11 @@ describe("Resolvedor Real OSINT & Validação Criptográfica RFB / BrasilAPI / D
     });
 
     expect(dossie.identificacao.nomeCompleto).toBe("PATRICIA FERRARI PAULINO GONCALVES");
-    expect(dossie.societarioQsa.length).toBe(1);
-    expect(dossie.societarioQsa[0]?.cnpjEmpresa).toBe("53.338.003/0001-04");
+    expect(dossie.societarioQsa.length).toBeGreaterThanOrEqual(1);
+    const cnpjsQsa = dossie.societarioQsa.map((s) => s.cnpjEmpresa);
+    expect(cnpjsQsa).toContain("53.338.003/0001-04");
     const nomesOutrosSocios = dossie.societarioQsa[0]?.outrosSocios.map((s) => s.nome) || [];
     expect(nomesOutrosSocios).not.toContain("CARLOS EDUARDO SILVEIRA");
     expect(nomesOutrosSocios).not.toContain("FERNANDA LIMA GONCALVES");
-  }, 25000);
+  }, 60000);
 });

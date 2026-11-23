@@ -148,7 +148,7 @@ export const AdminModulosPage: React.FC = () => {
     description: "",
     iconName: "Building2",
     badge: "Negócio",
-    colorScheme: "purple",
+    colorScheme: "emerald",
     cnpj: "",
     cidade: "Tangará da Serra - MT",
     unidade: "Matriz Operacional",
@@ -345,7 +345,7 @@ export const AdminModulosPage: React.FC = () => {
       description: "",
       iconName: "Building2",
       badge: "Nova Unidade",
-      colorScheme: "purple",
+      colorScheme: "emerald",
       cnpj: "",
       cidade: "Tangará da Serra - MT",
       unidade: "Filial Operacional",
@@ -409,13 +409,13 @@ export const AdminModulosPage: React.FC = () => {
       {/* Top Breadcrumb & Status */}
       <div className="max-w-6xl mx-auto mb-6 flex flex-wrap items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-          <Link href="/" className="hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-colors">
+          <Link href="/" className="hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors">
             BancoFe
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
           <span className="font-semibold text-slate-800 dark:text-slate-200">Painel Administrativo</span>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-purple-600 dark:text-purple-400 font-semibold">
+          <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
             {viewMode === "group" ? "Ecossistema Consolidado BancoFe" : "Módulos por Negócio"}
           </span>
         </div>
@@ -427,7 +427,7 @@ export const AdminModulosPage: React.FC = () => {
               onClick={() => setViewMode("company")}
               className={`px-3 py-1 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 viewMode === "company"
-                  ? "bg-[#820AD1] text-white shadow-xs"
+                  ? "bg-emerald-700 text-white shadow-xs"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
               }`}
             >
@@ -437,7 +437,7 @@ export const AdminModulosPage: React.FC = () => {
               onClick={() => setViewMode("group")}
               className={`px-3 py-1 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                 viewMode === "group"
-                  ? "bg-[#820AD1] text-white shadow-xs"
+                  ? "bg-emerald-700 text-white shadow-xs"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
               }`}
             >
@@ -487,7 +487,7 @@ export const AdminModulosPage: React.FC = () => {
                 }}
                 className={`flex items-center gap-2.5 px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border ${
                   isSelected
-                    ? "bg-[#820AD1] text-white border-[#820AD1] shadow-sm shadow-purple-500/20 scale-[1.01]"
+                    ? "bg-emerald-700 text-white border-emerald-600 shadow-sm shadow-emerald-900/30 scale-[1.01]"
                     : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/60"
                 }`}
               >
@@ -516,7 +516,7 @@ export const AdminModulosPage: React.FC = () => {
 
           <button
             onClick={handleOpenAddBusiness}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 bg-slate-100/80 hover:bg-slate-200/70 dark:bg-slate-800/60 dark:hover:bg-slate-800 border border-dashed border-slate-300 dark:border-slate-700 transition-all cursor-pointer whitespace-nowrap"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 bg-slate-100/80 hover:bg-slate-200/70 dark:bg-slate-800/60 dark:hover:bg-slate-800 border border-dashed border-slate-300 dark:border-slate-700 transition-all cursor-pointer whitespace-nowrap"
           >
             <Plus className="w-3.5 h-3.5" />
             Nova Empresa
@@ -530,7 +530,7 @@ export const AdminModulosPage: React.FC = () => {
       {viewMode === "group" && (
         <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-200">
           {/* Executive Group Hero Card */}
-          <div className="bg-gradient-to-br from-[#820AD1] to-[#4c047d] text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+          <div className="bg-gradient-to-br from-[#0c4a34] to-[#4c047d] text-white rounded-3xl p-6 sm:p-8 shadow-xl">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/15">
               <div className="flex items-center gap-3.5">
                 <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20">
@@ -616,11 +616,11 @@ export const AdminModulosPage: React.FC = () => {
                 return (
                   <div
                     key={biz.id}
-                    className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800/90 p-5 shadow-xs hover:border-purple-400 dark:hover:border-purple-800 transition-all group flex flex-col justify-between"
+                    className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800/90 p-5 shadow-xs hover:border-emerald-500 dark:hover:border-emerald-800 transition-all group flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-start justify-between gap-3 mb-3">
-                        <div className="p-3 rounded-2xl bg-purple-500/10 text-[#820AD1] dark:text-purple-300 border border-purple-500/20 group-hover:scale-105 transition-transform">
+                        <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 dark:text-emerald-300 border border-emerald-500/20 group-hover:scale-105 transition-transform">
                           <DynamicIcon name={biz.iconName} className="w-6 h-6" />
                         </div>
                         <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
@@ -674,7 +674,7 @@ export const AdminModulosPage: React.FC = () => {
                           setActiveBusinessId(biz.id);
                           setViewMode("company");
                         }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#820AD1] hover:bg-[#7009b5] text-white text-xs font-semibold shadow-xs cursor-pointer transition-all"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold shadow-xs cursor-pointer transition-all"
                       >
                         <span>Gerenciar Módulos</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -698,7 +698,7 @@ export const AdminModulosPage: React.FC = () => {
             {/* Header Row */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-purple-500/10 dark:bg-purple-500/15 border border-purple-500/20 flex items-center justify-center text-[#820AD1] dark:text-purple-300">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 dark:text-emerald-300">
                   <DynamicIcon name={activeBusiness.iconName} className="w-6 h-6" />
                 </div>
                 <div>
@@ -706,7 +706,7 @@ export const AdminModulosPage: React.FC = () => {
                     <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
                       {activeBusiness.name}
                     </h1>
-                    <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-purple-500/10 text-[#820AD1] dark:text-purple-300 border border-purple-500/20">
+                    <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 dark:text-emerald-300 border border-emerald-500/20">
                       {activeBusiness.badge}
                     </span>
                   </div>
@@ -720,7 +720,7 @@ export const AdminModulosPage: React.FC = () => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleOpenAddModule}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#820AD1] hover:bg-[#7009b5] text-white font-semibold text-xs shadow-sm shadow-purple-500/20 transition-all cursor-pointer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs shadow-sm shadow-emerald-900/30 transition-all cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Adicionar Módulo
@@ -741,7 +741,7 @@ export const AdminModulosPage: React.FC = () => {
               {/* Card 1: Volume */}
               <div className="space-y-1">
                 <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-                  <DollarSign className="w-3.5 h-3.5 text-purple-500" />
+                  <DollarSign className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Volume Mensal Operado</span>
                 </div>
                 <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 font-mono">
@@ -789,7 +789,7 @@ export const AdminModulosPage: React.FC = () => {
                 <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 font-mono">
                   {formatMoney(calculatedStats.monthlySavings)}
                 </div>
-                <div className="text-[11px] text-purple-600 dark:text-purple-400 font-medium">
+                <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
                   ~{calculatedStats.hoursSavedMonthly}h economizadas da equipe
                 </div>
               </div>
@@ -816,7 +816,7 @@ export const AdminModulosPage: React.FC = () => {
 
               <button
                 onClick={() => setShowCalculationDetails(!showCalculationDetails)}
-                className="flex items-center gap-1.5 font-semibold text-[#820AD1] dark:text-purple-400 hover:underline cursor-pointer"
+                className="flex items-center gap-1.5 font-semibold text-emerald-600 dark:text-emerald-400 dark:text-emerald-400 hover:underline cursor-pointer"
               >
                 <BarChart3 className="w-3.5 h-3.5" />
                 <span>{showCalculationDetails ? "Ocultar Detalhamento de Cálculos" : "Ver Cálculos e Indicadores Completos"}</span>
@@ -828,7 +828,7 @@ export const AdminModulosPage: React.FC = () => {
             {showCalculationDetails && (
               <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 rounded-2xl p-4 sm:p-5 space-y-4 animate-in fade-in duration-200">
                 <div className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-                  <Cpu className="w-4 h-4 text-purple-500" />
+                  <Cpu className="w-4 h-4 text-emerald-500" />
                   <span>Memória de Cálculo & Auditoria Operacional</span>
                 </div>
 
@@ -877,7 +877,7 @@ export const AdminModulosPage: React.FC = () => {
                 placeholder="Buscar por módulo, rota (/pdv) ou identificador..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#820AD1] transition-all"
+                className="w-full pl-9 pr-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-600 transition-all"
               />
             </div>
 
@@ -897,7 +897,7 @@ export const AdminModulosPage: React.FC = () => {
                     onClick={() => setFilterStatus(status)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                       filterStatus === status
-                        ? "bg-[#820AD1] text-white border-[#820AD1] shadow-xs"
+                        ? "bg-emerald-700 text-white border-emerald-600 shadow-xs"
                         : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
                     }`}
                   >
@@ -921,7 +921,7 @@ export const AdminModulosPage: React.FC = () => {
                 </p>
                 <button
                   onClick={handleOpenAddModule}
-                  className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#820AD1] text-white text-xs font-semibold cursor-pointer"
+                  className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-emerald-700 text-white text-xs font-semibold cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Adicionar Módulo Agora
@@ -944,7 +944,7 @@ export const AdminModulosPage: React.FC = () => {
                 return (
                   <div
                     key={mod.id}
-                    className={`bg-white dark:bg-slate-900 rounded-2xl border p-4 sm:p-5 transition-all shadow-[0_1px_8px_rgba(0,0,0,0.02)] hover:border-purple-300 dark:hover:border-purple-900 ${
+                    className={`bg-white dark:bg-slate-900 rounded-2xl border p-4 sm:p-5 transition-all shadow-[0_1px_8px_rgba(0,0,0,0.02)] hover:border-emerald-500 dark:hover:border-emerald-800 ${
                       mod.active
                         ? "border-slate-200/90 dark:border-slate-800/90"
                         : "border-slate-200/50 dark:border-slate-800/50 opacity-60 bg-slate-50/50 dark:bg-slate-900/40"
@@ -954,7 +954,7 @@ export const AdminModulosPage: React.FC = () => {
                       {/* Left: Icon & Info */}
                       <div className="flex items-start gap-3.5 flex-1">
                         {/* Icon Box */}
-                        <div className="p-3 rounded-2xl bg-purple-500/10 text-[#820AD1] dark:text-purple-300 border border-purple-500/20 shrink-0">
+                        <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 dark:text-emerald-300 border border-emerald-500/20 shrink-0">
                           <DynamicIcon name={mod.iconName} className="w-5 h-5" />
                         </div>
 
@@ -966,7 +966,7 @@ export const AdminModulosPage: React.FC = () => {
                             </h3>
 
                             {mod.badge && (
-                              <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${mod.badgeColor || "bg-purple-500/10 text-purple-600 border-purple-500/20"}`}>
+                              <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${mod.badgeColor || "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"}`}>
                                 {mod.badge}
                               </span>
                             )}
@@ -1001,7 +1001,7 @@ export const AdminModulosPage: React.FC = () => {
                             {t.costReduction && (
                               <>
                                 <span>•</span>
-                                <span className="text-purple-600 dark:text-purple-400 font-medium">
+                                <span className="text-emerald-600 dark:text-emerald-400 font-medium">
                                   💰 {formatMoney(t.costReduction)} economizados
                                 </span>
                               </>
@@ -1011,7 +1011,7 @@ export const AdminModulosPage: React.FC = () => {
                               <span className="text-slate-400">Rota:</span>
                               <Link
                                 href={mod.defaultPath}
-                                className="text-[#820AD1] dark:text-purple-400 hover:underline flex items-center gap-0.5 font-mono"
+                                className="text-emerald-600 dark:text-emerald-400 dark:text-emerald-400 hover:underline flex items-center gap-0.5 font-mono"
                               >
                                 {mod.defaultPath}
                                 <ExternalLink className="w-3 h-3" />
@@ -1032,7 +1032,7 @@ export const AdminModulosPage: React.FC = () => {
                             type="button"
                             onClick={() => toggleModule(mod.id, !mod.active)}
                             className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors cursor-pointer ${
-                              mod.active ? "bg-[#820AD1]" : "bg-slate-300 dark:bg-slate-700"
+                              mod.active ? "bg-emerald-700" : "bg-slate-300 dark:bg-slate-700"
                             }`}
                           >
                             <span
@@ -1071,7 +1071,7 @@ export const AdminModulosPage: React.FC = () => {
                           onClick={() => handleOpenEditModule(mod)}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all cursor-pointer"
                         >
-                          <Edit2 className="w-3 h-3 text-purple-600 dark:text-purple-400" />
+                          <Edit2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                           Modificar
                         </button>
 
@@ -1109,7 +1109,7 @@ export const AdminModulosPage: React.FC = () => {
             {/* Modal Header */}
             <div className="flex items-center justify-between p-5 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-[#820AD1] text-white">
+                <div className="p-2 rounded-xl bg-emerald-700 text-white">
                   <DynamicIcon name={moduleForm.iconName} className="w-5 h-5" />
                 </div>
                 <div>
@@ -1139,7 +1139,7 @@ export const AdminModulosPage: React.FC = () => {
                   Pré-visualização do Módulo:
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
-                  <div className="p-2 rounded-lg bg-purple-500/10 text-[#820AD1] dark:text-purple-300">
+                  <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 dark:text-emerald-300">
                     <DynamicIcon name={moduleForm.iconName} className="w-4 h-4" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -1172,7 +1172,7 @@ export const AdminModulosPage: React.FC = () => {
                     placeholder="Ex: Open Finance & Pix"
                     value={moduleForm.label}
                     onChange={(e) => setModuleForm({ ...moduleForm, label: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#820AD1]"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-600"
                   />
                 </div>
 
@@ -1201,7 +1201,7 @@ export const AdminModulosPage: React.FC = () => {
                   placeholder="Explique o que este módulo oferece e quais operações ele executa..."
                   value={moduleForm.description}
                   onChange={(e) => setModuleForm({ ...moduleForm, description: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#820AD1]"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-600"
                 />
               </div>
 
@@ -1217,7 +1217,7 @@ export const AdminModulosPage: React.FC = () => {
                     placeholder="/pdv, /erp, /agro..."
                     value={moduleForm.defaultPath}
                     onChange={(e) => setModuleForm({ ...moduleForm, defaultPath: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-2 focus:ring-[#820AD1]"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-mono focus:outline-none focus:ring-2 focus:ring-emerald-600"
                   />
                 </div>
 
@@ -1233,7 +1233,7 @@ export const AdminModulosPage: React.FC = () => {
                         permission: e.target.value as "all" | "admin" | "user",
                       })
                     }
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#820AD1]"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-600"
                   >
                     <option value="all">Todos os Usuários</option>
                     <option value="admin">Apenas Administradores</option>
@@ -1253,7 +1253,7 @@ export const AdminModulosPage: React.FC = () => {
                     placeholder="NOVO, BETA, 24/7..."
                     value={moduleForm.badge}
                     onChange={(e) => setModuleForm({ ...moduleForm, badge: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#820AD1]"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-600"
                   />
                 </div>
 
@@ -1264,7 +1264,7 @@ export const AdminModulosPage: React.FC = () => {
                   <select
                     value={moduleForm.badgeColor}
                     onChange={(e) => setModuleForm({ ...moduleForm, badgeColor: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#820AD1]"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-600"
                   >
                     {BADGE_COLOR_PRESETS.map((p) => (
                       <option key={p.id} value={p.class}>
@@ -1301,7 +1301,7 @@ export const AdminModulosPage: React.FC = () => {
                       title={iconName}
                       className={`p-2 rounded-lg flex items-center justify-center transition-all cursor-pointer ${
                         moduleForm.iconName === iconName
-                          ? "bg-[#820AD1] text-white shadow-xs"
+                          ? "bg-emerald-700 text-white shadow-xs"
                           : "hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300"
                       }`}
                     >
@@ -1322,7 +1322,7 @@ export const AdminModulosPage: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#820AD1] hover:bg-[#7009b5] text-white font-semibold shadow-xs cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-semibold shadow-xs cursor-pointer"
                 >
                   {editingModule ? "Salvar Alterações" : "Adicionar Módulo"}
                 </button>
@@ -1379,7 +1379,7 @@ export const AdminModulosPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-lg w-full p-6 shadow-2xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-xl bg-[#820AD1] text-white">
+                <div className="p-2 rounded-xl bg-emerald-700 text-white">
                   <Building2 className="w-5 h-5" />
                 </div>
                 <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
@@ -1452,7 +1452,7 @@ export const AdminModulosPage: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#820AD1] hover:bg-[#7009b5] text-white font-semibold cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-semibold cursor-pointer"
                 >
                   Salvar Empresa
                 </button>

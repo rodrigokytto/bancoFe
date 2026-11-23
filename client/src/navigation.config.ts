@@ -105,9 +105,11 @@ export const SECTIONS: Record<string, NavSection> = {
       { id: "bancofe_hub", path: "/bancofe", label: "BancoFé Hub Geral (PRD)", icon: Landmark, badge: "ISPB 799", badgeColor: "bg-emerald-600 text-white", highlight: true },
       { id: "bancofe_consulta360", path: "/consulta-360", label: "Consulta 360° CPF/CNPJ", icon: Search, badge: "11 Abas", badgeColor: "bg-cyan-600 text-white", highlight: true },
       { id: "bancofe_operacoes", path: "/admin/operacoes-financeiras", label: "Operações & Termos SCR", icon: Building2, badge: "Crédito 360°", badgeColor: "bg-emerald-600 text-white", highlight: true },
-      { id: "bancofe_ecommerce", path: "/admin/ecommerce", label: "E-Commerce & Omnichannel", icon: Store, badge: "Multi-Loja", badgeColor: "bg-emerald-700 text-white", highlight: true },
-      { id: "bancofe_precadastro", path: "/bancofe", label: "Pré-Cadastro 10x Produtos", icon: Calculator, badge: "Simulador", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_ecommerce", path: "/admin/ecommerce", label: "E-Commerce & Omnichannel", icon: Store, badge: "Multi-Loja", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_precadastro", path: "/admin/pre-cadastro", label: "Pré-Cadastro 10x Produtos", icon: Calculator, badge: "Simulador", badgeColor: "bg-emerald-600 text-white", highlight: true },
       { id: "bancofe_radar", path: "/bancofe", label: "Radar MT & 20 Empresas", icon: Target, badge: "Tangará", highlight: true },
+      { id: "bancofe_modulos", path: "/admin", label: "Gestão Módulos & Negócios", icon: Layers, badge: "Holding", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_fechamento", path: "/admin/fechamento", label: "Fechamento & Contabilidade", icon: Receipt, badge: "COSIF", badgeColor: "bg-emerald-600 text-white" },
     ],
   },
   mesas_balcao: {
@@ -191,7 +193,7 @@ export const SECTIONS: Record<string, NavSection> = {
     label: "Gestão de Carteira & LTV",
     icon: Users,
     items: [
-      { id: "crm_operacoes_financeiras", path: "/admin/crm-financeira", label: "Operações Financeiras & CRM", icon: Building2, badge: "360°", badgeColor: "bg-[#820AD1] text-white", highlight: true },
+      { id: "crm_operacoes_financeiras", path: "/admin/crm-financeira", label: "Operações Financeiras & CRM", icon: Building2, badge: "360°", badgeColor: "bg-emerald-600 text-white", highlight: true },
       { id: "clientes", path: "/clientes", label: "Base de Clientes & CRM", icon: Users },
       { id: "customer360", path: "/erp?tab=customer360", label: "Customer 360° & Score RFM", icon: Users, badge: "0-1000", badgeColor: "bg-violet-600 text-white" },
     ],
@@ -620,7 +622,7 @@ export const MODULES: NavModule[] = [
   },
 ];
 
-export const DEFAULT_MODULE = "comando";
+export const DEFAULT_MODULE = "bancofe_banking";
 export const STORAGE_KEY_MODULE = "zuma_active_nav_module";
 
 /* ==========================================================================

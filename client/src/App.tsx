@@ -85,10 +85,13 @@ function Router() {
     return <LoginPage />;
   }
 
-  // Rotas públicas que não exigem login imediato
+  // Rotas públicas e institucionais que não bloqueiam navegação direta
   const isPublicClientRoute = 
     location === "/loja" || 
     location === "/entregador" || 
+    location === "/" ||
+    location === "/bancofe" ||
+    location === "/cockpit" ||
     location.startsWith("/garcom") || 
     location.startsWith("/kds") || 
     location.startsWith("/kds-v2") || 
@@ -96,7 +99,18 @@ function Router() {
     location.startsWith("/cardapio-mesa") || 
     location.startsWith("/passaporte-salmao") ||
     location.startsWith("/admin") ||
-    location.startsWith("/administracao");
+    location.startsWith("/administracao") ||
+    location.startsWith("/bancofe") ||
+    location.startsWith("/consulta") ||
+    location.startsWith("/ecommerce") ||
+    location.startsWith("/operacoes") ||
+    location.startsWith("/crm-financeira") ||
+    location.startsWith("/pre-cadastro") ||
+    location.startsWith("/precadastro") ||
+    location.startsWith("/cadastro") ||
+    location.startsWith("/termos") ||
+    location.startsWith("/documentos") ||
+    location.startsWith("/fechamento");
 
   if (!isAuthenticated && !isPublicClientRoute) {
     return <LoginPage />;

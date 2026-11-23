@@ -802,9 +802,12 @@ export function registerPlataformaWebAndApis(app: any) {
     res.send(renderizarHtmlHomeBancoFe((req as any).usuario));
   });
 
-  app.get("/cockpit-geral", authMiddleware, (req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlHomeBancoFe((req as any).usuario));
+  app.get("/cockpit-geral", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlHomeBancoFe((req as any).usuario));
+    }
+    return next();
   });
 
   app.get("/plataforma/consulta-cpf", authMiddleware, (_req: Request, res: Response) => {
@@ -827,9 +830,12 @@ export function registerPlataformaWebAndApis(app: any) {
     res.send(renderizarHtmlCarteiraDigital());
   });
 
-  app.get("/admin", authMiddleware, (_req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlAdminModulos());
+  app.get("/admin", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlAdminModulos());
+    }
+    return next();
   });
 
   app.get("/admin/mesa-credito", authMiddleware, (req: Request, res: Response) => {
@@ -844,14 +850,20 @@ export function registerPlataformaWebAndApis(app: any) {
     res.send(renderizarHtmlMesaCredito(propostaId));
   });
 
-  app.get("/admin/ecommerce", authMiddleware, (_req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlAdminEcommerce());
+  app.get("/admin/ecommerce", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlAdminEcommerce());
+    }
+    return next();
   });
 
-  app.get("/ecommerce", authMiddleware, (_req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlAdminEcommerce());
+  app.get("/ecommerce", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlAdminEcommerce());
+    }
+    return next();
   });
 
   app.get("/admin/backoffice", authMiddleware, (req: Request, res: Response) => {
@@ -876,49 +888,113 @@ export function registerPlataformaWebAndApis(app: any) {
     res.redirect("/?tab=git-devops");
   });
 
-  app.get("/consulta-360", authMiddleware, (_req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlConsultaCpf());
+  app.get("/consulta-360", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlConsultaCpf());
+    }
+    return next();
   });
 
-  app.get("/consulta-360-completa", authMiddleware, (_req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlConsultaCpf());
+  app.get("/consulta-360-completa", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlConsultaCpf());
+    }
+    return next();
   });
 
-  app.get("/consulta-360-visual", authMiddleware, (_req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlConsultaCpf());
+  app.get("/consulta-360-visual", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlConsultaCpf());
+    }
+    return next();
   });
 
-  app.get("/precadastro", authMiddleware, (_req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlPreCadastro());
+  app.get("/precadastro", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlPreCadastro());
+    }
+    return next();
   });
 
-  app.get("/precadastro-produtos", authMiddleware, (_req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlPreCadastro());
+  app.get("/precadastro-produtos", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlPreCadastro());
+    }
+    return next();
   });
 
-  app.get("/radar-prospeccao", authMiddleware, (_req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlClientesPotenciais());
+  app.get("/radar-prospeccao", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlClientesPotenciais());
+    }
+    return next();
   });
 
-  app.get("/empresas-regiao", authMiddleware, (_req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlClientesPotenciais());
+  app.get("/empresas-regiao", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlClientesPotenciais());
+    }
+    return next();
   });
 
-  app.get("/admin/modulos", authMiddleware, (_req: Request, res: Response) => {
+  app.get("/admin/modulos", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlAdminModulos());
+    }
+    return next();
+  });
+
+  app.get("/admin/configuracoes", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.ssr === "1" || req.query.ssr === "true") {
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      return res.send(renderizarHtmlAdminModulos());
+    }
+    return next();
+  });
+
+  // Endpoints explícitos SSR para homologação e auditoria
+  app.get("/ssr/home", authMiddleware, (req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlHomeBancoFe((req as any).usuario));
+  });
+
+  app.get("/ssr/ecommerce", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlAdminEcommerce());
+  });
+
+  app.get("/ssr/admin", authMiddleware, (_req: Request, res: Response) => {
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.send(renderizarHtmlAdminModulos());
   });
 
-  app.get("/admin/configuracoes", authMiddleware, (_req: Request, res: Response) => {
+  app.get("/ssr/consulta-360", authMiddleware, (_req: Request, res: Response) => {
     res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlAdminModulos());
+    res.send(renderizarHtmlConsultaCpf());
+  });
+
+  app.get("/ssr/precadastro", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlPreCadastro());
+  });
+
+  app.get("/ssr/mesa-credito", authMiddleware, (req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    const propostaId = req.query.proposta as string | undefined;
+    res.send(renderizarHtmlMesaCredito(propostaId));
+  });
+
+  app.get("/ssr/backoffice", authMiddleware, (req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlBackoffice((req as any).usuario));
   });
 
   app.get("/api/v1/compliance/sicar/resumo", (_req: Request, res: Response) => {
