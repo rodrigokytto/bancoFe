@@ -25,7 +25,7 @@
         "requerAutenticacao": true,
         "permissoesMinimas": "USUARIO",
         "dataCriacao": "2026-11-20T00:00:00.000Z",
-        "dataAtualizacao": "2026-11-23T20:44:23.213Z"
+        "dataAtualizacao": "2026-11-23T21:09:21.364Z"
       },
       {
         "id": "mod-bfe-02",
@@ -147,6 +147,19 @@
         "permissoesMinimas": "GERENTE",
         "dataCriacao": "2026-11-23T20:44:23.211Z",
         "dataAtualizacao": "2026-11-23T20:44:23.211Z"
+      },
+      {
+        "id": "mod-bancofe-mwtrdvtd",
+        "codigo": "CONSORCIO_IMOVEL_V1",
+        "nome": "Esteira de Consórcio Imobiliário",
+        "descricao": "Gestão e lances de cotas contempladas para aquisição imobiliária",
+        "categoria": "credito",
+        "ativo": true,
+        "rotaUrl": "/plataforma/consorcios",
+        "icone": "fa-handshake",
+        "permissoesMinimas": "GERENTE",
+        "dataCriacao": "2026-11-23T21:09:21.361Z",
+        "dataAtualizacao": "2026-11-23T21:09:21.361Z"
       }
     ]
   },
