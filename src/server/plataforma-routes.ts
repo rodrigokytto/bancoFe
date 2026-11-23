@@ -55,7 +55,7 @@ export function registerPlataformaWebAndApis(app: any) {
 
   app.get("/login", (req: Request, res: Response) => {
     const erro = req.query.erro ? String(req.query.erro) : undefined;
-    const returnTo = req.query.returnTo ? String(req.query.returnTo) : "/plataforma/consulta-cpf";
+    const returnTo = req.query.returnTo ? String(req.query.returnTo) : "/admin";
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.send(renderizarHtmlLogin(erro, returnTo));
   });
@@ -75,10 +75,10 @@ export function registerPlataformaWebAndApis(app: any) {
           sucesso: true,
           token,
           usuario: authResult.usuario,
-          redirectUrl: returnTo || "/plataforma/consulta-cpf",
+          redirectUrl: returnTo || "/admin",
         });
       }
-      return res.redirect(returnTo || "/plataforma/consulta-cpf");
+      return res.redirect(returnTo || "/admin");
     }
 
     if (req.headers.accept?.includes("application/json") || req.xhr) {
@@ -88,12 +88,12 @@ export function registerPlataformaWebAndApis(app: any) {
         code: "INVALID_CREDENTIALS",
       });
     }
-    res.redirect(`/login?erro=${encodeURIComponent(authResult.erro || "credenciais_invalidas")}&returnTo=${encodeURIComponent(returnTo || "/plataforma/consulta-cpf")}`);
+    res.redirect(`/login?erro=${encodeURIComponent(authResult.erro || "credenciais_invalidas")}&returnTo=${encodeURIComponent(returnTo || "/admin")}`);
   });
 
   // Endpoints REST de Autenticação para SPA, Cockpit e Mobile
   const processarLoginRest = (req: Request, res: Response) => {
-    const { user, username, email, usuario, senha, password, pass } = req.body || {};
+    const { user, username, email, usuario, senha, password, pass, returnTo } = req.body || {};
     const userInformado = user || username || email || usuario;
     const senhaInformada = senha || password || pass;
 
@@ -112,7 +112,7 @@ export function registerPlataformaWebAndApis(app: any) {
           lojaId: authResult.usuario.lojaId,
           empresa: authResult.usuario.empresa,
         },
-        redirectUrl: "/plataforma/consulta-cpf",
+        redirectUrl: returnTo || (req.query.returnTo ? String(req.query.returnTo) : "/admin"),
       });
     }
 
@@ -624,8 +624,8 @@ export function registerPlataformaWebAndApis(app: any) {
       cpfCnpj: contrato.clienteCpfCnpj,
       vencimento: parcela.vencimento,
       valor: parcela.valorParcela,
-      linhaDigitavel: parcela.boletoLinhaDigitavel,
-      codigoBarras: parcela.boletoCodigoBarras,
+      linhaDigitavel: parcela.linhaDigitavelBoleto,
+      codigoBarras: parcela.linhaDigitavelBoleto?.replace(/\D/g, "") || "",
       beneficiario: "BANCOFE S.A. - ISPB 799",
       chavePix: "financeiro@bancofe.com.br",
     });
@@ -641,7 +641,7 @@ export function registerPlataformaWebAndApis(app: any) {
       numeroParcela: parcela.numero,
       valor: parcela.valorParcela,
       pixCopiaECola: parcela.pixCopiaECola,
-      pixQrCodeBase64: parcela.pixQrCodeBase64,
+      pixQrCodeBase64: (parcela as any).pixQrCodeBase64 || "",
     });
   });
 

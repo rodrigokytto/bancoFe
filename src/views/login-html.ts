@@ -6,7 +6,7 @@ import { CONFIG_OFICIAL_KYTTO } from "../config-kytto.ts";
  * Usuário: rrodrigogon@gmail.com | rodrigo.goncalves@kytto.com.br | Admin | 30587162813
  * Senha: #080581Verdao
  */
-export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/plataforma/consulta-cpf"): string {
+export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/admin"): string {
   const cnpjKytto = CONFIG_OFICIAL_KYTTO.empresa.cnpj;
   const razaoKytto = CONFIG_OFICIAL_KYTTO.empresa.razaoSocial;
 
@@ -211,7 +211,7 @@ export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/plata
         const res = await fetch('/api/admin/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({ user: usuario, usuario, username: usuario, email: usuario, senha, password: senha })
+          body: JSON.stringify({ user: usuario, usuario, username: usuario, email: usuario, senha, password: senha, returnTo })
         });
         const data = await res.json();
         if (data.sucesso || data.token) {
@@ -219,7 +219,7 @@ export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/plata
           document.cookie = "bancofe_auth=" + token + "; path=/; max-age=2592000; SameSite=Lax";
           document.cookie = "session_token=" + token + "; path=/; max-age=2592000; SameSite=Lax";
           document.cookie = "sp_token=" + token + "; path=/; max-age=2592000; SameSite=Lax";
-          window.location.href = data.redirectUrl || returnTo || "/plataforma/consulta-cpf";
+          window.location.href = data.redirectUrl || returnTo || "/admin";
         } else {
           alert('Erro de autenticação: ' + (data.error || data.mensagem || 'Usuário ou senha inválidos.'));
           btnSubmit.disabled = false;

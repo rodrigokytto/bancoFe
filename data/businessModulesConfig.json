@@ -374,6 +374,64 @@
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "banco_cadastro_360",
+        "businessId": "bancofe",
+        "label": "Cadastro 360° & KYB Bancário",
+        "description": "Dossiê único de clientes, QSA, UBO, score de compliance e domicílio bancário centralizado.",
+        "iconName": "Users",
+        "badge": "KYB Bacen",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/admin/cadastro-360",
+        "order": 7,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "kyb_compliance",
+          "cadastro_360"
+        ],
+        "telemetry": {
+          "monthlyRequests": 48200,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 35000000,
+          "costReduction": 42000,
+          "usersCount": 38,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "banco_termos_regulatorios",
+        "businessId": "bancofe",
+        "label": "Termos Regulatórios & Consentimentos Bacen",
+        "description": "Gestão de termos SCR (CMN 4.571), Open Finance, PLD-FT e travas de domicílio CERC/CIP.",
+        "iconName": "Scale",
+        "badge": "Regulatório",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/admin/termos",
+        "order": 8,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "formalizacao_juridica",
+          "termos_scr"
+        ],
+        "telemetry": {
+          "monthlyRequests": 31000,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 28000000,
+          "costReduction": 29000,
+          "usersCount": 28,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
       }
     ],
     "zuma_gastronomia": [
@@ -812,6 +870,62 @@
           "usersCount": 8,
           "lastSync": "Agora"
         }
+      },
+      {
+        "id": "holding_auditoria_fiscal",
+        "businessId": "holding_kytto",
+        "label": "Auditoria Fiscal & SPED Bloco K",
+        "description": "Malha fina preventiva SEFAZ-MT, conciliação tributária e arquivos magnéticos.",
+        "iconName": "ShieldCheck",
+        "badge": "SEFAZ-MT",
+        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/fiscal",
+        "order": 2,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "fiscal_contabil",
+          "governanca_holding"
+        ],
+        "telemetry": {
+          "monthlyRequests": 48900,
+          "uptimePercent": 100,
+          "avgLatencyMs": 15,
+          "status": "healthy",
+          "costReduction": 42000,
+          "usersCount": 18,
+          "lastSync": "Há 12 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "holding_concreto_industria",
+        "businessId": "holding_kytto",
+        "label": "Usinas de Concreto & Pedreiras",
+        "description": "Traço de concreto, pesagem de agregados, frotas de betoneiras e obras civis.",
+        "iconName": "Layers",
+        "badge": "Usinas",
+        "badgeColor": "bg-slate-500/15 text-slate-600 dark:text-slate-400 border-slate-500/30",
+        "defaultPath": "/patrimonio",
+        "order": 3,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "governanca_holding",
+          "suprimentos_estoque"
+        ],
+        "telemetry": {
+          "monthlyRequests": 36200,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "costReduction": 36000,
+          "usersCount": 22,
+          "lastSync": "Há 6 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
       }
     ],
     "bancofe_logistica": [
@@ -1106,8 +1220,95 @@
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-23T12:01:17.425Z"
+      },
+      {
+        "id": "crm_cadastro_360_empresas",
+        "businessId": "operacoes_financeiras_crm",
+        "label": "Cadastro 360° Corporativo & Mesa KYB/KYC",
+        "description": "Visão holística de clientes PJ/PF, QSA/UBO, balanço sintético, compliance PLD-FT e limites operacionais.",
+        "iconName": "Users",
+        "badge": "360° KYB",
+        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+        "defaultPath": "/admin/cadastro-360",
+        "order": 7,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "kyb_compliance",
+          "cadastro_360"
+        ],
+        "telemetry": {
+          "monthlyRequests": 28400,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 24800000,
+          "costReduction": 38500,
+          "usersCount": 26,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "crm_precadastro_dossie_documental",
+        "businessId": "operacoes_financeiras_crm",
+        "label": "Pré-Cadastro & Vault Documental Digital",
+        "description": "Checklist de 13 documentos obrigatórios, upload, validação com hash SHA-256 e controle de validade de certidões.",
+        "iconName": "Boxes",
+        "badge": "Dossiê Digital",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/admin/pre-cadastro",
+        "order": 8,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "onboarding_digital",
+          "vault_documental"
+        ],
+        "telemetry": {
+          "monthlyRequests": 21200,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 16500000,
+          "costReduction": 24000,
+          "usersCount": 22,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "crm_central_termos_contratos",
+        "businessId": "operacoes_financeiras_crm",
+        "label": "Central de Termos & Formalizações Digitais",
+        "description": "Termos SCR Bacen, Domicílio Bancário, PLD-FT, Open Finance, Cessão Fiduciária e CCB Eletrônica com hash e IP.",
+        "iconName": "Scale",
+        "badge": "Termos & SCR",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/admin/termos",
+        "order": 9,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "formalizacao_juridica",
+          "termos_scr"
+        ],
+        "telemetry": {
+          "monthlyRequests": 18900,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 15,
+          "status": "healthy",
+          "monthlyVolume": 14200000,
+          "costReduction": 19500,
+          "usersCount": 20,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
       }
     ]
   },
-  "updatedAt": "2026-11-23T15:24:09.184Z"
+  "updatedAt": "2026-11-23T15:58:56.371Z"
 }

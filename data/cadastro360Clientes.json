@@ -1,5 +1,155 @@
 [
   {
+    "id": "cli-360-mwtg9rx8",
+    "codigo": "BFE-360-0010",
+    "razaoSocial": "Tangará Distribuidora de Alimentos S.A.",
+    "nomeFantasia": "Tangará Alimentos",
+    "cnpjCpf": "44.555.666/0001-99",
+    "tipoPessoa": "PJ",
+    "statusCadastral": "homologado",
+    "empresaOrigemId": "operacoes_financeiras_crm",
+    "empresaOrigemNome": "BancoFe — Operações & CRM",
+    "dadosCadastrais": {
+      "dataFundacao": "2018-05-10",
+      "porte": "MEDIO",
+      "regimeTributario": "Lucro Presumido",
+      "cnaePrincipal": {
+        "codigo": "46.39-7-01",
+        "descricao": "Comércio atacadista de produtos alimentícios"
+      },
+      "cnaesSecundarios": [],
+      "capitalSocial": 2500000,
+      "faturamentoAnualDeclarado": 12000000,
+      "endereco": {
+        "logradouro": "Rua das Palmeiras",
+        "numero": "150",
+        "bairro": "Industrial",
+        "cidade": "Tangará da Serra",
+        "uf": "MT",
+        "cep": "78300-000"
+      },
+      "contatos": {
+        "nomeResponsavel": "Carlos Alberto Menezes",
+        "cargo": "Diretor Comercial",
+        "email": "carlos@tangaraalimentos.com.br",
+        "telefone": "(65) 3326-7788",
+        "whatsapp": "(65) 99988-7788"
+      }
+    },
+    "contaGraficaBancoFe": {
+      "banco": "BancoFe S.A. (Código 799)",
+      "agencia": "0001",
+      "contaCorrente": "674612-1",
+      "chavePix": "44.555.666/0001-99",
+      "saldoConta": 0,
+      "limiteChequeEspecial": 50000,
+      "travaDomicilioBancario": {
+        "ativa": true,
+        "registradora": "CERC",
+        "status": "vigente",
+        "percentualRetencao": 100
+      }
+    },
+    "quadroSocietario": [
+      {
+        "id": "soc-1795449493916-1",
+        "nome": "Sócio Administrador",
+        "cpf": "000.000.000-00",
+        "cargo": "Sócio-Administrador",
+        "participacaoPercentual": 100,
+        "pep": false,
+        "beneficiarioFinalUBO": true,
+        "dataEntrada": "2020-01-01",
+        "documentosValidados": true
+      }
+    ],
+    "compliancePLD": {
+      "scoreCompliance": 96,
+      "nivelRisco": "baixo",
+      "ultimaVarredura": "2026-11-23T15:58:13.960Z",
+      "proximaRevisao": "2027-05-22T15:58:13.960Z",
+      "ofacSanctions": {
+        "status": "nada_consta",
+        "dataConsulta": "2026-11-23T15:58:13.960Z"
+      },
+      "csnuOnu": {
+        "status": "nada_consta",
+        "dataConsulta": "2026-11-23T15:58:13.960Z"
+      },
+      "ceafGov": {
+        "status": "nada_consta",
+        "dataConsulta": "2026-11-23T15:58:13.960Z"
+      },
+      "cepim": {
+        "status": "nada_consta",
+        "dataConsulta": "2026-11-23T15:58:13.960Z"
+      },
+      "trabalhoEscravoMte": {
+        "status": "nada_consta",
+        "dataConsulta": "2026-11-23T15:58:13.960Z"
+      },
+      "ceisTcu": {
+        "status": "nada_consta",
+        "dataConsulta": "2026-11-23T15:58:13.960Z"
+      },
+      "scrBacenConforme": true,
+      "pepIdentificado": false,
+      "observacoesCompliance": "Varredura automatizada 360° executada com sucesso em 23/11/2026. Nenhuma inconformidade regulatória detectada no Bacen/SIT/TCU."
+    },
+    "analiseFinanceira": {
+      "faturamentoUltimos12Meses": 12000000,
+      "ebitdaAnual": 2400000,
+      "margemEbitda": 20,
+      "lucroLiquido": 1440000,
+      "ativoTotal": 6500000,
+      "patrimonioLiquido": 4200000,
+      "dividaLiquidaEbitda": 1.2,
+      "liquidezCorrente": 1.85,
+      "scoreBureau": 780,
+      "ratingCMN2682": "A",
+      "provisaoPddExigida": 0.5,
+      "dataUltimoBalanco": "2025-12-31",
+      "contadorResponsavel": {
+        "nome": "Contabilidade Central MT",
+        "crc": "MT-018245/O"
+      }
+    },
+    "limitesOperacionais": {
+      "limiteGlobalAprovado": 1000000,
+      "limiteUtilizadoTotal": 0,
+      "limiteDisponivelTotal": 1000000,
+      "sublimites": [
+        {
+          "produtoId": "lim_giro",
+          "produtoNome": "Capital de Giro (CCB)",
+          "limiteAprovado": 500000,
+          "limiteTomado": 0,
+          "limiteDisponivel": 500000,
+          "taxaPadraoMes": 1.35,
+          "status": "ativo"
+        },
+        {
+          "produtoId": "lim_recebiveis",
+          "produtoNome": "Desconto de Duplicatas & NF-e",
+          "limiteAprovado": 500000,
+          "limiteTomado": 0,
+          "limiteDisponivel": 500000,
+          "taxaPadraoMes": 1.15,
+          "status": "ativo"
+        }
+      ],
+      "dataAprovacaoAlcada": "2026-11-23T15:58:13.916Z",
+      "aprovadoPor": "Mesa de Crédito BancoFe",
+      "nivelAlcada": "Gerente de Risco",
+      "validadeLimite": "2027-11-23T15:58:13.916Z"
+    },
+    "garantiasColaterais": [],
+    "historicoOperacoes": [],
+    "percentualCompletudeCadastral": 8,
+    "criadoEm": "2026-11-23T15:58:13.916Z",
+    "atualizadoEm": "2026-11-23T15:58:13.960Z"
+  },
+  {
     "id": "cli-360-mwtfad0a",
     "codigo": "BFE-360-0009",
     "razaoSocial": "Tangará Distribuidora de Alimentos S.A.",

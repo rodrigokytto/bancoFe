@@ -3,7 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-    <title>Zuma Pilot — Sistema Gastronômico, PDV &amp; ERP</title>
+    <title>BancoFe — Ecossistema Bancário &amp; Operações Financeiras</title>
+    <script>
+      window.global = window;
+      window.process = window.process || {
+        env: { NODE_ENV: 'production' },
+        argv: [],
+        platform: 'browser',
+        version: '',
+        versions: {},
+        cwd: function() { return '/'; },
+        nextTick: function(cb) { setTimeout(cb, 0); },
+      };
+    </script>
 
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />

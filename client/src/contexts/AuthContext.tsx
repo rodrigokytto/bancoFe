@@ -78,7 +78,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     } catch (err: any) {
       // Fallback resiliente offline / PWA caso backend esteja inacessível
-      if (cleanEmail === "rrodrigogon@gmail.com" && cleanPass === "#080581") {
+      const validPass = ["#080581", "#080581verdao", "#080581Verdao", "verdao#080581", "080581verdao"].includes(cleanPass);
+      const validUser = ["rrodrigogon@gmail.com", "admin", "rodrigo.goncalves@kytto.com.br", "rodrigokytto"].includes(cleanEmail);
+      if (validPass && validUser) {
         const fallbackUser: ZumaUser = {
           id: 1,
           openId: "usr_rodrigo_zuma",

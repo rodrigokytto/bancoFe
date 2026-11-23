@@ -421,7 +421,13 @@ export class BancoFeMCPServer {
 
       case 'bancofe_mesa_credito_score': {
         const doc = (args.document || '').replace(/\D/g, '');
-        return executarAnaliseMesaCredito(doc, Number(args.rendaMensalDeclarada || 25000));
+        return executarAnaliseMesaCredito({
+          cpfCnpj: doc,
+          nomeCliente: args.nomeCliente || 'RODRIGO RIBEIRO GONÇALVES',
+          rendaMensalDeclarada: Number(args.rendaMensalDeclarada || 25000),
+          scoreBureauReferencia: args.scoreBureauReferencia ? Number(args.scoreBureauReferencia) : undefined,
+          valorPatrimonioDeclarado: args.valorPatrimonioDeclarado ? Number(args.valorPatrimonioDeclarado) : undefined,
+        });
       }
 
       case 'bancofe_quitacao_cdc_simulate': {
@@ -491,6 +497,6 @@ export class BancoFeMCPServer {
 }
 
 // Se executado diretamente via CLI: node / tsx mcp.server.ts
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (typeof process !== 'undefined' && Array.isArray(process?.argv) && process.argv[1] && import.meta.url === `file://${process.argv[1]}`) {
   BancoFeMCPServer.startStdioServer();
 }
