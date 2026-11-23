@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import path from 'path';
 import { IntegrationRegistry } from '../integrations/registry';
 import { BancoFeMCPServer } from '../integrations/mcps/server/mcp.server';
 import { AccountManager } from '../core/ledger/accounts';
@@ -7,7 +8,7 @@ import { LedgerEngine } from '../core/ledger/ledger.engine';
 import { IntegrationEventBus } from '../integrations/event-bus';
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -120,6 +121,15 @@ app.get('/api/ledger/audit', (_req: Request, res: Response) => {
     })),
     recentJournal: journal.slice(-10),
   });
+});
+
+// Servir frontend compilado em produção / preview
+const distPath = path.resolve(__dirname, '../../dist');
+app.use(express.static(distPath));
+
+app.get('*', (req: Request, res: Response, next) => {
+  if (req.path.startsWith('/api')) return next();
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 // Inicialização se executado diretamente
