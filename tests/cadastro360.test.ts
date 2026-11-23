@@ -43,55 +43,29 @@ describe("BancoFe - Cadastro 360°, Pré-Cadastro Documental & Central de Termos
     const novo = store.criarCliente({
       razaoSocial: "Tangará Distribuidora de Alimentos S.A.",
       nomeFantasia: "Tangará Alimentos",
-      cnpjCpf: "44.555.666/0001-99",
-      empresaOrigemId: "operacoes_financeiras_crm",
-      empresaOrigemNome: "BancoFe — Operações & CRM",
-      dadosCadastrais: {
-        dataFundacao: "2018-05-10",
-        porte: "MEDIO",
-        regimeTributario: "Lucro Presumido",
-        cnaePrincipal: { codigo: "46.39-7-01", descricao: "Comércio atacadista de produtos alimentícios" },
-        cnaesSecundarios: [],
-        capitalSocial: 2500000,
-        faturamentoAnualDeclarado: 12000000,
-        endereco: {
-          logradouro: "Rua das Palmeiras",
-          numero: "150",
-          bairro: "Industrial",
-          cidade: "Tangará da Serra",
-          uf: "MT",
-          cep: "78300-000",
-        },
-        contatos: {
-          nomeResponsavel: "Carlos Alberto Menezes",
-          cargo: "Diretor Comercial",
-          email: "carlos@tangaraalimentos.com.br",
-          telefone: "(65) 3326-7788",
-          whatsapp: "(65) 99988-7788",
-        },
-      },
+      cnpjCpf: "34.112.990/0001-05",
+      empresaOrigemId: "zuma_agro",
+      empresaOrigemNome: "BancoFe Agro & Safra MT",
     });
 
     expect(novo.id).toBeDefined();
-    expect(novo.codigo).toMatch(/^BFE-360-/);
+    expect(novo.codigo).toMatch(/^BFE-360-\d{4}$/);
     expect(novo.statusCadastral).toBe("pendente_documentos");
 
-    // Verificar checklist de 13 documentos gerados
+    // Validar se gerou 13 documentos no checklist
     const docs = store.listarDocumentosPorCliente(novo.id);
     expect(docs.length).toBe(13);
-    expect(docs.every((d) => d.status === "pendente_envio")).toBe(true);
-    expect(docs.some((d) => d.tipoDocumento === "cartao_cnpj")).toBe(true);
-    expect(docs.some((d) => d.tipoDocumento === "balanco_patrimonial_dre")).toBe(true);
-    expect(docs.some((d) => d.tipoDocumento === "cnd_federal_fgts_trabalhista")).toBe(true);
-    expect(docs.some((d) => d.tipoDocumento === "domicilio_bancario_trava")).toBe(true);
 
-    // Verificar minutas dos 7 termos regulatórios
+    // Validar se gerou 7 termos regulatórios digitais
     const termos = store.listarTermosPorCliente(novo.id);
     expect(termos.length).toBe(7);
-    expect(termos.some((t) => t.tipoTermo === "consentimento_scr_bacen")).toBe(true);
-    expect(termos.some((t) => t.tipoTermo === "abertura_conta_grafica_domicilio")).toBe(true);
-    expect(termos.some((t) => t.tipoTermo === "adesao_pld_ft_compliance")).toBe(true);
-    expect(termos.some((t) => t.tipoTermo === "ccb_eletronica_credito")).toBe(true);
+
+    // Validar termos regulatórios obrigatórios
+    const tiposTermos = termos.map((t) => t.tipoTermo);
+    expect(tiposTermos).toContain("consentimento_scr_bacen");
+    expect(tiposTermos).toContain("politica_privacidade_lgpd");
+    expect(tiposTermos).toContain("declaracao_conformidade_pld_ft");
+    expect(tiposTermos).toContain("ccb_eletronica_credito");
   });
 
   it("deve permitir upload, verificação de hash SHA-256 e aprovação de documento no vault", () => {

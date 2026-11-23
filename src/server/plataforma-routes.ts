@@ -713,7 +713,23 @@ export function registerPlataformaWebAndApis(app: any) {
   // ==========================================
 
   app.get("/api/v1/admin/negocios", (_req: Request, res: Response) => {
-    res.json(gestorModulos.listarNegocios());
+    const metricas = gestorModulos.obterMetricasAdmin();
+    const negocios = gestorModulos.listarNegocios();
+    res.json({
+      sucesso: true,
+      total: negocios.length,
+      negocios,
+      metricas,
+    });
+  });
+
+  app.post("/api/v1/admin/negocios", (req: Request, res: Response) => {
+    try {
+      const negocio = gestorModulos.adicionarNegocio(req.body);
+      res.status(201).json({ sucesso: true, negocio });
+    } catch (e: any) {
+      res.status(400).json({ erro: e.message });
+    }
   });
 
   app.get("/api/v1/admin/negocios/:negocioId", (req: Request, res: Response) => {
@@ -725,7 +741,22 @@ export function registerPlataformaWebAndApis(app: any) {
   app.post("/api/v1/admin/modulos/:negocioId", (req: Request, res: Response) => {
     try {
       const modulo = gestorModulos.adicionarModulo(req.params.negocioId as any, req.body);
-      res.status(201).json(modulo);
+      if (!modulo) return res.status(404).json({ erro: "Negócio não encontrado." });
+      res.status(201).json({ sucesso: true, modulo, id: modulo.id });
+    } catch (e: any) {
+      res.status(400).json({ erro: e.message });
+    }
+  });
+
+  app.put("/api/v1/admin/modulos/:negocioId/:moduloId", (req: Request, res: Response) => {
+    try {
+      const modulo = gestorModulos.atualizarModulo(
+        req.params.negocioId as any,
+        req.params.moduloId,
+        req.body
+      );
+      if (!modulo) return res.status(404).json({ erro: "Módulo ou negócio não encontrado." });
+      res.json({ sucesso: true, modulo });
     } catch (e: any) {
       res.status(400).json({ erro: e.message });
     }
@@ -737,7 +768,21 @@ export function registerPlataformaWebAndApis(app: any) {
         req.params.negocioId as any,
         req.params.moduloId
       );
-      res.json(modulo);
+      if (!modulo) return res.status(404).json({ erro: "Módulo ou negócio não encontrado." });
+      res.json({ sucesso: true, modulo, ativo: modulo.ativo });
+    } catch (e: any) {
+      res.status(400).json({ erro: e.message });
+    }
+  });
+
+  app.delete("/api/v1/admin/modulos/:negocioId/:moduloId", (req: Request, res: Response) => {
+    try {
+      const excluido = gestorModulos.excluirModulo(
+        req.params.negocioId as any,
+        req.params.moduloId
+      );
+      if (!excluido) return res.status(404).json({ erro: "Módulo ou negócio não encontrado." });
+      res.json({ sucesso: true, mensagem: "Módulo excluído com sucesso." });
     } catch (e: any) {
       res.status(400).json({ erro: e.message });
     }
