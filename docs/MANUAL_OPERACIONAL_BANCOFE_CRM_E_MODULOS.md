@@ -222,5 +222,23 @@ Taxa de Êxito : 100.0%
 | `/api/health` | REST API | Core Banking | Healthcheck e integridade de ledger |
 
 ---
+---
+
+## 9. RESOLUÇÃO DE INCIDENTE: BLINDAGEM DO FRONTEND (PROCESS IS NOT DEFINED)
+
+Durante a homologação em produção no Google Cloud Run, identificou-se uma ocorrência de tela branca decorrente da avaliação indevida de variáveis Node.js (`process.argv` e `process.env`) no runtime do browser.
+
+### Causa Raiz Identificada
+1. A biblioteca de integração MCP (`src/integrations/mcps/server/mcp.server.ts`) continha uma cláusula de execução CLI no nível superior do arquivo: `if (import.meta.url === \`file://\${process.argv[1]}\`)`. Ao ser importada pela interface de cockpit, o bundler Vite compilou essa chamada para o browser sem o objeto `process` definido.
+2. O formulário de login padrão redirecionava para uma rota estática legada em vez de respeitar o parâmetro dinâmico `returnTo`.
+
+### Solução Aplicada e Homologada
+1. **Shims Globais de Proteção**: Injeção de shim `window.process = { env: { NODE_ENV: 'production' }, argv: [], ... }` e `window.global = window` no cabeçalho do `client/index.html`.
+2. **Definições no Bundler Vite**: Adição do bloco `define: { "process.env": {}, global: "globalThis" }` em `vite.config.ts`.
+3. **Guarda Segura em MCP Server**: Condicional `typeof process !== 'undefined' && Array.isArray(process?.argv) && process.argv[1] && ...` garantindo total neutralidade em navegadores.
+4. **Redirecionamento Inteligente de Autenticação**: O endpoint `/api/admin/login` e o formulário `/login` agora respeitam rigorosamente `returnTo`, direcionando o usuário diretamente para `/admin/cadastro-360` ou `/admin` após a autenticação bem-sucedida.
+5. **Validação E2E com Navegador Headless (Puppeteer)**: Executados testes de montagem de tela, preenchimento de login e transição de páginas em PRD (`erp-bancofe-00026-r6h`), atingindo **0 erros** no console e 100% das 84 rotas com HTTP 200.
+
+---
 
 *Manual homologado para operação contínua pelo BancoFe S.A. e Holding Kytto.*
