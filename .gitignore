@@ -109,5 +109,10 @@ temp/
 # Webdev artifacts (checkpoint zips, migrations, etc.)
 .webdev/
 
+# Storage artifacts and temporary dossiers
+storage/*
+!storage/.gitkeep
+!storage/*/.gitkeep
+
 # Manus version file (auto-generated, not part of source)
 client/public/__manus__/version.json

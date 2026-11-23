@@ -34,3 +34,22 @@ export * from './integrations/skills/adapters/automation.skill';
 export * from './integrations/skills/adapters/office-docs.skill';
 export * from './integrations/skills/adapters/keyuser.skill';
 export * from './integrations/skills/adapters/stock-analysis.skill';
+
+// Consulta 360, Bureaus & Casanova Kytto
+export * from './config';
+export * from './servico';
+export * from './tipos';
+export * from './validador-integracoes';
+export * from './servidor';
+
+// Pré-Cadastro 360 & Onboarding Bancário
+export * from './precadastro/tipos-precadastro';
+export * from './precadastro/servico-precadastro';
+
+// Radar Preditivo & Base Potencial de Clientes
+export * from './clientes/clientes-prequalificados';
+export * from './clientes/radar-prospeccao';
+export * from './clientes/base-empresas-tga';
+
+// Gestão Administrativa de Módulos por Negócio (/admin)
+export * from './admin/gestor-modulos-negocio';
