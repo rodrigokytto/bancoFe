@@ -1,9 +1,9 @@
 import { CONFIG_OFICIAL_KYTTO } from "../config-kytto.ts";
 
 /**
- * Renderiza a tela oficial de autenticação da Plataforma Casanova / Consulta 360
+ * Renderiza a tela oficial de autenticação da Plataforma BancoFe / Casanova 360
  * Credenciais corporativas de PRD:
- * Usuário: Admin
+ * Usuário: rrodrigogon@gmail.com | rodrigo.goncalves@kytto.com.br | Admin | 30587162813
  * Senha: #080581Verdao
  */
 export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/plataforma/consulta-cpf"): string {
@@ -15,7 +15,7 @@ export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/plata
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acesso Seguro PRD • Casanova DataGraph 360 & Kytto</title>
+  <title>Acesso Seguro PRD • BancoFé & Kytto Ecossistema</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome -->
@@ -40,54 +40,83 @@ export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/plata
     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-600"></div>
 
     <!-- Header do Login com Identidade Visual -->
-    <div class="text-center mb-8">
+    <div class="text-center mb-6">
       <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-700 via-emerald-600 to-teal-400 mb-4 shadow-lg shadow-emerald-900/40 border border-emerald-400/30">
-        <i class="fa-solid fa-shield-halved text-white text-2xl"></i>
+        <i class="fa-solid fa-building-columns text-white text-2xl"></i>
       </div>
       <h1 class="text-2xl font-extrabold text-white tracking-tight flex items-center justify-center gap-2">
-        Casanova <span class="text-emerald-400">DataGraph 360</span>
+        BancoFé <span class="text-emerald-400">Core PRD</span>
       </h1>
-      <p class="text-xs text-slate-400 mt-1">Ambiente Oficial de Produção (PRD) • Google Cloud</p>
+      <p class="text-xs text-slate-400 mt-1">Holding & Negócios • Google Cloud & Render Global</p>
       
       <!-- Badge Institucional Kytto -->
       <div class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/70 border border-emerald-800/60 text-[11px] text-emerald-300">
-        <i class="fa-solid fa-building-circle-check text-emerald-400"></i>
+        <i class="fa-solid fa-shield-halved text-emerald-400"></i>
         <span>${razaoKytto}</span>
       </div>
-      <div class="text-[10px] text-slate-500 mt-1 mono">CNPJ: ${cnpjKytto}</div>
+      <div class="text-[10px] text-slate-500 mt-1 mono">CNPJ: ${cnpjKytto} • Nova Olímpia & Tangará da Serra/MT</div>
     </div>
 
     <!-- Alerta de Erro se houver -->
     ${
       erroMsg
-        ? `<div class="mb-6 p-3.5 rounded-xl bg-red-950/80 border border-red-800/80 text-red-200 text-xs flex items-center gap-2.5">
-            <i class="fa-solid fa-triangle-exclamation text-red-400 text-sm"></i>
-            <span>${erroMsg}</span>
+        ? `<div class="mb-5 p-3.5 rounded-xl bg-red-950/80 border border-red-800/80 text-red-200 text-xs flex flex-col gap-1">
+            <div class="flex items-center gap-2 font-semibold">
+              <i class="fa-solid fa-triangle-exclamation text-red-400"></i>
+              <span>Credenciais não reconhecidas</span>
+            </div>
+            <p class="text-[11px] text-red-300 mt-0.5">Utilize seu e-mail <strong>rrodrigogon@gmail.com</strong>, <strong>rodrigo.goncalves@kytto.com.br</strong> ou <strong>Admin</strong> com a senha <strong>#080581Verdao</strong>.</p>
           </div>`
         : ""
     }
 
+    <!-- Atalhos Rápidos de Usuário Autorizado -->
+    <div class="mb-5">
+      <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2 flex items-center justify-between">
+        <span>Selecione sua conta:</span>
+        <span class="text-emerald-400 text-[10px]"><i class="fa-solid fa-bolt mr-1"></i>Preenchimento rápido</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          onclick="selecionarConta('rrodrigogon@gmail.com')"
+          class="px-2.5 py-2 text-left bg-slate-950/70 hover:bg-emerald-950/50 border border-slate-800 hover:border-emerald-600/50 rounded-xl transition text-[11px] text-slate-300 flex items-center gap-2"
+        >
+          <i class="fa-solid fa-user-tie text-emerald-400"></i>
+          <span class="truncate">rrodrigogon@gmail.com</span>
+        </button>
+        <button
+          type="button"
+          onclick="selecionarConta('Admin')"
+          class="px-2.5 py-2 text-left bg-slate-950/70 hover:bg-emerald-950/50 border border-slate-800 hover:border-emerald-600/50 rounded-xl transition text-[11px] text-slate-300 flex items-center gap-2"
+        >
+          <i class="fa-solid fa-shield-halved text-teal-400"></i>
+          <span class="truncate">Admin (Mestre)</span>
+        </button>
+      </div>
+    </div>
+
     <!-- Formulário de Autenticação -->
-    <form id="form-login" method="POST" action="/login" class="space-y-5">
+    <form id="form-login" method="POST" action="/login" class="space-y-4">
       <input type="hidden" name="returnTo" value="${returnTo}" />
 
-      <!-- Campo Usuário -->
+      <!-- Campo Usuário / E-mail / CPF -->
       <div>
         <label for="username" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-          Usuário Administrador
+          E-mail ou Usuário Cadastrado
         </label>
         <div class="relative">
           <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-            <i class="fa-solid fa-user text-sm"></i>
+            <i class="fa-solid fa-envelope text-sm"></i>
           </div>
           <input
             type="text"
             id="username"
-            name="username"
+            name="usuario"
             required
             autocomplete="username"
-            value="Admin"
-            placeholder="Digite seu usuário..."
+            value="rrodrigogon@gmail.com"
+            placeholder="rrodrigogon@gmail.com, Admin ou CPF..."
             class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-700/80 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition placeholder-slate-500"
           />
         </div>
@@ -99,6 +128,7 @@ export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/plata
           <label for="password" class="block text-xs font-semibold uppercase tracking-wider text-slate-300">
             Senha de Acesso
           </label>
+          <span class="text-[11px] text-slate-400">Oficial: <strong class="text-emerald-400 mono">#080581Verdao</strong></span>
         </div>
         <div class="relative">
           <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -107,8 +137,9 @@ export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/plata
           <input
             type="password"
             id="password"
-            name="password"
+            name="senha"
             required
+            value="#080581Verdao"
             autocomplete="current-password"
             placeholder="••••••••••••"
             class="w-full pl-10 pr-10 py-2.5 bg-slate-950/80 border border-slate-700/80 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition placeholder-slate-500"
@@ -123,24 +154,11 @@ export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/plata
         </div>
       </div>
 
-      <!-- Informações Oficiais de Acesso -->
-      <div class="p-3 rounded-xl bg-slate-950/50 border border-slate-800 text-[11px] text-slate-400 space-y-1">
-        <div class="flex items-center justify-between text-slate-300 font-medium">
-          <span><i class="fa-solid fa-key text-emerald-400 mr-1"></i> Credenciais PRD Autorizadas:</span>
-        </div>
-        <div class="flex justify-between text-slate-400">
-          <span>Usuário:</span> <strong class="text-emerald-400 mono">Admin</strong>
-        </div>
-        <div class="flex justify-between text-slate-400">
-          <span>Senha:</span> <strong class="text-emerald-400 mono">#080581Verdao</strong>
-        </div>
-      </div>
-
       <!-- Botão de Login -->
       <button
         type="submit"
         id="btn-submit"
-        class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm tracking-wide transition shadow-lg shadow-emerald-900/40 flex items-center justify-center gap-2"
+        class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm tracking-wide transition shadow-lg shadow-emerald-900/40 flex items-center justify-center gap-2 mt-2"
       >
         <span>Entrar na Plataforma</span>
         <i class="fa-solid fa-arrow-right"></i>
@@ -149,12 +167,17 @@ export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/plata
 
     <!-- Rodapé de Governança -->
     <div class="mt-6 pt-4 border-t border-slate-800/80 text-center text-[10px] text-slate-500">
-      <p>Sessão Segura TLS 1.3 • Auditoria DPO & LGPD (Art. 41)</p>
-      <p class="mt-0.5">Rodrigo Gonçalves • Kytto Tecnologia & Casanova Imóveis</p>
+      <p>Sessão Segura TLS 1.3 • Auditoria BACEN / COSIF & DPO LGPD</p>
+      <p class="mt-0.5">Rodrigo Gonçalves • BANCOFE Holding & Negócios • Nova Olímpia/MT</p>
     </div>
   </div>
 
   <script>
+    function selecionarConta(usuario) {
+      document.getElementById('username').value = usuario;
+      document.getElementById('password').value = '#080581Verdao';
+    }
+
     // Alternar visibilidade da senha
     const btnToggle = document.getElementById('btn-toggle-senha');
     const inputSenha = document.getElementById('password');
@@ -176,34 +199,35 @@ export function renderizarHtmlLogin(erroMsg?: string, returnTo: string = "/plata
     const form = document.getElementById('form-login');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
+      const usuario = document.getElementById('username').value.trim();
+      const senha = document.getElementById('password').value.trim();
       const returnTo = "${returnTo}";
 
       const btnSubmit = document.getElementById('btn-submit');
       btnSubmit.disabled = true;
-      btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Autenticando...';
+      btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Autenticando...';
 
       try {
-        const res = await fetch('/api/v1/auth/login', {
+        const res = await fetch('/api/admin/login', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password })
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ user: usuario, usuario, username: usuario, email: usuario, senha, password: senha })
         });
         const data = await res.json();
-        if (data.sucesso) {
-          // Grava cookie no cliente e redireciona
-          document.cookie = "session_token=" + data.token + "; path=/; max-age=2592000; SameSite=Lax";
-          window.location.href = returnTo;
+        if (data.sucesso || data.token) {
+          const token = data.token || "autorizado";
+          document.cookie = "bancofe_auth=" + token + "; path=/; max-age=2592000; SameSite=Lax";
+          document.cookie = "session_token=" + token + "; path=/; max-age=2592000; SameSite=Lax";
+          document.cookie = "sp_token=" + token + "; path=/; max-age=2592000; SameSite=Lax";
+          window.location.href = data.redirectUrl || returnTo || "/plataforma/consulta-cpf";
         } else {
-          alert('Credenciais inválidas: ' + (data.mensagem || 'Usuário ou senha incorretos.'));
+          alert('Erro de autenticação: ' + (data.error || data.mensagem || 'Usuário ou senha inválidos.'));
           btnSubmit.disabled = false;
-          btnSubmit.innerHTML = '<span>Entrar na Plataforma</span> <i class="fa-solid fa-arrow-right"></i>';
+          btnSubmit.innerHTML = '<span>Entrar na Plataforma</span> <i class="fa-solid fa-arrow-right ml-1"></i>';
         }
       } catch (err) {
-        alert('Erro ao conectar ao servidor de autenticação.');
-        btnSubmit.disabled = false;
-        btnSubmit.innerHTML = '<span>Entrar na Plataforma</span> <i class="fa-solid fa-arrow-right"></i>';
+        // Fallback: submete formulário padrão se fetch falhar
+        form.submit();
       }
     });
   </script>

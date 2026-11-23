@@ -25,6 +25,13 @@ import { ValidadorIntegracoesCompletas } from "../validador-integracoes";
 import { MotorGestaoEmprestimosBancoFe } from "../credito/gestao-contratos-emprestimos";
 import { PortalClienteService } from "../portal-cliente/portal-cliente.service";
 import { GitDevOpsService } from "../git/git-devops.service";
+import {
+  validarCredenciaisUniversal,
+  emitirTokenSessao,
+  aplicarCookiesAutenticacao,
+  authMiddlewareUnificado,
+  verificarAutenticacao,
+} from "./auth-unificada";
 
 /**
  * Registra todas as rotas Web e APIs REST da Plataforma BancoFé, Casanova Kytto,
@@ -39,58 +46,124 @@ export function registerPlataformaWebAndApis(app: any) {
   let cacheValidacao: any = null;
   let cacheTimestamp = 0;
 
-  // Autenticação simplificada para PRD
-  const USUARIO_PRD = "Admin";
-  const SENHA_PRD = "#080581Verdao";
-  const TOKEN_PRD = Buffer.from(`${USUARIO_PRD}:${SENHA_PRD}`).toString("base64");
-
-  function authMiddleware(req: Request, res: Response, next: NextFunction) {
-    if (process.env.NODE_ENV === "development" || req.headers["x-bypass-auth"]) {
-      return next();
-    }
-    const authHeader = req.headers.authorization;
-    const cookieAuth = (req as any).cookies?.bancofe_auth || (req as any).cookies?.casanova_token;
-    if (cookieAuth === TOKEN_PRD || cookieAuth === "autorizado") return next();
-    if (authHeader && authHeader.startsWith("Basic ") && authHeader.slice(6).trim() === TOKEN_PRD) {
-      return next();
-    }
-    // Permitir acesso a login, assets e APIs públicas
-    if (
-      req.path === "/login" ||
-      req.path === "/logout" ||
-      req.path.startsWith("/api/health") ||
-      req.path.startsWith("/healthz")
-    ) {
-      return next();
-    }
-    // Redireciona web para login
-    if (!req.path.startsWith("/api/")) {
-      return res.redirect(`/login?returnTo=${encodeURIComponent(req.originalUrl || req.path)}`);
-    }
-    next();
-  }
+  // Middleware unificado de autenticação para PRD
+  const authMiddleware = authMiddlewareUnificado;
 
   // ==========================================
   // 1. TELAS WEB INTERATIVAS OFICIAIS
   // ==========================================
 
-  app.get("/login", (_req: Request, res: Response) => {
+  app.get("/login", (req: Request, res: Response) => {
+    const erro = req.query.erro ? String(req.query.erro) : undefined;
+    const returnTo = req.query.returnTo ? String(req.query.returnTo) : "/plataforma/consulta-cpf";
     res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(renderizarHtmlLogin());
+    res.send(renderizarHtmlLogin(erro, returnTo));
   });
 
   app.post("/login", (req: Request, res: Response) => {
-    const { usuario, senha, returnTo } = req.body || {};
-    if (usuario === USUARIO_PRD && senha === SENHA_PRD) {
-      res.setHeader("Set-Cookie", `bancofe_auth=${TOKEN_PRD}; Path=/; HttpOnly; SameSite=Lax`);
+    const { usuario, username, email, user, senha, password, pass, returnTo } = req.body || {};
+    const userInformado = usuario || username || email || user;
+    const senhaInformada = senha || password || pass;
+
+    const authResult = validarCredenciaisUniversal(userInformado, senhaInformada);
+    if (authResult.valido && authResult.usuario) {
+      const token = emitirTokenSessao(authResult.usuario);
+      aplicarCookiesAutenticacao(res, token, authResult.usuario);
+
+      if (req.headers.accept?.includes("application/json") || req.xhr) {
+        return res.json({
+          sucesso: true,
+          token,
+          usuario: authResult.usuario,
+          redirectUrl: returnTo || "/plataforma/consulta-cpf",
+        });
+      }
       return res.redirect(returnTo || "/plataforma/consulta-cpf");
     }
-    res.redirect("/login?erro=credenciais_invalidas");
+
+    if (req.headers.accept?.includes("application/json") || req.xhr) {
+      return res.status(401).json({
+        sucesso: false,
+        error: authResult.erro || "Usuário ou senha inválidos",
+        code: "INVALID_CREDENTIALS",
+      });
+    }
+    res.redirect(`/login?erro=${encodeURIComponent(authResult.erro || "credenciais_invalidas")}&returnTo=${encodeURIComponent(returnTo || "/plataforma/consulta-cpf")}`);
+  });
+
+  // Endpoints REST de Autenticação para SPA, Cockpit e Mobile
+  const processarLoginRest = (req: Request, res: Response) => {
+    const { user, username, email, usuario, senha, password, pass } = req.body || {};
+    const userInformado = user || username || email || usuario;
+    const senhaInformada = senha || password || pass;
+
+    const authResult = validarCredenciaisUniversal(userInformado, senhaInformada);
+    if (authResult.valido && authResult.usuario) {
+      const token = emitirTokenSessao(authResult.usuario);
+      aplicarCookiesAutenticacao(res, token, authResult.usuario);
+      return res.json({
+        sucesso: true,
+        token,
+        user: authResult.usuario,
+        usuario: authResult.usuario,
+        role: authResult.usuario.role,
+        sessao: {
+          empresaId: authResult.usuario.empresaId,
+          lojaId: authResult.usuario.lojaId,
+          empresa: authResult.usuario.empresa,
+        },
+        redirectUrl: "/plataforma/consulta-cpf",
+      });
+    }
+
+    return res.status(401).json({
+      error: authResult.erro || "usuário ou senha inválidos",
+      code: "INVALID_CREDENTIALS",
+    });
+  };
+
+  app.post("/api/admin/login", processarLoginRest);
+  app.post("/api/auth/login", processarLoginRest);
+  app.post("/api/v1/auth/login", processarLoginRest);
+  app.post("/api/login", processarLoginRest);
+
+  app.get("/api/auth/me", authMiddleware, (req: Request, res: Response) => {
+    res.json({
+      autenticado: true,
+      usuario: (req as any).usuario || {
+        id: "usr-rodrigo-goncalves-master",
+        nome: "Rodrigo Ribeiro Gonçalves",
+        email: "rrodrigogon@gmail.com",
+        role: "admin",
+      },
+    });
+  });
+
+  app.get("/api/admin/commerce-session", authMiddleware, (_req: Request, res: Response) => {
+    res.json({
+      lojas_acessiveis: [{ id: "loja-matriz-01", nome: "Matriz Tangará / Nova Olímpia", codigo: "MATRIZ" }],
+      empresas_acessiveis: [{ id: "emp-bancofe-matriz-tga", nome: "BancoFe Holding & Operações Financeiras" }],
+    });
   });
 
   app.get("/logout", (_req: Request, res: Response) => {
-    res.setHeader("Set-Cookie", `bancofe_auth=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`);
+    res.setHeader("Set-Cookie", [
+      "bancofe_auth=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT",
+      "session_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT",
+      "sp_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT",
+      "bancofe_user=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT",
+    ]);
     res.redirect("/login");
+  });
+
+  app.post("/api/auth/logout", (_req: Request, res: Response) => {
+    res.setHeader("Set-Cookie", [
+      "bancofe_auth=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT",
+      "session_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT",
+      "sp_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT",
+      "bancofe_user=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT",
+    ]);
+    res.json({ sucesso: true, mensagem: "Sessão finalizada com sucesso." });
   });
 
   app.get("/plataforma", authMiddleware, (_req: Request, res: Response) => {

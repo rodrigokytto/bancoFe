@@ -6,6 +6,7 @@ import { zumaRouter } from "./routers/zumaRouter";
 import { adminRouter } from "./routers/adminRouter";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+import { validarCredenciaisUniversal } from "../src/server/auth-unificada";
 
 export const appRouter = router({
   system: systemRouter,
@@ -22,12 +23,13 @@ export const appRouter = router({
         const email = input.email.trim().toLowerCase();
         const password = input.password.trim();
 
-        if (email === "rrodrigogon@gmail.com" && password === "#080581") {
+        const authRes = validarCredenciaisUniversal(email, password);
+        if (authRes.valido && authRes.usuario) {
           const user = {
             id: 1,
             openId: "usr_rodrigo_zuma",
-            name: "Rodrigo Ribeiro Gonçalves",
-            email: "rrodrigogon@gmail.com",
+            name: authRes.usuario.nome,
+            email: authRes.usuario.email,
             role: "admin",
             cargo: "Proprietário & Administrador Geral",
             unidade: "Tangará da Serra - MT",
@@ -48,7 +50,7 @@ export const appRouter = router({
 
         throw new TRPCError({
           code: "UNAUTHORIZED",
-          message: "E-mail ou senha incorretos. Acesso restrito ao Zuma Pilot.",
+          message: authRes.erro || "E-mail ou senha incorretos. Acesso restrito ao BancoFe / Zuma Pilot.",
         });
       }),
     logout: publicProcedure.mutation(({ ctx }) => {

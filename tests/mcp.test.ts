@@ -4,8 +4,8 @@ import { BancoFeMCPServer } from '../src/integrations/mcps/server/mcp.server';
 import { McpHubIntegrationAdapter } from '../src/integrations/mcps/clients/hub';
 
 describe('Integração Protocolo MCP (Model Context Protocol)', () => {
-  it('deve disponibilizar 10 ferramentas bancárias nativas com schemas estritos', () => {
-    expect(BANCOFE_MCP_TOOLS.length).toBe(10);
+  it('deve disponibilizar 18 ferramentas bancárias nativas com schemas estritos', () => {
+    expect(BANCOFE_MCP_TOOLS.length).toBe(18);
 
     const toolNames = BANCOFE_MCP_TOOLS.map((t) => t.name);
     expect(toolNames).toContain('bancofe_create_pix');
@@ -24,7 +24,7 @@ describe('Integração Protocolo MCP (Model Context Protocol)', () => {
     });
 
     expect(listRes.result).toBeDefined();
-    expect(listRes.result.tools).toHaveLength(10);
+    expect(listRes.result.tools).toHaveLength(18);
 
     // Teste chamada de ferramenta bancária: bancofe_simulate_loan
     const callRes = BancoFeMCPServer.handleRequest({
