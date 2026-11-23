@@ -24,6 +24,23 @@ async def run():
         ])
         
         page = await context.new_page()
+
+        # Screenshot da nova Tela Inicial do BancoFé (GET /)
+        print("Navegando para a nova Tela Inicial: https://erp-bancofe-5xsi5uyoda-rj.a.run.app/ ...")
+        res_home = await page.goto("https://erp-bancofe-5xsi5uyoda-rj.a.run.app/", wait_until="networkidle")
+        print(f"Status da Home: {res_home.status}")
+        await page.wait_for_timeout(2000)
+        await page.screenshot(path="/tmp/home_bancofe_topo_prd.png")
+        await page.screenshot(path="/tmp/home_bancofe_full_prd.png", full_page=True)
+        print("Screenshots da Home salvos: /tmp/home_bancofe_topo_prd.png e /tmp/home_bancofe_full_prd.png")
+
+        # Testar modal na Home
+        print("Testando abertura do modal na Home...")
+        await page.evaluate("abrirModalNovaSimulacao()")
+        await page.wait_for_timeout(1000)
+        await page.screenshot(path="/tmp/home_bancofe_modal_simulacao_prd.png")
+        print("Screenshot do modal na Home salvo: /tmp/home_bancofe_modal_simulacao_prd.png")
+
         print("Navegando para https://erp-bancofe-5xsi5uyoda-rj.a.run.app/admin/mesa-credito ...")
         res = await page.goto("https://erp-bancofe-5xsi5uyoda-rj.a.run.app/admin/mesa-credito", wait_until="networkidle")
         print(f"Status da resposta: {res.status}")
