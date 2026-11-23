@@ -17,6 +17,7 @@ import { RadarProspeccaoTerminal } from './components/RadarProspeccaoTerminal';
 import { AdminModulosTerminal } from './components/AdminModulosTerminal';
 import { PortalClienteTerminal } from './components/PortalClienteTerminal';
 import { GestaoEmprestimosAdminTerminal } from './components/GestaoEmprestimosAdminTerminal';
+import { GitDevOpsTerminal } from './components/GitDevOpsTerminal';
 import { IntegrationRegistry } from '../integrations/registry';
 
 export const App: React.FC = () => {
@@ -125,6 +126,8 @@ export const App: React.FC = () => {
         {activeTab === 'bureau' && <BureauTerminal />}
 
         {activeTab === 'admin-modulos' && <AdminModulosTerminal />}
+
+        {activeTab === 'git-devops' && <GitDevOpsTerminal />}
 
         {activeTab === 'mcp' && <McpCockpit />}
 

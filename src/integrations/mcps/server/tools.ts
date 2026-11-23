@@ -136,4 +136,96 @@ export const BANCOFE_MCP_TOOLS: MCPToolDefinition[] = [
       required: ['amountBrl'],
     },
   },
+  {
+    name: 'bancofe_sicar_esg_query',
+    description: 'Auditoria ambiental pericial do SICAR (Cadastro Ambiental Rural), Reserva Legal (35% Cerrado MT), APP e checagem de embargos IBAMA/SEMA.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        document: { type: 'string', description: 'CPF ou CNPJ do produtor/empresa' },
+        carNumero: { type: 'string', description: 'Número do CAR (opcional, ex: MT-5107909-...)' },
+      },
+      required: ['document'],
+    },
+  },
+  {
+    name: 'bancofe_scr_bacen_query',
+    description: 'Consulta analítica ao SCR Bacen / Registrato de endividamento no SFN conforme Resolução CMN 2.682/1999 (ratings AA até H).',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        document: { type: 'string', description: 'CPF ou CNPJ do cliente' },
+      },
+      required: ['document'],
+    },
+  },
+  {
+    name: 'bancofe_cartorios_protestos',
+    description: 'Pesquisa unificada na Central de Protestos (CENPROT) e matrículas de imóveis (ONR) com cálculo de LTV para Home Equity.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        document: { type: 'string', description: 'CPF ou CNPJ' },
+        valorImovelAvaliado: { type: 'number', description: 'Valor de avaliação do imóvel para garantia fiduciária (opcional)' },
+      },
+      required: ['document'],
+    },
+  },
+  {
+    name: 'bancofe_mesa_credito_score',
+    description: 'Executa a Mesa de Crédito Algorítmica BancoFé calculando Score (0-1000), Rating de Risco (AAA a D), PD % e limites automatizados.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        document: { type: 'string', description: 'CPF ou CNPJ para análise completa' },
+        rendaMensalDeclarada: { type: 'number', description: 'Renda ou faturamento mensal' },
+      },
+      required: ['document'],
+    },
+  },
+  {
+    name: 'bancofe_quitacao_cdc_simulate',
+    description: 'Simula quitação antecipada de empréstimo ou financiamento com desconto de juros a valor presente (Art. 52, § 2º do CDC / Lei 12.007).',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        contratoId: { type: 'string', description: 'Código do contrato (ex: BCF-EMP-2026-001)' },
+      },
+      required: ['contratoId'],
+    },
+  },
+  {
+    name: 'bancofe_declaracao_lei12007',
+    description: 'Gera Declaração Anual de Quitação de Débitos com protocolo oficial e hash criptográfico de autenticidade.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        document: { type: 'string', description: 'CPF ou CNPJ do cliente correntista' },
+        anoExercicio: { type: 'number', description: 'Ano base de exercício (padrão 2026)' },
+      },
+      required: ['document'],
+    },
+  },
+  {
+    name: 'bancofe_git_telemetry',
+    description: 'Consulta em tempo real a telemetria do Git, últimos commits assinados, branch ativa e status de deploy no Google Cloud Platform.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+    },
+  },
+  {
+    name: 'bancofe_conciliar_comprovante',
+    description: 'Aprova ou rejeita comprovante de pagamento submetido pelo Portal do Cliente na mesa de operações com baixa automática da parcela.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        contratoId: { type: 'string', description: 'Código do contrato de empréstimo' },
+        numeroParcela: { type: 'number', description: 'Número da parcela a ser conciliada' },
+        aprovar: { type: 'boolean', description: 'True para aprovar e dar baixa, False para rejeitar' },
+        observacaoMesa: { type: 'string', description: 'Parecer ou justificativa da mesa financeira' },
+      },
+      required: ['contratoId', 'numeroParcela', 'aprovar'],
+    },
+  },
 ];

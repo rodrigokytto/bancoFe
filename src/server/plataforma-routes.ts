@@ -24,6 +24,7 @@ import { ConectorBureausCredito } from "../bureaus-credito";
 import { ValidadorIntegracoesCompletas } from "../validador-integracoes";
 import { MotorGestaoEmprestimosBancoFe } from "../credito/gestao-contratos-emprestimos";
 import { PortalClienteService } from "../portal-cliente/portal-cliente.service";
+import { GitDevOpsService } from "../git/git-devops.service";
 
 /**
  * Registra todas as rotas Web e APIs REST da Plataforma BancoFé, Casanova Kytto,
@@ -128,6 +129,10 @@ export function registerPlataformaWebAndApis(app: any) {
 
   app.get("/gestao-emprestimos", authMiddleware, (_req: Request, res: Response) => {
     res.redirect("/?tab=gestao-emprestimos");
+  });
+
+  app.get("/git", (_req: Request, res: Response) => {
+    res.redirect("/?tab=git-devops");
   });
 
   app.get("/consulta-360", authMiddleware, (_req: Request, res: Response) => {
@@ -638,5 +643,22 @@ export function registerPlataformaWebAndApis(app: any) {
       observacaoMesa
     );
     res.json({ sucesso, contratoId, numeroParcela, status: aprovar ? "APROVADO_PAGA" : "REJEITADO" });
+  });
+
+  // ==========================================
+  // 9. GIT & DEVOPS BANCÁRIO (TELEMETRIA, COMMITS & WEBHOOKS)
+  // ==========================================
+  app.get("/api/v1/git/status", (_req: Request, res: Response) => {
+    res.json(GitDevOpsService.obterStatusRepositorio());
+  });
+
+  app.post("/api/v1/git/webhook", (req: Request, res: Response) => {
+    const evento = (req.headers["x-github-event"] as string) || "push";
+    const registro = GitDevOpsService.registrarWebhook(evento, req.body);
+    res.status(202).json({ recebido: true, registro });
+  });
+
+  app.get("/api/v1/git/webhooks", (_req: Request, res: Response) => {
+    res.json(GitDevOpsService.listarWebhooks());
   });
 }

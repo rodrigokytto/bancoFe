@@ -17,6 +17,7 @@ import {
   Settings,
   Users,
   Banknote,
+  GitBranch,
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -49,6 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'drex', label: 'Web3 Drex', icon: Coins },
     { id: 'bureau', label: 'Bureau Crédito', icon: UserCheck },
     { id: 'admin-modulos', label: 'Gestão de Módulos', icon: Settings },
+    { id: 'git-devops', label: 'Git & DevOps', icon: GitBranch, highlight: true },
     { id: 'mcp', label: 'MCP Protocol', icon: Cpu },
     { id: 'skills', label: 'Skills de IA', icon: ShieldCheck },
     { id: 'ledger', label: 'Livro Razão', icon: Landmark },

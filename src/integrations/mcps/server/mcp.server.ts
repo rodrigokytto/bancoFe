@@ -4,6 +4,13 @@ import { FebrabanBoletoEngine } from '../../git-abertos/boletos-cnab/febraban.en
 import { CNAB240Engine } from '../../git-abertos/boletos-cnab/cnab240.parser';
 import { BureauCreditoIntegrationAdapter } from '../../git-abertos/bureau-credito/bureau.adapter';
 import readline from 'readline';
+import { consultarComplianceAmbiental } from '../../../compliance/sicar-compliance-ambiental';
+import { consultarSCRBacen } from '../../../credito/scr-registrato-analitico';
+import { consultarCartoriosEProtestos } from '../../../credito/cartorios-protestos-onr';
+import { executarAnaliseMesaCredito } from '../../../credito/mesa-credito-algoritmica';
+import { MotorGestaoEmprestimosBancoFe } from '../../../credito/gestao-contratos-emprestimos';
+import { PortalClienteService } from '../../../portal-cliente/portal-cliente.service';
+import { GitDevOpsService } from '../../../git/git-devops.service';
 
 export interface JSONRPCRequest {
   jsonrpc: '2.0';
@@ -96,6 +103,18 @@ export class BancoFeMCPServer {
                   mimeType: 'application/json',
                   description: 'Resumo contábil das contas ativas, passivas e patrimoniais do BancoFe.',
                 },
+                {
+                  uri: 'bancofe://git/status',
+                  name: 'Telemetria do Repositório Git e Deploy PRD',
+                  mimeType: 'application/json',
+                  description: 'Status do repositório rodrigokytto/bancoFe, commits assinados e deploys no GCP Cloud Run.',
+                },
+                {
+                  uri: 'bancofe://contracts/summary',
+                  name: 'Resumo Executivo da Carteira de Crédito',
+                  mimeType: 'application/json',
+                  description: 'Total contratado, saldo devedor ativo e conciliação de recebimentos.',
+                },
               ],
             },
           };
@@ -124,6 +143,34 @@ export class BancoFeMCPServer {
                       null,
                       2
                     ),
+                  },
+                ],
+              },
+            };
+          } else if (uri === 'bancofe://git/status') {
+            return {
+              jsonrpc: '2.0',
+              id,
+              result: {
+                contents: [
+                  {
+                    uri,
+                    mimeType: 'application/json',
+                    text: JSON.stringify(GitDevOpsService.obterStatusRepositorio(), null, 2),
+                  },
+                ],
+              },
+            };
+          } else if (uri === 'bancofe://contracts/summary') {
+            return {
+              jsonrpc: '2.0',
+              id,
+              result: {
+                contents: [
+                  {
+                    uri,
+                    mimeType: 'application/json',
+                    text: JSON.stringify(MotorGestaoEmprestimosBancoFe.obterMetricasCarteira(), null, 2),
                   },
                 ],
               },
@@ -168,6 +215,14 @@ export class BancoFeMCPServer {
                 {
                   name: 'generate_sac_price_comparison',
                   description: 'Compara os sistemas de amortização SAC e PRICE para decisão de financiamento de safra.',
+                },
+                {
+                  name: 'parecer_credito_360',
+                  description: 'Gera parecer pericial de crédito consolidando Cadastro RFB, SICAR ESG, SCR Bacen e Protestos.',
+                },
+                {
+                  name: 'auditoria_git_seguranca_bacen85',
+                  description: 'Auditoria de segurança de código-fonte, commits assinados e esteira CI/CD sob Resolução Bacen 85.',
                 },
               ],
             },
@@ -346,6 +401,57 @@ export class BancoFeMCPServer {
           assetType: args.assetType || 'TPFt_LTN',
           status: 'SETTLED_ON_HYPERLEDGER_BESU',
           txHash: `0x${Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('')}`,
+        };
+      }
+
+      case 'bancofe_sicar_esg_query': {
+        const doc = (args.document || '').replace(/\D/g, '');
+        return consultarComplianceAmbiental(doc, args.carNumero);
+      }
+
+      case 'bancofe_scr_bacen_query': {
+        const doc = (args.document || '').replace(/\D/g, '');
+        return consultarSCRBacen(doc);
+      }
+
+      case 'bancofe_cartorios_protestos': {
+        const doc = (args.document || '').replace(/\D/g, '');
+        return consultarCartoriosEProtestos(doc, args.valorImovelAvaliado);
+      }
+
+      case 'bancofe_mesa_credito_score': {
+        const doc = (args.document || '').replace(/\D/g, '');
+        return executarAnaliseMesaCredito(doc, Number(args.rendaMensalDeclarada || 25000));
+      }
+
+      case 'bancofe_quitacao_cdc_simulate': {
+        const sim = MotorGestaoEmprestimosBancoFe.simularQuitacaoAntecipada(args.contratoId);
+        if (!sim) throw new Error(`Contrato ${args.contratoId} não localizado.`);
+        return sim;
+      }
+
+      case 'bancofe_declaracao_lei12007': {
+        const doc = (args.document || '').replace(/\D/g, '');
+        return PortalClienteService.emitirDeclaracaoQuitacaoAnual(doc, Number(args.anoExercicio || 2026));
+      }
+
+      case 'bancofe_git_telemetry': {
+        return GitDevOpsService.obterStatusRepositorio();
+      }
+
+      case 'bancofe_conciliar_comprovante': {
+        const ok = MotorGestaoEmprestimosBancoFe.conciliarComprovanteMesa(
+          args.contratoId,
+          Number(args.numeroParcela),
+          Boolean(args.aprovar),
+          args.observacaoMesa
+        );
+        return {
+          sucesso: ok,
+          contratoId: args.contratoId,
+          numeroParcela: args.numeroParcela,
+          novoStatus: args.aprovar ? 'APROVADO_PAGA' : 'REJEITADO',
+          timestamp: new Date().toISOString(),
         };
       }
 

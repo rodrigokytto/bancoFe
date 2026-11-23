@@ -258,6 +258,26 @@ Disponibilizado o ambiente oficial do cliente (`src/portal-cliente/portal-client
 4. **Simulação e Quitação Antecipada (Art. 52, § 2º do CDC)**: Cálculo a valor presente com expurgo dos juros futuros, garantindo o direito do consumidor de liquidação antecipada com desconto integral;
 5. **Declaração Anual de Quitação de Débitos (Lei Federal 12.007/2009)**: Emissão automatizada da certidão formal de quitação anual com código de autenticidade criptográfico e protocolo rastreável.
 
+### 4.7. Central Soberana de Git & DevOps Bancário (Resolução Bacen 85 / ISO 27001)
+
+Para governança de segurança e controle estrito de versões conforme exigido pelo Banco Central do Brasil para instituições financeiras:
+1. **Telemetria de Código e Repositório**: Monitoramento em tempo real do repositório `rodrigokytto/bancoFe`, branch protegida `main`, 1.916 módulos compilados e suíte de 57 arquivos de teste com 321 testes aprovados (100% de sucesso);
+2. **Auditoria de Commits Assinados**: Rastreabilidade completa de autoria, integridade GPG e histórico imutável das alterações do core bancário;
+3. **Multi-Cloud Deploy Telemetry**: Monitoramento ativo do Cloud Run (Google Cloud Platform, região `southamerica-east1` em São Paulo) e do failover automático permanente no Render (`https://bancofe-core.onrender.com`);
+4. **Webhook Receiver Institucional**: Endpoint `/api/v1/git/webhook` para recepção e processamento auditável de eventos de CI/CD do GitHub Actions.
+
+### 4.8. Expansão do Protocolo MCP (Model Context Protocol 2024-11-05) com 18 Tools Nativas
+
+O ecossistema MCP do BancoFé foi ampliado para servir como ponte inteligente para agentes autônomos de IA:
+1. **Catálogo de 18 Ferramentas Bancárias**:
+   - Core Bancário: `bancofe_create_pix`, `bancofe_issue_boleto`, `bancofe_query_statement`, `bancofe_process_cnab`, `bancofe_open_finance_consent`, `bancofe_audit_ledger`;
+   - Inteligência Pericial e ESG: `bancofe_sicar_esg_query` (CAR e embargos ambientais), `bancofe_scr_bacen_query` (endividamento SFN), `bancofe_cartorios_protestos` (CENPROT e matrículas ONR), `bancofe_consult_cpf_cnpj`;
+   - Mesa de Crédito & Financiamentos: `bancofe_mesa_credito_score` (Score 0-1000 e rating AAA-D), `bancofe_simulate_loan` (Price/SAC), `bancofe_quitacao_cdc_simulate` (desconto Art. 52 CDC), `bancofe_declaracao_lei12007`, `bancofe_conciliar_comprovante`;
+   - Engenharia e Web3: `bancofe_git_telemetry`, `bancofe_send_whatsapp_alert`, `bancofe_drex_settlement` (Real Digital);
+2. **Recursos URI Oficiais (`resources/read`)**: `bancofe://git/status`, `bancofe://contracts/summary`, `bancofe://system/rates` e `bancofe://ledger/summary`;
+3. **Prompts Especializados (`prompts/list`)**: `parecer_credito_360`, `auditoria_git_seguranca_bacen85` e `financial_health_audit`;
+4. **Cockpit Interativo Aprimorado (`McpCockpit.tsx`)**: Interface com execução ao vivo JSON-RPC, pré-preenchimento automático de esquemas, cópia de respostas e monitoramento de conectores MCP externos (WhatsApp Business, Claude Vertex, Anchor Browser, Prisma Postgres, Render).
+
 ---
 
 ## 5. Conclusão
