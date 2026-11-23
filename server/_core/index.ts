@@ -9,6 +9,7 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { registerIntegrationRoutes } from "../integrationsService";
 import { registerBancoFeRoutes } from "../../src/server/app";
+import { registerCrmFinanceiraRoutes } from "../crmFinanceiraRoutes";
 
 async function startServer() {
   const app = express();
@@ -33,6 +34,7 @@ async function startServer() {
   registerBancoFeRoutes(app);
   registerOAuthRoutes(app);
   registerIntegrationRoutes(app);
+  registerCrmFinanceiraRoutes(app);
   // tRPC API
   app.use(
     "/api/trpc",

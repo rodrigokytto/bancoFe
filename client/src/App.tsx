@@ -17,6 +17,7 @@ import { ZumaModaRoupas } from "./pages/ZumaModaRoupas";
 import { WhatsAppZumi } from "./pages/WhatsAppZumi";
 import { AdminWaha } from "./pages/AdminWaha";
 import { AdminModulosPage } from "./pages/AdminModulosPage";
+import { CrmFinanceiraPage } from "./pages/CrmFinanceiraPage";
 import { EngenhariaCardapio } from "./pages/EngenhariaCardapio";
 import { Reputacao } from "./pages/Reputacao";
 import { Campanhas } from "./pages/Campanhas";
@@ -138,6 +139,12 @@ function Router() {
             <Route path="/administracao" component={AdminModulosPage} />
             <Route path="/administracao/modulos" component={AdminModulosPage} />
             <Route path="/admin-modulos" component={AdminModulosPage} />
+
+            {/* BancoFe — Operações Financeiras & CRM 360° */}
+            <Route path="/admin/crm-financeira" component={CrmFinanceiraPage} />
+            <Route path="/admin/operacoes-financeiras" component={CrmFinanceiraPage} />
+            <Route path="/crm-financeira" component={CrmFinanceiraPage} />
+            <Route path="/operacoes-financeiras" component={CrmFinanceiraPage} />
 
             {/* Vendas & Apps */}
             <Route path="/" component={Cockpit} />

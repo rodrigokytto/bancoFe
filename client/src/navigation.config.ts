@@ -189,6 +189,7 @@ export const SECTIONS: Record<string, NavSection> = {
     label: "Gestão de Carteira & LTV",
     icon: Users,
     items: [
+      { id: "crm_operacoes_financeiras", path: "/admin/crm-financeira", label: "Operações Financeiras & CRM", icon: Building2, badge: "360°", badgeColor: "bg-[#820AD1] text-white", highlight: true },
       { id: "clientes", path: "/clientes", label: "Base de Clientes & CRM", icon: Users },
       { id: "customer360", path: "/erp?tab=customer360", label: "Customer 360° & Score RFM", icon: Users, badge: "0-1000", badgeColor: "bg-violet-600 text-white" },
     ],
