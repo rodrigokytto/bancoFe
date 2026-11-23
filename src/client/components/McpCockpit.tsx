@@ -466,23 +466,6 @@ export const McpCockpit: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3 shadow-lg">
-            <div className="flex items-center justify-between">
-              <span className="flex items-center space-x-2 text-slate-200 font-bold text-sm">
-                <Layers className="w-4 h-4 text-emerald-400" />
-                <span>Render MCP Server</span>
-              </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                CONECTADO
-              </span>
-            </div>
-            <p className="text-xs text-slate-400">
-              Gestão da infraestrutura na nuvem Render com espelhamento permanente e failover.
-            </p>
-            <div className="text-[10px] text-slate-500 font-mono bg-slate-950 p-2 rounded-lg">
-              Workspace sincronizado • Deploy automático
-            </div>
-          </div>
         </div>
       )}
     </div>

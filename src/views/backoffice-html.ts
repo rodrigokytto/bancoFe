@@ -48,7 +48,7 @@ export function renderizarHtmlBackoffice(usuario?: any): string {
               <span class="text-xl font-extrabold tracking-tight text-white">Banco<span class="text-emerald-400">Fé</span></span>
               <span class="text-xs px-2 py-0.5 rounded font-bold bg-emerald-950 text-emerald-400 border border-emerald-800/60 uppercase tracking-wider">Backoffice ERP</span>
             </div>
-            <p class="text-[11px] text-slate-400 font-medium">Holding & Negócios • GCP & Render Sincronizados</p>
+            <p class="text-[11px] text-slate-400 font-medium">Holding & Negócios • Google Cloud Platform</p>
           </div>
         </a>
       </div>
@@ -120,8 +120,8 @@ export function renderizarHtmlBackoffice(usuario?: any): string {
           <div class="px-4 py-3 rounded-xl bg-slate-900/90 border border-teal-500/30 flex items-center gap-3">
             <div class="w-3 h-3 rounded-full bg-teal-400"></div>
             <div>
-              <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Render & PostgreSQL</p>
-              <p class="text-xs font-bold text-teal-300 font-mono">oregon-global</p>
+              <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Cloud SQL PostgreSQL</p>
+              <p class="text-xs font-bold text-teal-300 font-mono">southamerica-east1</p>
             </div>
           </div>
         </div>
@@ -325,7 +325,7 @@ export function renderizarHtmlBackoffice(usuario?: any): string {
             </div>
             <h3 class="text-lg font-bold text-white">Central Soberana Git & DevOps</h3>
             <p class="text-xs text-slate-300 mt-1">
-              Controle de sincronização GitHub, 18 ferramentas de protocolo MCP ativas, webhooks automatizados e pipeline de integração contínua GCP e Render.
+              Controle de sincronização GitHub, 18 ferramentas de protocolo MCP ativas, webhooks automatizados e pipeline de integração contínua no GCP.
             </p>
             <div class="mt-4 pt-4 border-t border-slate-800 space-y-2">
               <a href="/git" class="block w-full py-2 px-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs text-center transition">
@@ -436,7 +436,7 @@ export function renderizarHtmlBackoffice(usuario?: any): string {
   <footer class="border-t border-slate-800/80 bg-[#070b10] py-6 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
       <p>Sessão Segura TLS 1.3 • Auditoria BACEN / COSIF & DPO LGPD • Rodrigo Gonçalves • Nova Olímpia/MT</p>
-      <p class="font-mono text-emerald-400/80">Google Cloud (southamerica-east1) × Render (oregon)</p>
+      <p class="font-mono text-emerald-400/80">Google Cloud (southamerica-east1)</p>
     </div>
   </footer>
 

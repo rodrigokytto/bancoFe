@@ -15,7 +15,7 @@ Foi realizada uma varredura pericial profunda em todos os domínios, endpoints, 
 |---|---|---|---|
 | **`casanova.kytto.com.br`** | Google Cloud Platform (`ghs.googlehosted.com` / Cloud Run) | **200 OK** | **100% Operacional**. Latência estável, trace GCP ativo (`x-cloud-trace-context`). |
 | **`nossacasa.kytto.com.br`** | Google Cloud Platform (`ghs.googlehosted.com` / Cloud Run) | **200 OK** | **100% Operacional**. Resposta rápida do Google Frontend. |
-| **`kytto.com.br`** | Render Hosting + Cloudflare Proxy | **200 OK** | **Operacional**, com registro de intermitência temporária (`502 Bad Gateway / dynamic-paid-error`). |
+| **`kytto.com.br`** | Hospedagem GCP + Cloudflare Proxy | **200 OK** | **Operacional**, com registro de intermitência temporária (`502 Bad Gateway / dynamic-paid-error`). |
 | **`zuma.kytto.com.br`** | Google Cloud Platform (Google Frontend `35.201.67.186`) | **503 Server Error** | **Indisponível**. Mensagem: *"The service you requested is not available yet"*. |
 | **`bancofe.kytto.com.br`** | Google Cloud Platform (Previsto Cloud Run) | **ENOTFOUND** | **Pendente de Apontamento DNS**. Registro CNAME ainda não criado. |
 | **`admin.kytto.com.br`** | Servidor Dedicado / VPS (`136.69.34.20`) | **Falha SSL** | **Erro TLS**. O servidor recusa o aperto de mão criptográfico (EOF violation). |

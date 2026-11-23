@@ -20,7 +20,6 @@ Todos os serviços principais encontram-se **100% operacionais**, com tempos de 
 | Ambiente / Finalidade | URL Oficial de Produção | Status HTTP | Latência Média | Provedor / Região |
 | :--- | :--- | :--- | :--- | :--- |
 | **GCP Cloud Run (Principal)** | `https://erp-bancofe-5xsi5uyoda-rj.a.run.app` | **200 OK** | **130 ms** | Google Cloud Platform (`southamerica-east1` - SP) |
-| **Render Cloud (Failover Permanente)** | `https://bancofe-core.onrender.com` | **200 OK** | **420 ms** | Render Global Edge CDN |
 | **Preview Live Sandbox (Build Atual)** | `https://3000-ixbcojokc2l9tjj44kp5b-4e27e3d4.us5.manus.computer` | **200 OK** | **45 ms** | Sandbox Container Cluster |
 | **Casa Nova Imóveis** | `https://casanova.kytto.com.br` | **200 OK** | **180 ms** | Google Cloud Platform |
 | **Nossa Casa Construtora** | `https://nossacasa.kytto.com.br` | **200 OK** | **190 ms** | Google Cloud Platform |
