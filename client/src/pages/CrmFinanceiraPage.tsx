@@ -138,6 +138,23 @@ export interface ResultadoSimulacao {
 
 // Estágios Oficiais do Funil BancoFe
 const ESTAGIOS_KANBAN = [
+  { id: "prospeccao", label: "1. Prospecção & Originação", cor: "bg-blue-500", border: "border-blue-500", sinonimos: ["prospeccao"] },
+  { id: "qualificacao", label: "2. Qualificação & KYC", cor: "bg-amber-500", border: "border-amber-500", sinonimos: ["qualificacao"] },
+  { id: "mesa_credito", label: "3. Mesa de Crédito & SCR", cor: "bg-emerald-600", border: "border-emerald-600", sinonimos: ["mesa_credito", "proposta"] },
+  { id: "comite_aprovacao", label: "4. Comitê de Alçada", cor: "bg-indigo-500", border: "border-indigo-500", sinonimos: ["comite_aprovacao", "comite", "analise"] },
+  { id: "formalizacao_ccb", label: "5. Formalização CCB", cor: "bg-orange-500", border: "border-orange-500", sinonimos: ["formalizacao_ccb", "formalizacao"] },
+  { id: "liquidado", label: "6. Liquidado & Desembolsado", cor: "bg-emerald-500", border: "border-emerald-500", sinonimos: ["liquidado", "contratado", "concluido"] },
+];
+
+export const CrmFinanceiraPage: React.FC = () => {
+  const [location] = useLocation();
+
+  // Estados principais
+  const [oportunidades, setOportunidades] = useState<OportunidadeOperacaoFinanceira[]>([]);
+  const [metricas, setMetricas] = useState<MetricasGestao | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   // Aba ativa: funil | precadastros | kanban | mesa | simulador | ccb | termos | consulta360 | carteira | antecipacao | gestao_emprestimos | portal_cliente
   const [activeTab, setActiveTab] = useState<
     "funil" | "precadastros" | "kanban" | "mesa" | "simulador" | "ccb" | "termos" | "consulta360" | "carteira" | "antecipacao" | "gestao_emprestimos" | "portal_cliente"
@@ -215,7 +232,6 @@ const ESTAGIOS_KANBAN = [
       setActiveTab("gestao_emprestimos");
     } else if (window.location.pathname.includes("portal-cliente")) {
       setActiveTab("portal_cliente");
-    }
     }
   }, []);
 
