@@ -125,6 +125,56 @@
         "hoursSavedMonthly": 380,
         "complianceScore": 100
       }
+    },
+    {
+      "id": "bancofe_logistica",
+      "name": "BancoFe Logística — Frota & Roteirização GPS",
+      "slug": "logistica",
+      "description": "Hub de logística de entregas, roteirização multiobjetivo para motoboys e carretas, rastreamento GPS e gestão de combustíveis.",
+      "iconName": "Truck",
+      "badge": "Logística",
+      "colorScheme": "cyan",
+      "cnpj": "34.567.890/0002-95",
+      "cidade": "Tangará da Serra & Cuiabá - MT",
+      "unidade": "Central de Despacho & Frotas",
+      "status": "active",
+      "metrics": {
+        "monthlyVolume": 740000,
+        "monthlyTransactions": 18400,
+        "uptimeSla": 99.97,
+        "avgLatencyMs": 14,
+        "monthlySavings": 19500,
+        "activeUsersCount": 32,
+        "hoursSavedMonthly": 165,
+        "complianceScore": 100
+      },
+      "createdAt": "2026-01-01T00:00:00Z",
+      "updatedAt": "2026-11-23T00:00:00Z"
+    },
+    {
+      "id": "bancofe_credito",
+      "name": "BancoFe Crédito — Fomento & Recebíveis",
+      "slug": "credito",
+      "description": "Mesa de antecipação de recebíveis, cessão de crédito, duplicatas escriturais, esteira de risco automatizada e funding para empresas do grupo.",
+      "iconName": "CircleDollarSign",
+      "badge": "Crédito PJ",
+      "colorScheme": "indigo",
+      "cnpj": "34.567.890/0003-76",
+      "cidade": "São Paulo - SP & MT",
+      "unidade": "Mesa de Fomento Mercantil",
+      "status": "active",
+      "metrics": {
+        "monthlyVolume": 5600000,
+        "monthlyTransactions": 28900,
+        "uptimeSla": 99.99,
+        "avgLatencyMs": 13,
+        "monthlySavings": 42000,
+        "activeUsersCount": 22,
+        "hoursSavedMonthly": 195,
+        "complianceScore": 100
+      },
+      "createdAt": "2026-01-01T00:00:00Z",
+      "updatedAt": "2026-11-23T00:00:00Z"
     }
   ],
   "modulesByBusiness": {
@@ -737,7 +787,125 @@
           "lastSync": "Agora"
         }
       }
+    ],
+    "bancofe_logistica": [
+      {
+        "id": "logistica_rotas_gps",
+        "businessId": "bancofe_logistica",
+        "label": "Roteirização Multiobjetivo & GPS",
+        "description": "Despacho automatizado para motoboys e carretas com previsão de trânsito e chuva.",
+        "iconName": "Navigation",
+        "badge": "GPS Fiel",
+        "badgeColor": "bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
+        "defaultPath": "/entregador",
+        "order": 1,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "delivery_logistica",
+          "apps_mobile_op"
+        ],
+        "telemetry": {
+          "monthlyRequests": 84200,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 740000,
+          "costReduction": 12500,
+          "usersCount": 28,
+          "lastSync": "Em tempo real"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "logistica_combustivel_manutencao",
+        "businessId": "bancofe_logistica",
+        "label": "Gestão de Combustíveis & Frotas",
+        "description": "Controle de consumo km/l, cartão combustível com conciliação BancoFe e revisões preventivas.",
+        "iconName": "Fuel",
+        "badge": "Combustível",
+        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/patrimonio",
+        "order": 2,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "suprimentos_estoque",
+          "governanca_holding"
+        ],
+        "telemetry": {
+          "monthlyRequests": 19800,
+          "uptimePercent": 99.95,
+          "avgLatencyMs": 16,
+          "status": "healthy",
+          "costReduction": 7000,
+          "usersCount": 14,
+          "lastSync": "Há 10 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      }
+    ],
+    "bancofe_credito": [
+      {
+        "id": "credito_antecipacao_duplicatas",
+        "businessId": "bancofe_credito",
+        "label": "Mesa de Antecipação & Duplicatas",
+        "description": "Esteira de crédito 100% digital, desconto de títulos eletrônicos e funding intercompany.",
+        "iconName": "CircleDollarSign",
+        "badge": "Funding",
+        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+        "defaultPath": "/erp?tab=billing",
+        "order": 1,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "financas_controladoria",
+          "vendas_b2b"
+        ],
+        "telemetry": {
+          "monthlyRequests": 62400,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 13,
+          "status": "healthy",
+          "monthlyVolume": 5600000,
+          "costReduction": 28000,
+          "usersCount": 16,
+          "lastSync": "Em tempo real"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "credito_score_bureau",
+        "businessId": "bancofe_credito",
+        "label": "Motor de Risco & Bureau de Crédito",
+        "description": "Score proprietário BancoFe com dados Serasa/Boa Vista e limite rotativo PJ garantido.",
+        "iconName": "ShieldCheck",
+        "badge": "Score IA",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/financeiro",
+        "order": 2,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "financas_controladoria",
+          "modelagem_preditiva"
+        ],
+        "telemetry": {
+          "monthlyRequests": 41200,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "costReduction": 14000,
+          "usersCount": 12,
+          "lastSync": "Há 2 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      }
     ]
   },
-  "updatedAt": "2026-11-23T00:45:27.740Z"
+  "updatedAt": "2026-11-23T00:59:31.695Z"
 }

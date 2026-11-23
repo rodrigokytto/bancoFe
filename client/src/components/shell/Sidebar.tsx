@@ -697,6 +697,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <div className="relative" ref={businessDropdownRef}>
                 <button
                   type="button"
+                  onClick={() => setBusinessDropdownOpen(!businessDropdownOpen)}
                   className="w-full text-left p-2 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 hover:bg-blue-50 dark:hover:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/60 flex items-center justify-between transition-colors cursor-pointer group"
                   title="Clique para alternar o Negócio Ativo"
                 >

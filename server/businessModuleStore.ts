@@ -70,6 +70,20 @@ export class BusinessModuleStore {
       return b;
     });
 
+    // Adicionar novos negócios do grupo BancoFe se ainda não estiverem presentes
+    for (const defBiz of DEFAULT_BUSINESSES) {
+      if (!this.businesses.some((b) => b.id === defBiz.id)) {
+        this.businesses.push(JSON.parse(JSON.stringify(defBiz)));
+      }
+    }
+
+    // Garantir módulos padrão de todos os negócios do grupo BancoFe
+    for (const [bizId, defMods] of Object.entries(INITIAL_MODULES_BY_BUSINESS)) {
+      if (!this.modulesByBusiness[bizId] || this.modulesByBusiness[bizId].length === 0) {
+        this.modulesByBusiness[bizId] = JSON.parse(JSON.stringify(defMods));
+      }
+    }
+
     for (const [bizId, mods] of Object.entries(this.modulesByBusiness)) {
       const defMods = INITIAL_MODULES_BY_BUSINESS[bizId] || [];
       const defModMap = new Map(defMods.map((m) => [m.id, m]));

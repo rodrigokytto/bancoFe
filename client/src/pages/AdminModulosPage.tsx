@@ -35,7 +35,10 @@ import {
   Layers,
   HelpCircle,
   BarChart3,
-  Cpu
+  Cpu,
+  Truck,
+  ArrowRight,
+  PieChart
 } from "lucide-react";
 import { useBusiness } from "../contexts/BusinessContext";
 import { DynamicIcon } from "../components/DynamicIcon";
@@ -66,6 +69,9 @@ export const AdminModulosPage: React.FC = () => {
     reorderModules,
     resetToDefault,
   } = useBusiness();
+
+  // Modo de exibição: "company" (Gestão por Empresa) ou "group" (Visão Consolidada Grupo BancoFe)
+  const [viewMode, setViewMode] = useState<"company" | "group">("company");
 
   // Estados de visualização / privacidade
   const [showSensitiveValues, setShowSensitiveValues] = useState<boolean>(true);
@@ -150,6 +156,40 @@ export const AdminModulosPage: React.FC = () => {
 
   // Ícone busca no modal
   const [iconSearch, setIconSearch] = useState("");
+
+  // Estatísticas Consolidadas de Todo o Grupo BancoFe
+  const consolidatedGroupStats = useMemo(() => {
+    let totalVolume = 0;
+    let totalTransactions = 0;
+    let totalSavings = 0;
+    let totalHoursSaved = 0;
+    let totalUsers = 0;
+    let sumUptime = 0;
+
+    businesses.forEach((b) => {
+      const m = b.metrics;
+      if (m) {
+        totalVolume += m.monthlyVolume || 0;
+        totalTransactions += m.monthlyTransactions || 0;
+        totalSavings += m.monthlySavings || 0;
+        totalHoursSaved += m.hoursSavedMonthly || 0;
+        totalUsers += m.activeUsersCount || 0;
+        sumUptime += m.uptimeSla || 99.98;
+      }
+    });
+
+    const avgUptime = businesses.length > 0 ? Number((sumUptime / businesses.length).toFixed(2)) : 99.98;
+
+    return {
+      totalCompanies: businesses.length,
+      totalVolume,
+      totalTransactions,
+      totalSavings,
+      totalHoursSaved,
+      totalUsers,
+      avgUptime,
+    };
+  }, [businesses]);
 
   // Módulos filtrados
   const filteredModules = useMemo(() => {
@@ -364,17 +404,6 @@ export const AdminModulosPage: React.FC = () => {
     await reorderModules(newOrder.map((m) => m.id));
   };
 
-  // Alternar Domínio no Formulário
-  const toggleDomainInForm = (domainId: string) => {
-    setModuleForm((prev) => {
-      const exists = prev.domains.includes(domainId);
-      return {
-        ...prev,
-        domains: exists ? prev.domains.filter((d) => d !== domainId) : [...prev.domains, domainId],
-      };
-    });
-  };
-
   return (
     <div className="min-h-screen bg-[#fafafa] dark:bg-[#0c0d12] text-slate-900 dark:text-slate-100 p-4 sm:p-6 lg:p-8 transition-colors antialiased font-sans">
       {/* Top Breadcrumb & Status */}
@@ -386,10 +415,37 @@ export const AdminModulosPage: React.FC = () => {
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
           <span className="font-semibold text-slate-800 dark:text-slate-200">Painel Administrativo</span>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-purple-600 dark:text-purple-400 font-semibold">Módulos por Negócio</span>
+          <span className="text-purple-600 dark:text-purple-400 font-semibold">
+            {viewMode === "group" ? "Ecossistema Consolidado BancoFe" : "Módulos por Negócio"}
+          </span>
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Alternador de Modo de Visão: Grupo Consolidado x Por Empresa */}
+          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-2xl border border-slate-200 dark:border-slate-700">
+            <button
+              onClick={() => setViewMode("company")}
+              className={`px-3 py-1 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                viewMode === "company"
+                  ? "bg-[#820AD1] text-white shadow-xs"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+              }`}
+            >
+              Por Empresa
+            </button>
+            <button
+              onClick={() => setViewMode("group")}
+              className={`px-3 py-1 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                viewMode === "group"
+                  ? "bg-[#820AD1] text-white shadow-xs"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+              }`}
+            >
+              <PieChart className="w-3.5 h-3.5" />
+              Grupo Consolidado
+            </button>
+          </div>
+
           <button
             onClick={() => setShowSensitiveValues(!showSensitiveValues)}
             className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-medium transition-all cursor-pointer"
@@ -412,20 +468,23 @@ export const AdminModulosPage: React.FC = () => {
       <div className="max-w-6xl mx-auto mb-6">
         <div className="flex items-center justify-between mb-2 px-1">
           <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-            Unidades de Negócio do Grupo BancoFe
+            Empresas do Ecossistema BancoFe
           </span>
           <span className="text-xs text-slate-500">
-            {businesses.length} empresas integradas
+            {businesses.length} empresas integradas ao core bancário
           </span>
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
           {businesses.map((biz) => {
-            const isSelected = biz.id === activeBusinessId;
+            const isSelected = viewMode === "company" && biz.id === activeBusinessId;
             return (
               <button
                 key={biz.id}
-                onClick={() => setActiveBusinessId(biz.id)}
+                onClick={() => {
+                  setActiveBusinessId(biz.id);
+                  setViewMode("company");
+                }}
                 className={`flex items-center gap-2.5 px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border ${
                   isSelected
                     ? "bg-[#820AD1] text-white border-[#820AD1] shadow-sm shadow-purple-500/20 scale-[1.01]"
@@ -460,421 +519,586 @@ export const AdminModulosPage: React.FC = () => {
             className="flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 bg-slate-100/80 hover:bg-slate-200/70 dark:bg-slate-800/60 dark:hover:bg-slate-800 border border-dashed border-slate-300 dark:border-slate-700 transition-all cursor-pointer whitespace-nowrap"
           >
             <Plus className="w-3.5 h-3.5" />
-            Novo Negócio
+            Nova Empresa
           </button>
         </div>
       </div>
 
       {/* =========================================================================
-          NUBANK-STYLE EXECUTIVE HERO CARD (COMPLETE CALCULATIONS & METRICS)
+          VIEW MODE 1: VISÃO CONSOLIDADA DE TODAS AS EMPRESAS DO GRUPO BANCOFE
           ========================================================================= */}
-      <div className="max-w-6xl mx-auto bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 sm:p-7 shadow-[0_2px_14px_rgba(0,0,0,0.03)] mb-6 transition-all">
-        {/* Header Row */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-purple-500/10 dark:bg-purple-500/15 border border-purple-500/20 flex items-center justify-center text-[#820AD1] dark:text-purple-300">
-              <DynamicIcon name={activeBusiness.iconName} className="w-6 h-6" />
-            </div>
-            <div>
+      {viewMode === "group" && (
+        <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-200">
+          {/* Executive Group Hero Card */}
+          <div className="bg-gradient-to-br from-[#820AD1] to-[#4c047d] text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/15">
+              <div className="flex items-center gap-3.5">
+                <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20">
+                  <Landmark className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                      Grupo BancoFe — Ecossistema Corporativo 360°
+                    </h2>
+                  </div>
+                  <p className="text-xs sm:text-sm text-purple-100/90 mt-1 max-w-2xl">
+                    Painel executivo unificado das 7 empresas operacionais. Liquidação instantânea Pix, esteira de antecipação de crédito intercompany e auditoria consolidada.
+                  </p>
+                </div>
+              </div>
+
               <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-                  {activeBusiness.name}
-                </h1>
-                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-purple-500/10 text-[#820AD1] dark:text-purple-300 border border-purple-500/20">
-                  {activeBusiness.badge}
+                <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-white/20 border border-white/30 backdrop-blur-xs">
+                  {consolidatedGroupStats.totalCompanies} Empresas Integradas
                 </span>
               </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                {activeBusiness.unidade || activeBusiness.cidade} • CNPJ: {activeBusiness.cnpj || "N/D"}
-              </p>
             </div>
-          </div>
 
-          {/* Quick Header Actions */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleOpenAddModule}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#820AD1] hover:bg-[#7009b5] text-white font-semibold text-xs shadow-sm shadow-purple-500/20 transition-all cursor-pointer"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              Adicionar Módulo
-            </button>
-
-            <button
-              onClick={() => resetToDefault()}
-              title="Restaurar configuração de módulos padrão para este negócio"
-              className="p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Complete Metrics Row (Nubank Big Numbers) */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-5 border-b border-slate-100 dark:border-slate-800">
-          {/* Card 1: Volume */}
-          <div className="space-y-1">
-            <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-              <DollarSign className="w-3.5 h-3.5 text-purple-500" />
-              <span>Volume Mensal Operado</span>
-            </div>
-            <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 font-mono">
-              {formatMoney(calculatedStats.monthlyVolume)}
-            </div>
-            <div className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-medium">
-              <TrendingUp className="w-3 h-3" /> Processamento 100% Auditado
-            </div>
-          </div>
-
-          {/* Card 2: Transações / Requisições */}
-          <div className="space-y-1">
-            <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-              <Activity className="w-3.5 h-3.5 text-blue-500" />
-              <span>Transações & Requisições</span>
-            </div>
-            <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 font-mono">
-              {formatNumber(calculatedStats.monthlyTransactions)}
-            </div>
-            <div className="text-[11px] text-slate-500 flex items-center gap-1">
-              <Clock className="w-3 h-3" /> Latência média: {calculatedStats.avgLatencyMs}ms
-            </div>
-          </div>
-
-          {/* Card 3: Uptime SLA */}
-          <div className="space-y-1">
-            <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-              <Zap className="w-3.5 h-3.5 text-emerald-500" />
-              <span>Disponibilidade (SLA)</span>
-            </div>
-            <div className="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400 font-mono">
-              {calculatedStats.uptimeSla}%
-            </div>
-            <div className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-medium">
-              <CheckCircle2 className="w-3 h-3" /> Alta Confiabilidade 24/7
-            </div>
-          </div>
-
-          {/* Card 4: Economia / ROI */}
-          <div className="space-y-1">
-            <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              <span>Economia / ROI Mensal</span>
-            </div>
-            <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 font-mono">
-              {formatMoney(calculatedStats.monthlySavings)}
-            </div>
-            <div className="text-[11px] text-purple-600 dark:text-purple-400 font-medium">
-              ~{calculatedStats.hoursSavedMonthly}h economizadas da equipe
-            </div>
-          </div>
-        </div>
-
-        {/* Module Health Progress & Toggle Details */}
-        <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-3">
-            <span className="font-semibold text-slate-700 dark:text-slate-300">
-              Status Operacional dos Módulos:
-            </span>
-            <div className="flex items-center gap-2">
-              <div className="w-32 bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-200/50 dark:border-slate-700/50">
-                <div
-                  className="bg-emerald-500 h-2 rounded-full transition-all duration-500"
-                  style={{ width: `${calculatedStats.activationPercent}%` }}
-                />
+            {/* Consolidated Big Numbers */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6">
+              <div className="space-y-1">
+                <div className="text-xs text-purple-200">Volume Total Transacionado</div>
+                <div className="text-2xl sm:text-3xl font-black font-mono">
+                  {formatMoney(consolidatedGroupStats.totalVolume)}
+                </div>
+                <div className="text-[11px] text-emerald-300 flex items-center gap-1">
+                  <TrendingUp className="w-3 h-3" /> 100% Auditado em Tempo Real
+                </div>
               </div>
-              <span className="font-bold text-slate-800 dark:text-slate-200">
-                {calculatedStats.active}/{calculatedStats.total} ativos ({calculatedStats.activationPercent}%)
+
+              <div className="space-y-1">
+                <div className="text-xs text-purple-200">Operações & Transações/mês</div>
+                <div className="text-2xl sm:text-3xl font-black font-mono">
+                  {formatNumber(consolidatedGroupStats.totalTransactions)}
+                </div>
+                <div className="text-[11px] text-purple-200 flex items-center gap-1">
+                  <Zap className="w-3 h-3" /> Core Bancário Alta Velocidade
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <div className="text-xs text-purple-200">Disponibilidade do Grupo (SLA)</div>
+                <div className="text-2xl sm:text-3xl font-black font-mono text-emerald-300">
+                  {consolidatedGroupStats.avgUptime}%
+                </div>
+                <div className="text-[11px] text-emerald-300 flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" /> Infraestrutura Cloud Run GCP
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <div className="text-xs text-purple-200">Economia Operacional Gerada</div>
+                <div className="text-2xl sm:text-3xl font-black font-mono">
+                  {formatMoney(consolidatedGroupStats.totalSavings)}
+                </div>
+                <div className="text-[11px] text-amber-300 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> ~{formatNumber(consolidatedGroupStats.totalHoursSaved)}h economizadas
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Grid de Todas as Empresas do Grupo BancoFe */}
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                Empresas & Unidades Operacionais Integradas
+              </h3>
+              <span className="text-xs text-slate-500">
+                Clique em qualquer empresa para configurar seus módulos
               </span>
             </div>
-          </div>
 
-          <button
-            onClick={() => setShowCalculationDetails(!showCalculationDetails)}
-            className="flex items-center gap-1.5 font-semibold text-[#820AD1] dark:text-purple-400 hover:underline cursor-pointer"
-          >
-            <BarChart3 className="w-3.5 h-3.5" />
-            <span>{showCalculationDetails ? "Ocultar Detalhamento de Cálculos" : "Ver Cálculos e Indicadores Completos"}</span>
-            {showCalculationDetails ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-          </button>
-        </div>
-
-        {/* Expandable Calculation & Telemetry Drawer */}
-        {showCalculationDetails && (
-          <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 rounded-2xl p-4 sm:p-5 space-y-4 animate-in fade-in duration-200">
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-              <Cpu className="w-4 h-4 text-purple-500" />
-              <span>Memória de Cálculo & Auditoria Operacional</span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-              <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-700/80 space-y-1">
-                <div className="text-slate-500">Cálculo de Eficiência da Equipe</div>
-                <div className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                  {calculatedStats.hoursSavedMonthly} horas / mês
-                </div>
-                <div className="text-[11px] text-slate-500">
-                  Base de cálculo: R$ 65,00/hora homem economizada em tarefas automatizadas pelos módulos ativos.
-                </div>
-              </div>
-
-              <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-700/80 space-y-1">
-                <div className="text-slate-500">Conformidade Regulatória & Fiscal</div>
-                <div className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
-                  {calculatedStats.complianceScore}% Aprovado
-                </div>
-                <div className="text-[11px] text-slate-500">
-                  Padrão Bacen Open Finance, SEFAZ-MT Bloco K e rastreabilidade sanitária Anvisa auditados.
-                </div>
-              </div>
-
-              <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-700/80 space-y-1">
-                <div className="text-slate-500">Operadores e Usuários Impactados</div>
-                <div className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                  {calculatedStats.activeUsersCount} usuários ativos
-                </div>
-                <div className="text-[11px] text-slate-500">
-                  Contas corporativas com permissões sincronizadas e logins rastreados.
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* =========================================================================
-          MINIMALIST SEARCH & FILTER BAR
-          ========================================================================= */}
-      <div className="max-w-6xl mx-auto mb-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        {/* Search */}
-        <div className="relative flex-1 max-w-md">
-          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Buscar por módulo, rota (/pdv) ou identificador..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#820AD1] transition-all"
-          />
-        </div>
-
-        {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 self-end sm:self-auto">
-          {(["all", "active", "inactive"] as const).map((status) => {
-            const count =
-              status === "all"
-                ? modules.length
-                : status === "active"
-                ? activeModules.length
-                : modules.length - activeModules.length;
-
-            return (
-              <button
-                key={status}
-                onClick={() => setFilterStatus(status)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
-                  filterStatus === status
-                    ? "bg-[#820AD1] text-white border-[#820AD1] shadow-xs"
-                    : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
-                }`}
-              >
-                {status === "all" ? "Todos" : status === "active" ? "Ativos" : "Inativos"} ({count})
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* =========================================================================
-          NUBANK-STYLE MODULE CARDS LIST
-          ========================================================================= */}
-      <div className="max-w-6xl mx-auto space-y-3">
-        {filteredModules.length === 0 ? (
-          <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-xs">
-            <Layers className="w-10 h-10 text-slate-400 mx-auto mb-2" />
-            <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">
-              Nenhum módulo encontrado
-            </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
-              Não encontramos módulos para os critérios de pesquisa. Adicione um novo módulo para esta empresa.
-            </p>
-            <button
-              onClick={handleOpenAddModule}
-              className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#820AD1] text-white text-xs font-semibold cursor-pointer"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              Adicionar Módulo Agora
-            </button>
-          </div>
-        ) : (
-          filteredModules.map((mod, index) => {
-            const isFirst = index === 0;
-            const isLast = index === filteredModules.length - 1;
-            const t = mod.telemetry || {
-              monthlyRequests: 12000,
-              uptimePercent: 99.98,
-              avgLatencyMs: 14,
-              status: "healthy",
-              costReduction: 2000,
-              usersCount: 6,
-              lastSync: "Agora",
-            };
-
-            return (
-              <div
-                key={mod.id}
-                className={`bg-white dark:bg-slate-900 rounded-2xl border p-4 sm:p-5 transition-all shadow-[0_1px_8px_rgba(0,0,0,0.02)] hover:border-purple-300 dark:hover:border-purple-900 ${
-                  mod.active
-                    ? "border-slate-200/90 dark:border-slate-800/90"
-                    : "border-slate-200/50 dark:border-slate-800/50 opacity-60 bg-slate-50/50 dark:bg-slate-900/40"
-                }`}
-              >
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                  {/* Left: Icon & Info */}
-                  <div className="flex items-start gap-3.5 flex-1">
-                    {/* Icon Box */}
-                    <div className="p-3 rounded-2xl bg-purple-500/10 text-[#820AD1] dark:text-purple-300 border border-purple-500/20 shrink-0">
-                      <DynamicIcon name={mod.iconName} className="w-5 h-5" />
-                    </div>
-
-                    <div className="space-y-1.5 flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[11px] font-bold text-slate-400">#{mod.order}</span>
-                        <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
-                          {mod.label}
-                        </h3>
-
-                        {mod.badge && (
-                          <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${mod.badgeColor || "bg-purple-500/10 text-purple-600 border-purple-500/20"}`}>
-                            {mod.badge}
-                          </span>
-                        )}
-
-                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
-                          {mod.id}
-                        </span>
-
-                        <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
-                          mod.permission === "admin"
-                            ? "bg-rose-500/10 text-rose-600 border border-rose-500/20"
-                            : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
-                        }`}>
-                          {mod.permission === "admin" ? "Apenas Admin" : "Todos os Usuários"}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {businesses.map((biz) => {
+                const m = biz.metrics;
+                return (
+                  <div
+                    key={biz.id}
+                    className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800/90 p-5 shadow-xs hover:border-purple-400 dark:hover:border-purple-800 transition-all group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <div className="p-3 rounded-2xl bg-purple-500/10 text-[#820AD1] dark:text-purple-300 border border-purple-500/20 group-hover:scale-105 transition-transform">
+                          <DynamicIcon name={biz.iconName} className="w-6 h-6" />
+                        </div>
+                        <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                          {biz.badge}
                         </span>
                       </div>
 
-                      <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-1">
-                        {mod.description || "Sem descrição cadastrada."}
+                      <h4 className="font-bold text-base text-slate-900 dark:text-slate-100 line-clamp-1 mb-1">
+                        {biz.name}
+                      </h4>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4">
+                        {biz.description}
                       </p>
 
-                      {/* Complete Calculations / Telemetry Line */}
-                      <div className="flex flex-wrap items-center gap-3 pt-1 text-[11px] text-slate-500">
-                        <span className="flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                          {t.uptimePercent}% SLA
-                        </span>
-                        <span>•</span>
-                        <span>⏱ {t.avgLatencyMs}ms</span>
-                        <span>•</span>
-                        <span>📊 {formatNumber(t.monthlyRequests || 0)} req/mês</span>
-                        {t.costReduction && (
-                          <>
-                            <span>•</span>
-                            <span className="text-purple-600 dark:text-purple-400 font-medium">
-                              💰 {formatMoney(t.costReduction)} economizados
-                            </span>
-                          </>
-                        )}
-                        <span>•</span>
-                        <div className="flex items-center gap-1">
-                          <span className="text-slate-400">Rota:</span>
-                          <Link
-                            href={mod.defaultPath}
-                            className="text-[#820AD1] dark:text-purple-400 hover:underline flex items-center gap-0.5 font-mono"
-                          >
-                            {mod.defaultPath}
-                            <ExternalLink className="w-3 h-3" />
-                          </Link>
+                      {/* Dados operacionais da empresa */}
+                      <div className="space-y-2 py-3 border-y border-slate-100 dark:border-slate-800 text-xs">
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-500">Volume Mensal:</span>
+                          <span className="font-bold font-mono text-slate-900 dark:text-slate-100">
+                            {formatMoney(m?.monthlyVolume || 0)}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-500">Transações / Mês:</span>
+                          <span className="font-mono text-slate-700 dark:text-slate-300">
+                            {formatNumber(m?.monthlyTransactions || 0)} ops
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-500">SLA Disponibilidade:</span>
+                          <span className="font-bold text-emerald-600 dark:text-emerald-400 font-mono">
+                            {m?.uptimeSla || 99.98}%
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-500">CNPJ:</span>
+                          <span className="font-mono text-slate-600 dark:text-slate-400 text-[11px]">
+                            {biz.cnpj || "N/D"}
+                          </span>
                         </div>
                       </div>
                     </div>
+
+                    <div className="pt-4 flex items-center justify-between gap-2">
+                      <span className="text-xs text-slate-500">
+                        Polo: <span className="font-medium text-slate-700 dark:text-slate-300">{biz.cidade?.split("&")[0].trim()}</span>
+                      </span>
+
+                      <button
+                        onClick={() => {
+                          setActiveBusinessId(biz.id);
+                          setViewMode("company");
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#820AD1] hover:bg-[#7009b5] text-white text-xs font-semibold shadow-xs cursor-pointer transition-all"
+                      >
+                        <span>Gerenciar Módulos</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================================
+          VIEW MODE 2: GESTÃO DETALHADA POR EMPRESA (NUBANK STYLE HERO + CARDS)
+          ========================================================================= */}
+      {viewMode === "company" && (
+        <>
+          {/* Executive Hero Card da Empresa */}
+          <div className="max-w-6xl mx-auto bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 sm:p-7 shadow-[0_2px_14px_rgba(0,0,0,0.03)] mb-6 transition-all">
+            {/* Header Row */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-purple-500/10 dark:bg-purple-500/15 border border-purple-500/20 flex items-center justify-center text-[#820AD1] dark:text-purple-300">
+                  <DynamicIcon name={activeBusiness.iconName} className="w-6 h-6" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                      {activeBusiness.name}
+                    </h1>
+                    <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-purple-500/10 text-[#820AD1] dark:text-purple-300 border border-purple-500/20">
+                      {activeBusiness.badge}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    {activeBusiness.unidade || activeBusiness.cidade} • CNPJ: {activeBusiness.cnpj || "N/D"}
+                  </p>
+                </div>
+              </div>
+
+              {/* Quick Header Actions */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleOpenAddModule}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#820AD1] hover:bg-[#7009b5] text-white font-semibold text-xs shadow-sm shadow-purple-500/20 transition-all cursor-pointer"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  Adicionar Módulo
+                </button>
+
+                <button
+                  onClick={() => resetToDefault()}
+                  title="Restaurar configuração de módulos padrão para este negócio"
+                  className="p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all cursor-pointer"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Complete Metrics Row (Nubank Big Numbers) */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-5 border-b border-slate-100 dark:border-slate-800">
+              {/* Card 1: Volume */}
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+                  <DollarSign className="w-3.5 h-3.5 text-purple-500" />
+                  <span>Volume Mensal Operado</span>
+                </div>
+                <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 font-mono">
+                  {formatMoney(calculatedStats.monthlyVolume)}
+                </div>
+                <div className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-medium">
+                  <TrendingUp className="w-3 h-3" /> Processamento 100% Auditado
+                </div>
+              </div>
+
+              {/* Card 2: Transações / Requisições */}
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+                  <Activity className="w-3.5 h-3.5 text-blue-500" />
+                  <span>Transações & Requisições</span>
+                </div>
+                <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 font-mono">
+                  {formatNumber(calculatedStats.monthlyTransactions)}
+                </div>
+                <div className="text-[11px] text-slate-500 flex items-center gap-1">
+                  <Clock className="w-3 h-3" /> Latência média: {calculatedStats.avgLatencyMs}ms
+                </div>
+              </div>
+
+              {/* Card 3: Uptime SLA */}
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+                  <Zap className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>Disponibilidade (SLA)</span>
+                </div>
+                <div className="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400 font-mono">
+                  {calculatedStats.uptimeSla}%
+                </div>
+                <div className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-medium">
+                  <CheckCircle2 className="w-3 h-3" /> Alta Confiabilidade 24/7
+                </div>
+              </div>
+
+              {/* Card 4: Economia / ROI */}
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Economia / ROI Mensal</span>
+                </div>
+                <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 font-mono">
+                  {formatMoney(calculatedStats.monthlySavings)}
+                </div>
+                <div className="text-[11px] text-purple-600 dark:text-purple-400 font-medium">
+                  ~{calculatedStats.hoursSavedMonthly}h economizadas da equipe
+                </div>
+              </div>
+            </div>
+
+            {/* Module Health Progress & Toggle Details */}
+            <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-3">
+                <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  Status Operacional dos Módulos:
+                </span>
+                <div className="flex items-center gap-2">
+                  <div className="w-32 bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-200/50 dark:border-slate-700/50">
+                    <div
+                      className="bg-emerald-500 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${calculatedStats.activationPercent}%` }}
+                    />
+                  </div>
+                  <span className="font-bold text-slate-800 dark:text-slate-200">
+                    {calculatedStats.active}/{calculatedStats.total} ativos ({calculatedStats.activationPercent}%)
+                  </span>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setShowCalculationDetails(!showCalculationDetails)}
+                className="flex items-center gap-1.5 font-semibold text-[#820AD1] dark:text-purple-400 hover:underline cursor-pointer"
+              >
+                <BarChart3 className="w-3.5 h-3.5" />
+                <span>{showCalculationDetails ? "Ocultar Detalhamento de Cálculos" : "Ver Cálculos e Indicadores Completos"}</span>
+                {showCalculationDetails ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              </button>
+            </div>
+
+            {/* Expandable Calculation & Telemetry Drawer */}
+            {showCalculationDetails && (
+              <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 rounded-2xl p-4 sm:p-5 space-y-4 animate-in fade-in duration-200">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                  <Cpu className="w-4 h-4 text-purple-500" />
+                  <span>Memória de Cálculo & Auditoria Operacional</span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                  <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-700/80 space-y-1">
+                    <div className="text-slate-500">Cálculo de Eficiência da Equipe</div>
+                    <div className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                      {calculatedStats.hoursSavedMonthly} horas / mês
+                    </div>
+                    <div className="text-[11px] text-slate-500">
+                      Base de cálculo: R$ 65,00/hora homem economizada em tarefas automatizadas pelos módulos ativos.
+                    </div>
                   </div>
 
-                  {/* Right: Controls & Actions (Minimalist & Effective) */}
-                  <div className="flex items-center justify-between lg:justify-end gap-2.5 pt-3 lg:pt-0 border-t lg:border-t-0 border-slate-100 dark:border-slate-800 shrink-0">
-                    {/* Toggle Active Switch */}
-                    <div className="flex items-center gap-2 pr-2 border-r border-slate-200 dark:border-slate-800">
-                      <span className="text-[11px] font-medium text-slate-500">
-                        {mod.active ? "Ativo" : "Inativo"}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => toggleModule(mod.id, !mod.active)}
-                        className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors cursor-pointer ${
-                          mod.active ? "bg-[#820AD1]" : "bg-slate-300 dark:bg-slate-700"
-                        }`}
-                      >
-                        <span
-                          className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${
-                            mod.active ? "translate-x-4.5" : "translate-x-0.5"
-                          }`}
-                        />
-                      </button>
+                  <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-700/80 space-y-1">
+                    <div className="text-slate-500">Conformidade Regulatória & Fiscal</div>
+                    <div className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                      {calculatedStats.complianceScore}% Aprovado
                     </div>
-
-                    {/* Reorder Buttons */}
-                    <div className="flex items-center gap-0.5 bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl">
-                      <button
-                        type="button"
-                        onClick={() => handleMoveModule(index, "up")}
-                        disabled={isFirst}
-                        title="Subir na Sidebar"
-                        className="p-1 rounded-lg hover:bg-white dark:hover:bg-slate-700 disabled:opacity-20 text-slate-600 dark:text-slate-300 cursor-pointer"
-                      >
-                        <ArrowUp className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleMoveModule(index, "down")}
-                        disabled={isLast}
-                        title="Descer na Sidebar"
-                        className="p-1 rounded-lg hover:bg-white dark:hover:bg-slate-700 disabled:opacity-20 text-slate-600 dark:text-slate-300 cursor-pointer"
-                      >
-                        <ArrowDown className="w-3.5 h-3.5" />
-                      </button>
+                    <div className="text-[11px] text-slate-500">
+                      Padrão Bacen Open Finance, SEFAZ-MT Bloco K e rastreabilidade sanitária Anvisa auditados.
                     </div>
+                  </div>
 
-                    {/* Edit Button */}
-                    <button
-                      type="button"
-                      onClick={() => handleOpenEditModule(mod)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all cursor-pointer"
-                    >
-                      <Edit2 className="w-3 h-3 text-purple-600 dark:text-purple-400" />
-                      Modificar
-                    </button>
-
-                    {/* Delete Button */}
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setDeleteConfirmModal({
-                          isOpen: true,
-                          type: "module",
-                          id: mod.id,
-                          name: mod.label,
-                        })
-                      }
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 text-rose-600 dark:text-rose-400 text-xs font-semibold transition-all cursor-pointer"
-                    >
-                      <Trash2 className="w-3 h-3" />
-                    </button>
+                  <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-700/80 space-y-1">
+                    <div className="text-slate-500">Operadores e Usuários Impactados</div>
+                    <div className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                      {calculatedStats.activeUsersCount} usuários ativos
+                    </div>
+                    <div className="text-[11px] text-slate-500">
+                      Contas corporativas com permissões sincronizadas e logins rastreados.
+                    </div>
                   </div>
                 </div>
               </div>
-            );
-          })
-        )}
-      </div>
+            )}
+          </div>
+
+          {/* Minimalist Search & Filter Bar */}
+          <div className="max-w-6xl mx-auto mb-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            {/* Search */}
+            <div className="relative flex-1 max-w-md">
+              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Buscar por módulo, rota (/pdv) ou identificador..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#820AD1] transition-all"
+              />
+            </div>
+
+            {/* Filter Pills */}
+            <div className="flex items-center gap-1.5 self-end sm:self-auto">
+              {(["all", "active", "inactive"] as const).map((status) => {
+                const count =
+                  status === "all"
+                    ? modules.length
+                    : status === "active"
+                    ? activeModules.length
+                    : modules.length - activeModules.length;
+
+                return (
+                  <button
+                    key={status}
+                    onClick={() => setFilterStatus(status)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                      filterStatus === status
+                        ? "bg-[#820AD1] text-white border-[#820AD1] shadow-xs"
+                        : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
+                    }`}
+                  >
+                    {status === "all" ? "Todos" : status === "active" ? "Ativos" : "Inativos"} ({count})
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Nubank-Style Module Cards List */}
+          <div className="max-w-6xl mx-auto space-y-3">
+            {filteredModules.length === 0 ? (
+              <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-xs">
+                <Layers className="w-10 h-10 text-slate-400 mx-auto mb-2" />
+                <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">
+                  Nenhum módulo encontrado
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
+                  Não encontramos módulos para os critérios de pesquisa. Adicione um novo módulo para esta empresa.
+                </p>
+                <button
+                  onClick={handleOpenAddModule}
+                  className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#820AD1] text-white text-xs font-semibold cursor-pointer"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  Adicionar Módulo Agora
+                </button>
+              </div>
+            ) : (
+              filteredModules.map((mod, index) => {
+                const isFirst = index === 0;
+                const isLast = index === filteredModules.length - 1;
+                const t = mod.telemetry || {
+                  monthlyRequests: 12000,
+                  uptimePercent: 99.98,
+                  avgLatencyMs: 14,
+                  status: "healthy",
+                  costReduction: 2000,
+                  usersCount: 6,
+                  lastSync: "Agora",
+                };
+
+                return (
+                  <div
+                    key={mod.id}
+                    className={`bg-white dark:bg-slate-900 rounded-2xl border p-4 sm:p-5 transition-all shadow-[0_1px_8px_rgba(0,0,0,0.02)] hover:border-purple-300 dark:hover:border-purple-900 ${
+                      mod.active
+                        ? "border-slate-200/90 dark:border-slate-800/90"
+                        : "border-slate-200/50 dark:border-slate-800/50 opacity-60 bg-slate-50/50 dark:bg-slate-900/40"
+                    }`}
+                  >
+                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                      {/* Left: Icon & Info */}
+                      <div className="flex items-start gap-3.5 flex-1">
+                        {/* Icon Box */}
+                        <div className="p-3 rounded-2xl bg-purple-500/10 text-[#820AD1] dark:text-purple-300 border border-purple-500/20 shrink-0">
+                          <DynamicIcon name={mod.iconName} className="w-5 h-5" />
+                        </div>
+
+                        <div className="space-y-1.5 flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="text-[11px] font-bold text-slate-400">#{mod.order}</span>
+                            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                              {mod.label}
+                            </h3>
+
+                            {mod.badge && (
+                              <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${mod.badgeColor || "bg-purple-500/10 text-purple-600 border-purple-500/20"}`}>
+                                {mod.badge}
+                              </span>
+                            )}
+
+                            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                              {mod.id}
+                            </span>
+
+                            <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
+                              mod.permission === "admin"
+                                ? "bg-rose-500/10 text-rose-600 border border-rose-500/20"
+                                : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
+                            }`}>
+                              {mod.permission === "admin" ? "Apenas Admin" : "Todos os Usuários"}
+                            </span>
+                          </div>
+
+                          <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-1">
+                            {mod.description || "Sem descrição cadastrada."}
+                          </p>
+
+                          {/* Complete Calculations / Telemetry Line */}
+                          <div className="flex flex-wrap items-center gap-3 pt-1 text-[11px] text-slate-500">
+                            <span className="flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                              {t.uptimePercent}% SLA
+                            </span>
+                            <span>•</span>
+                            <span>⏱ {t.avgLatencyMs}ms</span>
+                            <span>•</span>
+                            <span>📊 {formatNumber(t.monthlyRequests || 0)} req/mês</span>
+                            {t.costReduction && (
+                              <>
+                                <span>•</span>
+                                <span className="text-purple-600 dark:text-purple-400 font-medium">
+                                  💰 {formatMoney(t.costReduction)} economizados
+                                </span>
+                              </>
+                            )}
+                            <span>•</span>
+                            <div className="flex items-center gap-1">
+                              <span className="text-slate-400">Rota:</span>
+                              <Link
+                                href={mod.defaultPath}
+                                className="text-[#820AD1] dark:text-purple-400 hover:underline flex items-center gap-0.5 font-mono"
+                              >
+                                {mod.defaultPath}
+                                <ExternalLink className="w-3 h-3" />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right: Controls & Actions (Minimalist & Effective) */}
+                      <div className="flex items-center justify-between lg:justify-end gap-2.5 pt-3 lg:pt-0 border-t lg:border-t-0 border-slate-100 dark:border-slate-800 shrink-0">
+                        {/* Toggle Active Switch */}
+                        <div className="flex items-center gap-2 pr-2 border-r border-slate-200 dark:border-slate-800">
+                          <span className="text-[11px] font-medium text-slate-500">
+                            {mod.active ? "Ativo" : "Inativo"}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => toggleModule(mod.id, !mod.active)}
+                            className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors cursor-pointer ${
+                              mod.active ? "bg-[#820AD1]" : "bg-slate-300 dark:bg-slate-700"
+                            }`}
+                          >
+                            <span
+                              className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${
+                                mod.active ? "translate-x-4.5" : "translate-x-0.5"
+                              }`}
+                            />
+                          </button>
+                        </div>
+
+                        {/* Reorder Buttons */}
+                        <div className="flex items-center gap-0.5 bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl">
+                          <button
+                            type="button"
+                            onClick={() => handleMoveModule(index, "up")}
+                            disabled={isFirst}
+                            title="Subir na Sidebar"
+                            className="p-1 rounded-lg hover:bg-white dark:hover:bg-slate-700 disabled:opacity-20 text-slate-600 dark:text-slate-300 cursor-pointer"
+                          >
+                            <ArrowUp className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleMoveModule(index, "down")}
+                            disabled={isLast}
+                            title="Descer na Sidebar"
+                            className="p-1 rounded-lg hover:bg-white dark:hover:bg-slate-700 disabled:opacity-20 text-slate-600 dark:text-slate-300 cursor-pointer"
+                          >
+                            <ArrowDown className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        {/* Edit Button */}
+                        <button
+                          type="button"
+                          onClick={() => handleOpenEditModule(mod)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all cursor-pointer"
+                        >
+                          <Edit2 className="w-3 h-3 text-purple-600 dark:text-purple-400" />
+                          Modificar
+                        </button>
+
+                        {/* Delete Button */}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setDeleteConfirmModal({
+                              isOpen: true,
+                              type: "module",
+                              id: mod.id,
+                              name: mod.label,
+                            })
+                          }
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 text-rose-600 dark:text-rose-400 text-xs font-semibold transition-all cursor-pointer"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </>
+      )}
 
       {/* =========================================================================
           MODAL: ADICIONAR / MODIFICAR MÓDULO (CLEAN NUBANK STYLE)
@@ -1159,7 +1383,7 @@ export const AdminModulosPage: React.FC = () => {
                   <Building2 className="w-5 h-5" />
                 </div>
                 <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
-                  Cadastrar Nova Unidade de Negócio
+                  Cadastrar Nova Empresa no Grupo BancoFe
                 </h3>
               </div>
               <button
@@ -1173,11 +1397,11 @@ export const AdminModulosPage: React.FC = () => {
 
             <form onSubmit={handleSubmitBusiness} className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold mb-1">Nome do Negócio / Empresa *</label>
+                <label className="block font-semibold mb-1">Nome da Empresa *</label>
                 <input
                   type="text"
                   required
-                  placeholder="Ex: Zuma Logística & Distribuição"
+                  placeholder="Ex: BancoFe Imobiliária & Investimentos"
                   value={businessForm.name}
                   onChange={(e) => setBusinessForm({ ...businessForm, name: e.target.value })}
                   className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
@@ -1199,7 +1423,7 @@ export const AdminModulosPage: React.FC = () => {
                   <label className="block font-semibold mb-1">Tag / Categoria</label>
                   <input
                     type="text"
-                    placeholder="Logística, Varejo, etc."
+                    placeholder="Imóveis, Fomento, etc."
                     value={businessForm.badge}
                     onChange={(e) => setBusinessForm({ ...businessForm, badge: e.target.value })}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
@@ -1230,7 +1454,7 @@ export const AdminModulosPage: React.FC = () => {
                   type="submit"
                   className="px-5 py-2 rounded-xl bg-[#820AD1] hover:bg-[#7009b5] text-white font-semibold cursor-pointer"
                 >
-                  Salvar Negócio
+                  Salvar Empresa
                 </button>
               </div>
             </form>
