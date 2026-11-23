@@ -64,6 +64,10 @@ export function renderizarHtmlAdminModulos(): string {
           <span>Operações & CRM</span>
           <span class="px-1.5 py-0.2 rounded text-[9px] bg-purple-600 text-white font-bold">360°</span>
         </a>
+        <a href="/admin/mesa-credito" class="px-2.5 py-1.5 rounded-lg text-emerald-200 bg-emerald-950/60 hover:bg-emerald-900/70 border border-emerald-800/60 transition flex items-center gap-1.5 shadow-sm" title="Mesa de Crédito & Financiamentos">
+          <i class="fa-solid fa-scale-balanced text-emerald-400"></i>
+          <span>Mesa de Crédito</span>
+        </a>
         <a href="/admin/cadastro-360" class="px-2.5 py-1.5 rounded-lg text-purple-200 bg-purple-950/60 hover:bg-purple-900/70 border border-purple-800/60 transition flex items-center gap-1.5 shadow-sm" title="Cadastro 360, Pré-Cadastro & Vault Documental">
           <i class="fa-solid fa-id-card-clip text-purple-400"></i>
           <span>Cadastro 360° & Vault</span>

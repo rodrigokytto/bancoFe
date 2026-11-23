@@ -6,6 +6,8 @@ import { renderizarHtmlAdminModulos } from "../views/admin-modulos-html";
 import { renderizarHtmlCarteiraDigital } from "../views/carteira-html";
 import { renderizarHtmlLogin } from "../views/login-html";
 import { renderizarHtmlBackoffice } from "../views/backoffice-html";
+import { renderizarHtmlMesaCredito } from "../views/mesa-credito-html";
+import { ServicoMesaCredito } from "../credito/servico-mesa-credito";
 import { ServicoConsulta360 } from "../servico";
 import { ServicoPreCadastroBancoFe } from "../precadastro/servico-precadastro";
 import { consultarComplianceAmbiental } from "../compliance/sicar-compliance-ambiental";
@@ -398,6 +400,18 @@ export function registerPlataformaWebAndApis(app: any) {
     res.send(renderizarHtmlAdminModulos());
   });
 
+  app.get("/admin/mesa-credito", authMiddleware, (req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    const propostaId = req.query.proposta as string | undefined;
+    res.send(renderizarHtmlMesaCredito(propostaId));
+  });
+
+  app.get("/mesa-credito", authMiddleware, (req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    const propostaId = req.query.proposta as string | undefined;
+    res.send(renderizarHtmlMesaCredito(propostaId));
+  });
+
   app.get("/admin/backoffice", authMiddleware, (req: Request, res: Response) => {
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.send(renderizarHtmlBackoffice((req as any).usuario));
@@ -603,6 +617,103 @@ export function registerPlataformaWebAndApis(app: any) {
       res.json(parecer);
     } catch (e: any) {
       res.status(500).json({ erro: e.message });
+    }
+  });
+
+  // ==========================================
+  // APIS COMPLETAS DA MESA DE CRÉDITO & FINANCIAMENTOS
+  // ==========================================
+  const servicoMesaCredito = ServicoMesaCredito.getInstance();
+
+  app.get("/api/v1/mesa-credito/metricas", (_req: Request, res: Response) => {
+    try {
+      const metricas = servicoMesaCredito.obterMetricas();
+      res.json({ sucesso: true, metricas });
+    } catch (e: any) {
+      res.status(500).json({ sucesso: false, erro: e.message });
+    }
+  });
+
+  app.get("/api/v1/mesa-credito/propostas", (req: Request, res: Response) => {
+    try {
+      const propostas = servicoMesaCredito.listarPropostas({
+        status: req.query.status as string,
+        empresaOrigemId: req.query.empresa as string,
+        busca: req.query.busca as string,
+      });
+      res.json({ sucesso: true, total: propostas.length, propostas });
+    } catch (e: any) {
+      res.status(500).json({ sucesso: false, erro: e.message });
+    }
+  });
+
+  app.get("/api/v1/mesa-credito/proposta/:id", (req: Request, res: Response) => {
+    try {
+      const proposta = servicoMesaCredito.obterPropostaPorId(req.params.id);
+      if (!proposta) {
+        return res.status(404).json({ sucesso: false, erro: "Proposta não encontrada" });
+      }
+      res.json({ sucesso: true, proposta });
+    } catch (e: any) {
+      res.status(500).json({ sucesso: false, erro: e.message });
+    }
+  });
+
+  app.post("/api/v1/mesa-credito/deliberar", (req: Request, res: Response) => {
+    try {
+      const { id, novoStatus, valorAprovado, taxaMensal, parecerOperador, operadorNome } = req.body;
+      if (!id || !novoStatus) {
+        return res.status(400).json({ sucesso: false, erro: "ID e novoStatus são obrigatórios." });
+      }
+      const proposta = servicoMesaCredito.deliberarProposta({
+        id,
+        novoStatus,
+        valorAprovado: valorAprovado ? Number(valorAprovado) : undefined,
+        taxaMensal: taxaMensal ? Number(taxaMensal) : undefined,
+        parecerOperador: parecerOperador || "Deliberação registrada via painel Mesa de Crédito",
+        operadorNome: operadorNome || (req as any).usuario?.nome || "Rodrigo Gonçalves",
+      });
+      res.json({ sucesso: true, proposta });
+    } catch (e: any) {
+      res.status(500).json({ sucesso: false, erro: e.message });
+    }
+  });
+
+  app.post("/api/v1/mesa-credito/emitir-ccb/:id", (req: Request, res: Response) => {
+    try {
+      const proposta = servicoMesaCredito.emitirCcbDigital(
+        req.params.id,
+        (req as any).usuario?.nome || "Diretoria de Crédito BancoFé"
+      );
+      res.json({ sucesso: true, proposta });
+    } catch (e: any) {
+      res.status(500).json({ sucesso: false, erro: e.message });
+    }
+  });
+
+  app.post("/api/v1/mesa-credito/nova-proposta", (req: Request, res: Response) => {
+    try {
+      const b = req.body;
+      const nova = servicoMesaCredito.criarPropostaAvulsa({
+        clienteNome: b.clienteNome,
+        clienteDocumento: b.clienteDocumento,
+        clienteTipo: b.clienteTipo || "PF",
+        rendaMensalDeclarada: Number(b.rendaMensalDeclarada || 10000),
+        patrimonioDeclarado: Number(b.patrimonioDeclarado || 0),
+        empresaOrigemId: b.empresaOrigemId || "bancofe_financeira",
+        empresaOrigemNome: b.empresaOrigemNome || "BancoFe — Operações Financeiras & CRM",
+        produtoId: b.produtoId || "capital_giro_pj",
+        produtoNome: b.produtoNome || "Capital de Giro Empresarial",
+        finalidadeCredito: b.finalidadeCredito || "Operação de Crédito",
+        valorSolicitado: Number(b.valorSolicitado || 50000),
+        prazoMeses: Number(b.prazoMeses || 24),
+        taxaMensalDesejada: b.taxaMensalDesejada ? Number(b.taxaMensalDesejada) : undefined,
+        sistemaAmortizacao: b.sistemaAmortizacao || "PRICE",
+        scoreBureau: b.scoreBureau ? Number(b.scoreBureau) : undefined,
+      });
+      res.json({ sucesso: true, proposta: nova });
+    } catch (e: any) {
+      res.status(500).json({ sucesso: false, erro: e.message });
     }
   });
 

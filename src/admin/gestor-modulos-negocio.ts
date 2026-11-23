@@ -238,7 +238,7 @@ export class GestorModulosNegocioBancoFe {
             descricao: "Motor de risco algorítmico com classificação AA a H, SCR Bacen e matriz de alçadas executivas",
             categoria: "credito",
             ativo: true,
-            rotaUrl: "/admin/crm-financeira?aba=mesa",
+            rotaUrl: "/admin/mesa-credito",
             icone: "fa-scale-balanced",
             requerAutenticacao: true,
             permissoesMinimas: "ADMINISTRADOR_MASTER",

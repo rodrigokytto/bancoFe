@@ -25,7 +25,7 @@
         "requerAutenticacao": true,
         "permissoesMinimas": "USUARIO",
         "dataCriacao": "2026-11-20T00:00:00.000Z",
-        "dataAtualizacao": "2026-11-23T16:38:12.974Z"
+        "dataAtualizacao": "2026-11-23T20:44:23.213Z"
       },
       {
         "id": "mod-bfe-02",
@@ -108,6 +108,45 @@
         "permissoesMinimas": "GERENTE",
         "dataCriacao": "2026-11-23T16:38:12.972Z",
         "dataAtualizacao": "2026-11-23T16:38:12.972Z"
+      },
+      {
+        "id": "mod-bancofe-mwtqgcvw",
+        "codigo": "CONSORCIO_IMOVEL_V1",
+        "nome": "Esteira de Consórcio Imobiliário",
+        "descricao": "Gestão e lances de cotas contempladas para aquisição imobiliária",
+        "categoria": "credito",
+        "ativo": true,
+        "rotaUrl": "/plataforma/consorcios",
+        "icone": "fa-handshake",
+        "permissoesMinimas": "GERENTE",
+        "dataCriacao": "2026-11-23T20:43:17.180Z",
+        "dataAtualizacao": "2026-11-23T20:43:17.180Z"
+      },
+      {
+        "id": "mod-bancofe-mwtqgqoi",
+        "codigo": "CONSORCIO_IMOVEL_V1",
+        "nome": "Esteira de Consórcio Imobiliário",
+        "descricao": "Gestão e lances de cotas contempladas para aquisição imobiliária",
+        "categoria": "credito",
+        "ativo": true,
+        "rotaUrl": "/plataforma/consorcios",
+        "icone": "fa-handshake",
+        "permissoesMinimas": "GERENTE",
+        "dataCriacao": "2026-11-23T20:43:35.058Z",
+        "dataAtualizacao": "2026-11-23T20:43:35.058Z"
+      },
+      {
+        "id": "mod-bancofe-mwtqhru3",
+        "codigo": "CONSORCIO_IMOVEL_V1",
+        "nome": "Esteira de Consórcio Imobiliário",
+        "descricao": "Gestão e lances de cotas contempladas para aquisição imobiliária",
+        "categoria": "credito",
+        "ativo": true,
+        "rotaUrl": "/plataforma/consorcios",
+        "icone": "fa-handshake",
+        "permissoesMinimas": "GERENTE",
+        "dataCriacao": "2026-11-23T20:44:23.211Z",
+        "dataAtualizacao": "2026-11-23T20:44:23.211Z"
       }
     ]
   },
@@ -146,7 +185,7 @@
         "descricao": "Motor de risco algorítmico com classificação AA a H, SCR Bacen e matriz de alçadas executivas",
         "categoria": "credito",
         "ativo": true,
-        "rotaUrl": "/admin/crm-financeira?aba=mesa",
+        "rotaUrl": "/admin/mesa-credito",
         "icone": "fa-scale-balanced",
         "requerAutenticacao": true,
         "permissoesMinimas": "ADMINISTRADOR_MASTER",

@@ -64,16 +64,24 @@ describe("Gestão Administrativa de Módulos por Negócio (/admin)", () => {
 
   it("deve permitir excluir módulo de um negócio", () => {
     const gestor = new GestorModulosNegocioBancoFe();
+    const modTemp = gestor.adicionarModulo("neg-dino", {
+      nome: "Módulo Temporário de Teste",
+      codigo: "MOD_TEMP_TESTE",
+      descricao: "Criado para validar exclusão",
+      categoria: "operacao",
+      ativo: true,
+      rotaUrl: "/temp",
+      icone: "fa-trash",
+      permissoesMinimas: "USUARIO",
+    });
     const neg = gestor.obterNegocio("neg-dino")!;
     const totalAntes = neg.modulos.length;
-    const moduloId = neg.modulos[0].id;
-
-    const excluido = gestor.excluirModulo("neg-dino", moduloId);
+    const excluido = gestor.excluirModulo("neg-dino", modTemp.id);
     expect(excluido).toBe(true);
 
     const negDepois = gestor.obterNegocio("neg-dino")!;
     expect(negDepois.modulos.length).toBe(totalAntes - 1);
-    expect(negDepois.modulos.some((m) => m.id === moduloId)).toBe(false);
+    expect(negDepois.modulos.some((m) => m.id === modTemp.id)).toBe(false);
   });
 
   it("deve responder corretamente aos endpoints HTTP da API de administração e tela /admin", async () => {
