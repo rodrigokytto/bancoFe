@@ -69,7 +69,6 @@ A base ativa do serviço `ServicoPreCadastroBancoFe` (`src/precadastro/servico-p
 - **Total Geral de Testes Homologados:** **213 testes automatizados passando sem advertências**.
 - **Build de Produção:** `pnpm build` executado com sucesso gerando bundle otimizado (`dist/index.js` de 2.1 MB).
 - **Repositório GitHub Soberano:** Commit `fcc4f63` enviado com sucesso para a branch `main` de `rodrigokytto/bancoFe`.
-- **Deploy Automático Render:** Disparado webhook no Render Oregon (`https://bancofe-core.onrender.com`).
 - **GCP Cloud Run:** Imagem homologada e operacional em `https://erp-bancofe-5xsi5uyoda-rj.a.run.app`.
 
 ---

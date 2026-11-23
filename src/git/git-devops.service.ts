@@ -37,7 +37,6 @@ export interface GitRepoStatus {
     provedorPrincipal: string;
     ambiente: string;
     urlPrincipal: string;
-    urlSecundariaRender: string;
     dominioOficial: string;
     regiao: string;
     status: 'ONLINE' | 'DEGRADADO' | 'BUILDING';
@@ -162,7 +161,6 @@ export class GitDevOpsService {
         provedorPrincipal: 'Google Cloud Platform (Cloud Run)',
         ambiente: 'Produção (PRD)',
         urlPrincipal: 'https://erp-bancofe-5xsi5uyoda-rj.a.run.app',
-        urlSecundariaRender: 'https://bancofe-core.onrender.com',
         dominioOficial: 'bancofe.kytto.com.br',
         regiao: 'southamerica-east1 (São Paulo, Brasil)',
         status: 'ONLINE',

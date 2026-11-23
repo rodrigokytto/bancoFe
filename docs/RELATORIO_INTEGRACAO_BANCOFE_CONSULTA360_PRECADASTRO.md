@@ -263,7 +263,7 @@ Disponibilizado o ambiente oficial do cliente (`src/portal-cliente/portal-client
 Para governança de segurança e controle estrito de versões conforme exigido pelo Banco Central do Brasil para instituições financeiras:
 1. **Telemetria de Código e Repositório**: Monitoramento em tempo real do repositório `rodrigokytto/bancoFe`, branch protegida `main`, 1.916 módulos compilados e suíte de 57 arquivos de teste com 321 testes aprovados (100% de sucesso);
 2. **Auditoria de Commits Assinados**: Rastreabilidade completa de autoria, integridade GPG e histórico imutável das alterações do core bancário;
-3. **Multi-Cloud Deploy Telemetry**: Monitoramento ativo do Cloud Run (Google Cloud Platform, região `southamerica-east1` em São Paulo) e do failover automático permanente no Render (`https://bancofe-core.onrender.com`);
+3. **Multi-Cloud Deploy Telemetry**: Monitoramento ativo do Cloud Run (Google Cloud Platform, região `southamerica-east1` em São Paulo);
 4. **Webhook Receiver Institucional**: Endpoint `/api/v1/git/webhook` para recepção e processamento auditável de eventos de CI/CD do GitHub Actions.
 
 ### 4.8. Expansão do Protocolo MCP (Model Context Protocol 2024-11-05) com 18 Tools Nativas
@@ -276,7 +276,7 @@ O ecossistema MCP do BancoFé foi ampliado para servir como ponte inteligente pa
    - Engenharia e Web3: `bancofe_git_telemetry`, `bancofe_send_whatsapp_alert`, `bancofe_drex_settlement` (Real Digital);
 2. **Recursos URI Oficiais (`resources/read`)**: `bancofe://git/status`, `bancofe://contracts/summary`, `bancofe://system/rates` e `bancofe://ledger/summary`;
 3. **Prompts Especializados (`prompts/list`)**: `parecer_credito_360`, `auditoria_git_seguranca_bacen85` e `financial_health_audit`;
-4. **Cockpit Interativo Aprimorado (`McpCockpit.tsx`)**: Interface com execução ao vivo JSON-RPC, pré-preenchimento automático de esquemas, cópia de respostas e monitoramento de conectores MCP externos (WhatsApp Business, Claude Vertex, Anchor Browser, Prisma Postgres, Render).
+4. **Cockpit Interativo Aprimorado (`McpCockpit.tsx`)**: Interface com execução ao vivo JSON-RPC, pré-preenchimento automático de esquemas, cópia de respostas e monitoramento de conectores MCP externos (WhatsApp Business, Claude Vertex, Anchor Browser, Prisma Postgres).
 
 ---
 

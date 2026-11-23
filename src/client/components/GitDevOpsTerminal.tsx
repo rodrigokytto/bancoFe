@@ -70,7 +70,7 @@ export const GitDevOpsTerminal: React.FC = () => {
               </a>
             </h2>
             <p className="text-slate-400 text-sm mt-1 max-w-2xl">
-              Central soberana de controle de versão, telemetria de código, commits assinados e esteira de integração contínua (CI/CD) para Google Cloud Platform e Render.
+              Central soberana de controle de versão, telemetria de código, commits assinados e esteira de integração contínua (CI/CD) para Google Cloud Platform.
             </p>
           </div>
 
@@ -169,40 +169,6 @@ export const GitDevOpsTerminal: React.FC = () => {
           </div>
         </div>
 
-        {/* Card Render Failover */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Server className="w-5 h-5 text-purple-400" />
-              <div>
-                <h3 className="text-sm font-bold text-white">Render.com (Failover Permanente)</h3>
-                <span className="text-xs text-slate-400 font-mono">Disponibilidade 99.99%</span>
-              </div>
-            </div>
-            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/10 text-purple-400 border border-purple-500/30">
-              HOT STANDBY
-            </span>
-          </div>
-
-          <p className="text-xs text-slate-300">
-            Espelhamento contínuo com deploy automático direto do GitHub para redundância de alta criticidade bancária.
-          </p>
-
-          <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs font-mono space-y-1">
-            <div className="text-slate-400">
-              URL Render:{' '}
-              <a
-                href={status.deployPrd.urlSecundariaRender}
-                target="_blank"
-                rel="noreferrer"
-                className="text-purple-400 hover:underline break-all"
-              >
-                {status.deployPrd.urlSecundariaRender}
-              </a>
-            </div>
-            <div className="text-slate-500">Healthcheck: /healthz (200 OK)</div>
-          </div>
-        </div>
       </div>
 
       {/* Histórico de Commits Recentes do Core Bancário */}
