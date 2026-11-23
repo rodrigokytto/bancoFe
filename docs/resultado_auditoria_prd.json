@@ -1,0 +1,247 @@
+{
+  "timestamp": "2026-11-23T18:50:38.604Z",
+  "ambiente": "Google Cloud Run (southamerica-east1)",
+  "urlBase": "https://erp-bancofe-5xsi5uyoda-rj.a.run.app",
+  "rotasHttp": [
+    {
+      "rota": "/",
+      "nome": "Root SPA",
+      "status": 200,
+      "tempoMs": 192,
+      "sucesso": true
+    },
+    {
+      "rota": "/login",
+      "nome": "Portal de Login Unificado",
+      "status": 200,
+      "tempoMs": 193,
+      "sucesso": true
+    },
+    {
+      "rota": "/admin",
+      "nome": "Console /admin Multi-Negócio",
+      "status": 200,
+      "tempoMs": 141,
+      "sucesso": true
+    },
+    {
+      "rota": "/admin/crm-financeira",
+      "nome": "Operações Financeiras & CRM 360",
+      "status": 200,
+      "tempoMs": 134,
+      "sucesso": true
+    },
+    {
+      "rota": "/admin/cadastro-360",
+      "nome": "Cadastro 360° Corporativo",
+      "status": 200,
+      "tempoMs": 134,
+      "sucesso": true
+    },
+    {
+      "rota": "/admin/pre-cadastro",
+      "nome": "Vault Documental & Checklist",
+      "status": 200,
+      "tempoMs": 176,
+      "sucesso": true
+    },
+    {
+      "rota": "/admin/termos",
+      "nome": "Central de Termos Regulatórios SCR Bacen",
+      "status": 200,
+      "tempoMs": 138,
+      "sucesso": true
+    },
+    {
+      "rota": "/plataforma/consulta-cpf",
+      "nome": "Consulta 360 CPF & CNPJ",
+      "status": 200,
+      "tempoMs": 135,
+      "sucesso": true
+    },
+    {
+      "rota": "/plataforma/precadastro",
+      "nome": "Esteira de Pré-Cadastro",
+      "status": 200,
+      "tempoMs": 136,
+      "sucesso": true
+    },
+    {
+      "rota": "/plataforma/clientes-potenciais",
+      "nome": "Radar Preditivo de Clientes",
+      "status": 200,
+      "tempoMs": 144,
+      "sucesso": true
+    },
+    {
+      "rota": "/plataforma/carteira",
+      "nome": "Carteira Digital & Chaves PIX",
+      "status": 200,
+      "tempoMs": 129,
+      "sucesso": true
+    },
+    {
+      "rota": "/portal-cliente",
+      "nome": "Portal do Cliente",
+      "status": 302,
+      "tempoMs": 129,
+      "sucesso": true
+    },
+    {
+      "rota": "/gestao-emprestimos",
+      "nome": "Gestão de Empréstimos",
+      "status": 302,
+      "tempoMs": 135,
+      "sucesso": true
+    },
+    {
+      "rota": "/git",
+      "nome": "Console Git DevOps",
+      "status": 302,
+      "tempoMs": 131,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/health",
+      "nome": "Healthcheck Geral",
+      "status": 200,
+      "tempoMs": 136,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/bancofe/health",
+      "nome": "Healthcheck BancoFé Core",
+      "status": 200,
+      "tempoMs": 128,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/status",
+      "nome": "Status do Sistema",
+      "status": 200,
+      "tempoMs": 127,
+      "sucesso": true
+    },
+    {
+      "rota": "/metrics",
+      "nome": "Métricas Prometheus",
+      "status": 200,
+      "tempoMs": 130,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/docs",
+      "nome": "Swagger / OpenAPI Docs",
+      "status": 200,
+      "tempoMs": 136,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/openapi.json",
+      "nome": "Especificação OpenAPI 3.0",
+      "status": 200,
+      "tempoMs": 131,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/integrations",
+      "nome": "Catálogo de Integrações",
+      "status": 200,
+      "tempoMs": 128,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/ledger/audit",
+      "nome": "Auditoria Contábil Livro Razão",
+      "status": 200,
+      "tempoMs": 129,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/v1/admin/negocios",
+      "nome": "API Admin: Negócios & Módulos",
+      "status": 200,
+      "tempoMs": 134,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/v1/crm-financeira/oportunidades",
+      "nome": "API CRM: Oportunidades",
+      "status": 200,
+      "tempoMs": 130,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/v1/crm-financeira/metricas",
+      "nome": "API CRM: Métricas Financeiras",
+      "status": 200,
+      "tempoMs": 135,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/v1/cadastro-360/metricas",
+      "nome": "API Cadastro 360: Métricas",
+      "status": 200,
+      "tempoMs": 130,
+      "sucesso": true
+    },
+    {
+      "rota": "/api/v1/cadastro-360/clientes",
+      "nome": "API Cadastro 360: Clientes",
+      "status": 200,
+      "tempoMs": 128,
+      "sucesso": true
+    }
+  ],
+  "crudAdminPrd": {
+    "moduloCriado": true,
+    "moduloModificado": true,
+    "statusAlternado": true,
+    "moduloExcluido": true
+  },
+  "crmSimulacaoPrd": null,
+  "cadastro360Prd": null,
+  "ledgerAuditPrd": {
+    "isValid": true,
+    "totalDebits": 0,
+    "totalCredits": 0,
+    "totalAssets": 11000000000,
+    "totalLiabilities": 9000000000,
+    "totalEquity": 1825000000,
+    "totalRevenue": 175000000,
+    "totalExpense": 0,
+    "totalEntries": 0,
+    "accountingEquationBalanced": true
+  },
+  "integracoesPrd": {
+    "total": 9
+  },
+  "screenshots": [
+    {
+      "nome": "13_prd_dashboard_admin_completo.png",
+      "path": "/home/ubuntu/bancoFe/docs/screenshots/13_prd_dashboard_admin_completo.png",
+      "descricao": "Console Administrativo /admin com os 9 negócios"
+    },
+    {
+      "nome": "14_prd_crm_financeira_pipeline.png",
+      "path": "/home/ubuntu/bancoFe/docs/screenshots/14_prd_crm_financeira_pipeline.png",
+      "descricao": "Esteira de Crédito & CRM 360 com Kanban e Simulador SAC/Price"
+    },
+    {
+      "nome": "15_prd_cadastro_360_empresas.png",
+      "path": "/home/ubuntu/bancoFe/docs/screenshots/15_prd_cadastro_360_empresas.png",
+      "descricao": "Cadastro 360° Corporativo e Governança em 8 Abas"
+    },
+    {
+      "nome": "16_prd_pre_cadastro_vault.png",
+      "path": "/home/ubuntu/bancoFe/docs/screenshots/16_prd_pre_cadastro_vault.png",
+      "descricao": "Vault Documental de Pré-Cadastro com Checklist de 13 Documentos"
+    },
+    {
+      "nome": "17_prd_central_termos_scr.png",
+      "path": "/home/ubuntu/bancoFe/docs/screenshots/17_prd_central_termos_scr.png",
+      "descricao": "Central de Termos Regulatórios SCR Bacen e LGPD"
+    }
+  ],
+  "erros": []
+}
