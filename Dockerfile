@@ -39,7 +39,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl tzdata && 
 # Configura timezone para Brasília (GMT-3)
 ENV TZ=America/Sao_Paulo
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=8080
 
 # Criação de usuário não-privilegiado para conformidade de segurança bancária
 RUN groupadd -r bancofe && useradd -r -g bancofe bancofe
@@ -51,12 +51,15 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/src ./src
 COPY --from=builder /app/server ./server
 COPY --from=builder /app/shared ./shared
+COPY --from=builder /app/data ./data
+
+RUN mkdir -p /app/data && chown -R bancofe:bancofe /app/data
 
 USER bancofe
 
-EXPOSE 3000
+EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl -f http://localhost:3000/api/health || exit 1
+  CMD curl -f http://localhost:8080/api/health || exit 1
 
 CMD ["node", "dist/index.js"]

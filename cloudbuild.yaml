@@ -1,21 +1,24 @@
 steps:
-  # 1. Build da imagem Docker
+  # 1. Build da imagem Docker de Produção
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
       - '-t'
-      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:$COMMIT_SHA'
+      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/bancofe/bancofe-erp:$SHORT_SHA'
       - '-t'
-      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:latest'
-      - '-t'
-      - 'gcr.io/$PROJECT_ID/erp-bancofe:latest'
+      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/bancofe/bancofe-erp:latest'
       - '.'
 
-  # 2. Push da imagem
+  # 2. Push da imagem para o Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:$COMMIT_SHA'
+      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/bancofe/bancofe-erp:$SHORT_SHA'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/bancofe/bancofe-erp:latest'
 
   # 3. Deploy no Google Cloud Run (southamerica-east1 / São Paulo)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -25,29 +28,21 @@ steps:
       - 'deploy'
       - 'erp-bancofe'
       - '--image'
-      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:$COMMIT_SHA'
+      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/bancofe/bancofe-erp:$SHORT_SHA'
       - '--region'
       - 'southamerica-east1'
       - '--platform'
       - 'managed'
-      - '--allow-unauthenticated'
       - '--port'
-      - '3000'
+      - '8080'
       - '--memory'
       - '1Gi'
       - '--cpu'
       - '1'
-      - '--min-instances'
-      - '1'
-      - '--max-instances'
-      - '10'
-      - '--startup-probe-path=/healthz'
-      - '--liveness-probe-path=/healthz'
 
 images:
-  - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:$COMMIT_SHA'
-  - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:latest'
-  - 'gcr.io/$PROJECT_ID/erp-bancofe:latest'
+  - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/bancofe/bancofe-erp:$SHORT_SHA'
+  - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/bancofe/bancofe-erp:latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
