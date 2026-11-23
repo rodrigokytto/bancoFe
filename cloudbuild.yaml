@@ -1,0 +1,53 @@
+steps:
+  # 1. Build da imagem Docker
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:$COMMIT_SHA'
+      - '-t'
+      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:latest'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/erp-bancofe:latest'
+      - '.'
+
+  # 2. Push da imagem
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:$COMMIT_SHA'
+
+  # 3. Deploy no Google Cloud Run (southamerica-east1 / São Paulo)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'erp-bancofe'
+      - '--image'
+      - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:$COMMIT_SHA'
+      - '--region'
+      - 'southamerica-east1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--port'
+      - '3000'
+      - '--memory'
+      - '1Gi'
+      - '--cpu'
+      - '1'
+      - '--min-instances'
+      - '1'
+      - '--max-instances'
+      - '10'
+      - '--startup-probe-path=/healthz'
+      - '--liveness-probe-path=/healthz'
+
+images:
+  - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:$COMMIT_SHA'
+  - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/zuma-repo/erp-bancofe:latest'
+  - 'gcr.io/$PROJECT_ID/erp-bancofe:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

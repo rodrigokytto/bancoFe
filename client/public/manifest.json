@@ -1,0 +1,70 @@
+{
+  "name": "Zuma Pilot — Sistema Gastronômico & ERP",
+  "short_name": "Zuma Pilot",
+  "description": "Plataforma completa de gestão, PDV Touch, KDS Cozinha, App do Garçom, GPS do Entregador e Vendas com IA para o Zuma Cozinha Oriental em Tangará da Serra - MT.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0B0C10",
+  "theme_color": "#E8613A",
+  "categories": ["food", "business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "App do Garçom (27 Mesas)",
+      "short_name": "Garçom",
+      "description": "Comanda móvel das 27 mesas do salão",
+      "url": "/garcom",
+      "icons": [{ "src": "/icons/icon-garcom.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "App do Entregador (GPS)",
+      "short_name": "Entregador",
+      "description": "Navegação e GPS fiel de Tangará da Serra",
+      "url": "/entregador",
+      "icons": [{ "src": "/icons/icon-entregador.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "PDV Caixa Touch",
+      "short_name": "Caixa Touch",
+      "description": "Frente de caixa com Sangria, Suprimento e Z-Report",
+      "url": "/pdv",
+      "icons": [{ "src": "/icons/icon-pdv.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "KDS Cozinha & Sushibar",
+      "short_name": "KDS Cozinha",
+      "description": "Monitor de produção por praças da cozinha",
+      "url": "/kds",
+      "icons": [{ "src": "/icons/icon-kds.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Cockpit do Proprietário",
+      "short_name": "Dono",
+      "description": "Curva D-7, DRE Real e Radar de Mercado",
+      "url": "/proprietario",
+      "icons": [{ "src": "/icons/icon-proprietario.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Central de Pagamentos & Apple Pay",
+      "short_name": "Pagamentos",
+      "description": "Checkout transparente, Apple Pay e Pix",
+      "url": "/pagamentos",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" fill="none">
+    <rect width="400" height="400" fill="#0F172A"/>
+    <!-- Grid overlay de visão computacional -->
+    <defs>
+      <pattern id="grid_colab_06" width="20" height="20" patternUnits="userSpaceOnUse">
+        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#334155" stroke-width="0.5"/>
+      </pattern>
+      <linearGradient id="grad_colab_06" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#2563EB" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#0284C7" stop-opacity="0.4"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="400" fill="url(#grid_colab_06)" />
+
+    <!-- Câmera Header -->
+    <rect x="16" y="16" width="368" height="28" rx="6" fill="#1E293B" stroke="#334155"/>
+    <circle cx="32" cy="30" r="4" fill="#22C55E"/>
+    <text x="44" y="34" font-family="monospace" font-size="11" font-weight="bold" fill="#F8FAFC">ULTRA VISION AI 4K · CAM-01 (Salão VIP)</text>
+    <text x="320" y="34" font-family="monospace" font-size="10" fill="#94A3B8">REC 60FPS</text>
+
+    <!-- Silhueta e Rosto do Colaborador -->
+    <circle cx="200" cy="180" r="75" fill="url(#grad_colab_06)" stroke="#2563EB" stroke-width="2"/>
+    <path d="M 120 340 C 120 270, 280 270, 280 340 Z" fill="url(#grad_colab_06)" opacity="0.85"/>
+
+    <!-- Touca Sanitária ANVISA se aplicável -->
+    
+
+    <!-- Olhos e Face Landmarks -->
+    <circle cx="175" cy="175" r="4" fill="#FFFFFF"/>
+    <circle cx="225" cy="175" r="4" fill="#FFFFFF"/>
+    <path d="M 185 210 Q 200 220 215 210" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+
+    <!-- Mesh Facial & Bounding Box -->
+    <rect x="105" y="95" width="190" height="210" rx="10" fill="none" stroke="#22C55E" stroke-width="2" stroke-dasharray="8 4"/>
+    <path d="M 95 115 L 95 95 L 115 95" stroke="#22C55E" stroke-width="4" fill="none"/>
+    <path d="M 305 115 L 305 95 L 285 95" stroke="#22C55E" stroke-width="4" fill="none"/>
+    <path d="M 95 285 L 95 305 L 115 305" stroke="#22C55E" stroke-width="4" fill="none"/>
+    <path d="M 305 285 L 305 305 L 285 305" stroke="#22C55E" stroke-width="4" fill="none"/>
+
+    <!-- Landmarks Cruzados -->
+    <circle cx="175" cy="175" r="7" stroke="#38BDF8" stroke-width="1.5" fill="none"/>
+    <circle cx="225" cy="175" r="7" stroke="#38BDF8" stroke-width="1.5" fill="none"/>
+    <circle cx="200" cy="195" r="3" fill="#38BDF8"/>
+    <line x1="175" y1="175" x2="200" y2="195" stroke="#38BDF8" stroke-width="0.8" opacity="0.6"/>
+    <line x1="225" y1="175" x2="200" y2="195" stroke="#38BDF8" stroke-width="0.8" opacity="0.6"/>
+
+    <!-- Badge Biométrico -->
+    <rect x="110" y="275" width="180" height="22" rx="4" fill="#15803D"/>
+    <text x="120" y="290" font-family="monospace" font-size="11" font-weight="bold" fill="#FFFFFF">MATCH: 99.4% · PORTARIA 671</text>
+
+    <!-- Footer Informativo -->
+    <rect x="16" y="352" width="368" height="36" rx="6" fill="#1E293B" stroke="#334155"/>
+    <text x="28" y="368" font-family="sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">Lucas Pinheiro · Garçom Sênior & Comandas</text>
+    <text x="28" y="381" font-family="monospace" font-size="9" fill="#94A3B8">Zuma Tangará da Serra (MT) · CNPJ 36.296.848/0001-57</text>
+  </svg>

@@ -1,0 +1,33 @@
+{
+  "routes": [
+    { "path": "/", "title": "Cockpit Executivo Zuma" },
+    { "path": "/mapa-de-calor", "title": "Mapa de Calor 7x11" },
+    { "path": "/erp", "title": "ERP Master 360°" },
+    { "path": "/comparativo-saipos", "title": "Zuma vs Saipos (ROI & TCO)" },
+    { "path": "/mesa", "title": "Auto-atendimento Mesa QR Code" },
+    { "path": "/kds-v2", "title": "KDS 2.0 Fire-on-Demand" },
+    { "path": "/telemetria", "title": "Telemetria IoT Câmara Fria" },
+    { "path": "/previsao-compras", "title": "Previsão Inteligente Salmão" },
+    { "path": "/fechamento-contabil", "title": "Fechamento Contábil 1-Click SEFAZ-MT" },
+    { "path": "/patrimonio", "title": "Patrimônio & Ativos" },
+    { "path": "/suprimentos", "title": "Suprimentos & Kardex" },
+    { "path": "/compras", "title": "Cotações de Pescados" },
+    { "path": "/fiscal", "title": "Fiscal NFC-e SEFAZ-MT" },
+    { "path": "/financeiro", "title": "DRE Financeiro & Conciliação" },
+    { "path": "/pdv", "title": "Frente de Caixa & Fechamento Cego" },
+    { "path": "/kds", "title": "KDS Cozinha Inteligente" },
+    { "path": "/estoque", "title": "Estoque & Salmão Chileno" },
+    { "path": "/garcom", "title": "PWA Garçom Touch" },
+    { "path": "/pagamentos", "title": "PWA Pagamentos & TEF" },
+    { "path": "/entregador", "title": "PWA Entregador GPS" },
+    { "path": "/apps", "title": "Central de Apps e PWAs" },
+    { "path": "/conexoes", "title": "Hub de Conexões e APIs" },
+    { "path": "/operacao", "title": "Operação 360°" },
+    { "path": "/proprietario", "title": "Cockpit do Proprietário" },
+    { "path": "/clube", "title": "Clube Zumi Fidelidade" },
+    { "path": "/zumi", "title": "Akira & Zumi IA WhatsApp" },
+    { "path": "/cardapio", "title": "Engenharia de Cardápio" },
+    { "path": "/barca", "title": "Monte sua Barca Interativa" },
+    { "path": "/agro", "title": "Zuma Agro & Pescados" }
+  ]
+}
