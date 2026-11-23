@@ -46,8 +46,6 @@ steps:
       - '10'
       - '--concurrency'
       - '80'
-      - '--startup-probe-path=/healthz'
-      - '--liveness-probe-path=/healthz'
 
 images:
   - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/bancofe/bancofe-erp:$SHORT_SHA'
