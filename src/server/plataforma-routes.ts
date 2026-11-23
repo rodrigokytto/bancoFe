@@ -5,6 +5,7 @@ import { renderizarHtmlClientesPotenciais } from "../views/clientes-potenciais-h
 import { renderizarHtmlAdminModulos } from "../views/admin-modulos-html";
 import { renderizarHtmlCarteiraDigital } from "../views/carteira-html";
 import { renderizarHtmlLogin } from "../views/login-html";
+import { renderizarHtmlBackoffice } from "../views/backoffice-html";
 import { ServicoConsulta360 } from "../servico";
 import { ServicoPreCadastroBancoFe } from "../precadastro/servico-precadastro";
 import { consultarComplianceAmbiental } from "../compliance/sicar-compliance-ambiental";
@@ -139,10 +140,201 @@ export function registerPlataformaWebAndApis(app: any) {
     });
   });
 
-  app.get("/api/admin/commerce-session", authMiddleware, (_req: Request, res: Response) => {
+  // Endpoints do Grupo e Backoffice ERP
+  app.get("/api/admin/grupo/painel", (_req: Request, res: Response) => {
     res.json({
-      lojas_acessiveis: [{ id: "loja-matriz-01", nome: "Matriz Tangará / Nova Olímpia", codigo: "MATRIZ" }],
-      empresas_acessiveis: [{ id: "emp-bancofe-matriz-tga", nome: "BancoFe Holding & Operações Financeiras" }],
+      mes: "2026-11",
+      holding: {
+        id: "holding-bancofe-kytto",
+        nome: "BancoFé Holding & Negócios",
+        razaoSocial: "PATRICIA FERRARI PAULINO GONCALVES",
+        cnpj: "53.338.003/0001-04",
+        cidade: "Nova Olímpia",
+        uf: "MT",
+        ativo: true,
+      },
+      empresas: [
+        {
+          id: "emp-bancofe-credito",
+          nome: "BancoFé Operações Financeiras & Crédito",
+          razaoSocial: "BancoFé Holding e Negócios S/A",
+          cnpj: "53.338.003/0001-04",
+          setor: "financeira",
+          setorRotulo: "Operações Financeiras & CDC",
+          cidade: "Nova Olímpia/MT",
+          ativa: true,
+          modulos: null,
+        },
+        {
+          id: "emp-zuma-culinaria",
+          nome: "Zuma Cozinha Oriental",
+          razaoSocial: "Zuma Gastronomia e Restaurante Ltda",
+          cnpj: "36.296.848/0001-57",
+          setor: "restaurante",
+          setorRotulo: "Gastronomia & Delivery",
+          cidade: "Tangará da Serra/MT",
+          ativa: true,
+          modulos: null,
+        },
+        {
+          id: "emp-casanova-imoveis",
+          nome: "Casa Nova Imóveis & Construtora",
+          razaoSocial: "Casa Nova Empreendimentos Imobiliários Ltda",
+          cnpj: "03.882.498/0001-10",
+          setor: "loja",
+          setorRotulo: "Imobiliária & Pré-Cadastro",
+          cidade: "Tangará da Serra/MT",
+          ativa: true,
+          modulos: null,
+        },
+        {
+          id: "emp-agro-open",
+          nome: "Agropecuária & Cana de Açúcar (UISA/Agro Open)",
+          razaoSocial: "Agro Open Eventos e Agronegócios Ltda",
+          cnpj: "43.084.070/0001-88",
+          setor: "bar",
+          setorRotulo: "Agronegócio & Eventos",
+          cidade: "Nova Olímpia/MT",
+          ativa: true,
+          modulos: null,
+        },
+        {
+          id: "emp-barbearia-dino",
+          nome: "Barbearia Dino",
+          razaoSocial: "Dino Estética e Barbearia Ltda",
+          cnpj: "50.073.355/0001-89",
+          setor: "barbearia",
+          setorRotulo: "Estética & Serviços",
+          cidade: "Tangará da Serra/MT",
+          ativa: true,
+          modulos: null,
+        },
+        {
+          id: "emp-stallone-nutre",
+          nome: "Stallone Nutre Sport",
+          razaoSocial: "Stallone Suplementos e Nutrição Ltda",
+          cnpj: "56.099.531/0001-38",
+          setor: "loja",
+          setorRotulo: "Nutrição & Suplementos",
+          cidade: "Tangará da Serra/MT",
+          ativa: true,
+          modulos: null,
+        },
+      ],
+      consolidado: {
+        receitaTotal: 845020.5,
+        despesasTotais: 512100.2,
+        lucroLiquido: 332920.3,
+        clientesAtivos: 4820,
+        contratosCredito: 142,
+      },
+      serie: [],
+    });
+  });
+
+  app.get("/api/admin/grupo/empresa", (_req: Request, res: Response) => {
+    res.json({
+      mes: "2026-11",
+      empresa: {
+        id: "emp-bancofe-credito",
+        nome: "BancoFé Operações Financeiras & Crédito",
+        razaoSocial: "BancoFé Holding e Negócios S/A",
+        cnpj: "53.338.003/0001-04",
+        setor: "financeira",
+        setorRotulo: "Operações Financeiras & CDC",
+        cidade: "Nova Olímpia/MT",
+        ativa: true,
+        modulos: null,
+      },
+      serie: [],
+    });
+  });
+
+  app.get("/api/admin/commerce-session", (req: Request, res: Response) => {
+    const usuarioAuth = (req as any).usuario || {
+      id: "usr-rodrigo-goncalves-master",
+      nome: "Rodrigo Ribeiro Gonçalves",
+      email: "rrodrigogon@gmail.com",
+      role: "admin",
+      platformAdmin: true,
+      ativo: true,
+    };
+    res.json({
+      autenticado: true,
+      usuario: usuarioAuth,
+      user: usuarioAuth,
+      empresa_ativa: {
+        id: "emp-bancofe-credito",
+        nome: "BancoFé Operações Financeiras & Crédito",
+        setor: "financeira",
+        setorRotulo: "Operações Financeiras & CDC",
+        cnpj: "53.338.003/0001-04",
+      },
+      loja_ativa: {
+        id: "loja-matriz-01",
+        nome: "Matriz Tangará / Nova Olímpia",
+        codigo: "MATRIZ",
+      },
+      lojas_acessiveis: [
+        { id: "loja-matriz-01", nome: "Matriz Tangará / Nova Olímpia", codigo: "MATRIZ" },
+      ],
+      empresas_acessiveis: [
+        { id: "emp-bancofe-credito", nome: "BancoFé Operações Financeiras & Crédito", setor: "financeira" },
+        { id: "emp-zuma-culinaria", nome: "Zuma Cozinha Oriental", setor: "restaurante" },
+        { id: "emp-casanova-imoveis", nome: "Casa Nova Imóveis & Construtora", setor: "loja" },
+        { id: "emp-agro-open", nome: "Agropecuária & Cana de Açúcar (UISA)", setor: "bar" },
+        { id: "emp-barbearia-dino", nome: "Barbearia Dino", setor: "barbearia" },
+        { id: "emp-stallone-nutre", nome: "Stallone Nutre Sport", setor: "loja" },
+      ],
+    });
+  });
+
+  app.get("/api/admin/minhas-permissoes", (_req: Request, res: Response) => {
+    res.json({
+      sucesso: true,
+      permissoes: [
+        "admin",
+        "superadmin",
+        "financeiro",
+        "credito",
+        "consulta_360",
+        "precadastro",
+        "portal_cliente",
+        "pdv",
+        "compras",
+        "estoque",
+        "fiscal",
+        "relatorios",
+        "whatsapp",
+        "backoffice",
+      ],
+      isPlatformAdmin: true,
+      isAdmin: true,
+    });
+  });
+
+  app.get("/api/admin/razao/estado", (_req: Request, res: Response) => {
+    res.json({
+      estado: "ativo",
+      fechamentoPendente: false,
+      ultimaAuditoria: new Date().toISOString(),
+      conformidadeBacen: true,
+    });
+  });
+
+  app.get("/api/admin/notificacoes", (_req: Request, res: Response) => {
+    res.json({
+      sucesso: true,
+      notificacoes: [
+        {
+          id: "notif-prd-1",
+          titulo: "Holding BancoFé Sincronizada",
+          mensagem: "Todos os módulos da holding (BancoFé, Zuma, Casa Nova e UISA) ativos em produção.",
+          lida: false,
+          criado_em: new Date().toISOString(),
+        },
+      ],
+      totalNaoLidas: 1,
     });
   });
 
@@ -194,6 +386,16 @@ export function registerPlataformaWebAndApis(app: any) {
   app.get("/admin", authMiddleware, (_req: Request, res: Response) => {
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.send(renderizarHtmlAdminModulos());
+  });
+
+  app.get("/admin/backoffice", authMiddleware, (req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlBackoffice((req as any).usuario));
+  });
+
+  app.get("/backoffice", authMiddleware, (req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlBackoffice((req as any).usuario));
   });
 
   app.get("/portal-cliente", (_req: Request, res: Response) => {

@@ -1,6 +1,6 @@
 [
   {
-    "id": "cli-360-mwtg9rx8",
+    "id": "cli-360-mwtgnm6v",
     "codigo": "BFE-360-0010",
     "razaoSocial": "Tangará Distribuidora de Alimentos S.A.",
     "nomeFantasia": "Tangará Alimentos",
@@ -39,7 +39,7 @@
     "contaGraficaBancoFe": {
       "banco": "BancoFe S.A. (Código 799)",
       "agencia": "0001",
-      "contaCorrente": "674612-1",
+      "contaCorrente": "493523-1",
       "chavePix": "44.555.666/0001-99",
       "saldoConta": 0,
       "limiteChequeEspecial": 50000,
@@ -52,7 +52,7 @@
     },
     "quadroSocietario": [
       {
-        "id": "soc-1795449493916-1",
+        "id": "soc-1795450139671-1",
         "nome": "Sócio Administrador",
         "cpf": "000.000.000-00",
         "cargo": "Sócio-Administrador",
@@ -66,31 +66,31 @@
     "compliancePLD": {
       "scoreCompliance": 96,
       "nivelRisco": "baixo",
-      "ultimaVarredura": "2026-11-23T15:58:13.960Z",
-      "proximaRevisao": "2027-05-22T15:58:13.960Z",
+      "ultimaVarredura": "2026-11-23T16:08:59.711Z",
+      "proximaRevisao": "2027-05-22T16:08:59.711Z",
       "ofacSanctions": {
         "status": "nada_consta",
-        "dataConsulta": "2026-11-23T15:58:13.960Z"
+        "dataConsulta": "2026-11-23T16:08:59.711Z"
       },
       "csnuOnu": {
         "status": "nada_consta",
-        "dataConsulta": "2026-11-23T15:58:13.960Z"
+        "dataConsulta": "2026-11-23T16:08:59.711Z"
       },
       "ceafGov": {
         "status": "nada_consta",
-        "dataConsulta": "2026-11-23T15:58:13.960Z"
+        "dataConsulta": "2026-11-23T16:08:59.711Z"
       },
       "cepim": {
         "status": "nada_consta",
-        "dataConsulta": "2026-11-23T15:58:13.960Z"
+        "dataConsulta": "2026-11-23T16:08:59.711Z"
       },
       "trabalhoEscravoMte": {
         "status": "nada_consta",
-        "dataConsulta": "2026-11-23T15:58:13.960Z"
+        "dataConsulta": "2026-11-23T16:08:59.711Z"
       },
       "ceisTcu": {
         "status": "nada_consta",
-        "dataConsulta": "2026-11-23T15:58:13.960Z"
+        "dataConsulta": "2026-11-23T16:08:59.711Z"
       },
       "scrBacenConforme": true,
       "pepIdentificado": false,
@@ -138,16 +138,16 @@
           "status": "ativo"
         }
       ],
-      "dataAprovacaoAlcada": "2026-11-23T15:58:13.916Z",
+      "dataAprovacaoAlcada": "2026-11-23T16:08:59.671Z",
       "aprovadoPor": "Mesa de Crédito BancoFe",
       "nivelAlcada": "Gerente de Risco",
-      "validadeLimite": "2027-11-23T15:58:13.916Z"
+      "validadeLimite": "2027-11-23T16:08:59.671Z"
     },
     "garantiasColaterais": [],
     "historicoOperacoes": [],
     "percentualCompletudeCadastral": 8,
-    "criadoEm": "2026-11-23T15:58:13.916Z",
-    "atualizadoEm": "2026-11-23T15:58:13.960Z"
+    "criadoEm": "2026-11-23T16:08:59.671Z",
+    "atualizadoEm": "2026-11-23T16:08:59.711Z"
   },
   {
     "id": "cli-360-mwtfad0a",
