@@ -177,6 +177,11 @@ function Router() {
             <Route path="/admin/operacoes" component={CrmFinanceiraPage} />
             <Route path="/admin/crm-financeira" component={CrmFinanceiraPage} />
             <Route path="/admin/operacoes-financeiras" component={CrmFinanceiraPage} />
+            <Route path="/admin/mesa-operacoes" component={CrmFinanceiraPage} />
+            <Route path="/admin/mesa-credito" component={CrmFinanceiraPage} />
+            <Route path="/admin/mesa" component={CrmFinanceiraPage} />
+            <Route path="/mesa-operacoes" component={CrmFinanceiraPage} />
+            <Route path="/mesa-credito" component={CrmFinanceiraPage} />
             <Route path="/operacoes" component={CrmFinanceiraPage} />
             <Route path="/crm-financeira" component={CrmFinanceiraPage} />
             <Route path="/operacoes-financeiras" component={CrmFinanceiraPage} />

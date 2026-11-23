@@ -838,17 +838,18 @@ export function registerPlataformaWebAndApis(app: any) {
     return next();
   });
 
-  app.get("/admin/mesa-credito", authMiddleware, (req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    const propostaId = req.query.proposta as string | undefined;
-    res.send(renderizarHtmlMesaCredito(propostaId));
-  });
-
-  app.get("/mesa-credito", authMiddleware, (req: Request, res: Response) => {
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    const propostaId = req.query.proposta as string | undefined;
-    res.send(renderizarHtmlMesaCredito(propostaId));
-  });
+  app.get(
+    ["/admin/mesa-credito", "/mesa-credito", "/admin/mesa-operacoes", "/mesa-operacoes", "/admin/operacoes", "/admin/crm-financeira", "/admin/operacoes-financeiras"],
+    authMiddleware,
+    (req: Request, res: Response, next: NextFunction) => {
+      if (req.query.ssr === "1" || req.query.ssr === "true") {
+        res.setHeader("Content-Type", "text/html; charset=utf-8");
+        const propostaId = req.query.proposta as string | undefined;
+        return res.send(renderizarHtmlMesaCredito(propostaId));
+      }
+      return next();
+    }
+  );
 
   app.get("/admin/ecommerce", authMiddleware, (req: Request, res: Response, next: NextFunction) => {
     if (req.query.ssr === "1" || req.query.ssr === "true") {
@@ -1142,6 +1143,308 @@ export function registerPlataformaWebAndApis(app: any) {
   // APIS COMPLETAS DA MESA DE CRÉDITO & FINANCIAMENTOS
   // ==========================================
   const servicoMesaCredito = ServicoMesaCredito.getInstance();
+
+  // ==========================================
+  // 2.1 APIS DE OPERAÇÕES FINANCEIRAS & MESA BANCOFE
+  // ==========================================
+  const MESA_OPERACAO_ESTADO_BANCOFE = {
+    data: new Date().toISOString().slice(0, 10),
+    indicadores: {
+      carteiraCentavos: 450000000,
+      contratosAtivos: 428,
+      vencidoCentavos: 12500000,
+      inadimplencia: 0.027,
+      receberHojeCentavos: 8500000,
+      receber7DiasCentavos: 42000000,
+      aguardandoAprovacao: 4,
+      aguardandoLiberacao: 2,
+      acimaDoLimite: 0,
+      volumeTotalCentavos: 45e7,
+      ticketMedioCentavos: 10514018,
+      esteiraTotalCentavos: 665e6,
+      dossiesEmAnalise: 4,
+      dossiesAprovadosMes: 18,
+      tempoMedioAprovacaoDias: 2.4
+    },
+    filas: {
+      aprovacao: [
+        {
+          id: 'prop-001',
+          contraparteNome: 'Agropecuária Vale Verde Ltda',
+          produto: 'Crédito Rural CPR Verde',
+          valorCentavos: 75000000,
+          prazoMeses: 24,
+          taxaMensal: 0.012
+        },
+        {
+          id: 'prop-002',
+          contraparteNome: 'Logística Kytto Express S.A.',
+          produto: 'Capital de Giro FIDC',
+          valorCentavos: 45000000,
+          prazoMeses: 12,
+          taxaMensal: 0.015
+        },
+        {
+          id: 'prop-003',
+          contraparteNome: 'Bioenergia UISA Açúcar e Álcool',
+          produto: 'Adiantamento de Recebíveis',
+          valorCentavos: 150000000,
+          prazoMeses: 36,
+          taxaMensal: 0.011
+        },
+        {
+          id: 'prop-004',
+          contraparteNome: 'Zuma Oriental Gastronomia',
+          produto: 'Expansão de Franquias',
+          valorCentavos: 35000000,
+          prazoMeses: 18,
+          taxaMensal: 0.014
+        }
+      ],
+      liberacao: [
+        {
+          id: 'lib-001',
+          contraparteNome: 'Bioenergia UISA S.A.',
+          produto: 'CPR Financeira Agro',
+          valorCentavos: 120000000
+        },
+        {
+          id: 'lib-002',
+          contraparteNome: 'Casanova Kytto Incorporadora',
+          produto: 'Financiamento Produção Imobiliária',
+          valorCentavos: 80000000
+        }
+      ]
+    },
+    agenda: {
+      vencidas: [
+        {
+          id: 'parc-venc-1',
+          vencimento: '2026-11-15',
+          contraparteNome: 'Transportes TransKytto',
+          numero: '03/12',
+          valorCentavos: 4250000
+        },
+        {
+          id: 'parc-venc-2',
+          vencimento: '2026-11-18',
+          contraparteNome: 'Comércio de Cereais Grão de Ouro',
+          numero: '06/24',
+          valorCentavos: 8250000
+        }
+      ],
+      hoje: [
+        {
+          id: 'parc-hoje-1',
+          vencimento: new Date().toISOString().slice(0, 10),
+          contraparteNome: 'Zuma Restaurante e Gastronomia',
+          numero: '04/12',
+          valorCentavos: 8500000
+        }
+      ],
+      proximos7Dias: [
+        {
+          id: 'parc-prox-1',
+          vencimento: '2026-11-25',
+          contraparteNome: 'Holding BancoFé Participações',
+          numero: '08/36',
+          valorCentavos: 18000000
+        },
+        {
+          id: 'parc-prox-2',
+          vencimento: '2026-11-28',
+          contraparteNome: 'Distribuidora Alvorada Ltda',
+          numero: '02/10',
+          valorCentavos: 24000000
+        }
+      ]
+    },
+    caixaProjetado: [
+      { data: '2026-11-23', entradasCentavos: 8500000 },
+      { data: '2026-11-24', entradasCentavos: 14200000 },
+      { data: '2026-11-25', entradasCentavos: 18000000 },
+      { data: '2026-11-26', entradasCentavos: 9500000 },
+      { data: '2026-11-27', entradasCentavos: 11000000 },
+      { data: '2026-11-28', entradasCentavos: 24000000 },
+      { data: '2026-11-29', entradasCentavos: 6500000 },
+      { data: '2026-11-30', entradasCentavos: 35000000 }
+    ],
+    exposicoes: [
+      {
+        chave: 'exp-1',
+        contraparteNome: 'Bioenergia UISA S.A.',
+        contraparteEmpresaId: 'emp-uisa',
+        contraparteDocumento: '00.123.456/0001-78',
+        contratos: 6,
+        saldoCentavos: 157500000,
+        limiteCentavos: 200000000,
+        uso: 0.7875
+      },
+      {
+        chave: 'exp-2',
+        contraparteNome: 'Zuma Oriental Gastronomia',
+        contraparteEmpresaId: 'emp-zuma',
+        contraparteDocumento: '12.345.678/0001-90',
+        contratos: 4,
+        saldoCentavos: 99000000,
+        limiteCentavos: 120000000,
+        uso: 0.825
+      },
+      {
+        chave: 'exp-3',
+        contraparteNome: 'Kytto Logística Integrada',
+        contraparteEmpresaId: 'emp-kytto',
+        contraparteDocumento: '23.456.789/0001-01',
+        contratos: 3,
+        saldoCentavos: 67500000,
+        limiteCentavos: 80000000,
+        uso: 0.843
+      }
+    ],
+    contratosAtivos: [
+      {
+        id: 'ct-001',
+        contraparteNome: 'Bioenergia UISA S.A.',
+        produto: 'CPR Financeira Agro',
+        valorCentavos: 120000000,
+        saldoCentavos: 85000000,
+        proximoVencimento: '2026-12-05'
+      },
+      {
+        id: 'ct-002',
+        contraparteNome: 'Zuma Oriental Gastronomia',
+        produto: 'Capital de Giro D+0',
+        valorCentavos: 50000000,
+        saldoCentavos: 32000000,
+        proximoVencimento: '2026-12-10'
+      },
+      {
+        id: 'ct-003',
+        contraparteNome: 'Kytto Tech Solutions',
+        produto: 'Financiamento Equipamentos',
+        valorCentavos: 45000000,
+        saldoCentavos: 28000000,
+        proximoVencimento: '2026-12-15'
+      }
+    ],
+    atividade: [
+      {
+        tipo: 'CONTRATO_LIBERADO',
+        contraparteNome: 'Bioenergia UISA S.A.',
+        ocorridoEm: new Date(Date.now() - 3600000 * 2).toISOString()
+      },
+      {
+        tipo: 'PROPOSTA_APROVADA',
+        contraparteNome: 'Zuma Oriental Gastronomia',
+        ocorridoEm: new Date(Date.now() - 3600000 * 5).toISOString()
+      },
+      {
+        tipo: 'PARCELA_BAIXADA',
+        contraparteNome: 'Transportes TransKytto',
+        ocorridoEm: new Date(Date.now() - 3600000 * 8).toISOString()
+      }
+    ],
+    contratosRecentes: [],
+    exposicoesPorSetor: [
+      { setor: 'Agronegocio', percentual: 35, valorCentavos: 1575e5 },
+      { setor: 'Gastronomia', percentual: 22, valorCentavos: 99e6 },
+      { setor: 'Varejo', percentual: 18, valorCentavos: 81e6 },
+      { setor: 'Industria', percentual: 15, valorCentavos: 675e5 },
+      { setor: 'Servicos', percentual: 10, valorCentavos: 45e6 }
+    ]
+  };
+
+  app.get("/api/admin/operacoes-financeiras/mesa", (_req: Request, res: Response) => {
+    res.json(MESA_OPERACAO_ESTADO_BANCOFE);
+  });
+
+  app.get("/api/admin/operacoes-financeiras/crm/gestao", (_req: Request, res: Response) => {
+    res.json({
+      totalOportunidades: 28,
+      volumeTotalPipeline: 14500000,
+      ticketMedio: 517857,
+      taxaConversao: 84.5,
+      operacoesEsteiraFIDC: 12,
+      ccbsFormalizadas: 18,
+      volumeFormalizado: 8750000,
+      inadimplenciaBacen: 0.027
+    });
+  });
+
+  app.get("/api/admin/operacoes-financeiras/crm/oportunidades", (_req: Request, res: Response) => {
+    const propostas = servicoMesaCredito.listarPropostas();
+    res.json({ oportunidades: propostas });
+  });
+
+  app.get("/api/admin/operacoes-financeiras/produtos", (_req: Request, res: Response) => {
+    res.json({
+      produtos: {
+        MUTUO_INTRAGRUPO: { nome: 'Mútuo Intragrupo Holding', garantia: false },
+        CAPITAL_GIRO_PJ: { nome: 'Capital de Giro PJ Estruturado', garantia: true },
+        CPR_FINANCEIRA_AGRO: { nome: 'Cédula de Produto Rural (CPR Financeira)', garantia: true },
+        FIDC_RECEBIVEIS: { nome: 'Antecipação de Recebíveis FIDC D+0', garantia: true }
+      }
+    });
+  });
+
+  app.post("/api/admin/operacoes-financeiras/contratos", (req: Request, res: Response) => {
+    const { produto, valorCentavos, contraparteNome, contraparteDocumento } = req.body || {};
+    const novoContrato = {
+      id: 'ct-' + Date.now(),
+      contraparteNome: contraparteNome || 'Nova Contraparte',
+      contraparteDocumento: contraparteDocumento || '',
+      produto: produto || 'MUTUO_INTRAGRUPO',
+      valorCentavos: Number(valorCentavos) || 10000000,
+      saldoCentavos: Number(valorCentavos) || 10000000,
+      criadoEm: new Date().toISOString()
+    };
+    MESA_OPERACAO_ESTADO_BANCOFE.filas.aprovacao.unshift(novoContrato);
+    MESA_OPERACAO_ESTADO_BANCOFE.indicadores.aguardandoAprovacao = MESA_OPERACAO_ESTADO_BANCOFE.filas.aprovacao.length;
+    res.json({ sucesso: true, contrato: novoContrato, iof: { iofTotalCentavos: 38000 } });
+  });
+
+  app.post("/api/admin/operacoes-financeiras/contratos/:id/aprovar", (req: Request, res: Response) => {
+    const id = req.params.id;
+    const idx = MESA_OPERACAO_ESTADO_BANCOFE.filas.aprovacao.findIndex(p => p.id === id);
+    if (idx !== -1) {
+      const prop = MESA_OPERACAO_ESTADO_BANCOFE.filas.aprovacao.splice(idx, 1)[0];
+      MESA_OPERACAO_ESTADO_BANCOFE.filas.liberacao.push(prop);
+      MESA_OPERACAO_ESTADO_BANCOFE.indicadores.aguardandoAprovacao = MESA_OPERACAO_ESTADO_BANCOFE.filas.aprovacao.length;
+      MESA_OPERACAO_ESTADO_BANCOFE.indicadores.aguardandoLiberacao = MESA_OPERACAO_ESTADO_BANCOFE.filas.liberacao.length;
+    }
+    res.json({ sucesso: true, mensagem: 'Contrato aprovado com sucesso' });
+  });
+
+  app.post("/api/admin/operacoes-financeiras/contratos/:id/liberar", (req: Request, res: Response) => {
+    const id = req.params.id;
+    const idx = MESA_OPERACAO_ESTADO_BANCOFE.filas.liberacao.findIndex(p => p.id === id);
+    if (idx !== -1) {
+      const prop = MESA_OPERACAO_ESTADO_BANCOFE.filas.liberacao.splice(idx, 1)[0];
+      MESA_OPERACAO_ESTADO_BANCOFE.contratosAtivos.unshift({
+        id: prop.id,
+        contraparteNome: prop.contraparteNome,
+        produto: prop.produto,
+        valorCentavos: prop.valorCentavos,
+        saldoCentavos: prop.valorCentavos,
+        proximoVencimento: new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10)
+      });
+      MESA_OPERACAO_ESTADO_BANCOFE.indicadores.contratosAtivos = MESA_OPERACAO_ESTADO_BANCOFE.contratosAtivos.length;
+      MESA_OPERACAO_ESTADO_BANCOFE.indicadores.aguardandoLiberacao = MESA_OPERACAO_ESTADO_BANCOFE.filas.liberacao.length;
+    }
+    res.json({ sucesso: true, mensagem: 'Recurso liberado com sucesso' });
+  });
+
+  app.post("/api/admin/operacoes-financeiras/parcelas/:id/pagar", (req: Request, res: Response) => {
+    const id = req.params.id;
+    for (const aba of ['vencidas', 'hoje', 'proximos7Dias']) {
+      const idx = (MESA_OPERACAO_ESTADO_BANCOFE.agenda as any)[aba].findIndex((p: any) => p.id === id);
+      if (idx !== -1) {
+        (MESA_OPERACAO_ESTADO_BANCOFE.agenda as any)[aba].splice(idx, 1);
+        break;
+      }
+    }
+    res.json({ sucesso: true, mensagem: 'Parcela baixada com sucesso' });
+  });
 
   app.get("/api/v1/mesa-credito/metricas", (_req: Request, res: Response) => {
     try {

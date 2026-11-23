@@ -215,6 +215,8 @@ export const CrmFinanceiraPage: React.FC = () => {
     const tab = urlParams.get("tab");
     if (tab && ["kanban", "mesa", "simulador", "ccb", "termos", "consulta360", "carteira", "antecipacao"].includes(tab)) {
       setActiveTab(tab as any);
+    } else if (window.location.pathname.includes("mesa")) {
+      setActiveTab("mesa");
     }
   }, []);
 

@@ -154,6 +154,12 @@
     ],
     "deliberacoes": [
       {
+        "data": "2026-11-23T21:57:00.628Z",
+        "autor": "Diretoria de Crédito BancoFé",
+        "acao": "FORMALIZADO_CCB",
+        "parecer": "Cédula de Crédito Bancário (CCB Digital) emitida eletronicamente com registro SHA-256 e assinatura digital qualificada."
+      },
+      {
         "data": "2026-11-23T21:09:21.503Z",
         "autor": "Diretoria de Crédito BancoFé",
         "acao": "FORMALIZADO_CCB",
@@ -191,7 +197,7 @@
       }
     ],
     "dataCriacao": "2026-11-20T20:36:31.966Z",
-    "dataAtualizacao": "2026-11-23T21:09:21.503Z",
+    "dataAtualizacao": "2026-11-23T21:57:00.628Z",
     "numeroCcbDigital": "CCB-BFE-2026-4836",
     "hashCcbSha256": "01000c8ae2886794887b438192a2fac4a39269684f563ba36378b4b3dba7e826"
   },
@@ -684,6 +690,12 @@
     ],
     "deliberacoes": [
       {
+        "data": "2026-11-23T21:57:00.620Z",
+        "autor": "Rodrigo Gonçalves",
+        "acao": "APROVADO_MESA",
+        "parecer": "Aprovado com taxa bonificada pelo Comitê de Financiamentos"
+      },
+      {
         "data": "2026-11-23T21:09:21.495Z",
         "autor": "Rodrigo Gonçalves",
         "acao": "APROVADO_MESA",
@@ -721,7 +733,7 @@
       }
     ],
     "dataCriacao": "2026-11-20T20:36:31.966Z",
-    "dataAtualizacao": "2026-11-23T21:09:21.495Z"
+    "dataAtualizacao": "2026-11-23T21:57:00.620Z"
   },
   {
     "id": "mc-prop-005",
@@ -2861,5 +2873,165 @@
     ],
     "dataCriacao": "2026-11-23T21:09:21.510Z",
     "dataAtualizacao": "2026-11-23T21:09:21.510Z"
+  },
+  {
+    "id": "mc-prop-f04ea5a1",
+    "codigoProtocolo": "MC-2026-7045",
+    "clienteNome": "Fazenda Santa Lúcia Agroindustrial",
+    "clienteDocumento": "11.222.333/0001-44",
+    "clienteTipo": "PJ",
+    "rendaMensalDeclarada": 320000,
+    "patrimonioDeclarado": 6500000,
+    "empresaOrigemId": "agro_uisa",
+    "empresaOrigemNome": "Agro & Crédito Rural (UISA Biorrefinaria)",
+    "produtoId": "cpr_verde_barter",
+    "produtoNome": "CPR Verde de Soja e Milho",
+    "finalidadeCredito": "Custeio de plantio",
+    "valorSolicitado": 800000,
+    "valorAprovado": 800000,
+    "prazoMeses": 24,
+    "taxaMensalPercentual": 0.89,
+    "taxaAnualEfetiva": 11.22,
+    "sistemaAmortizacao": "SAC",
+    "status": "COMITE_RISCO",
+    "statusLabel": "Submetido ao Comitê",
+    "scoreBancoFe": 920,
+    "ratingBancoFe": "AAA",
+    "probabilidadeInadimplenciaPD": 0.4,
+    "perdaEsperadaEL": 0.18,
+    "comprometimentoRendaDTI": 12.6,
+    "primeiraParcela": 40453.33,
+    "ultimaParcela": 33630,
+    "totalJuros": 89000,
+    "totalPagoEstimado": 889000,
+    "cetAnualPercentual": 11.22,
+    "parecerAlgoritmico": {
+      "cpfCnpj": "11222333000144",
+      "nomeCliente": "Fazenda Santa Lúcia Agroindustrial",
+      "dataAnalise": "23/11/2026 às 21:57:00",
+      "protocoloDecisao": "DEC-BFE-1122-805422",
+      "scoreBancoFe": 920,
+      "ratingBancoFe": "AAA",
+      "probabilidadeInadimplenciaPD": 0.4,
+      "perdaEsperadaELPercentual": 0.18,
+      "decisaoFinal": "SUBMETIDO_COMITE_RISCO",
+      "limiteGlobalPreAprovado": 8000000,
+      "limitesPorProduto": {
+        "financiamentoHabitacionalMaximo": 17600000,
+        "creditoRuralCPRMaximo": 4800000,
+        "capitalGiroPJMaximo": 2560000,
+        "homeEquityMaximo": 0,
+        "cartaoCreditoBlackMaximo": 150000,
+        "consignadoFolhaMaximo": 5376000
+      },
+      "taxaJurosMensalRecomendadaPercentual": 0.89,
+      "fatoresPositivos": [
+        "Rating A no SCR Bacen com histórico consistente.",
+        "Certidão Nacional Negativa de Protestos (CENPROT/IEPTB).",
+        "Conformidade plena em órgãos ambientais (SICAR, SEMA-MT, IBAMA) e Desmatamento Zero."
+      ],
+      "fatoresAtencaoOuRisco": [],
+      "condicionantesAprovacao": [
+        "Homologação formal pelo Comitê Executivo de Crédito Agro/Imobiliário BancoFé."
+      ],
+      "dossieComplianceAmbiental": {
+        "cpfCnpjConsultado": "11222333000144",
+        "titularNome": "Fazenda Santa Lúcia Agroindustrial",
+        "dataConsulta": "23/11/2026 às 21:57:00",
+        "protocoloCompliance": "SICAR-ESG-2026-1122-4753",
+        "statusGeral": "CONFORME_ESG_APROVADO",
+        "scoreESG": 88,
+        "imoveisRuraisIdentificados": [],
+        "embargosIdentificados": [],
+        "moratoriaSojaConforme": true,
+        "moratoriaCarneConforme": true,
+        "trabalhoAnalogoEscravoCGFE": false,
+        "parecerConcessaoCreditoRural": {
+          "aprovadoParaCPR": true,
+          "aprovadoParaFinanciamentoHabitacional": true,
+          "limiteMaximoRecomendadoHectares": 0,
+          "observacaoTecnica": "Sem apontamentos de infração ambiental, desmate irregular ou embargos IBAMA/SEMA-MT."
+        },
+        "hashAuditoriaSha256": "esg_sha256_112223_1a20a69925f"
+      },
+      "dossieSCRBacen": {
+        "cpfCnpj": "11222333000144",
+        "titularNome": "Fazenda Santa Lúcia Agroindustrial",
+        "dataBaseConsulta": "10/2026 (Competência Oficial Bacen Fechada)",
+        "protocoloBacenSCR": "BACEN-SCR-1122-486630",
+        "ratingConsolidadoBacen": "A",
+        "saldoDevedorTotalSFN": 30000,
+        "limitesCreditoDisponiveisSFN": 800000,
+        "totalAVencerSFN": 30000,
+        "totalVencidoSFN": 0,
+        "totalPrejuizoSFN": 0,
+        "percentualPontualidadeHistorica": 99.5,
+        "operacoesDetalhadas": [
+          {
+            "instituicaoFinanceira": "Sistema Financeiro Nacional (Consolidado)",
+            "codigoCompensacao": "SFN",
+            "modalidadeOperacao": "Cartão de Crédito Parcelado",
+            "valorContratado": 30000,
+            "saldoDevedorTotal": 15000,
+            "saldoAVencerAte30Dias": 2500,
+            "saldoAVencer31a60Dias": 2500,
+            "saldoAVencer61a90Dias": 2500,
+            "saldoAVencerAcima360Dias": 0,
+            "saldoVencido": 0,
+            "prejuizoRegistrado": 0,
+            "ratingBacen": "A",
+            "garantiasConstituidas": "Sem garantias reais exigidas"
+          }
+        ],
+        "instituicoesComRelacionamentoAtivo": [
+          "Bancos e Cooperativas do SFN"
+        ],
+        "chavesPixCadastradasDICT": [
+          {
+            "chave": "11222333000144",
+            "tipo": "CPF",
+            "banco": "Banco Conveniado"
+          }
+        ],
+        "parecerCapacidadeEndividamento": {
+          "margemComprometimentoAtualPercentual": 8,
+          "margemLivreParaNovasOperacoesMensal": 70400,
+          "recomendacaoMesa": "APROVAR_SEM_RESTRICAO",
+          "observacaoAuditoria": "Regularidade no SCR Bacen. Capacidade de pagamento plenamente preservada."
+        }
+      },
+      "dossieCartorios": {
+        "cpfCnpj": "11222333000144",
+        "titularNome": "Fazenda Santa Lúcia Agroindustrial",
+        "dataPesquisa": "23/11/2026",
+        "protocoloPesquisaCENPROT": "CENPROT-BR-2026-1122-56037",
+        "protocoloPesquisaONR": "ONR-CART-2026-1122-39502",
+        "certidaoNegativaProtestosNacional": true,
+        "totalProtestosAtivos": 0,
+        "valorTotalProtestado": 0,
+        "protestosDetalhes": [],
+        "matriculasLocalizadas": [],
+        "patrimonioImobiliarioTotalEstimado": 0,
+        "patrimonioDesimpedidoParaGarantia": 0,
+        "parecerGarantiasReais": {
+          "elegivelParaHomeEquity": false,
+          "elegivelParaCreditoRuralComGarantia": false,
+          "ltvMaximoRecomendadoPercentual": 50,
+          "observacaoAuditoriaCartoraria": "Certidão de protestos negativa. Não foram localizadas matrículas registradas no CPF."
+        }
+      },
+      "hashDecisaoSha256": "bfe_dec_sha256_11222_1a20a69925f"
+    },
+    "garantiasApresentadas": [],
+    "deliberacoes": [
+      {
+        "data": "2026-11-23T21:57:00.639Z",
+        "autor": "Mesa de Crédito Algorítmica BancoFé",
+        "acao": "CRIACAO_PROPOSTA",
+        "parecer": "Proposta submetida à Mesa de Crédito. Parecer algorítmico inicial: SUBMETIDO_COMITE_RISCO (Score: 920, Rating: AAA)."
+      }
+    ],
+    "dataCriacao": "2026-11-23T21:57:00.639Z",
+    "dataAtualizacao": "2026-11-23T21:57:00.639Z"
   }
 ]
