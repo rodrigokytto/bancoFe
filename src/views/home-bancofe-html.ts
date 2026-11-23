@@ -140,13 +140,16 @@ export function renderizarHtmlHomeBancoFe(usuario?: any): string {
         <a href="/admin/mesa-credito" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-300 hover:bg-emerald-950/50 transition flex items-center gap-1.5">
           <i class="fa-solid fa-scale-balanced text-emerald-400"></i> Mesa de Crédito
         </a>
-        <a href="/admin/crm-financeira" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-purple-300 hover:bg-purple-950/50 transition flex items-center gap-1.5">
-          <i class="fa-solid fa-briefcase text-purple-400"></i> Operações & CRM
+        <a href="/admin/crm-financeira" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-300 hover:bg-emerald-950/50 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-briefcase text-emerald-400"></i> Operações & CRM
         </a>
-        <a href="/admin/cadastro-360" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-purple-300 hover:bg-purple-950/50 transition flex items-center gap-1.5">
-          <i class="fa-solid fa-id-card-clip text-purple-400"></i> Cadastro 360
+        <a href="/admin/ecommerce" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-300 hover:bg-emerald-950/50 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-store text-emerald-400"></i> E-Commerce
         </a>
-        <a href="/plataforma/consulta-cpf" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-teal-300 hover:bg-teal-950/50 transition flex items-center gap-1.5">
+        <a href="/admin/cadastro-360" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-300 hover:bg-emerald-950/50 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-id-card-clip text-emerald-400"></i> Cadastro 360
+        </a>
+        <a href="/consulta-360" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-teal-300 hover:bg-teal-950/50 transition flex items-center gap-1.5">
           <i class="fa-solid fa-magnifying-glass text-teal-400"></i> Consulta 360
         </a>
         <a href="/plataforma/precadastro" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-300 hover:bg-emerald-950/50 transition flex items-center gap-1.5">

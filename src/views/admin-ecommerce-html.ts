@@ -53,23 +53,29 @@ export function renderizarHtmlAdminEcommerce(): string {
 
       <!-- Navegação Principal -->
       <nav class="hidden xl:flex items-center gap-1.5 text-xs font-semibold">
+        <a href="/" class="px-3 py-1.5 rounded-lg text-emerald-300 hover:text-white hover:bg-emerald-950/50 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-house text-emerald-400"></i> Home
+        </a>
+        <a href="/admin/mesa-credito" class="px-3 py-1.5 rounded-lg text-emerald-200 hover:bg-emerald-950/70 border border-transparent hover:border-emerald-800/60 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-scale-balanced text-emerald-400"></i> Mesa de Crédito
+        </a>
+        <a href="/admin/crm-financeira" class="px-3 py-1.5 rounded-lg text-emerald-200 hover:bg-emerald-950/70 border border-transparent hover:border-emerald-800/60 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-briefcase text-emerald-400"></i> Operações & CRM
+        </a>
         <a href="/admin/ecommerce" class="px-3 py-1.5 rounded-lg bg-emerald-800 text-white border border-emerald-500/50 transition flex items-center gap-1.5 shadow-sm">
           <i class="fa-solid fa-store text-emerald-300"></i> E-Commerce Hub
         </a>
-        <a href="/admin/crm-financeira" class="px-3 py-1.5 rounded-lg text-emerald-200 hover:bg-emerald-950/70 border border-transparent hover:border-emerald-800/60 transition flex items-center gap-1.5">
-          <i class="fa-solid fa-briefcase text-emerald-400"></i> Operações & Termos
-        </a>
         <a href="/admin/cadastro-360" class="px-3 py-1.5 rounded-lg text-emerald-200 hover:bg-emerald-950/70 border border-transparent hover:border-emerald-800/60 transition flex items-center gap-1.5">
-          <i class="fa-solid fa-id-card-clip text-emerald-400"></i> Cadastro 360° & Vault
+          <i class="fa-solid fa-id-card-clip text-emerald-400"></i> Cadastro 360
         </a>
-        <a href="/plataforma/consulta-cpf" class="px-3 py-1.5 rounded-lg text-emerald-200 hover:bg-emerald-950/70 border border-transparent hover:border-emerald-800/60 transition flex items-center gap-1.5">
-          <i class="fa-solid fa-magnifying-glass-chart text-emerald-400"></i> Consulta CPF/CNPJ
+        <a href="/consulta-360" class="px-3 py-1.5 rounded-lg text-emerald-200 hover:bg-emerald-950/70 border border-transparent hover:border-emerald-800/60 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-magnifying-glass text-teal-400"></i> Consulta 360
         </a>
         <a href="/admin" class="px-3 py-1.5 rounded-lg text-emerald-200 hover:bg-emerald-950/70 border border-transparent hover:border-emerald-800/60 transition flex items-center gap-1.5">
           <i class="fa-solid fa-cubes text-emerald-400"></i> Gestão de Módulos
         </a>
-        <a href="/" class="px-3 py-1.5 rounded-lg text-emerald-300/80 hover:text-white hover:bg-emerald-950/50 transition flex items-center gap-1.5">
-          <i class="fa-solid fa-gauge-high text-teal-400"></i> Cockpit Geral
+        <a href="/admin/backoffice" class="px-3 py-1.5 rounded-lg text-emerald-300/80 hover:text-white hover:bg-emerald-950/50 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-server text-teal-400"></i> Backoffice
         </a>
       </nav>
 

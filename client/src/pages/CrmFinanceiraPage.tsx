@@ -137,7 +137,7 @@ export interface ResultadoSimulacao {
 const ESTAGIOS_KANBAN = [
   { id: "prospeccao", label: "1. Prospecção & Originação", cor: "bg-blue-500", border: "border-blue-500" },
   { id: "qualificacao", label: "2. Qualificação & KYC", cor: "bg-amber-500", border: "border-amber-500" },
-  { id: "mesa_credito", label: "3. Mesa de Crédito & SCR", cor: "bg-purple-500", border: "border-purple-500" },
+  { id: "mesa_credito", label: "3. Mesa de Crédito & SCR", cor: "bg-emerald-600", border: "border-emerald-600" },
   { id: "comite_aprovacao", label: "4. Comitê de Alçada", cor: "bg-indigo-500", border: "border-indigo-500" },
   { id: "formalizacao_ccb", label: "5. Formalização CCB", cor: "bg-orange-500", border: "border-orange-500" },
   { id: "liquidado", label: "6. Liquidado & Desembolsado", cor: "bg-emerald-500", border: "border-emerald-500" },
@@ -464,13 +464,13 @@ export const CrmFinanceiraPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 p-4 sm:p-6 lg:p-8">
       {/* =========================================================================
-          TOPO: BREADCRUMB & HEADER INSTITUCIONAL NUBANK STYLE (#820AD1)
+          TOPO: BREADCRUMB & HEADER INSTITUCIONAL BANCOFÉ INSTITUCIONAL CLEAN (#0c4a34)
           ========================================================================= */}
       <div className="max-w-7xl mx-auto mb-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-slate-200 dark:border-slate-800">
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-1">
-              <Link href="/admin" className="text-[#820AD1] hover:underline flex items-center gap-1">
+              <Link href="/admin" className="text-[#0c4a34] hover:underline flex items-center gap-1">
                 <Landmark className="w-3.5 h-3.5" />
                 Painel /admin
               </Link>
@@ -480,7 +480,7 @@ export const CrmFinanceiraPage: React.FC = () => {
               <span className="text-slate-700 dark:text-slate-300">Operações Financeiras & CRM 360°</span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-[#820AD1] flex items-center justify-center text-white shadow-lg shadow-purple-900/20">
+              <div className="w-11 h-11 rounded-2xl bg-[#0c4a34] flex items-center justify-center text-white shadow-lg shadow-emerald-950/30">
                 <Briefcase className="w-6 h-6" />
               </div>
               <div>
@@ -488,7 +488,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                   <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 dark:text-white">
                     Operações Financeiras & CRM 360°
                   </h1>
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-500/10 text-[#820AD1] dark:text-purple-300 border border-purple-500/20">
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/10 text-[#0c4a34] dark:text-emerald-300 border border-emerald-500/20">
                     Mesa de Crédito & FIDC
                   </span>
                 </div>
@@ -507,22 +507,22 @@ export const CrmFinanceiraPage: React.FC = () => {
               title="Sincronizar dados em tempo real"
               className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer shadow-xs disabled:opacity-50"
             >
-              <RefreshCw className={`w-4 h-4 ${isRefreshing ? "animate-spin text-[#820AD1]" : ""}`} />
+              <RefreshCw className={`w-4 h-4 ${isRefreshing ? "animate-spin text-[#0c4a34]" : ""}`} />
             </button>
 
             <button
               onClick={() => {
                 setActiveTab("simulador");
               }}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:border-purple-300 dark:hover:border-purple-800 text-xs font-semibold shadow-xs cursor-pointer transition-all"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:border-emerald-300 dark:hover:border-emerald-800 text-xs font-semibold shadow-xs cursor-pointer transition-all"
             >
-              <Calculator className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+              <Calculator className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>Simulador de Taxas</span>
             </button>
 
             <a
               href="/admin/cadastro-360"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-[#820AD1]/10 border border-[#820AD1]/30 text-[#820AD1] dark:text-purple-300 hover:bg-[#820AD1]/20 text-xs font-semibold shadow-xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-[#0c4a34]/10 border border-[#0c4a34]/30 text-[#0c4a34] dark:text-emerald-300 hover:bg-[#0c4a34]/20 text-xs font-semibold shadow-xs transition-all cursor-pointer"
             >
               <Users className="w-3.5 h-3.5" />
               <span>Cadastro 360° & Termos</span>
@@ -530,7 +530,7 @@ export const CrmFinanceiraPage: React.FC = () => {
 
             <button
               onClick={() => setIsNovoModalOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#820AD1] hover:bg-[#7009b5] text-white text-xs font-bold shadow-md shadow-purple-500/20 transition-all cursor-pointer active:scale-98"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0c4a34] hover:bg-[#083324] text-white text-xs font-bold shadow-md shadow-emerald-950/30 transition-all cursor-pointer active:scale-98"
             >
               <Plus className="w-4 h-4" />
               <span>Nova Operação</span>
@@ -546,7 +546,7 @@ export const CrmFinanceiraPage: React.FC = () => {
           <div className="col-span-2 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 p-4 shadow-xs">
             <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mb-1">
               <span className="font-medium">Pipeline Total em Esteira</span>
-              <DollarSign className="w-4 h-4 text-[#820AD1]" />
+              <DollarSign className="w-4 h-4 text-[#0c4a34]" />
             </div>
             <div className="text-2xl font-black tracking-tight text-slate-900 dark:text-white font-mono">
               {formatMoney(metricas?.volumeTotalPipeline || 23770000)}
@@ -578,7 +578,7 @@ export const CrmFinanceiraPage: React.FC = () => {
           {/* Card 4: Taxa Média */}
           <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 p-4 shadow-xs">
             <div className="text-xs text-slate-500 dark:text-slate-400 mb-1">Taxa Média Ponderada</div>
-            <div className="text-xl font-bold text-purple-600 dark:text-purple-400 font-mono">
+            <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400 font-mono">
               {metricas?.taxaMediaMensal || 1.29}% a.m.
             </div>
             <div className="text-[11px] text-slate-500 mt-1">Spread líq: ~0.85%</div>
@@ -661,7 +661,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                 placeholder="Buscar por cliente, CNPJ ou protocolo..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-purple-500/30"
+                className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30"
               />
             </div>
 
@@ -704,7 +704,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                         {opsNaColuna.length}
                       </span>
                     </div>
-                    <div className="text-[11px] font-mono font-bold text-[#820AD1] dark:text-purple-400">
+                    <div className="text-[11px] font-mono font-bold text-[#0c4a34] dark:text-emerald-400">
                       {formatMoney(volumeColuna)}
                     </div>
                   </div>
@@ -719,14 +719,14 @@ export const CrmFinanceiraPage: React.FC = () => {
                       opsNaColuna.map((op) => (
                         <div
                           key={op.id}
-                          className="bg-white dark:bg-slate-800/90 rounded-xl border border-slate-200/90 dark:border-slate-700/80 p-3 shadow-2xs hover:border-purple-400 dark:hover:border-purple-600 transition-all group"
+                          className="bg-white dark:bg-slate-800/90 rounded-xl border border-slate-200/90 dark:border-slate-700/80 p-3 shadow-2xs hover:border-emerald-400 dark:hover:border-emerald-600 transition-all group"
                         >
                           {/* Header do Card */}
                           <div className="flex items-center justify-between gap-1 mb-1.5">
                             <span className="text-[10px] font-mono font-bold text-slate-400">
                               {op.codigoProtocolo}
                             </span>
-                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/10 text-[#820AD1] dark:text-purple-300">
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-[#0c4a34] dark:text-emerald-300">
                               Score {op.scoreSerasa} • {op.ratingBacen}
                             </span>
                           </div>
@@ -759,7 +759,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                           <div className="flex items-center justify-between gap-1 pt-1 border-t border-slate-100 dark:border-slate-700/50">
                             <button
                               onClick={() => setDetalhesOp(op)}
-                              className="text-[11px] font-semibold text-[#820AD1] dark:text-purple-400 hover:underline flex items-center gap-0.5 cursor-pointer"
+                              className="text-[11px] font-semibold text-[#0c4a34] dark:text-emerald-400 hover:underline flex items-center gap-0.5 cursor-pointer"
                             >
                               <Eye className="w-3 h-3" />
                               <span>Detalhes</span>
@@ -775,7 +775,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                                   }
                                 }}
                                 title="Avançar para o próximo estágio"
-                                className="inline-flex items-center gap-0.5 px-2 py-1 rounded-md bg-[#820AD1] text-white text-[10px] font-semibold hover:bg-[#7009b5] cursor-pointer transition-all"
+                                className="inline-flex items-center gap-0.5 px-2 py-1 rounded-md bg-[#0c4a34] text-white text-[10px] font-semibold hover:bg-[#083324] cursor-pointer transition-all"
                               >
                                 <span>Avançar</span>
                                 <ChevronRight className="w-3 h-3" />
@@ -801,7 +801,7 @@ export const CrmFinanceiraPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-3">
-                <div className="p-3 rounded-2xl bg-purple-500/10 text-[#820AD1] dark:text-purple-300">
+                <div className="p-3 rounded-2xl bg-emerald-500/10 text-[#0c4a34] dark:text-emerald-300">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
                 <div>
@@ -836,7 +836,7 @@ export const CrmFinanceiraPage: React.FC = () => {
               <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-bold text-slate-500">Alçada Nível 2</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-[#820AD1]">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-[#0c4a34]">
                     Gerente de Crédito
                   </span>
                 </div>
@@ -873,7 +873,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                     <div key={op.id} className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-mono text-xs font-bold text-purple-600">{op.codigoProtocolo}</span>
+                          <span className="font-mono text-xs font-bold text-emerald-600">{op.codigoProtocolo}</span>
                           <span className="text-sm font-bold text-slate-900 dark:text-white">{op.clienteNome}</span>
                           <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600">
                             Rating {op.ratingBacen}
@@ -915,7 +915,7 @@ export const CrmFinanceiraPage: React.FC = () => {
           <div className="lg:col-span-5 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-5">
             <div>
               <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Calculator className="w-5 h-5 text-[#820AD1]" />
+                <Calculator className="w-5 h-5 text-[#0c4a34]" />
                 Simulador de Financiamento & CCB
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
@@ -935,7 +935,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                   step="5000"
                   value={simuladorParams.valorBruto}
                   onChange={(e) => setSimuladorParams({ ...simuladorParams, valorBruto: Number(e.target.value) })}
-                  className="w-full pl-9 pr-3 py-2 text-sm font-bold font-mono rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-500/30"
+                  className="w-full pl-9 pr-3 py-2 text-sm font-bold font-mono rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/30"
                 />
               </div>
               <div className="flex gap-1.5 mt-2">
@@ -943,7 +943,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                   <button
                     key={v}
                     onClick={() => setSimuladorParams({ ...simuladorParams, valorBruto: v })}
-                    className="px-2 py-0.5 text-[10px] font-mono rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-purple-100 dark:hover:bg-purple-900/40 cursor-pointer"
+                    className="px-2 py-0.5 text-[10px] font-mono rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 cursor-pointer"
                   >
                     {v >= 1000000 ? `${v / 1000000}M` : `${v / 1000}k`}
                   </button>
@@ -962,7 +962,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                   step="0.05"
                   value={simuladorParams.taxaMensalPercentual}
                   onChange={(e) => setSimuladorParams({ ...simuladorParams, taxaMensalPercentual: Number(e.target.value) })}
-                  className="w-full px-3 py-2 text-sm font-bold font-mono rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-500/30"
+                  className="w-full px-3 py-2 text-sm font-bold font-mono rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/30"
                 />
               </div>
 
@@ -993,7 +993,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                   onClick={() => setSimuladorParams({ ...simuladorParams, sistemaAmortizacao: "SAC" })}
                   className={`p-3 rounded-xl border text-left cursor-pointer transition-all ${
                     simuladorParams.sistemaAmortizacao === "SAC"
-                      ? "bg-purple-500/10 border-[#820AD1] text-[#820AD1] dark:text-purple-300 font-bold"
+                      ? "bg-emerald-500/10 border-[#0c4a34] text-[#0c4a34] dark:text-emerald-300 font-bold"
                       : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400"
                   }`}
                 >
@@ -1006,7 +1006,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                   onClick={() => setSimuladorParams({ ...simuladorParams, sistemaAmortizacao: "PRICE" })}
                   className={`p-3 rounded-xl border text-left cursor-pointer transition-all ${
                     simuladorParams.sistemaAmortizacao === "PRICE"
-                      ? "bg-purple-500/10 border-[#820AD1] text-[#820AD1] dark:text-purple-300 font-bold"
+                      ? "bg-emerald-500/10 border-[#0c4a34] text-[#0c4a34] dark:text-emerald-300 font-bold"
                       : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400"
                   }`}
                 >
@@ -1051,7 +1051,7 @@ export const CrmFinanceiraPage: React.FC = () => {
 
               <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-xs">
                 <span className="text-xs text-slate-500 block mb-1">Total de Juros</span>
-                <span className="text-xl font-black text-purple-600 dark:text-purple-400 font-mono">
+                <span className="text-xl font-black text-emerald-600 dark:text-emerald-400 font-mono">
                   {formatMoney(simuladorResultado?.totalJuros || 0)}
                 </span>
                 <span className="text-[10px] text-slate-500 block mt-1">
@@ -1081,7 +1081,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                     navigator.clipboard.writeText(JSON.stringify(simuladorResultado?.cronogramaParcelas, null, 2));
                     toast.success("Cronograma copiado para a área de transferência!");
                   }}
-                  className="text-xs text-[#820AD1] hover:underline font-semibold cursor-pointer"
+                  className="text-xs text-[#0c4a34] hover:underline font-semibold cursor-pointer"
                 >
                   Copiar Tabela
                 </button>
@@ -1105,7 +1105,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                         <td className="p-2 font-bold text-slate-900 dark:text-slate-100">#{p.numero}</td>
                         <td className="p-2 text-slate-600 dark:text-slate-400">{formatMoney(p.saldoDevedorInicial)}</td>
                         <td className="p-2 text-emerald-600 dark:text-emerald-400">{formatMoney(p.amortizacao)}</td>
-                        <td className="p-2 text-purple-600 dark:text-purple-400">{formatMoney(p.juros)}</td>
+                        <td className="p-2 text-emerald-600 dark:text-emerald-400">{formatMoney(p.juros)}</td>
                         <td className="p-2 font-bold text-slate-900 dark:text-slate-100">{formatMoney(p.prestacao)}</td>
                         <td className="p-2 text-slate-600 dark:text-slate-400">{formatMoney(p.saldoDevedorFinal)}</td>
                       </tr>
@@ -1126,7 +1126,7 @@ export const CrmFinanceiraPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-3">
-                <div className="p-3 rounded-2xl bg-purple-500/10 text-[#820AD1] dark:text-purple-300">
+                <div className="p-3 rounded-2xl bg-emerald-500/10 text-[#0c4a34] dark:text-emerald-300">
                   <FileCheck2 className="w-6 h-6" />
                 </div>
                 <div>
@@ -1138,7 +1138,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/10 text-[#820AD1] border border-purple-500/20">
+              <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-[#0c4a34] border border-emerald-500/20">
                 Certificação ICP-Brasil & Gov.br
               </span>
             </div>
@@ -1149,7 +1149,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                 <div key={op.id} className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold text-purple-600">{op.codigoProtocolo}</span>
+                      <span className="font-mono text-xs font-bold text-emerald-600">{op.codigoProtocolo}</span>
                       <span className="text-sm font-bold text-slate-900 dark:text-white">{op.clienteNome}</span>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                         op.estagio === "liquidado"
@@ -1171,7 +1171,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                       onClick={() => setCcbMinutaModalOp(op)}
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
                     >
-                      <FileText className="w-3.5 h-3.5 text-purple-600" />
+                      <FileText className="w-3.5 h-3.5 text-emerald-600" />
                       <span>Ver Minuta CCB</span>
                     </button>
 
@@ -1237,7 +1237,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-xs text-slate-500">Repasses previstos Janeiro/2027:</div>
-                  <div className="text-xl font-black font-mono text-purple-600 dark:text-purple-400">R$ 1.580.300,00</div>
+                  <div className="text-xl font-black font-mono text-emerald-600 dark:text-emerald-400">R$ 1.580.300,00</div>
                 </div>
                 <div>
                   <div className="text-xs text-slate-500">Taxa de Recuperação de Crédito:</div>
@@ -1257,7 +1257,7 @@ export const CrmFinanceiraPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-3">
-                <div className="p-3 rounded-2xl bg-purple-500/10 text-[#820AD1] dark:text-purple-300">
+                <div className="p-3 rounded-2xl bg-emerald-500/10 text-[#0c4a34] dark:text-emerald-300">
                   <Receipt className="w-6 h-6" />
                 </div>
                 <div>
@@ -1283,11 +1283,11 @@ export const CrmFinanceiraPage: React.FC = () => {
                 <input
                   type="text"
                   placeholder="51261118987654000199550010000892411000892415"
-                  className="flex-1 px-3 py-2 text-xs font-mono rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-500/30"
+                  className="flex-1 px-3 py-2 text-xs font-mono rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/30"
                 />
                 <button
                   onClick={() => toast.success("NF-e validada com sucesso na SEFAZ-MT! Lastro de R$ 89.240,00 liberado para desconto a 1,18% a.m.")}
-                  className="px-4 py-2 rounded-xl bg-[#820AD1] text-white text-xs font-bold hover:bg-[#7009b5] cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-[#0c4a34] text-white text-xs font-bold hover:bg-[#083324] cursor-pointer"
                 >
                   Consultar Lastro SEFAZ
                 </button>
@@ -1739,7 +1739,7 @@ export const CrmFinanceiraPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-xl w-full p-6 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-2">
-                <Plus className="w-5 h-5 text-[#820AD1]" />
+                <Plus className="w-5 h-5 text-[#0c4a34]" />
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   Nova Operação Financeira
                 </h3>
@@ -1894,7 +1894,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-[#820AD1] hover:bg-[#7009b5] text-white text-xs font-bold shadow-md shadow-purple-500/20 cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-[#0c4a34] hover:bg-[#083324] text-white text-xs font-bold shadow-md shadow-emerald-950/30 cursor-pointer"
                 >
                   Criar Operação
                 </button>
@@ -1912,7 +1912,7 @@ export const CrmFinanceiraPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-2xl w-full p-6 shadow-2xl max-h-[90vh] flex flex-col">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
               <div>
-                <span className="text-xs font-mono font-bold text-purple-600">{detalhesOp.codigoProtocolo}</span>
+                <span className="text-xs font-mono font-bold text-emerald-600">{detalhesOp.codigoProtocolo}</span>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">{detalhesOp.clienteNome}</h3>
               </div>
               <button
@@ -1934,7 +1934,7 @@ export const CrmFinanceiraPage: React.FC = () => {
 
                 <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
                   <span className="text-[10px] text-slate-400 block">Taxa & Sistema</span>
-                  <span className="text-sm font-bold font-mono text-purple-600">
+                  <span className="text-sm font-bold font-mono text-emerald-600">
                     {detalhesOp.taxaMensalPercentual}% {detalhesOp.sistemaAmortizacao}
                   </span>
                 </div>
@@ -1964,10 +1964,10 @@ export const CrmFinanceiraPage: React.FC = () => {
               {/* Linha do Tempo e Histórico */}
               <div>
                 <h4 className="font-bold text-slate-900 dark:text-white mb-2">Trilha de Auditoria & Etapas</h4>
-                <div className="space-y-2 border-l-2 border-purple-500/30 pl-3 ml-2">
+                <div className="space-y-2 border-l-2 border-emerald-600/30 pl-3 ml-2">
                   {detalhesOp.historicoEtapas?.map((h, i) => (
                     <div key={i} className="relative">
-                      <div className="w-2 h-2 rounded-full bg-[#820AD1] absolute -left-[17px] top-1" />
+                      <div className="w-2 h-2 rounded-full bg-[#0c4a34] absolute -left-[17px] top-1" />
                       <div className="text-[11px] text-slate-400">
                         {new Date(h.data).toLocaleString("pt-BR")} • <strong className="text-slate-700 dark:text-slate-300">{h.autor}</strong>
                       </div>
@@ -2019,7 +2019,7 @@ export const CrmFinanceiraPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-3xl w-full p-6 shadow-2xl max-h-[90vh] flex flex-col">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-2">
-                <FileCheck2 className="w-5 h-5 text-[#820AD1]" />
+                <FileCheck2 className="w-5 h-5 text-[#0c4a34]" />
                 <div>
                   <h3 className="text-base font-bold text-slate-900 dark:text-white">
                     Minuta de Cédula de Crédito Bancário — CCB nº {ccbMinutaModalOp.codigoProtocolo}
@@ -2040,7 +2040,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                 <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white">
                   CÉDULA DE CRÉDITO BANCÁRIO ELETRÔNICA
                 </h2>
-                <span className="text-[10px] font-mono text-purple-600">Nº {ccbMinutaModalOp.codigoProtocolo}-CCB/2026</span>
+                <span className="text-[10px] font-mono text-emerald-600">Nº {ccbMinutaModalOp.codigoProtocolo}-CCB/2026</span>
               </div>
 
               <p>
@@ -2090,7 +2090,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                   toast.success("Minuta enviada para assinatura digital ICP-Brasil!");
                   setCcbMinutaModalOp(null);
                 }}
-                className="px-4 py-2 rounded-xl bg-[#820AD1] hover:bg-[#7009b5] text-white text-xs font-bold shadow-md shadow-purple-500/20 cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-[#0c4a34] hover:bg-[#083324] text-white text-xs font-bold shadow-md shadow-emerald-950/30 cursor-pointer"
               >
                 Enviar para Assinatura ICP-Brasil
               </button>
