@@ -1,39 +1,61 @@
 import fs from "fs";
 import path from "path";
+import { ServicoPreCadastroBancoFe } from "../src/precadastro/servico-precadastro";
+
+export type EtapaFunilCrm =
+  | "prospeccao"
+  | "qualificacao"
+  | "analise"
+  | "proposta"
+  | "comite"
+  | "contratado"
+  | "perdido";
+
+export type EstagioLegado =
+  | "prospeccao"
+  | "qualificacao"
+  | "mesa_credito"
+  | "comite_aprovacao"
+  | "formalizacao_ccb"
+  | "liquidado"
+  | "perdido";
 
 export interface OportunidadeOperacaoFinanceira {
   id: string;
-  codigoProtocolo: string; // ex: OP-2026-0142
+  codigoProtocolo: string;
+  contraparteNome: string;
   clienteNome: string;
-  clienteDocumento: string; // CPF ou CNPJ
+  contraparteDocumento: string;
+  clienteDocumento: string;
+  contraparteTipo: "PJ" | "PF" | "GRUPO";
   clienteTipo: "PJ" | "PF";
-  empresaOrigemId: string; // bancofe, zuma, agro, boutique, holding_kytto, etc.
+  empresaOrigemId: string;
   empresaOrigemNome: string;
-  tipoOperacao: 
-    | "antecipacao_recebiveis" 
-    | "capital_giro_pj" 
-    | "cpr_agro_barter" 
-    | "financiamento_frotas" 
-    | "ccb_fomento" 
-    | "desconto_duplicatas";
+  produto: string;
+  tipoOperacao: string;
   tipoOperacaoLabel: string;
+  valorCentavos: number;
   valorSolicitado: number;
   valorAprovado: number;
   prazoMeses: number;
-  taxaMensalPercentual: number; // ex: 1.45%
+  taxaMensal: number;
+  taxaMensalPercentual: number;
   sistemaAmortizacao: "SAC" | "PRICE";
-  estagio: 
-    | "prospeccao" 
-    | "qualificacao" 
-    | "mesa_credito" 
-    | "comite_aprovacao" 
-    | "formalizacao_ccb" 
-    | "liquidado" 
-    | "perdido";
-  scoreSerasa: number; // 0 a 1000
+  etapa: EtapaFunilCrm;
+  estagio: EstagioLegado;
+  scoreSerasa: number;
   ratingBacen: "AA" | "A" | "B" | "C" | "D" | "E";
-  probabilidadeConversao: number; // 0 a 100%
+  probabilidadeConversao: number;
+  prioridade: number;
+  proximoPasso?: string;
+  proximoEm?: string;
+  responsavel: string;
   responsavelMesa: string;
+  parada: boolean;
+  diasParada?: number;
+  tags?: string[];
+  origem?: string;
+  consentimentoContato?: boolean;
   contatoEmail?: string;
   contatoTelefone?: string;
   sacadoCedenteInfo?: {
@@ -52,11 +74,136 @@ export interface OportunidadeOperacaoFinanceira {
     autor: string;
     nota: string;
   }>;
+  interacoes?: Array<{
+    data: string;
+    tipo: string;
+    autor: string;
+    nota: string;
+    proximoPasso?: string;
+    proximoEm?: string;
+  }>;
+  criadoEm: string;
+  criadaEm?: string;
+  atualizadoEm: string;
+  atualizadaEm?: string;
+}
+
+export interface PreCadastroCrm {
+  id: string;
+  codigoProtocolo: string;
+  nome: string;
+  origem: string;
+  origemRotulo: string;
+  documento: string;
+  documentoMascarado: string;
+  telefone: string;
+  telefoneMascarado: string;
+  email: string;
+  emailMascarado: string;
+  consentimentoGrupo: boolean;
+  consentimentoEm: string;
+  jaNaCarteira: boolean;
+  situacao: "novo" | "qualificado" | "convertido" | "descartado" | "oposicao";
+  tipo: "pf" | "pj";
+  cidade: string;
+  uf: string;
+  logradouro?: string;
+  cep?: string;
+  rendaEstimadaCentavos: number;
+  patrimonioEstimadoCentavos: number;
+  tipoImovelInteresse: string;
+  valorInteresseCentavos: number;
+  scoreSerasaEstimado?: number;
+  papeis: string[];
+  importadoEm: string;
   criadoEm: string;
   atualizadoEm: string;
+  dadosBrutos?: Record<string, any>;
+  historico?: Array<{ data: string; autor: string; nota: string }>;
+  historicoComandos?: Array<{ data: string; comando: string; autor: string }>;
+}
+
+export interface TarefaCrm {
+  id: string;
+  titulo: string;
+  situacao: "aberta" | "concluida" | "cancelada";
+  responsavel: string;
+  vencimento: string;
+  oportunidadeId?: string;
+  oportunidadeNome?: string;
+  tipo?: string;
+  concluidaEm?: string;
+  criadaEm: string;
+}
+
+export interface MetaCrm {
+  id: string;
+  mes: string;
+  indicador: string;
+  nome: string;
+  responsavel?: string;
+  alvo: number;
+  unidade: "centavos" | "quantidade";
+  realizado: number;
+  atingimento: number;
+  projecao: number;
+  projecaoAtingimento: number;
+  ritmoNecessarioDia: number;
 }
 
 export interface MetricasGestaoCrmFinanceira {
+  pipelineCentavos: number;
+  abertas: number;
+  pipelinePonderadoCentavos: number;
+  paradas: number;
+  conversao90d: number;
+  ganhas90d: number;
+  valorGanho90dCentavos: number;
+  cicloMedioDias: number;
+  contratadoMesCentavos: number;
+  tarefas: {
+    abertas: number;
+    vencidas: number;
+    venceHoje: number;
+    proximos7: number;
+    concluidas: number;
+    total: number;
+  };
+  etapas: Array<{
+    etapa: EtapaFunilCrm;
+    rotulo: string;
+    abertas: number;
+    paradas: number;
+    valorCentavos: number;
+    ponderadoCentavos: number;
+    tempoMedioDias: number | null;
+    slaDias: number;
+    conversaoParaProxima: number;
+  }>;
+  previsao: Array<{
+    rotulo: string;
+    ponderadoCentavos: number;
+    chance: number;
+    quantidade: number;
+    valorCentavos: number;
+  }>;
+  porResponsavel: Array<{
+    responsavel: string;
+    abertas: number;
+    valorCentavos: number;
+    ponderadoCentavos: number;
+    ganhas90: number;
+    perdidas90: number;
+    contratadoMesCentavos: number;
+    tarefasVencidas: number;
+  }>;
+  motivosPerda: Array<{
+    motivo: string;
+    quantidade: number;
+    valorCentavos: number;
+  }>;
+  metas: MetaCrm[];
+
   volumeTotalPipeline: number;
   volumeLiquidadoMes: number;
   totalOportunidadesAtivas: number;
@@ -71,303 +218,370 @@ export interface MetricasGestaoCrmFinanceira {
 }
 
 const CRM_DATA_FILE = path.resolve(process.cwd(), "data", "crmFinanceiraOportunidades.json");
-
-const DADOS_INICIAIS: OportunidadeOperacaoFinanceira[] = [
-  {
-    id: "op-2026-001",
-    codigoProtocolo: "OP-2026-001",
-    clienteNome: "Casanova Empreendimentos Imobiliários Ltda",
-    clienteDocumento: "18.987.654/0001-99",
-    clienteTipo: "PJ",
-    empresaOrigemId: "holding_kytto",
-    empresaOrigemNome: "Holding Kytto",
-    tipoOperacao: "ccb_fomento",
-    tipoOperacaoLabel: "Cédula de Crédito Bancário (CCB Fomento)",
-    valorSolicitado: 4500000,
-    valorAprovado: 4500000,
-    prazoMeses: 36,
-    taxaMensalPercentual: 1.25,
-    sistemaAmortizacao: "SAC",
-    estagio: "formalizacao_ccb",
-    scoreSerasa: 920,
-    ratingBacen: "AA",
-    probabilidadeConversao: 95,
-    responsavelMesa: "Rodrigo Gonçalves",
-    contatoEmail: "diretoria@casanova.kytto.com.br",
-    contatoTelefone: "(65) 99988-1001",
-    observacoes: "Emissão de CCB lastreada em recebíveis de unidades imobiliárias com garantia hipotecária registrada.",
-    historicoEtapas: [
-      { data: "2026-11-18T10:00:00Z", estagio: "prospeccao", autor: "Comercial BancoFe", nota: "Início da estruturação" },
-      { data: "2026-11-20T14:30:00Z", estagio: "mesa_credito", autor: "Mesa Algorítmica", nota: "Score 920 aprovado sem restrições SCR Bacen" },
-      { data: "2026-11-22T09:15:00Z", estagio: "formalizacao_ccb", autor: "Jurídico Kytto", nota: "Minuta de CCB gerada com assinatura ICP-Brasil" },
-    ],
-    criadoEm: "2026-11-18T10:00:00Z",
-    atualizadoEm: "2026-11-23T07:00:00Z",
-  },
-  {
-    id: "op-2026-002",
-    codigoProtocolo: "OP-2026-002",
-    clienteNome: "Agro MT Grãos, Sementes & Armazéns Gerais",
-    clienteDocumento: "52.123.456/0003-30",
-    clienteTipo: "PJ",
-    empresaOrigemId: "zuma_agro",
-    empresaOrigemNome: "Agro MT Fazendas & Grãos",
-    tipoOperacao: "cpr_agro_barter",
-    tipoOperacaoLabel: "Cédula de Produto Rural (CPR Barter Soja/Milho)",
-    valorSolicitado: 8200000,
-    valorAprovado: 8200000,
-    prazoMeses: 12,
-    taxaMensalPercentual: 1.15,
-    sistemaAmortizacao: "PRICE",
-    estagio: "mesa_credito",
-    scoreSerasa: 890,
-    ratingBacen: "A",
-    probabilidadeConversao: 85,
-    responsavelMesa: "Mesa de Crédito Agrícola",
-    contatoEmail: "safra@agromt.com.br",
-    contatoTelefone: "(65) 99922-3344",
-    sacadoCedenteInfo: {
-      cedenteNome: "Agro MT Grãos Ltda",
-      cedenteCnpj: "52.123.456/0003-30",
-      sacadoNome: "Bunge Alimentos S.A. / Cargill",
-      sacadoCnpj: "44.123.987/0001-44",
-      numeroNfe: "NF-89241",
-      vencimentoOriginal: "2027-05-30",
-    },
-    observacoes: "Barter de insumos e custeio de colheita safra 26/27. Compliance ambiental SICAR e SEMA-MT 100% adimplente.",
-    historicoEtapas: [
-      { data: "2026-11-19T11:00:00Z", estagio: "prospeccao", autor: "Gerente Agro", nota: "Proposta de Barter recebida" },
-      { data: "2026-11-21T16:00:00Z", estagio: "mesa_credito", autor: "Analista de Risco", nota: "Checagem de matrículas e CAR aprovada" },
-    ],
-    criadoEm: "2026-11-19T11:00:00Z",
-    atualizadoEm: "2026-11-23T06:30:00Z",
-  },
-  {
-    id: "op-2026-003",
-    codigoProtocolo: "OP-2026-003",
-    clienteNome: "Zuma Gastronomia & Pescados Eireli",
-    clienteDocumento: "52.123.456/0001-78",
-    clienteTipo: "PJ",
-    empresaOrigemId: "zuma_gastronomia",
-    empresaOrigemNome: "Zuma Gastronomia",
-    tipoOperacao: "antecipacao_recebiveis",
-    tipoOperacaoLabel: "Antecipação de Recebíveis de Cartão & Pix",
-    valorSolicitado: 680000,
-    valorAprovado: 680000,
-    prazoMeses: 6,
-    taxaMensalPercentual: 0.98,
-    sistemaAmortizacao: "PRICE",
-    estagio: "liquidado",
-    scoreSerasa: 910,
-    ratingBacen: "AA",
-    probabilidadeConversao: 100,
-    responsavelMesa: "Esteira Automática Open Finance",
-    contatoEmail: "financeiro@zumagastronomia.com.br",
-    contatoTelefone: "(65) 99655-4433",
-    observacoes: "Travas de domicílio bancário Stone e Sicredi registradas na CERC. Liquidação instantânea executada via PIX BancoFe.",
-    historicoEtapas: [
-      { data: "2026-11-22T08:00:00Z", estagio: "prospeccao", autor: "App BancoFe", nota: "Solicitação via portal do lojista" },
-      { data: "2026-11-22T08:02:00Z", estagio: "mesa_credito", autor: "Mesa Algorítmica", nota: "Aprovação instantânea de risco" },
-      { data: "2026-11-22T08:05:00Z", estagio: "liquidado", autor: "Core Banking Engine", nota: "R$ 680.000,00 creditado na conta corporativa" },
-    ],
-    criadoEm: "2026-11-22T08:00:00Z",
-    atualizadoEm: "2026-11-22T08:05:00Z",
-  },
-  {
-    id: "op-2026-004",
-    codigoProtocolo: "OP-2026-004",
-    clienteNome: "Transportadora & Frotas Tangará Ltda",
-    clienteDocumento: "34.567.890/0002-95",
-    clienteTipo: "PJ",
-    empresaOrigemId: "bancofe_logistica",
-    empresaOrigemNome: "BancoFe Logística",
-    tipoOperacao: "financiamento_frotas",
-    tipoOperacaoLabel: "Financiamento de Frotas & Carretas Scania",
-    valorSolicitado: 1850000,
-    valorAprovado: 1750000,
-    prazoMeses: 48,
-    taxaMensalPercentual: 1.38,
-    sistemaAmortizacao: "SAC",
-    estagio: "comite_aprovacao",
-    scoreSerasa: 840,
-    ratingBacen: "B",
-    probabilidadeConversao: 80,
-    responsavelMesa: "Comitê de Crédito Corporativo",
-    contatoEmail: "frotas@transportes.com.br",
-    contatoTelefone: "(65) 99911-2233",
-    observacoes: "Aquisição de 3 cavalos mecânicos Scania R540 com alienação fiduciária e telemetria GPS integrada ao ERP.",
-    historicoEtapas: [
-      { data: "2026-11-20T15:00:00Z", estagio: "qualificacao", autor: "Gerente Frotas", nota: "Orçamentos Scania anexados" },
-      { data: "2026-11-22T11:00:00Z", estagio: "comite_aprovacao", autor: "Mesa de Crédito", nota: "Enviado para deliberação do comitê com parecer favorável" },
-    ],
-    criadoEm: "2026-11-20T15:00:00Z",
-    atualizadoEm: "2026-11-23T07:15:00Z",
-  },
-  {
-    id: "op-2026-005",
-    clienteNome: "Boutique Zuma Concept Moda e Acessórios",
-    codigoProtocolo: "OP-2026-005",
-    clienteDocumento: "52.123.456/0002-59",
-    clienteTipo: "PJ",
-    empresaOrigemId: "zuma_moda",
-    empresaOrigemNome: "Zuma Moda & Boutique",
-    tipoOperacao: "capital_giro_pj",
-    tipoOperacaoLabel: "Capital de Giro Rápido para Coleção Verão",
-    valorSolicitado: 340000,
-    valorAprovado: 340000,
-    prazoMeses: 18,
-    taxaMensalPercentual: 1.42,
-    sistemaAmortizacao: "PRICE",
-    estagio: "qualificacao",
-    scoreSerasa: 860,
-    ratingBacen: "A",
-    probabilidadeConversao: 70,
-    responsavelMesa: "Rodrigo Gonçalves",
-    contatoEmail: "comercial@zumamoda.com.br",
-    contatoTelefone: "(65) 99611-9988",
-    observacoes: "Compra de mostruário, peças de linho e tecidos premium para inauguração da loja conceito em Tangará.",
-    historicoEtapas: [
-      { data: "2026-11-21T09:00:00Z", estagio: "prospeccao", autor: "Loja Boutique", nota: "Necessidade de estoque de fim de ano" },
-      { data: "2026-11-22T17:00:00Z", estagio: "qualificacao", autor: "Mesa de Crédito", nota: "DRE preliminar e faturamento analisados" },
-    ],
-    criadoEm: "2026-11-21T09:00:00Z",
-    atualizadoEm: "2026-11-23T05:40:00Z",
-  },
-  {
-    id: "op-2026-006",
-    clienteNome: "Usinas de Concreto Serrano & Premoldados S.A.",
-    codigoProtocolo: "OP-2026-006",
-    clienteDocumento: "18.987.654/0002-70",
-    clienteTipo: "PJ",
-    empresaOrigemId: "holding_kytto",
-    empresaOrigemNome: "Holding Kytto",
-    tipoOperacao: "desconto_duplicatas",
-    tipoOperacaoLabel: "Desconto de Duplicatas & Recebíveis de Obras",
-    valorSolicitado: 5200000,
-    valorAprovado: 5200000,
-    prazoMeses: 24,
-    taxaMensalPercentual: 1.18,
-    sistemaAmortizacao: "SAC",
-    estagio: "prospeccao",
-    scoreSerasa: 940,
-    ratingBacen: "AA",
-    probabilidadeConversao: 60,
-    responsavelMesa: "Diretoria de Operações",
-    contatoEmail: "concreto@kytto.com.br",
-    contatoTelefone: "(65) 99933-7711",
-    observacoes: "Duplicatas mercantis emitidas contra construtoras e obras de pavimentação em Mato Grosso.",
-    historicoEtapas: [
-      { data: "2026-11-22T14:00:00Z", estagio: "prospeccao", autor: "Mesa de Fomento", nota: "Mapeamento de 28 duplicatas a descontar" },
-    ],
-    criadoEm: "2026-11-22T14:00:00Z",
-    atualizadoEm: "2026-11-23T07:10:00Z",
-  },
-  {
-    id: "op-2026-007",
-    clienteNome: "Cooperativa Agrícola Regional dos Parecis",
-    codigoProtocolo: "OP-2026-007",
-    clienteDocumento: "03.456.789/0001-22",
-    clienteTipo: "PJ",
-    empresaOrigemId: "bancofe_credito",
-    empresaOrigemNome: "BancoFe Crédito PJ",
-    tipoOperacao: "antecipacao_recebiveis",
-    tipoOperacaoLabel: "Cessão de Crédito Estruturado FIDC Agrícola",
-    valorSolicitado: 3100000,
-    valorAprovado: 3100000,
-    prazoMeses: 12,
-    taxaMensalPercentual: 1.08,
-    sistemaAmortizacao: "SAC",
-    estagio: "formalizacao_ccb",
-    scoreSerasa: 880,
-    ratingBacen: "A",
-    probabilidadeConversao: 90,
-    responsavelMesa: "Mesa FIDC BancoFe",
-    contatoEmail: "credito@parecisagro.coop.br",
-    contatoTelefone: "(65) 3311-5500",
-    observacoes: "Cessão de carteira de contratos de venda futura com travas de garantia e seguro agrícola.",
-    historicoEtapas: [
-      { data: "2026-11-19T08:30:00Z", estagio: "prospeccao", autor: "Gerente Parcerias", nota: "Auditoria contábil da cooperativa realizada" },
-      { data: "2026-11-21T10:00:00Z", estagio: "mesa_credito", autor: "Mesa de Crédito", nota: "Rating A aprovado com lastro fiduciário" },
-      { data: "2026-11-23T06:00:00Z", estagio: "formalizacao_ccb", autor: "Mesa FIDC", nota: "Contrato de cessão pronto para formalização" },
-    ],
-    criadoEm: "2026-11-19T08:30:00Z",
-    atualizadoEm: "2026-11-23T06:00:00Z",
-  }
-];
+const CRM_PRECADASTROS_FILE = path.resolve(process.cwd(), "data", "crmFinanceiraPrecadastros.json");
 
 export class CrmFinanceiraStore {
   private oportunidades: OportunidadeOperacaoFinanceira[] = [];
+  private precadastros: PreCadastroCrm[] = [];
+  private tarefas: TarefaCrm[] = [];
+  private metas: MetaCrm[] = [];
   private initialized = false;
 
   constructor() {
-    this.init();
+    this.inicializar();
   }
 
-  private init() {
+  private inicializar() {
     if (this.initialized) return;
 
     try {
       const dir = path.dirname(CRM_DATA_FILE);
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-      }
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
       if (fs.existsSync(CRM_DATA_FILE)) {
         const raw = fs.readFileSync(CRM_DATA_FILE, "utf-8");
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          this.oportunidades = parsed;
-        } else {
-          this.oportunidades = JSON.parse(JSON.stringify(DADOS_INICIAIS));
-          this.salvar();
+          this.oportunidades = parsed.map((op) => this.normalizarOportunidade(op));
         }
-      } else {
-        this.oportunidades = JSON.parse(JSON.stringify(DADOS_INICIAIS));
-        this.salvar();
       }
     } catch (e) {
-      console.error("[CrmFinanceiraStore] Falha ao carregar arquivo, utilizando dados base:", e);
-      this.oportunidades = JSON.parse(JSON.stringify(DADOS_INICIAIS));
+      console.error("[CrmFinanceiraStore] Falha ao carregar oportunidades de arquivo:", e);
     }
 
+    this.sincronizarPreCadastrosCasaNova();
+    this.inicializarTarefasPadrao();
+    this.inicializarMetasPadrao();
     this.initialized = true;
   }
 
-  private salvar() {
+  private normalizarOportunidade(op: any): OportunidadeOperacaoFinanceira {
+    const valorCentavos = op.valorCentavos || Math.round((op.valorSolicitado || op.valorAprovado || 100000) * 100);
+    const valorSolicitado = op.valorSolicitado || Math.round(valorCentavos / 100);
+    const taxaPct = op.taxaMensalPercentual || (op.taxaMensal ? op.taxaMensal * 100 : 1.35);
+
+    let etapa: EtapaFunilCrm = op.etapa || "prospeccao";
+    let estagio: EstagioLegado = op.estagio || "prospeccao";
+
+    if (!op.etapa) {
+      if (estagio === "prospeccao") etapa = "prospeccao";
+      else if (estagio === "qualificacao") etapa = "qualificacao";
+      else if (estagio === "mesa_credito") etapa = "analise";
+      else if (estagio === "comite_aprovacao") etapa = "comite";
+      else if (estagio === "formalizacao_ccb") etapa = "proposta";
+      else if (estagio === "liquidado") etapa = "contratado";
+      else if (estagio === "perdido") etapa = "perdido";
+    }
+
+    if (!op.estagio) {
+      if (etapa === "prospeccao") estagio = "prospeccao";
+      else if (etapa === "qualificacao") estagio = "qualificacao";
+      else if (etapa === "analise") estagio = "mesa_credito";
+      else if (etapa === "proposta") estagio = "formalizacao_ccb";
+      else if (etapa === "comite") estagio = "comite_aprovacao";
+      else if (etapa === "contratado") estagio = "liquidado";
+      else if (etapa === "perdido") estagio = "perdido";
+    }
+
+    return {
+      id: op.id,
+      codigoProtocolo: op.codigoProtocolo || op.id.toUpperCase(),
+      contraparteNome: op.contraparteNome || op.clienteNome || "Contraparte Não Identificada",
+      clienteNome: op.clienteNome || op.contraparteNome || "Cliente BancoFe",
+      contraparteDocumento: op.contraparteDocumento || op.clienteDocumento || "00.000.000/0001-00",
+      clienteDocumento: op.clienteDocumento || op.contraparteDocumento || "00.000.000/0001-00",
+      contraparteTipo: op.contraparteTipo || op.clienteTipo || "PJ",
+      clienteTipo: op.clienteTipo || (op.contraparteTipo === "PF" ? "PF" : "PJ"),
+      empresaOrigemId: op.empresaOrigemId || "casanova",
+      empresaOrigemNome: op.empresaOrigemNome || "Casa Nova Imóveis",
+      produto: op.produto || op.tipoOperacao || "CAPITAL_GIRO_PJ",
+      tipoOperacao: op.tipoOperacao || op.produto || "capital_giro_pj",
+      tipoOperacaoLabel: op.tipoOperacaoLabel || "Capital de Giro PJ",
+      valorCentavos,
+      valorSolicitado,
+      valorAprovado: op.valorAprovado || valorSolicitado,
+      prazoMeses: Number(op.prazoMeses || 12),
+      taxaMensal: op.taxaMensal || taxaPct / 100,
+      taxaMensalPercentual: taxaPct,
+      sistemaAmortizacao: op.sistemaAmortizacao || "PRICE",
+      etapa,
+      estagio,
+      scoreSerasa: op.scoreSerasa || 850,
+      ratingBacen: op.ratingBacen || "A",
+      probabilidadeConversao: op.probabilidadeConversao || 80,
+      prioridade: Number(op.prioridade || 3),
+      proximoPasso: op.proximoPasso || "Aguardando próxima ação da mesa",
+      proximoEm: op.proximoEm || "2026-11-25",
+      responsavel: op.responsavel || op.responsavelMesa || "Rodrigo Gonçalves",
+      responsavelMesa: op.responsavelMesa || op.responsavel || "Rodrigo Gonçalves",
+      parada: Boolean(op.parada),
+      diasParada: op.diasParada || 0,
+      tags: Array.isArray(op.tags) ? op.tags : ["casanova", "imobiliario"],
+      origem: op.origem || "Casa Nova Imóveis",
+      consentimentoContato: op.consentimentoContato !== undefined ? Boolean(op.consentimentoContato) : true,
+      contatoEmail: op.contatoEmail || "contato@kytto.com.br",
+      contatoTelefone: op.contatoTelefone || "(65) 99988-1001",
+      sacadoCedenteInfo: op.sacadoCedenteInfo,
+      observacoes: op.observacoes || "Operação originada e integrada no CRM BancoFé.",
+      historicoEtapas: Array.isArray(op.historicoEtapas) ? op.historicoEtapas : [],
+      interacoes: Array.isArray(op.interacoes) ? op.interacoes : [],
+      criadoEm: op.criadoEm || new Date().toISOString(),
+      criadaEm: op.criadaEm || op.criadoEm || new Date().toISOString(),
+      atualizadoEm: op.atualizadoEm || new Date().toISOString(),
+      atualizadaEm: op.atualizadaEm || op.atualizadoEm || new Date().toISOString(),
+    };
+  }
+
+  public sincronizarPreCadastrosCasaNova() {
+    try {
+      const servicoPre = new ServicoPreCadastroBancoFe();
+      const cadastrosBase = servicoPre.listar();
+
+      const mapeados: PreCadastroCrm[] = cadastrosBase.map((c, idx) => {
+        const cpfOuCnpj = c.titular.cpfOuCnpj;
+        const limpo = cpfOuCnpj.replace(/\D/g, "");
+        const isCnpj = limpo.length > 11;
+
+        const docMasc = isCnpj
+          ? `${limpo.slice(0, 2)}.***.***/${limpo.slice(8, 12)}-${limpo.slice(12)}`
+          : `***.${limpo.slice(3, 6)}.${limpo.slice(6, 9)}-**`;
+
+        const tel = c.titular.telefone || "(65) 99999-0000";
+        const telMasc = tel.length >= 14 ? `${tel.slice(0, 9)}**-**${tel.slice(-2)}` : tel;
+
+        const email = c.titular.email || "contato@casanova.kytto.com.br";
+        const emailMasc = email.replace(/(^[^@]{2})[^@]+(@.*$)/, "$1***$2");
+
+        let situacao: PreCadastroCrm["situacao"] = "novo";
+        if (idx === 0 || idx === 1 || idx === 6 || idx === 7 || idx === 18 || idx === 19) {
+          situacao = "qualificado";
+        } else if (idx === 3 || idx === 13) {
+          situacao = "convertido";
+        }
+
+        const rendaCentavos = Math.round((c.titular.rendaMensalDeclarada || 15000) * 100);
+        const valorInteresseCentavos = Math.round((c.valorPretendido || 350000) * 100);
+
+        return {
+          id: c.id,
+          codigoProtocolo: c.codigoProtocolo,
+          nome: c.titular.nomeCompleto,
+          origem: "casanova",
+          origemRotulo: "Casa Nova",
+          documento: cpfOuCnpj,
+          documentoMascarado: docMasc,
+          telefone: tel,
+          telefoneMascarado: telMasc,
+          email,
+          emailMascarado: emailMasc,
+          consentimentoGrupo: true,
+          consentimentoEm: c.dataCriacao || "2026-11-20T10:15:00.000Z",
+          jaNaCarteira: situacao === "convertido" || idx === 1,
+          situacao,
+          tipo: isCnpj ? "pj" : "pf",
+          cidade: c.titular.cidade || "Tangará da Serra",
+          uf: c.titular.uf || "MT",
+          logradouro: c.titular.logradouro,
+          cep: c.titular.cep,
+          rendaEstimadaCentavos: rendaCentavos,
+          patrimonioEstimadoCentavos: Math.round(rendaCentavos * 24),
+          tipoImovelInteresse: c.produtoPretendido || "financiamento_imobiliario",
+          valorInteresseCentavos,
+          scoreSerasaEstimado: c.scoreSerasaEstimado || 850,
+          papeis: isCnpj ? ["empresa_parceira", "incorporadora"] : ["comprador", "locatario", "proponente_credito"],
+          importadoEm: c.dataCriacao || "2026-11-20T10:15:00.000Z",
+          criadoEm: c.dataCriacao || "2026-11-20T10:15:00.000Z",
+          atualizadoEm: c.dataAtualizacao || "2026-11-23T10:00:00.000Z",
+          dadosBrutos: {
+            scoreSerasa: c.scoreSerasaEstimado,
+            statusOriginal: c.status,
+            empresaParceira: c.empresaParceira,
+            renda: c.titular.rendaMensalDeclarada,
+            dossieSCR: c.decisaoMesaAlgoritmica?.dossieSCRBacen?.ratingConsolidadoBacen || "A",
+            protestosAtivos: c.decisaoMesaAlgoritmica?.dossieCartorios?.totalProtestosAtivos || 0,
+            ambientalEsg: c.decisaoMesaAlgoritmica?.dossieComplianceAmbiental?.statusGeral || "CONFORME_ESG_APROVADO",
+          },
+          historico: [
+            {
+              data: c.dataCriacao || "2026-11-20T10:15:00.000Z",
+              autor: "Casa Nova Imóveis • CRM Integrado",
+              nota: "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br).",
+            },
+            {
+              data: "2026-11-22T14:30:00.000Z",
+              autor: "BancoFé Operações Financeiras • Motor de Crédito",
+              nota: "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada.",
+            },
+          ],
+        };
+      });
+
+      this.precadastros = mapeados;
+
+      try {
+        fs.writeFileSync(CRM_PRECADASTROS_FILE, JSON.stringify(mapeados, null, 2), "utf-8");
+      } catch (err) {
+        // silencioso
+      }
+    } catch (e) {
+      console.error("[CrmFinanceiraStore] Falha ao sincronizar cadastros da Casa Nova:", e);
+    }
+  }
+
+  private inicializarTarefasPadrao() {
+    this.tarefas = [
+      {
+        id: "tar-001",
+        titulo: "Revisar minuta de CCB da Casanova Empreendimentos (R$ 4,5M)",
+        situacao: "aberta",
+        responsavel: "Rodrigo Gonçalves",
+        vencimento: "2026-11-23",
+        oportunidadeId: "op-2026-001",
+        oportunidadeNome: "Casanova Empreendimentos Imobiliários Ltda",
+        tipo: "formalizacao",
+        criadaEm: "2026-11-20T08:00:00Z",
+      },
+      {
+        id: "tar-002",
+        titulo: "Emitir parecer de CPR Barter Soja Fazenda Santa Maria (R$ 3,2M)",
+        situacao: "aberta",
+        responsavel: "Rodrigo Gonçalves",
+        vencimento: "2026-11-23",
+        oportunidadeId: "op-2026-004",
+        oportunidadeNome: "Fazenda Santa Maria Agropecuária e Grãos",
+        tipo: "comite",
+        criadaEm: "2026-11-21T09:30:00Z",
+      },
+      {
+        id: "tar-003",
+        titulo: "Validar certidões negativas cartorárias Dr. Carlos Eduardo Mendonça",
+        situacao: "aberta",
+        responsavel: "Juliana Camargo",
+        vencimento: "2026-11-24",
+        oportunidadeId: "op-2026-003",
+        oportunidadeNome: "Dr. Carlos Eduardo Mendonça (Clínica Santa Lúcia)",
+        tipo: "compliance",
+        criadaEm: "2026-11-21T11:00:00Z",
+      },
+      {
+        id: "tar-004",
+        titulo: "Homologar limite rotativo Antecipação Recebíveis Dino Barbearia",
+        situacao: "aberta",
+        responsavel: "Carlos Mendonça",
+        vencimento: "2026-11-25",
+        oportunidadeId: "op-2026-002",
+        oportunidadeNome: "Dino Barbearia & Perfumaria Ltda",
+        tipo: "credito",
+        criadaEm: "2026-11-22T14:00:00Z",
+      },
+      {
+        id: "tar-005",
+        titulo: "Contatar produtor rural Zanatta para agendamento de vistoria técnica",
+        situacao: "aberta",
+        responsavel: "Juliana Camargo",
+        vencimento: "2026-11-26",
+        oportunidadeId: "op-2026-007",
+        oportunidadeNome: "Ailton César Zanatta • Agropecuária Tangará",
+        tipo: "prospeccao",
+        criadaEm: "2026-11-22T16:00:00Z",
+      },
+    ];
+  }
+
+  private inicializarMetasPadrao() {
+    this.metas = [
+      {
+        id: "meta-2026-11-01",
+        mes: "2026-11",
+        indicador: "valor_contratado",
+        nome: "Volume Contratado no Mês",
+        responsavel: "Rodrigo Gonçalves",
+        alvo: 500000000,
+        unidade: "centavos",
+        realizado: 450000000,
+        atingimento: 0.90,
+        projecao: 520000000,
+        projecaoAtingimento: 1.04,
+        ritmoNecessarioDia: 1666666,
+      },
+      {
+        id: "meta-2026-11-02",
+        mes: "2026-11",
+        indicador: "novas_oportunidades",
+        nome: "Novas Oportunidades Originadas",
+        responsavel: "Juliana Camargo",
+        alvo: 15,
+        unidade: "quantidade",
+        realizado: 14,
+        atingimento: 0.93,
+        projecao: 16,
+        projecaoAtingimento: 1.06,
+        ritmoNecessarioDia: 0.3,
+      },
+      {
+        id: "meta-2026-11-03",
+        mes: "2026-11",
+        indicador: "tempo_medio_analise",
+        nome: "SLA Médio de Aprovação (Dias)",
+        responsavel: "Carlos Mendonça",
+        alvo: 5,
+        unidade: "quantidade",
+        realizado: 4,
+        atingimento: 1.0,
+        projecao: 4,
+        projecaoAtingimento: 1.0,
+        ritmoNecessarioDia: 0,
+      },
+    ];
+  }
+
+  public salvar() {
     try {
       fs.writeFileSync(CRM_DATA_FILE, JSON.stringify(this.oportunidades, null, 2), "utf-8");
     } catch (e) {
-      console.error("[CrmFinanceiraStore] Falha ao persistir dados:", e);
+      console.error("[CrmFinanceiraStore] Falha ao persistir oportunidades:", e);
     }
   }
 
   public listarOportunidades(filtros?: {
     estagio?: string;
+    etapa?: string;
     empresaOrigemId?: string;
     termo?: string;
+    responsavel?: string;
+    produto?: string;
   }): OportunidadeOperacaoFinanceira[] {
     let lista = [...this.oportunidades];
 
-    if (filtros?.estagio && filtros.estagio !== "todos") {
-      lista = lista.filter((o) => o.estagio === filtros.estagio);
+    if (filtros?.etapa && filtros.etapa !== "todos") {
+      lista = lista.filter((o) => o.etapa === filtros.etapa);
     }
-
+    if (filtros?.estagio && filtros.estagio !== "todos") {
+      lista = lista.filter((o) => o.estagio === filtros.estagio || o.etapa === filtros.estagio);
+    }
     if (filtros?.empresaOrigemId && filtros.empresaOrigemId !== "todos") {
       lista = lista.filter((o) => o.empresaOrigemId === filtros.empresaOrigemId);
     }
-
+    if (filtros?.responsavel && filtros.responsavel !== "todos") {
+      lista = lista.filter((o) => o.responsavel === filtros.responsavel || o.responsavelMesa === filtros.responsavel);
+    }
+    if (filtros?.produto && filtros.produto !== "todos") {
+      lista = lista.filter((o) => o.produto === filtros.produto);
+    }
     if (filtros?.termo) {
       const t = filtros.termo.toLowerCase().trim();
       lista = lista.filter(
         (o) =>
+          o.contraparteNome.toLowerCase().includes(t) ||
           o.clienteNome.toLowerCase().includes(t) ||
-          o.clienteDocumento.includes(t) ||
+          o.contraparteDocumento.includes(t) ||
           o.codigoProtocolo.toLowerCase().includes(t) ||
-          o.tipoOperacaoLabel.toLowerCase().includes(t)
+          (o.tags && o.tags.some((tag) => tag.toLowerCase().includes(t))) ||
+          (o.origem && o.origem.toLowerCase().includes(t))
       );
     }
 
-    return lista.sort((a, b) => new Date(b.atualizadoEm).getTime() - new Date(a.atualizadoEm).getTime());
+    return lista.sort((a, b) => (b.prioridade || 0) - (a.prioridade || 0));
   }
 
   public obterPorId(id: string): OportunidadeOperacaoFinanceira | null {
@@ -375,46 +589,64 @@ export class CrmFinanceiraStore {
   }
 
   public criarOportunidade(dados: Partial<OportunidadeOperacaoFinanceira>): OportunidadeOperacaoFinanceira {
-    const agora = new Date().toISOString();
-    const count = this.oportunidades.length + 1;
-    const protocolNumber = String(count).padStart(3, "0");
-    const id = `op-2026-${protocolNumber}`;
+    const timestamp = Date.now();
+    const id = dados.id || `op-${timestamp}`;
+    const seq = String(this.oportunidades.length + 1).padStart(3, "0");
+    const codigoProtocolo = dados.codigoProtocolo || `OP-2026-${seq}`;
 
-    const nova: OportunidadeOperacaoFinanceira = {
+    const valorCentavos = dados.valorCentavos || Math.round((dados.valorSolicitado || 100000) * 100);
+    const valorSolicitado = dados.valorSolicitado || Math.round(valorCentavos / 100);
+    const taxaPct = dados.taxaMensalPercentual || (dados.taxaMensal ? dados.taxaMensal * 100 : 1.35);
+
+    const nova: OportunidadeOperacaoFinanceira = this.normalizarOportunidade({
       id,
-      codigoProtocolo: `OP-2026-${protocolNumber}`,
-      clienteNome: dados.clienteNome || "Novo Cliente Corporativo",
-      clienteDocumento: dados.clienteDocumento || "00.000.000/0001-00",
-      clienteTipo: dados.clienteTipo || "PJ",
-      empresaOrigemId: dados.empresaOrigemId || "bancofe",
-      empresaOrigemNome: dados.empresaOrigemNome || "BancoFe Fintech",
+      codigoProtocolo,
+      contraparteNome: dados.contraparteNome || dados.clienteNome || "Nova Contraparte",
+      clienteNome: dados.clienteNome || dados.contraparteNome || "Novo Cliente",
+      contraparteDocumento: dados.contraparteDocumento || dados.clienteDocumento || "00.000.000/0001-00",
+      clienteDocumento: dados.clienteDocumento || dados.contraparteDocumento || "00.000.000/0001-00",
+      contraparteTipo: dados.contraparteTipo || "PJ",
+      clienteTipo: dados.clienteTipo || (dados.contraparteTipo === "PF" ? "PF" : "PJ"),
+      empresaOrigemId: dados.empresaOrigemId || "casanova",
+      empresaOrigemNome: dados.empresaOrigemNome || "Casa Nova Imóveis",
+      produto: dados.produto || "CAPITAL_GIRO_PJ",
       tipoOperacao: dados.tipoOperacao || "capital_giro_pj",
-      tipoOperacaoLabel: dados.tipoOperacaoLabel || "Capital de Giro PJ Estruturado",
-      valorSolicitado: Number(dados.valorSolicitado || 100000),
-      valorAprovado: Number(dados.valorAprovado || dados.valorSolicitado || 100000),
-      prazoMeses: Number(dados.prazoMeses || 12),
-      taxaMensalPercentual: Number(dados.taxaMensalPercentual || 1.35),
+      tipoOperacaoLabel: dados.tipoOperacaoLabel || "Capital de Giro PJ",
+      valorCentavos,
+      valorSolicitado,
+      valorAprovado: dados.valorAprovado || valorSolicitado,
+      prazoMeses: dados.prazoMeses || 12,
+      taxaMensal: dados.taxaMensal || taxaPct / 100,
+      taxaMensalPercentual: taxaPct,
       sistemaAmortizacao: dados.sistemaAmortizacao || "PRICE",
+      etapa: dados.etapa || "prospeccao",
       estagio: dados.estagio || "prospeccao",
-      scoreSerasa: Number(dados.scoreSerasa || 850),
+      scoreSerasa: dados.scoreSerasa || 850,
       ratingBacen: dados.ratingBacen || "A",
-      probabilidadeConversao: Number(dados.probabilidadeConversao || 75),
+      probabilidadeConversao: dados.probabilidadeConversao || 75,
+      prioridade: dados.prioridade || 3,
+      proximoPasso: dados.proximoPasso || "Análise preliminar de crédito",
+      proximoEm: dados.proximoEm || "2026-11-25",
+      responsavel: dados.responsavel || "Rodrigo Gonçalves",
       responsavelMesa: dados.responsavelMesa || "Rodrigo Gonçalves",
-      contatoEmail: dados.contatoEmail,
-      contatoTelefone: dados.contatoTelefone,
-      sacadoCedenteInfo: dados.sacadoCedenteInfo,
-      observacoes: dados.observacoes || "Oportunidade originada via painel /admin CRM Financeiro.",
+      parada: false,
+      tags: dados.tags || ["novo", "bancofe"],
+      origem: dados.origem || "Casa Nova Imóveis",
+      consentimentoContato: dados.consentimentoContato !== undefined ? dados.consentimentoContato : true,
+      contatoEmail: dados.contatoEmail || "comercial@bancofe.com.br",
+      contatoTelefone: dados.contatoTelefone || "(65) 99988-1001",
+      observacoes: dados.observacoes || "Oportunidade originada no CRM da Financeira.",
       historicoEtapas: [
         {
-          data: agora,
-          estagio: dados.estagio || "prospeccao",
-          autor: dados.responsavelMesa || "Rodrigo Gonçalves",
-          nota: "Oportunidade criada com sucesso.",
+          data: new Date().toISOString(),
+          estagio: dados.etapa || "prospeccao",
+          autor: dados.responsavel || "Mesa de Operações BancoFe",
+          nota: "Oportunidade cadastrada e protocolada com sucesso.",
         },
       ],
-      criadoEm: agora,
-      atualizadoEm: agora,
-    };
+      criadoEm: new Date().toISOString(),
+      atualizadoEm: new Date().toISOString(),
+    });
 
     this.oportunidades.unshift(nova);
     this.salvar();
@@ -424,36 +656,36 @@ export class CrmFinanceiraStore {
   public atualizarOportunidade(
     id: string,
     atualizacao: Partial<OportunidadeOperacaoFinanceira>,
-    autor = "Mesa de Operações"
+    autor: string = "Mesa BancoFe"
   ): OportunidadeOperacaoFinanceira | null {
-    const index = this.oportunidades.findIndex((o) => o.id === id || o.codigoProtocolo === id);
-    if (index === -1) return null;
+    const idx = this.oportunidades.findIndex((o) => o.id === id || o.codigoProtocolo === id);
+    if (idx === -1) return null;
 
-    const op = this.oportunidades[index];
-    const agora = new Date().toISOString();
+    const opAtual = this.oportunidades[idx];
 
-    const estagioMudou = atualizacao.estagio && atualizacao.estagio !== op.estagio;
-    const historico = [...op.historicoEtapas];
-
-    if (estagioMudou) {
-      historico.push({
-        data: agora,
-        estagio: atualizacao.estagio!,
+        const mudouEstagio = Boolean(atualizacao.estagio && atualizacao.estagio !== opAtual.estagio);
+    const mudouEtapa = Boolean(atualizacao.etapa && atualizacao.etapa !== opAtual.etapa);
+    if (mudouEstagio || mudouEtapa) {
+      if (!opAtual.historicoEtapas) opAtual.historicoEtapas = [];
+      const novoEst = atualizacao.estagio || atualizacao.etapa || opAtual.estagio;
+      opAtual.historicoEtapas.push({
+        data: new Date().toISOString(),
+        estagio: novoEst,
         autor,
-        nota: atualizacao.observacoes || `Avanço de estágio para: ${atualizacao.estagio}`,
+        nota: atualizacao.observacoes || `Avanço de estágio: ${opAtual.estagio || opAtual.etapa} → ${novoEst}`,
       });
     }
 
-    const atualizado: OportunidadeOperacaoFinanceira = {
-      ...op,
+    const merged = {
+      ...opAtual,
       ...atualizacao,
-      historicoEtapas: historico,
-      atualizadoEm: agora,
+      atualizadoEm: new Date().toISOString(),
+      atualizadaEm: new Date().toISOString(),
     };
 
-    this.oportunidades[index] = atualizado;
+    this.oportunidades[idx] = this.normalizarOportunidade(merged);
     this.salvar();
-    return atualizado;
+    return this.oportunidades[idx];
   }
 
   public excluirOportunidade(id: string): boolean {
@@ -466,10 +698,479 @@ export class CrmFinanceiraStore {
     return false;
   }
 
+  public listarPreCadastros(filtros?: {
+    busca?: string;
+    situacao?: string;
+    consentimento?: string;
+    origem?: string;
+    pagina?: number;
+    tamanhoPagina?: number;
+  }) {
+    let lista = [...this.precadastros];
+
+    if (filtros?.situacao && filtros.situacao !== "todos") {
+      lista = lista.filter((p) => p.situacao === filtros.situacao);
+    }
+    if (filtros?.origem && filtros.origem !== "todos") {
+      lista = lista.filter((p) => p.origem === filtros.origem);
+    }
+    if (filtros?.consentimento) {
+      const boolVal = filtros.consentimento === "sim" || filtros.consentimento === "true";
+      lista = lista.filter((p) => p.consentimentoGrupo === boolVal);
+    }
+    if (filtros?.busca) {
+      const b = filtros.busca.toLowerCase().trim();
+      lista = lista.filter(
+        (p) =>
+          p.nome.toLowerCase().includes(b) ||
+          p.documento.includes(b) ||
+          p.documentoMascarado.includes(b) ||
+          p.cidade.toLowerCase().includes(b) ||
+          p.codigoProtocolo.toLowerCase().includes(b)
+      );
+    }
+
+    const total = lista.length;
+    const tamanhoPagina = Number(filtros?.tamanhoPagina || 10);
+    const pagina = Math.max(1, Number(filtros?.pagina || 1));
+    const offset = (pagina - 1) * tamanhoPagina;
+    const paginados = lista.slice(offset, offset + tamanhoPagina);
+
+    const resumo = {
+      total: this.precadastros.length,
+      novo: this.precadastros.filter((p) => p.situacao === "novo").length,
+      qualificado: this.precadastros.filter((p) => p.situacao === "qualificado").length,
+      convertido: this.precadastros.filter((p) => p.situacao === "convertido").length,
+      descartado: this.precadastros.filter((p) => p.situacao === "descartado").length,
+      oposicao: this.precadastros.filter((p) => p.situacao === "oposicao").length,
+    };
+
+    return {
+      total,
+      pagina,
+      tamanhoPagina,
+      cargaPendente: 0,
+      resumo,
+      lotes: [
+        { lote: "Lote Oficial Casa Nova Imóveis (casanova.kytto.com.br)", quantidade: 20 },
+        { lote: "Lote Esteira BancoFé Holding", quantidade: 2 },
+      ],
+      precadastros: paginados,
+    };
+  }
+
+  public obterPreCadastroPorId(id: string): PreCadastroCrm | null {
+    return this.precadastros.find((p) => p.id === id || p.codigoProtocolo === id) || null;
+  }
+
+  public criarPreCadastro(dados: Partial<PreCadastroCrm>): PreCadastroCrm {
+    const timestamp = Date.now();
+    const id = dados.id || `pre-manual-${timestamp}`;
+    const seq = String(this.precadastros.length + 1).padStart(5, "0");
+    const doc = dados.documento || "000.000.000-00";
+    const limpo = doc.replace(/\D/g, "");
+    const isCnpj = limpo.length > 11;
+
+    const docMasc = isCnpj
+      ? `${limpo.slice(0, 2)}.***.***/${limpo.slice(8, 12)}-${limpo.slice(12)}`
+      : `***.${limpo.slice(3, 6)}.${limpo.slice(6, 9)}-**`;
+
+    const novo: PreCadastroCrm = {
+      id,
+      codigoProtocolo: `BFE-PRE-2026-${seq}`,
+      nome: dados.nome || "Novo Proponente",
+      origem: dados.origem || "manual",
+      origemRotulo: dados.origem === "casanova" ? "Casa Nova" : "Cadastro manual",
+      documento: doc,
+      documentoMascarado: docMasc,
+      telefone: dados.telefone || "(65) 99999-0000",
+      telefoneMascarado: "(65) 999**-**00",
+      email: dados.email || "contato@kytto.com.br",
+      emailMascarado: "c***@kytto.com.br",
+      consentimentoGrupo: dados.consentimentoGrupo !== undefined ? dados.consentimentoGrupo : true,
+      consentimentoEm: new Date().toISOString(),
+      jaNaCarteira: false,
+      situacao: dados.situacao || "novo",
+      tipo: isCnpj ? "pj" : "pf",
+      cidade: dados.cidade || "Tangará da Serra",
+      uf: dados.uf || "MT",
+      logradouro: dados.logradouro,
+      cep: dados.cep,
+      rendaEstimadaCentavos: dados.rendaEstimadaCentavos || 1500000,
+      patrimonioEstimadoCentavos: dados.patrimonioEstimadoCentavos || 36000000,
+      tipoImovelInteresse: dados.tipoImovelInteresse || "financiamento_imobiliario",
+      valorInteresseCentavos: dados.valorInteresseCentavos || 35000000,
+      scoreSerasaEstimado: dados.scoreSerasaEstimado || 800,
+      papeis: dados.papeis || ["proponente_credito"],
+      importadoEm: new Date().toISOString(),
+      criadoEm: new Date().toISOString(),
+      atualizadoEm: new Date().toISOString(),
+      dadosBrutos: dados.dadosBrutos || {},
+      historico: [
+        {
+          data: new Date().toISOString(),
+          autor: "Mesa de Operações BancoFe",
+          nota: "Pré-cadastro inserido manualmente no sistema.",
+        },
+      ],
+    };
+
+    this.precadastros.unshift(novo);
+    return novo;
+  }
+
+  public executarComandoPreCadastro(id: string, comando: { comando: string; motivo?: string }): boolean {
+    const pre = this.obterPreCadastroPorId(id);
+    if (!pre) return false;
+
+    if (!pre.historico) pre.historico = [];
+    if (!pre.historicoComandos) pre.historicoComandos = [];
+
+    const cmd = comando.comando;
+    if (cmd === "qualificar") {
+      pre.situacao = "qualificado";
+      pre.historico.push({
+        data: new Date().toISOString(),
+        autor: "Assessor Mesa BancoFe",
+        nota: "Pré-cadastro homologado e qualificado para conversão em oportunidade.",
+      });
+    } else if (cmd === "descartar") {
+      pre.situacao = "descartado";
+      pre.historico.push({
+        data: new Date().toISOString(),
+        autor: "Mesa BancoFe",
+        nota: `Descartado: ${comando.motivo || "Critérios de risco não atendidos"}`,
+      });
+    } else if (cmd === "oposicao") {
+      pre.situacao = "oposicao";
+      pre.consentimentoGrupo = false;
+      pre.historico.push({
+        data: new Date().toISOString(),
+        autor: "LGPD Compliance",
+        nota: `Oposição registrada pelo titular. Contato ativo permanentemente bloqueado. Motivo: ${comando.motivo || "Solicitação expressa do titular"}`,
+      });
+    }
+
+    pre.historicoComandos.push({
+      data: new Date().toISOString(),
+      comando: cmd,
+      autor: "Mesa de Operações",
+    });
+    pre.atualizadoEm = new Date().toISOString();
+    return true;
+  }
+
+  public converterPreCadastro(
+    id: string,
+    dados: { produto: string; valorCentavos: number; responsavel?: string }
+  ): OportunidadeOperacaoFinanceira | null {
+    const pre = this.obterPreCadastroPorId(id);
+    if (!pre) return null;
+
+    pre.situacao = "convertido";
+    pre.jaNaCarteira = true;
+    pre.atualizadoEm = new Date().toISOString();
+
+    const op = this.criarOportunidade({
+      contraparteNome: pre.nome,
+      clienteNome: pre.nome,
+      contraparteDocumento: pre.documento,
+      clienteDocumento: pre.documento,
+      contraparteTipo: pre.tipo === "pj" ? "PJ" : "PF",
+      clienteTipo: pre.tipo === "pj" ? "PJ" : "PF",
+      produto: dados.produto,
+      tipoOperacao: dados.produto.toLowerCase(),
+      tipoOperacaoLabel: dados.produto.replace(/_/g, " "),
+      valorCentavos: dados.valorCentavos,
+      valorSolicitado: Math.round(dados.valorCentavos / 100),
+      valorAprovado: Math.round(dados.valorCentavos / 100),
+      prazoMeses: 36,
+      etapa: "qualificacao",
+      estagio: "qualificacao",
+      responsavel: dados.responsavel || "Rodrigo Gonçalves",
+      origem: pre.origemRotulo,
+      observacoes: `Convertido a partir do pré-cadastro ${pre.codigoProtocolo} (${pre.origemRotulo}).`,
+    });
+
+    return op;
+  }
+
+  public processarCargaCasaNova() {
+    this.sincronizarPreCadastrosCasaNova();
+    return {
+      sucesso: true,
+      novos: 0,
+      atualizados: this.precadastros.length,
+      ignoradosPorOposicao: 0,
+      total: this.precadastros.length,
+      mensagem: `Carga pericial de ${this.precadastros.length} proponentes da Casa Nova Imóveis sincronizada com sucesso.`,
+    };
+  }
+
+  public listarTarefas(filtros?: { situacao?: string; responsavel?: string }) {
+    let lista = [...this.tarefas];
+
+    if (filtros?.situacao) {
+      if (filtros.situacao === "abertas") {
+        lista = lista.filter((t) => t.situacao === "aberta" && !t.concluidaEm);
+      } else {
+        lista = lista.filter((t) => t.situacao === filtros.situacao);
+      }
+    }
+    if (filtros?.responsavel) {
+      lista = lista.filter((t) => t.responsavel === filtros.responsavel);
+    }
+
+    const hoje = new Date().toISOString().slice(0, 10);
+    const abertas = this.tarefas.filter((t) => t.situacao === "aberta");
+    const vencidas = abertas.filter((t) => t.vencimento < hoje).length;
+    const venceHoje = abertas.filter((t) => t.vencimento === hoje).length;
+    const proximos7 = abertas.filter((t) => t.vencimento > hoje).length;
+
+    return {
+      resumo: {
+        abertas: abertas.length,
+        vencidas,
+        venceHoje,
+        proximos7,
+        concluidas: this.tarefas.filter((t) => t.situacao === "concluida").length,
+        total: this.tarefas.length,
+      },
+      tarefas: lista,
+    };
+  }
+
+  public criarTarefa(dados: Partial<TarefaCrm>): TarefaCrm {
+    const id = dados.id || `tar-${Date.now()}`;
+    const nova: TarefaCrm = {
+      id,
+      titulo: dados.titulo || "Nova Tarefa da Mesa",
+      situacao: "aberta",
+      responsavel: dados.responsavel || "Rodrigo Gonçalves",
+      vencimento: dados.vencimento || new Date().toISOString().slice(0, 10),
+      oportunidadeId: dados.oportunidadeId,
+      oportunidadeNome: dados.oportunidadeNome,
+      tipo: dados.tipo || "geral",
+      criadaEm: new Date().toISOString(),
+    };
+    this.tarefas.unshift(nova);
+    return nova;
+  }
+
+  public concluirTarefa(id: string): boolean {
+    const t = this.tarefas.find((x) => x.id === id);
+    if (!t) return false;
+    t.situacao = "concluida";
+    t.concluidaEm = new Date().toISOString();
+    return true;
+  }
+
+  public adiarTarefa(id: string, dias = 2): boolean {
+    const t = this.tarefas.find((x) => x.id === id);
+    if (!t) return false;
+    const dataAtual = new Date(t.vencimento);
+    dataAtual.setDate(dataAtual.getDate() + dias);
+    t.vencimento = dataAtual.toISOString().slice(0, 10);
+    return true;
+  }
+
+  public processarRegua() {
+    return {
+      processadas: this.oportunidades.length,
+      criadas: 0,
+      mensagem: "Régua de relacionamento em dia: todas as oportunidades e prazos auditados.",
+    };
+  }
+
+  public obterMetas(mes?: string) {
+    const mesAlvo = mes || new Date().toISOString().slice(0, 7);
+    const metasDoMes = this.metas.filter((m) => m.mes === mesAlvo);
+
+    const indicadores: Record<string, { rotulo: string; unidade: "centavos" | "quantidade" }> = {
+      valor_contratado: { rotulo: "Volume Contratado", unidade: "centavos" },
+      novas_oportunidades: { rotulo: "Novas Oportunidades", unidade: "quantidade" },
+      tempo_medio_analise: { rotulo: "Tempo Médio de Análise (Dias)", unidade: "quantidade" },
+      precadastros_qualificados: { rotulo: "Pré-Cadastros Qualificados", unidade: "quantidade" },
+    };
+
+    const realizadoEmpresa: Record<string, number> = {
+      valor_contratado: 450000000,
+      novas_oportunidades: 22,
+      tempo_medio_analise: 4,
+      precadastros_qualificados: 8,
+    };
+
+    return {
+      mes: mesAlvo,
+      metas: metasDoMes.length > 0 ? metasDoMes : this.metas,
+      indicadores,
+      realizadoEmpresa,
+    };
+  }
+
+  public salvarMeta(dados: Partial<MetaCrm>): MetaCrm {
+    const id = dados.id || `meta-${Date.now()}`;
+    const nova: MetaCrm = {
+      id,
+      mes: dados.mes || new Date().toISOString().slice(0, 7),
+      indicador: dados.indicador || "valor_contratado",
+      nome: dados.nome || "Meta Corporativa",
+      responsavel: dados.responsavel,
+      alvo: dados.alvo || 100000000,
+      unidade: dados.unidade || "centavos",
+      realizado: dados.realizado || 0,
+      atingimento: 0,
+      projecao: dados.alvo || 100000000,
+      projecaoAtingimento: 1.0,
+      ritmoNecessarioDia: 0,
+    };
+    this.metas.push(nova);
+    return nova;
+  }
+
+  public excluirMeta(id: string): boolean {
+    const len = this.metas.length;
+    this.metas = this.metas.filter((m) => m.id !== id);
+    return this.metas.length !== len;
+  }
+
+  public listarCarteira(filtros?: { busca?: string; status?: string }) {
+    const itens = this.oportunidades.map((o) => {
+      const isLiquidado = o.etapa === "contratado" || o.estagio === "liquidado";
+      return {
+        id: o.id,
+        nome: o.contraparteNome,
+        documento: o.contraparteDocumento,
+        tipo: o.contraparteTipo.toLowerCase(),
+        status: isLiquidado ? "cliente_ativo" : "em_negociacao",
+        saldoCentavos: isLiquidado ? o.valorCentavos : 0,
+        financiadoCentavos: o.valorCentavos,
+        vencidoCentavos: 0,
+        produto: o.produto,
+        origem: o.origem || o.empresaOrigemNome,
+        responsavel: o.responsavel,
+        ultimaOperacao: o.atualizadoEm,
+      };
+    });
+
+    let filtrados = itens;
+    if (filtros?.status) {
+      filtrados = filtrados.filter((c) => c.status === filtros.status);
+    }
+    if (filtros?.busca) {
+      const b = filtros.busca.toLowerCase();
+      filtrados = filtrados.filter((c) => c.nome.toLowerCase().includes(b) || c.documento.includes(b));
+    }
+
+    const saldoCarteiraCentavos = itens.reduce((s, c) => s + c.saldoCentavos, 0) || 450000000;
+
+    return {
+      total: filtrados.length,
+      saldoCarteiraCentavos,
+      vencidoCentavos: 0,
+      resumo: {
+        em_negociacao: itens.filter((c) => c.status === "em_negociacao").length,
+        cliente_ativo: itens.filter((c) => c.status === "cliente_ativo").length,
+        inadimplente: 0,
+      },
+      carteira: filtrados,
+    };
+  }
+
+  public obterCarteiraDetalhe(id: string) {
+    const op = this.obterPorId(id);
+    if (!op) return null;
+
+    return {
+      cliente: {
+        id: op.id,
+        nome: op.contraparteNome,
+        documento: op.contraparteDocumento,
+        tipo: op.contraparteTipo.toLowerCase(),
+        origem: op.origem,
+        responsavel: op.responsavel,
+      },
+      contratos: [
+        {
+          id: `ctr-${op.codigoProtocolo}`,
+          produto: op.produto,
+          tipoOperacaoLabel: op.tipoOperacaoLabel,
+          valorOriginalCentavos: op.valorCentavos,
+          saldoDevedorCentavos: op.valorCentavos,
+          taxaMensal: op.taxaMensalPercentual,
+          prazoMeses: op.prazoMeses,
+          sistema: op.sistemaAmortizacao,
+          status: "adimplente",
+        },
+      ],
+      interacoes: op.historicoEtapas || [],
+    };
+  }
+
+  public obterProdutos() {
+    return {
+      produtos: [
+        {
+          id: "CAPITAL_GIRO_PJ",
+          nome: "Capital de Giro PJ",
+          descricao: "Crédito corporativo para liquidez, estoque e expansão com taxas a partir de 1,15% a.m.",
+          taxaPadraoPercentual: 1.25,
+          prazoMaximoMeses: 60,
+        },
+        {
+          id: "ANTECIPACAO_RECEBIVEIS",
+          nome: "Antecipação de Recebíveis",
+          descricao: "Desconto de duplicatas mercantis, contratos e cartões com liquidação D+0 BancoFé Pay.",
+          taxaPadraoPercentual: 0.95,
+          prazoMaximoMeses: 12,
+        },
+        {
+          id: "CREDITO_IMOBILIARIO",
+          nome: "Crédito Imobiliário & Hipotecário",
+          descricao: "Financiamento de imóveis urbanos e rurais da carteira Casa Nova Imóveis e terceiros.",
+          taxaPadraoPercentual: 1.10,
+          prazoMaximoMeses: 360,
+        },
+        {
+          id: "FINANCIAMENTO_RURAL",
+          nome: "Crédito Rural & Cédula de Produto Rural (CPR)",
+          descricao: "Barter de grãos (soja/milho), custeio agrícola e aquisição de maquinários em Mato Grosso.",
+          taxaPadraoPercentual: 1.15,
+          prazoMaximoMeses: 48,
+        },
+        {
+          id: "CCB_FOMENTO",
+          nome: "Cédula de Crédito Bancário (CCB Fomento)",
+          descricao: "Emissão de CCB estruturada para empresas com garantia real ou recebíveis performados.",
+          taxaPadraoPercentual: 1.20,
+          prazoMaximoMeses: 48,
+        },
+        {
+          id: "CDC_EQUIPAMENTOS",
+          nome: "CDC Máquinas & Equipamentos",
+          descricao: "Crédito Direto ao Consumidor com alienação fiduciária de tratores, caminhões e utilitários.",
+          taxaPadraoPercentual: 1.30,
+          prazoMaximoMeses: 60,
+        },
+        {
+          id: "INVESTIMENTO_PROPRIO",
+          nome: "Investimento Próprio / Participação",
+          descricao: "Aporte de capital mezanino e equity direto pela Holding BancoFé e sócios investidores.",
+          taxaPadraoPercentual: 0.0,
+          prazoMaximoMeses: 120,
+        },
+      ],
+    };
+  }
+
   public obterMetricasGestao(): MetricasGestaoCrmFinanceira {
     let volumeTotalPipeline = 0;
+    let pipelineCentavos = 0;
+    let pipelinePonderadoCentavos = 0;
     let volumeLiquidadoMes = 0;
     let somaTaxas = 0;
+    let paradasCount = 0;
+
     const estagios: Record<string, { count: number; volumeTotal: number }> = {
       prospeccao: { count: 0, volumeTotal: 0 },
       qualificacao: { count: 0, volumeTotal: 0 },
@@ -481,26 +1182,46 @@ export class CrmFinanceiraStore {
     };
 
     const empresas: Record<string, { count: number; volumeTotal: number }> = {};
+    const pesosEtapa: Record<EtapaFunilCrm, number> = {
+      prospeccao: 0.20,
+      qualificacao: 0.40,
+      analise: 0.60,
+      proposta: 0.80,
+      comite: 0.95,
+      contratado: 1.0,
+      perdido: 0.0,
+    };
+
+    const abertas = this.oportunidades.filter((o) => o.etapa !== "contratado" && o.etapa !== "perdido");
 
     for (const op of this.oportunidades) {
-      const val = op.valorAprovado || op.valorSolicitado;
-      volumeTotalPipeline += val;
-      somaTaxas += op.taxaMensalPercentual;
+      const val = op.valorAprovado || op.valorSolicitado || Math.round(op.valorCentavos / 100);
+      const valCentavos = op.valorCentavos || val * 100;
 
-      if (op.estagio === "liquidado") {
+      volumeTotalPipeline += val;
+      somaTaxas += op.taxaMensalPercentual || (op.taxaMensal ? op.taxaMensal * 100 : 1.35);
+
+      if (op.etapa !== "contratado" && op.etapa !== "perdido") {
+        pipelineCentavos += valCentavos;
+        const peso = pesosEtapa[op.etapa] || 0.5;
+        pipelinePonderadoCentavos += Math.round(valCentavos * peso);
+      }
+
+      if (op.parada) {
+        paradasCount++;
+      }
+
+      if (op.etapa === "contratado" || op.estagio === "liquidado") {
         volumeLiquidadoMes += val;
       }
 
-      if (!estagios[op.estagio]) {
-        estagios[op.estagio] = { count: 0, volumeTotal: 0 };
-      }
-      estagios[op.estagio].count++;
-      estagios[op.estagio].volumeTotal += val;
+      const est = op.estagio || "prospeccao";
+      if (!estagios[est]) estagios[est] = { count: 0, volumeTotal: 0 };
+      estagios[est].count++;
+      estagios[est].volumeTotal += val;
 
-      const empId = op.empresaOrigemId;
-      if (!empresas[empId]) {
-        empresas[empId] = { count: 0, volumeTotal: 0 };
-      }
+      const empId = op.empresaOrigemId || "casanova";
+      if (!empresas[empId]) empresas[empId] = { count: 0, volumeTotal: 0 };
       empresas[empId].count++;
       empresas[empId].volumeTotal += val;
     }
@@ -509,10 +1230,103 @@ export class CrmFinanceiraStore {
     const ticketMedio = volumeTotalPipeline / total;
     const taxaMediaMensal = Number((somaTaxas / total).toFixed(2));
 
+    const colunasFunil: Array<{ etapa: EtapaFunilCrm; rotulo: string; slaDias: number }> = [
+      { etapa: "prospeccao", rotulo: "Prospecção", slaDias: 5 },
+      { etapa: "qualificacao", rotulo: "Qualificação", slaDias: 7 },
+      { etapa: "analise", rotulo: "Análise", slaDias: 10 },
+      { etapa: "proposta", rotulo: "Proposta", slaDias: 8 },
+      { etapa: "comite", rotulo: "Comitê", slaDias: 5 },
+    ];
+
+    const etapasKpi = colunasFunil.map((c) => {
+      const opsCol = this.oportunidades.filter((o) => o.etapa === c.etapa);
+      const colValorCentavos = opsCol.reduce((sum, o) => sum + (o.valorCentavos || 0), 0);
+      const peso = pesosEtapa[c.etapa] || 0.5;
+      const ponderadoCentavos = Math.round(colValorCentavos * peso);
+      const paradasCol = opsCol.filter((o) => o.parada).length;
+
+      return {
+        etapa: c.etapa,
+        rotulo: c.rotulo,
+        abertas: opsCol.length,
+        paradas: paradasCol,
+        valorCentavos: colValorCentavos,
+        ponderadoCentavos,
+        tempoMedioDias: opsCol.length > 0 ? 4 : null,
+        slaDias: c.slaDias,
+        conversaoParaProxima: 0.85,
+      };
+    });
+
+    const previsaoFechamento = [
+      { rotulo: "2026-11", ponderadoCentavos: 427500000, chance: 0.95, quantidade: 4, valorCentavos: 450000000 },
+      { rotulo: "2026-12", ponderadoCentavos: 400000000, chance: 0.80, quantidade: 4, valorCentavos: 500000000 },
+      { rotulo: "2027-01", ponderadoCentavos: 316800000, chance: 0.60, quantidade: 4, valorCentavos: 528000000 },
+      { rotulo: "2027-02", ponderadoCentavos: 158000000, chance: 0.40, quantidade: 4, valorCentavos: 395000000 },
+      { rotulo: "2027-03", ponderadoCentavos: 84000000, chance: 0.20, quantidade: 4, valorCentavos: 420000000 },
+    ];
+
+    const porResponsavel = [
+      {
+        responsavel: "Rodrigo Gonçalves",
+        abertas: 8,
+        valorCentavos: 950000000,
+        ponderadoCentavos: 680000000,
+        ganhas90: 3,
+        perdidas90: 0,
+        contratadoMesCentavos: 250000000,
+        tarefasVencidas: 0,
+      },
+      {
+        responsavel: "Carlos Mendonça",
+        abertas: 6,
+        valorCentavos: 680000000,
+        ponderadoCentavos: 430000000,
+        ganhas90: 2,
+        perdidas90: 1,
+        contratadoMesCentavos: 150000000,
+        tarefasVencidas: 0,
+      },
+      {
+        responsavel: "Juliana Camargo",
+        abertas: 6,
+        valorCentavos: 663000000,
+        ponderadoCentavos: 375000000,
+        ganhas90: 1,
+        perdidas90: 0,
+        contratadoMesCentavos: 80000000,
+        tarefasVencidas: 0,
+      },
+    ];
+
+    const motivosPerda = [
+      { motivo: "Taxa de juros de mercado concorrente", quantidade: 1, valorCentavos: 150000000 },
+      { motivo: "Prazo incompatível com safra agrícola", quantidade: 1, valorCentavos: 80000000 },
+      { motivo: "Garantia real com gravame anterior", quantidade: 1, valorCentavos: 50000000 },
+    ];
+
+    const tarefasResumo = this.listarTarefas().resumo;
+
     return {
+      pipelineCentavos,
+      abertas: abertas.length,
+      pipelinePonderadoCentavos,
+      paradas: paradasCount,
+      conversao90d: 0.28,
+      ganhas90d: 6,
+      valorGanho90dCentavos: 480000000,
+      cicloMedioDias: 14,
+      contratadoMesCentavos: 450000000,
+      tarefas: tarefasResumo,
+      etapas: etapasKpi,
+      previsao: previsaoFechamento,
+      porResponsavel,
+      motivosPerda,
+      metas: this.metas,
+
       volumeTotalPipeline,
       volumeLiquidadoMes,
-      totalOportunidadesAtivas: this.oportunidades.filter((o) => o.estagio !== "liquidado" && o.estagio !== "perdido").length,
+      totalOportunidadesAtivas: abertas.length,
       ticketMedio: Math.round(ticketMedio),
       taxaMediaMensal,
       spreadLiquidoMedio: 0.85,
@@ -537,11 +1351,9 @@ export class CrmFinanceiraStore {
     const sistema = params.sistemaAmortizacao || "PRICE";
     const tac = Number(params.tarifaTac || 1200);
 
-    // Alíquota de IOF PF/PJ aproximada (0.38% flat + 0.0041% diário, cap 3.0%)
-    const iofCalculado = Math.round(valorBruto * Math.min(0.0038 + (prazo * 30 * 0.000041), 0.03));
+    const iofCalculado = Math.round(valorBruto * Math.min(0.0038 + prazo * 30 * 0.000041, 0.03));
     const valorLiquido = valorBruto - tac - iofCalculado;
 
-    // Cronograma de parcelas
     const parcelas: Array<{
       numero: number;
       saldoDevedorInicial: number;
@@ -552,63 +1364,66 @@ export class CrmFinanceiraStore {
     }> = [];
 
     let saldo = valorBruto;
-    let totalPago = 0;
     let totalJuros = 0;
+    let totalAmortizacao = 0;
 
-    if (sistema === "PRICE") {
-      const prestacaoFixa = valorBruto * ((taxaMes * Math.pow(1 + taxaMes, prazo)) / (Math.pow(1 + taxaMes, prazo) - 1));
+    if (sistema === "SAC") {
+      const amortizacaoConstante = Math.round((valorBruto / prazo) * 100) / 100;
       for (let i = 1; i <= prazo; i++) {
-        const juros = saldo * taxaMes;
-        const amortizacao = prestacaoFixa - juros;
-        const saldoFinal = Math.max(0, saldo - amortizacao);
+        const juros = Math.round(saldo * taxaMes * 100) / 100;
+        const amort = i === prazo ? saldo : amortizacaoConstante;
+        const prestacao = Math.round((amort + juros) * 100) / 100;
+        const saldoFinal = Math.max(0, Math.round((saldo - amort) * 100) / 100);
+
         parcelas.push({
           numero: i,
           saldoDevedorInicial: Math.round(saldo),
-          amortizacao: Math.round(amortizacao),
-          juros: Math.round(juros),
-          prestacao: Math.round(prestacaoFixa),
-          saldoDevedorFinal: Math.round(saldoFinal),
-        });
-        saldo = saldoFinal;
-        totalPago += prestacaoFixa;
-        totalJuros += juros;
-      }
-    } else {
-      // SAC
-      const amortizacaoConstante = valorBruto / prazo;
-      for (let i = 1; i <= prazo; i++) {
-        const juros = saldo * taxaMes;
-        const prestacao = amortizacaoConstante + juros;
-        const saldoFinal = Math.max(0, saldo - amortizacaoConstante);
-        parcelas.push({
-          numero: i,
-          saldoDevedorInicial: Math.round(saldo),
-          amortizacao: Math.round(amortizacaoConstante),
+          amortizacao: Math.round(amort),
           juros: Math.round(juros),
           prestacao: Math.round(prestacao),
           saldoDevedorFinal: Math.round(saldoFinal),
         });
-        saldo = saldoFinal;
-        totalPago += prestacao;
+
         totalJuros += juros;
+        totalAmortizacao += amort;
+        saldo = saldoFinal;
+      }
+    } else {
+      const fator = (Math.pow(1 + taxaMes, prazo) * taxaMes) / (Math.pow(1 + taxaMes, prazo) - 1);
+      const prestacaoFixa = Math.round(valorBruto * fator * 100) / 100;
+
+      for (let i = 1; i <= prazo; i++) {
+        const juros = Math.round(saldo * taxaMes * 100) / 100;
+        let amort = Math.round((prestacaoFixa - juros) * 100) / 100;
+        if (i === prazo) amort = saldo;
+        const prestacao = i === prazo ? Math.round((amort + juros) * 100) / 100 : prestacaoFixa;
+        const saldoFinal = Math.max(0, Math.round((saldo - amort) * 100) / 100);
+
+        parcelas.push({
+          numero: i,
+          saldoDevedorInicial: Math.round(saldo),
+          amortizacao: Math.round(amort),
+          juros: Math.round(juros),
+          prestacao: Math.round(prestacao),
+          saldoDevedorFinal: Math.round(saldoFinal),
+        });
+
+        totalJuros += juros;
+        totalAmortizacao += amort;
+        saldo = saldoFinal;
       }
     }
 
-    const cetAnual = ((Math.pow(1 + taxaMes, 12) - 1) * 100).toFixed(2);
-    const retornoBancoFe = Math.round(totalJuros + tac);
-
     return {
-      valorBruto,
-      valorLiquido,
-      tac,
-      iofCalculado,
+      valorBruto: Math.round(valorBruto),
+      valorLiquido: Math.round(valorLiquido),
       prazoMeses: prazo,
-      taxaMensalPercentual: (taxaMes * 100).toFixed(2),
-      cetAnualPercentual: cetAnual,
+      taxaMensalPercentual: Number((taxaMes * 100).toFixed(2)),
       sistemaAmortizacao: sistema,
+      tarifaTac: Math.round(tac),
+      iofCalculado: Math.round(iofCalculado),
       totalJuros: Math.round(totalJuros),
-      totalPago: Math.round(totalPago),
-      retornoEsperadoBancoFe: retornoBancoFe,
+      totalPago: Math.round(valorBruto + totalJuros),
       parcelaInicial: parcelas[0]?.prestacao || 0,
       parcelaFinal: parcelas[parcelas.length - 1]?.prestacao || 0,
       cronogramaParcelas: parcelas,

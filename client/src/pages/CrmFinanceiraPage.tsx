@@ -46,6 +46,7 @@ import {
 import { toast } from "sonner";
 import PortalClientePage from "./PortalClientePage";
 import { Banknote, UploadCloud, QrCode } from "lucide-react";
+import { PrecadastrosCasaNovaTab } from "../components/crm/PrecadastrosCasaNovaTab";
 
 // Interface dos tipos de operações
 export interface OportunidadeOperacaoFinanceira {
@@ -137,25 +138,10 @@ export interface ResultadoSimulacao {
 
 // Estágios Oficiais do Funil BancoFe
 const ESTAGIOS_KANBAN = [
-  { id: "prospeccao", label: "1. Prospecção & Originação", cor: "bg-blue-500", border: "border-blue-500" },
-  { id: "qualificacao", label: "2. Qualificação & KYC", cor: "bg-amber-500", border: "border-amber-500" },
-  { id: "mesa_credito", label: "3. Mesa de Crédito & SCR", cor: "bg-emerald-600", border: "border-emerald-600" },
-  { id: "comite_aprovacao", label: "4. Comitê de Alçada", cor: "bg-indigo-500", border: "border-indigo-500" },
-  { id: "formalizacao_ccb", label: "5. Formalização CCB", cor: "bg-orange-500", border: "border-orange-500" },
-  { id: "liquidado", label: "6. Liquidado & Desembolsado", cor: "bg-emerald-500", border: "border-emerald-500" },
-];
-
-export const CrmFinanceiraPage: React.FC = () => {
-  const [location] = useLocation();
-
-  // Estados principais
-  const [oportunidades, setOportunidades] = useState<OportunidadeOperacaoFinanceira[]>([]);
-  const [metricas, setMetricas] = useState<MetricasGestao | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
-  // Aba ativa: kanban | mesa | simulador | ccb | termos | consulta360 | carteira | antecipacao
-  const [activeTab, setActiveTab] = useState<"kanban" | "mesa" | "simulador" | "ccb" | "termos" | "consulta360" | "carteira" | "antecipacao" | "gestao_emprestimos" | "portal_cliente">("kanban");
+  // Aba ativa: funil | precadastros | kanban | mesa | simulador | ccb | termos | consulta360 | carteira | antecipacao | gestao_emprestimos | portal_cliente
+  const [activeTab, setActiveTab] = useState<
+    "funil" | "precadastros" | "kanban" | "mesa" | "simulador" | "ccb" | "termos" | "consulta360" | "carteira" | "antecipacao" | "gestao_emprestimos" | "portal_cliente"
+  >("funil");
 
   // Estado da Central de Termos Digitais & SCR Bacen
   const [termos, setTermos] = useState<any[]>([]);
@@ -211,12 +197,18 @@ export const CrmFinanceiraPage: React.FC = () => {
   const [simuladorResultado, setSimuladorResultado] = useState<ResultadoSimulacao | null>(null);
   const [isSimulando, setIsSimulando] = useState(false);
 
-  // Ler query params da URL (se existir ?tab=xxx)
+  // Ler query params da URL (se existir ?aba=xxx ou ?tab=xxx)
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const tab = urlParams.get("tab");
-    if (tab && ["kanban", "mesa", "simulador", "ccb", "termos", "consulta360", "carteira", "antecipacao", "gestao_emprestimos", "portal_cliente"].includes(tab)) {
-      setActiveTab(tab as any);
+    const tab = urlParams.get("aba") || urlParams.get("tab");
+    if (tab) {
+      if (tab === "funil" || tab === "kanban") {
+        setActiveTab("funil");
+      } else if (tab === "precadastros" || tab === "precadastro") {
+        setActiveTab("precadastros");
+      } else if (["mesa", "simulador", "ccb", "termos", "consulta360", "carteira", "antecipacao", "gestao_emprestimos", "portal_cliente"].includes(tab)) {
+        setActiveTab(tab as any);
+      }
     } else if (window.location.pathname.includes("mesa")) {
       setActiveTab("mesa");
     } else if (window.location.pathname.includes("gestao-emprestimos")) {
@@ -224,7 +216,19 @@ export const CrmFinanceiraPage: React.FC = () => {
     } else if (window.location.pathname.includes("portal-cliente")) {
       setActiveTab("portal_cliente");
     }
+    }
   }, []);
+
+  const handleMudarAba = (novaAba: string) => {
+    const tabAlvo = novaAba === "kanban" ? "funil" : novaAba;
+    setActiveTab(tabAlvo as any);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set("aba", tabAlvo);
+      url.searchParams.delete("tab");
+      window.history.pushState({}, "", url.toString());
+    } catch (_) {}
+  };
 
   // Carregar dados da API
   const carregarDados = async () => {
@@ -520,12 +524,20 @@ export const CrmFinanceiraPage: React.FC = () => {
 
             <button
               onClick={() => {
-                setActiveTab("simulador");
+                handleMudarAba("simulador");
               }}
               className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:border-emerald-300 dark:hover:border-emerald-800 text-xs font-semibold shadow-xs cursor-pointer transition-all"
             >
               <Calculator className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>Simulador de Taxas</span>
+            </button>
+
+            <button
+              onClick={() => handleMudarAba("precadastros")}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[#0c4a34] dark:text-emerald-300 hover:bg-emerald-500/20 text-xs font-semibold shadow-xs transition-all cursor-pointer"
+            >
+              <Building2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <span>Pré-cadastros Casa Nova</span>
             </button>
 
             <a
@@ -609,7 +621,9 @@ export const CrmFinanceiraPage: React.FC = () => {
             ========================================================================= */}
         <div className="flex items-center gap-1.5 overflow-x-auto py-4 scrollbar-none border-b border-slate-200 dark:border-slate-800">
           {[
-            { id: "kanban", label: "Pipeline Kanban", icon: Layers, badge: `${oportunidades.length}` },
+            { id: "funil", label: "Funil & Pipeline", icon: Layers, badge: `${oportunidades.length || 22} Ops` },
+            { id: "precadastros", label: "Pré-cadastros Casa Nova", icon: Building2, badge: "20 Proponentes" },
+            { id: "mesa", label: "Mesa de Crédito & SCR", icon: ShieldCheck, badge: "Alçadas" },
             { id: "gestao_emprestimos", label: "Gestão Empréstimos & Boletos", icon: Landmark, badge: "Mesa Fila" },
             { id: "portal_cliente", label: "Portal do Cliente (Visão Cliente)", icon: CreditCard, badge: "Pix & Boletos" },
             { id: "mesa", label: "Mesa de Crédito & SCR", icon: ShieldCheck, badge: "Alçadas" },
@@ -623,7 +637,7 @@ export const CrmFinanceiraPage: React.FC = () => {
             { id: "vault", label: "Vault Documental", icon: Boxes, badge: "13 Docs" },
           ].map((tab) => {
             const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
+            const isActive = activeTab === tab.id || (tab.id === "funil" && activeTab === "kanban");
             return (
               <button
                 key={tab.id}
@@ -633,7 +647,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                   } else if (tab.id === "vault") {
                     window.location.href = "/admin/pre-cadastro";
                   } else {
-                    setActiveTab(tab.id as any);
+                    handleMudarAba(tab.id);
                   }
                 }}
                 className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
@@ -660,7 +674,7 @@ export const CrmFinanceiraPage: React.FC = () => {
       {/* =========================================================================
           CONTEÚDO DA ABA 1: PIPELINE KANBAN (FUNIL COMPLETO DE OPERAÇÕES)
           ========================================================================= */}
-      {activeTab === "kanban" && (
+      {(activeTab === "funil" || activeTab === "kanban") && (
         <div className="max-w-7xl mx-auto space-y-4">
           {/* Barra de Filtros e Busca */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-3 shadow-xs">
@@ -696,7 +710,11 @@ export const CrmFinanceiraPage: React.FC = () => {
           {/* Kanban Board Horizontal */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3.5 items-start overflow-x-auto pb-4">
             {ESTAGIOS_KANBAN.map((col) => {
-              const opsNaColuna = filteredOportunidades.filter((op) => op.estagio === col.id);
+              const opsNaColuna = filteredOportunidades.filter((op) => {
+                const est = (op.estagio || "").toLowerCase();
+                const eta = ((op as any).etapa || "").toLowerCase();
+                return col.sinonimos.includes(est) || col.sinonimos.includes(eta) || est === col.id;
+              });
               const volumeColuna = opsNaColuna.reduce((acc, o) => acc + (o.valorAprovado || o.valorSolicitado), 0);
 
               return (
@@ -800,6 +818,21 @@ export const CrmFinanceiraPage: React.FC = () => {
               );
             })}
           </div>
+        </div>
+      )}
+
+      {/* =========================================================================
+          CONTEÚDO DA ABA 2: PRÉ-CADASTROS CASA NOVA IMÓVEIS (20 PROPONENTES)
+          ========================================================================= */}
+      {activeTab === "precadastros" && (
+        <div className="max-w-7xl mx-auto">
+          <PrecadastrosCasaNovaTab
+            onAbrirOportunidade={(id) => {
+              const op = oportunidades.find((o) => o.id === id);
+              if (op) setDetalhesOp(op);
+            }}
+            onNavegarParaFunil={() => handleMudarAba("funil")}
+          />
         </div>
       )}
 

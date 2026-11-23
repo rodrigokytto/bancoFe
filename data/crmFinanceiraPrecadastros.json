@@ -1,0 +1,1119 @@
+[
+  {
+    "id": "pre-001",
+    "codigoProtocolo": "BFE-PRE-2026-08491",
+    "nome": "DR. CARLOS EDUARDO MENDONÇA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "000.000.009-49",
+    "documentoMascarado": "***.000.009-**",
+    "telefone": "(65) 99812-4411",
+    "telefoneMascarado": "(65) 9981**-**11",
+    "email": "dr.carloseduardo.med@gmail.com",
+    "emailMascarado": "dr***@gmail.com",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-20T10:15:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "qualificado",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Avenida Brasil, 1420-W",
+    "cep": "78300-112",
+    "rendaEstimadaCentavos": 3850000,
+    "patrimonioEstimadoCentavos": 92400000,
+    "tipoImovelInteresse": "financiamento_imobiliario",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 890,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-20T10:15:00.000Z",
+    "criadoEm": "2026-11-20T10:15:00.000Z",
+    "atualizadoEm": "2026-11-22T14:30:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 890,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 38500,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-20T10:15:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-002",
+    "codigoProtocolo": "BFE-PRE-2026-08492",
+    "nome": "RODRIGO RIBEIRO GONCALVES",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "305.871.628-13",
+    "documentoMascarado": "***.871.628-**",
+    "telefone": "(18) 99712-4411",
+    "telefoneMascarado": "(18) 9971**-**11",
+    "email": "rodrigo.goncalves@kytto.com.br",
+    "emailMascarado": "ro***@kytto.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-21T09:00:00.000Z",
+    "jaNaCarteira": true,
+    "situacao": "qualificado",
+    "tipo": "pf",
+    "cidade": "Mirante do Paranapanema",
+    "uf": "SP",
+    "logradouro": "Rua Elias Barbosa da Silva, 833",
+    "cep": "19.262-070",
+    "rendaEstimadaCentavos": 8500000,
+    "patrimonioEstimadoCentavos": 204000000,
+    "tipoImovelInteresse": "credito_rural_agro",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 960,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-21T09:00:00.000Z",
+    "criadoEm": "2026-11-21T09:00:00.000Z",
+    "atualizadoEm": "2026-11-22T16:45:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 960,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis & Estância Gonçalves",
+      "renda": 85000,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-21T09:00:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-003",
+    "codigoProtocolo": "BFE-PRE-2026-08493",
+    "nome": "Juliana Camargo Diniz",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "740.***.***-61",
+    "documentoMascarado": "***.61.-**",
+    "telefone": "(65) 99611-3320",
+    "telefoneMascarado": "(65) 9961**-**20",
+    "email": "juliana.diniz@jbs.com.br",
+    "emailMascarado": "ju***@jbs.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-21T14:20:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Bairro Morada do Sol",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 740000,
+    "patrimonioEstimadoCentavos": 17760000,
+    "tipoImovelInteresse": "mcmv_habitacional_popular",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 780,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-21T14:20:00.000Z",
+    "criadoEm": "2026-11-21T14:20:00.000Z",
+    "atualizadoEm": "2026-11-22T11:10:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 780,
+      "statusOriginal": "pendente_documentos",
+      "empresaParceira": "Casa Nova Imóveis (MCMV)",
+      "renda": 7400,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-21T14:20:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-004",
+    "codigoProtocolo": "BFE-PRE-2026-08494",
+    "nome": "DINO BARBEARIA & PERFUMARIA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "24.891.044/0001-12",
+    "documentoMascarado": "24.***.***/0001-12",
+    "telefone": "(65) 3326-4400",
+    "telefoneMascarado": "(65) 3326**-**00",
+    "email": "contato@dinobarbearia.com.br",
+    "emailMascarado": "co***@dinobarbearia.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T08:10:00.000Z",
+    "jaNaCarteira": true,
+    "situacao": "convertido",
+    "tipo": "pj",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Rua Antonio Hortolani, Centro",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 4500000,
+    "patrimonioEstimadoCentavos": 108000000,
+    "tipoImovelInteresse": "capital_giro_pj",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 850,
+    "papeis": [
+      "empresa_parceira",
+      "incorporadora"
+    ],
+    "importadoEm": "2026-11-22T08:10:00.000Z",
+    "criadoEm": "2026-11-22T08:10:00.000Z",
+    "atualizadoEm": "2026-11-22T15:20:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 850,
+      "statusOriginal": "em_qualificacao",
+      "empresaParceira": "Casa Nova Imóveis (Ponto Comercial)",
+      "renda": 45000,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T08:10:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-005",
+    "codigoProtocolo": "BFE-PRE-2026-08495",
+    "nome": "Carlos Eduardo Nogueira",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "831.***.***-52",
+    "documentoMascarado": "***.52.-**",
+    "telefone": "(65) 99912-8811",
+    "telefoneMascarado": "(65) 9991**-**11",
+    "email": "carlos.nogueira@uisa.com.br",
+    "emailMascarado": "ca***@uisa.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T10:45:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Nova Olímpia",
+    "uf": "MT",
+    "logradouro": "Centro",
+    "cep": "78370-000",
+    "rendaEstimadaCentavos": 620000,
+    "patrimonioEstimadoCentavos": 14880000,
+    "tipoImovelInteresse": "emprestimo_consignado",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 760,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T10:45:00.000Z",
+    "criadoEm": "2026-11-22T10:45:00.000Z",
+    "atualizadoEm": "2026-11-22T17:00:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 760,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis & UISA",
+      "renda": 6200,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T10:45:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-006",
+    "codigoProtocolo": "BFE-PRE-2026-08496",
+    "nome": "ENG. MARCOS AURELIO PRADO",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "000.000.006-04",
+    "documentoMascarado": "***.000.006-**",
+    "telefone": "(65) 99841-5522",
+    "telefoneMascarado": "(65) 9984**-**22",
+    "email": "marcos.prado@construtoraultra.com.br",
+    "emailMascarado": "ma***@construtoraultra.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T11:30:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Jardim Europa",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 4200000,
+    "patrimonioEstimadoCentavos": 100800000,
+    "tipoImovelInteresse": "financiamento_lotes_ultra",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 920,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T11:30:00.000Z",
+    "criadoEm": "2026-11-22T11:30:00.000Z",
+    "atualizadoEm": "2026-11-22T18:15:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 920,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis & Construtora Ultra",
+      "renda": 42000,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T11:30:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-007",
+    "codigoProtocolo": "BFE-PRE-2026-08497",
+    "nome": "PATRÍCIA FERRARI PAULINO GONÇALVES",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "322.855.228-43",
+    "documentoMascarado": "***.855.228-**",
+    "telefone": "(18) 3991-1145",
+    "telefoneMascarado": "(18) 3991**-**45",
+    "email": "patricia.goncalves@kytto.com.br",
+    "emailMascarado": "pa***@kytto.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T13:00:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "qualificado",
+    "tipo": "pf",
+    "cidade": "Mirante do Paranapanema",
+    "uf": "SP",
+    "logradouro": "Rua Elias Barbosa da Silva, 833",
+    "cep": "19.262-070",
+    "rendaEstimadaCentavos": 4200000,
+    "patrimonioEstimadoCentavos": 100800000,
+    "tipoImovelInteresse": "home_equity_garantia_imovel",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 940,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T13:00:00.000Z",
+    "criadoEm": "2026-11-22T13:00:00.000Z",
+    "atualizadoEm": "2026-11-22T19:00:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 940,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis (Alto Padrão)",
+      "renda": 42000,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T13:00:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-008",
+    "codigoProtocolo": "BFE-PRE-2026-08498",
+    "nome": "AILTON CESAR ZANATTA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "000.000.012-44",
+    "documentoMascarado": "***.000.012-**",
+    "telefone": "(65) 99941-8822",
+    "telefoneMascarado": "(65) 9994**-**22",
+    "email": "ailton.zanatta@fazendaparecis.com.br",
+    "emailMascarado": "ai***@fazendaparecis.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T14:30:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "qualificado",
+    "tipo": "pf",
+    "cidade": "Campo Novo do Parecis",
+    "uf": "MT",
+    "logradouro": "Zona Rural / Rodovia MT-235",
+    "cep": "78360-000",
+    "rendaEstimadaCentavos": 12000000,
+    "patrimonioEstimadoCentavos": 288000000,
+    "tipoImovelInteresse": "cpr_digital_agro_barter",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 950,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T14:30:00.000Z",
+    "criadoEm": "2026-11-22T14:30:00.000Z",
+    "atualizadoEm": "2026-11-22T19:40:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 950,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis & BancoFé Agro",
+      "renda": 120000,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-009",
+    "codigoProtocolo": "BFE-PRE-2026-08499",
+    "nome": "MARIANA ALENCAR VIEIRA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "000.000.010-82",
+    "documentoMascarado": "***.000.010-**",
+    "telefone": "(65) 99654-2201",
+    "telefoneMascarado": "(65) 9965**-**01",
+    "email": "mariana.alencar@clinicavieira.com.br",
+    "emailMascarado": "ma***@clinicavieira.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T15:00:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Rua Sebastião Barreto, Jardim Europa",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 2200000,
+    "patrimonioEstimadoCentavos": 52800000,
+    "tipoImovelInteresse": "financiamento_imobiliario",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 840,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T15:00:00.000Z",
+    "criadoEm": "2026-11-22T15:00:00.000Z",
+    "atualizadoEm": "2026-11-23T09:10:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 840,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 22000,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T15:00:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-010",
+    "codigoProtocolo": "BFE-PRE-2026-08500",
+    "nome": "ROBERTO MENDES DE OLIVEIRA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "000.000.006-04",
+    "documentoMascarado": "***.000.006-**",
+    "telefone": "(65) 99988-3322",
+    "telefoneMascarado": "(65) 9998**-**22",
+    "email": "roberto.mendes@mendesengenharia.com.br",
+    "emailMascarado": "ro***@mendesengenharia.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T16:15:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Avenida Tancredo Neves, Centro",
+    "cep": "78300-050",
+    "rendaEstimadaCentavos": 5400000,
+    "patrimonioEstimadoCentavos": 129600000,
+    "tipoImovelInteresse": "financiamento_lotes_ultra",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 915,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T16:15:00.000Z",
+    "criadoEm": "2026-11-22T16:15:00.000Z",
+    "atualizadoEm": "2026-11-23T10:00:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 915,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 54000,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T16:15:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-011",
+    "codigoProtocolo": "BFE-PRE-2026-08501",
+    "nome": "LUCAS DIAS DA SILVA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "000.000.002-72",
+    "documentoMascarado": "***.000.002-**",
+    "telefone": "(65) 99822-1100",
+    "telefoneMascarado": "(65) 9982**-**00",
+    "email": "lucas.dias@silvaadvocacia.com.br",
+    "emailMascarado": "lu***@silvaadvocacia.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T17:20:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Rua José Corsino, Tarumã",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 3500000,
+    "patrimonioEstimadoCentavos": 84000000,
+    "tipoImovelInteresse": "financiamento_imobiliario",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 880,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T17:20:00.000Z",
+    "criadoEm": "2026-11-22T17:20:00.000Z",
+    "atualizadoEm": "2026-11-23T10:30:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 880,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 35000,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T17:20:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-012",
+    "codigoProtocolo": "BFE-PRE-2026-08502",
+    "nome": "FERNANDO SILVEIRA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "000.000.012-44",
+    "documentoMascarado": "***.000.012-**",
+    "telefone": "(65) 99733-4411",
+    "telefoneMascarado": "(65) 9973**-**11",
+    "email": "fernando.silveira@agropecuariamt.com.br",
+    "emailMascarado": "fe***@agropecuariamt.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T18:00:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Bairro Alto da Boa Vista",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 850000,
+    "patrimonioEstimadoCentavos": 20400000,
+    "tipoImovelInteresse": "mcmv_habitacional_popular",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 750,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T18:00:00.000Z",
+    "criadoEm": "2026-11-22T18:00:00.000Z",
+    "atualizadoEm": "2026-11-23T11:00:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 750,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 8500,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T18:00:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-013",
+    "codigoProtocolo": "BFE-PRE-2026-08503",
+    "nome": "DRA. PATRICIA MENDES",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "000.000.014-06",
+    "documentoMascarado": "***.000.014-**",
+    "telefone": "(65) 99612-8877",
+    "telefoneMascarado": "(65) 9961**-**77",
+    "email": "patricia.mendes@odontotangara.com.br",
+    "emailMascarado": "pa***@odontotangara.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T19:30:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Rua Celso Rosa Lima, Centro",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 1820000,
+    "patrimonioEstimadoCentavos": 43680000,
+    "tipoImovelInteresse": "financiamento_imobiliario",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 820,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T19:30:00.000Z",
+    "criadoEm": "2026-11-22T19:30:00.000Z",
+    "atualizadoEm": "2026-11-23T11:30:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 820,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 18200,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T19:30:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-014",
+    "codigoProtocolo": "BFE-PRE-2026-08504",
+    "nome": "CAUÃ ANGELOTTI GONÇALVES",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "000.000.005-15",
+    "documentoMascarado": "***.000.005-**",
+    "telefone": "(65) 99933-2211",
+    "telefoneMascarado": "(65) 9993**-**11",
+    "email": "caua.goncalves@estudante.ufmt.br",
+    "emailMascarado": "ca***@estudante.ufmt.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T20:10:00.000Z",
+    "jaNaCarteira": true,
+    "situacao": "convertido",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Bairro Vila Alta",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 350000,
+    "patrimonioEstimadoCentavos": 8400000,
+    "tipoImovelInteresse": "mcmv_habitacional_popular",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 710,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T20:10:00.000Z",
+    "criadoEm": "2026-11-22T20:10:00.000Z",
+    "atualizadoEm": "2026-11-23T12:00:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 710,
+      "statusOriginal": "em_qualificacao",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 3500,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T20:10:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-015",
+    "codigoProtocolo": "BFE-PRE-2026-08505",
+    "nome": "JOISE CRISTIANE ANGELOTTI",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "000.000.003-53",
+    "documentoMascarado": "***.000.003-**",
+    "telefone": "(65) 99877-5544",
+    "telefoneMascarado": "(65) 9987**-**44",
+    "email": "joise.angelotti@tangaraeduc.gov.br",
+    "emailMascarado": "jo***@tangaraeduc.gov.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T21:00:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Rua Manoel Dionísio Sobrinho",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 1450000,
+    "patrimonioEstimadoCentavos": 34800000,
+    "tipoImovelInteresse": "financiamento_imobiliario",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 810,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T21:00:00.000Z",
+    "criadoEm": "2026-11-22T21:00:00.000Z",
+    "atualizadoEm": "2026-11-23T12:15:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 810,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 14500,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T21:00:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-016",
+    "codigoProtocolo": "BFE-PRE-2026-08506",
+    "nome": "LUCAS DOS PASSOS SILVA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "069.887.226-61",
+    "documentoMascarado": "***.887.226-**",
+    "telefone": "(65) 99911-7788",
+    "telefoneMascarado": "(65) 9991**-**88",
+    "email": "lucas.passos@consultoriams.com.br",
+    "emailMascarado": "lu***@consultoriams.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-22T22:00:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Rua Lions Internacional, Centro",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 4500000,
+    "patrimonioEstimadoCentavos": 108000000,
+    "tipoImovelInteresse": "financiamento_imobiliario",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 930,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-22T22:00:00.000Z",
+    "criadoEm": "2026-11-22T22:00:00.000Z",
+    "atualizadoEm": "2026-11-23T13:00:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 930,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 45000,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-22T22:00:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-017",
+    "codigoProtocolo": "BFE-PRE-2026-08507",
+    "nome": "MARCOS VINÍCIUS DE ALMEIDA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "234.567.890-12",
+    "documentoMascarado": "***.567.890-**",
+    "telefone": "(65) 99833-4455",
+    "telefoneMascarado": "(65) 9983**-**55",
+    "email": "marcos.almeida@transnorte.com.br",
+    "emailMascarado": "ma***@transnorte.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-23T07:45:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Bairro Jardim dos Ipês",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 1680000,
+    "patrimonioEstimadoCentavos": 40320000,
+    "tipoImovelInteresse": "financiamento_lotes_ultra",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 835,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-23T07:45:00.000Z",
+    "criadoEm": "2026-11-23T07:45:00.000Z",
+    "atualizadoEm": "2026-11-23T13:30:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 835,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 16800,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-23T07:45:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-018",
+    "codigoProtocolo": "BFE-PRE-2026-08508",
+    "nome": "JULIANA FERREIRA LIMA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "567.890.123-45",
+    "documentoMascarado": "***.890.123-**",
+    "telefone": "(65) 99622-3344",
+    "telefoneMascarado": "(65) 9962**-**44",
+    "email": "juliana.lima@arquiteturamt.com.br",
+    "emailMascarado": "ju***@arquiteturamt.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-23T08:15:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "novo",
+    "tipo": "pf",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Residencial Manacá",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 1250000,
+    "patrimonioEstimadoCentavos": 30000000,
+    "tipoImovelInteresse": "financiamento_imobiliario",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 815,
+    "papeis": [
+      "comprador",
+      "locatario",
+      "proponente_credito"
+    ],
+    "importadoEm": "2026-11-23T08:15:00.000Z",
+    "criadoEm": "2026-11-23T08:15:00.000Z",
+    "atualizadoEm": "2026-11-23T14:00:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 815,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 12500,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-23T08:15:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-019",
+    "codigoProtocolo": "BFE-PRE-2026-08509",
+    "nome": "CASANOVA EMPREENDIMENTOS IMOBILIÁRIOS LTDA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "18.987.654/0001-99",
+    "documentoMascarado": "18.***.***/0001-99",
+    "telefone": "(65) 99988-1001",
+    "telefoneMascarado": "(65) 9998**-**01",
+    "email": "diretoria@casanova.kytto.com.br",
+    "emailMascarado": "di***@casanova.kytto.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-23T08:45:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "qualificado",
+    "tipo": "pj",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Avenida Brasil, Centro",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 450000000,
+    "patrimonioEstimadoCentavos": 10800000000,
+    "tipoImovelInteresse": "capital_giro_pj",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 920,
+    "papeis": [
+      "empresa_parceira",
+      "incorporadora"
+    ],
+    "importadoEm": "2026-11-23T08:45:00.000Z",
+    "criadoEm": "2026-11-23T08:45:00.000Z",
+    "atualizadoEm": "2026-11-23T14:30:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 920,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 4500000,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-23T08:45:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  },
+  {
+    "id": "pre-cnv-020",
+    "codigoProtocolo": "BFE-PRE-2026-08510",
+    "nome": "CONSTRUTORA CASA NOVA IMÓVEIS LTDA",
+    "origem": "casanova",
+    "origemRotulo": "Casa Nova",
+    "documento": "03.456.789/0001-88",
+    "documentoMascarado": "03.***.***/0001-88",
+    "telefone": "(65) 3326-1020",
+    "telefoneMascarado": "(65) 3326**-**20",
+    "email": "contato@casanovaimoveis.com.br",
+    "emailMascarado": "co***@casanovaimoveis.com.br",
+    "consentimentoGrupo": true,
+    "consentimentoEm": "2026-11-23T09:10:00.000Z",
+    "jaNaCarteira": false,
+    "situacao": "qualificado",
+    "tipo": "pj",
+    "cidade": "Tangará da Serra",
+    "uf": "MT",
+    "logradouro": "Avenida Brasil, Centro",
+    "cep": "78300-000",
+    "rendaEstimadaCentavos": 320000000,
+    "patrimonioEstimadoCentavos": 7680000000,
+    "tipoImovelInteresse": "capital_giro_pj",
+    "valorInteresseCentavos": 35000000,
+    "scoreSerasaEstimado": 890,
+    "papeis": [
+      "empresa_parceira",
+      "incorporadora"
+    ],
+    "importadoEm": "2026-11-23T09:10:00.000Z",
+    "criadoEm": "2026-11-23T09:10:00.000Z",
+    "atualizadoEm": "2026-11-23T15:00:00.000Z",
+    "dadosBrutos": {
+      "scoreSerasa": 890,
+      "statusOriginal": "aprovado_autonomo",
+      "empresaParceira": "Casa Nova Imóveis",
+      "renda": 3200000,
+      "dossieSCR": "A",
+      "protestosAtivos": 0,
+      "ambientalEsg": "CONFORME_ESG_APROVADO"
+    },
+    "historico": [
+      {
+        "data": "2026-11-23T09:10:00.000Z",
+        "autor": "Casa Nova Imóveis • CRM Integrado",
+        "nota": "Pré-cadastro registrado no portal da Casa Nova Imóveis (casanova.kytto.com.br)."
+      },
+      {
+        "data": "2026-11-22T14:30:00.000Z",
+        "autor": "BancoFé Operações Financeiras • Motor de Crédito",
+        "nota": "Sincronizado na esteira BancoFé com scoring algorítmico e auditoria 360° aprovada."
+      }
+    ]
+  }
+]
