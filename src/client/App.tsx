@@ -1,0 +1,115 @@
+import React, { useState, useEffect } from 'react';
+import { Navbar } from './components/Navbar';
+import { IntegrationsHub } from './components/IntegrationsHub';
+import { PixTerminal } from './components/PixTerminal';
+import { BoletoTerminal } from './components/BoletoTerminal';
+import { McpCockpit } from './components/McpCockpit';
+import { SkillRunner } from './components/SkillRunner';
+import { LedgerExplorer } from './components/LedgerExplorer';
+import { IntegrationRegistry } from '../integrations/registry';
+
+export const App: React.FC = () => {
+  const [activeTab, setActiveTab] = useState('cockpit');
+  const [loading, setLoading] = useState(false);
+  const [integrationsList, setIntegrationsList] = useState<any[]>([]);
+
+  const loadIntegrations = async () => {
+    setLoading(true);
+    try {
+      // Tenta buscar da API backend, com fallback direto ao registry local
+      const res = await fetch('/api/integrations').catch(() => null);
+      if (res && res.ok) {
+        const data = await res.json();
+        setIntegrationsList(data.integrations || []);
+      } else {
+        const registry = IntegrationRegistry.getInstance();
+        const adapters = registry.listAdapters();
+        const checks = await registry.runHealthChecks();
+        const formatted = adapters.map((a) => ({
+          id: a.id,
+          name: a.name,
+          version: a.version,
+          category: a.category,
+          description: a.description,
+          tags: a.tags,
+          capabilities: a.capabilities,
+          health: checks[a.id] || { status: 'CONNECTED', latencyMs: 5, message: 'Operacional' },
+        }));
+        setIntegrationsList(formatted);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadIntegrations();
+  }, []);
+
+  const handleSelectAction = (adapterId: string, action: string) => {
+    if (adapterId.includes('pix')) {
+      setActiveTab('pix');
+    } else if (adapterId.includes('boleto')) {
+      setActiveTab('boletos');
+    } else if (adapterId.includes('mcp')) {
+      setActiveTab('mcp');
+    } else if (adapterId.includes('skill')) {
+      setActiveTab('skills');
+    } else {
+      setActiveTab('cockpit');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-950 flex flex-col font-['Plus_Jakarta_Sans',sans-serif]">
+      <Navbar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onRefresh={loadIntegrations}
+        loading={loading}
+        totalAdapters={integrationsList.length}
+      />
+
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {activeTab === 'cockpit' && (
+          <IntegrationsHub
+            integrations={integrationsList}
+            onSelectAction={handleSelectAction}
+          />
+        )}
+
+        {activeTab === 'pix' && <PixTerminal />}
+
+        {activeTab === 'boletos' && <BoletoTerminal />}
+
+        {activeTab === 'mcp' && <McpCockpit />}
+
+        {activeTab === 'skills' && <SkillRunner />}
+
+        {activeTab === 'ledger' && <LedgerExplorer />}
+      </main>
+
+      {/* Rodapé com conformidade BACEN e Git info */}
+      <footer className="border-t border-slate-800 bg-slate-950 py-6 text-xs text-slate-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center space-x-2">
+            <span className="font-bold text-slate-300">BancoFe S.A.</span>
+            <span>•</span>
+            <span>Instituição de Pagamento & Crédito Agro</span>
+            <span>•</span>
+            <span className="font-mono text-emerald-400">ISPB 799</span>
+          </div>
+          <div className="flex items-center space-x-4 text-[11px] font-mono">
+            <span>Repositório: rodrigokytto/bancoFe</span>
+            <span>•</span>
+            <span className="text-slate-400">SPI / CIP / FAPI / MCP / Skills</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default App;

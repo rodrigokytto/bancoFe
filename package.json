@@ -1,0 +1,62 @@
+{
+  "name": "bancofe",
+  "version": "1.0.0",
+  "description": "BancoFe - Plataforma Bancária com Módulo de Integrações Git Abertos, MCPs e Skills",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview --port 3000 --host",
+    "server": "tsx src/server/app.ts",
+    "mcp": "tsx src/integrations/mcps/server/mcp.server.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "zod": "^3.24.2",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.0.2",
+    "lucide-react": "^1.16.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/cors": "^2.8.17",
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.1",
+    "vitest": "^3.0.8"
+  },
+  "keywords": [
+    "bancofe",
+    "banking",
+    "fintech",
+    "open-finance",
+    "pix",
+    "cnab240",
+    "cnab400",
+    "febraban",
+    "boletos",
+    "mcp",
+    "model-context-protocol",
+    "skills",
+    "double-entry-ledger",
+    "drex",
+    "agro-finance"
+  ],
+  "author": "rodrigokytto",
+  "license": "MIT"
+}
