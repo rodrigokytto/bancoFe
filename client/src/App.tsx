@@ -63,7 +63,7 @@ import { NossaGenteRh } from "./pages/NossaGenteRh";
 import { PassaporteSalmaoPublico } from "./pages/PassaporteSalmaoPublico";
 import { MapaMesasSalao } from "./pages/MapaMesasSalao";
 import { BancoFeHub } from "./pages/BancoFeHub";
-
+import { EcommerceAdminPage } from "./pages/EcommerceAdminPage";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -134,6 +134,24 @@ function Router() {
       <Route>
         <AppLayout>
           <Switch>
+            {/* E-Commerce & Omnichannel Holding */}
+            <Route path="/admin/ecommerce" component={EcommerceAdminPage} />
+            <Route path="/admin/e-commerce" component={EcommerceAdminPage} />
+            <Route path="/admin/lojas" component={EcommerceAdminPage} />
+            <Route path="/admin/catalogo" component={EcommerceAdminPage} />
+            <Route path="/admin/pedidos" component={EcommerceAdminPage} />
+            <Route path="/ecommerce" component={EcommerceAdminPage} />
+
+            {/* Atalhos Rápidos Contabilidade, Fechamento e Termos (Prevenção 404) */}
+            <Route path="/admin/cont" component={FechamentoContabilMensal} />
+            <Route path="/admin/contabilidade" component={FechamentoContabilMensal} />
+            <Route path="/admin/fech" component={FechamentoContabilMensal} />
+            <Route path="/admin/fechamento" component={FechamentoContabilMensal} />
+            <Route path="/admin/term" component={Cadastro360BancoFePage} />
+            <Route path="/admin/termos" component={Cadastro360BancoFePage} />
+            <Route path="/termos" component={Cadastro360BancoFePage} />
+            <Route path="/documentos" component={Cadastro360BancoFePage} />
+
             {/* Administração de Módulos por Negócio (BancoFe) */}
             <Route path="/admin" component={AdminModulosPage} />
             <Route path="/admin/modulos" component={AdminModulosPage} />
@@ -142,20 +160,34 @@ function Router() {
             <Route path="/admin-modulos" component={AdminModulosPage} />
 
             {/* BancoFe — Operações Financeiras & CRM 360° */}
+            <Route path="/admin/operacoes" component={CrmFinanceiraPage} />
             <Route path="/admin/crm-financeira" component={CrmFinanceiraPage} />
             <Route path="/admin/operacoes-financeiras" component={CrmFinanceiraPage} />
+            <Route path="/operacoes" component={CrmFinanceiraPage} />
             <Route path="/crm-financeira" component={CrmFinanceiraPage} />
             <Route path="/operacoes-financeiras" component={CrmFinanceiraPage} />
 
             {/* BancoFe — Cadastro 360°, Pré-Cadastro & Central de Termos */}
             <Route path="/admin/cadastro-360" component={Cadastro360BancoFePage} />
             <Route path="/admin/pre-cadastro" component={Cadastro360BancoFePage} />
+            <Route path="/admin/precadastro" component={Cadastro360BancoFePage} />
             <Route path="/admin/documentos" component={Cadastro360BancoFePage} />
             <Route path="/admin/termos" component={Cadastro360BancoFePage} />
             <Route path="/cadastro-360" component={Cadastro360BancoFePage} />
             <Route path="/pre-cadastro" component={Cadastro360BancoFePage} />
+            <Route path="/precadastro" component={Cadastro360BancoFePage} />
+            <Route path="/cadastro360" component={Cadastro360BancoFePage} />
             <Route path="/documentos" component={Cadastro360BancoFePage} />
             <Route path="/termos" component={Cadastro360BancoFePage} />
+
+            {/* Consulta 360° CPF & CNPJ Completa */}
+            <Route path="/consulta-360" component={BancoFeHub} />
+            <Route path="/consulta360" component={BancoFeHub} />
+            <Route path="/consulta-cpf" component={BancoFeHub} />
+            <Route path="/consulta-cnpj" component={BancoFeHub} />
+            <Route path="/admin/consulta-360" component={BancoFeHub} />
+            <Route path="/admin/consulta-cpf" component={BancoFeHub} />
+            <Route path="/admin/consulta-cnpj" component={BancoFeHub} />
 
             {/* Vendas & Apps */}
             <Route path="/" component={Cockpit} />

@@ -153,6 +153,16 @@ export function registerCadastro360Routes(app: any) {
     }
   });
 
+  // 10.1 Listar Todos os Termos da Holding (Central de Termos)
+  router.get("/termos", (_req: Request, res: Response) => {
+    try {
+      const termos = store.listarTodosTermos();
+      res.json({ success: true, count: termos.length, data: termos });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
   // 11. Obter Minuta do Termo
   router.get("/clientes/:id/termos/:termoId/minuta", (req: Request, res: Response) => {
     try {

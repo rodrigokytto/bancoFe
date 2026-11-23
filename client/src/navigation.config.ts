@@ -103,7 +103,9 @@ export const SECTIONS: Record<string, NavSection> = {
     icon: Landmark,
     items: [
       { id: "bancofe_hub", path: "/bancofe", label: "BancoFé Hub Geral (PRD)", icon: Landmark, badge: "ISPB 799", badgeColor: "bg-emerald-600 text-white", highlight: true },
-      { id: "bancofe_consulta360", path: "/bancofe", label: "Consulta 360° CPF/CNPJ", icon: Search, badge: "11 Abas", badgeColor: "bg-cyan-600 text-white", highlight: true },
+      { id: "bancofe_consulta360", path: "/consulta-360", label: "Consulta 360° CPF/CNPJ", icon: Search, badge: "11 Abas", badgeColor: "bg-cyan-600 text-white", highlight: true },
+      { id: "bancofe_operacoes", path: "/admin/operacoes-financeiras", label: "Operações & Termos SCR", icon: Building2, badge: "Crédito 360°", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_ecommerce", path: "/admin/ecommerce", label: "E-Commerce & Omnichannel", icon: Store, badge: "Multi-Loja", badgeColor: "bg-emerald-700 text-white", highlight: true },
       { id: "bancofe_precadastro", path: "/bancofe", label: "Pré-Cadastro 10x Produtos", icon: Calculator, badge: "Simulador", badgeColor: "bg-emerald-600 text-white", highlight: true },
       { id: "bancofe_radar", path: "/bancofe", label: "Radar MT & 20 Empresas", icon: Target, badge: "Tangará", highlight: true },
     ],

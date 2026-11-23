@@ -452,6 +452,10 @@ export class Cadastro360Store {
   // OPERAÇÕES DE TERMOS DIGITAIS
   // ==========================================
 
+  public listarTodosTermos(): TermoDigitalBancoFe[] {
+    return this.termos;
+  }
+
   public listarTermosPorCliente(clienteId: string): TermoDigitalBancoFe[] {
     return this.termos.filter((t) => t.clienteId === clienteId);
   }

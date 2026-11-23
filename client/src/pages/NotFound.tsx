@@ -1,68 +1,111 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle, Home } from "lucide-react";
-import { useEffect } from "react";
+import { Landmark, Store, FileText, Search, Home, Building2, Briefcase } from "lucide-react";
 import { useLocation } from "wouter";
 
-// Hosting answers this path with HTTP 404 while still serving the app.
-const NOT_FOUND_PATH = "/404";
-
-// Render for unknown routes and for items the server confirmed missing (e.g. `/page/:id`).
-// The redirect is irreversible: never render while loading, on other errors, or before auth resolves.
 export default function NotFound() {
   const [, setLocation] = useLocation();
 
-  useEffect(() => {
-    const robots = document.createElement("meta");
-    robots.name = "robots";
-    robots.content = "noindex";
-    document.head.appendChild(robots);
-
-    // Full-page navigation: a client-side route change sends no request, so no 404 status.
-    if (window.location.pathname.replace(/\/$/, "") !== NOT_FOUND_PATH) {
-      window.location.replace(NOT_FOUND_PATH);
-    }
-
-    return () => robots.remove();
-  }, []);
-
-  const handleGoHome = () => {
-    setLocation("/");
-  };
-
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
-      <Card className="w-full max-w-lg mx-4 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-        <CardContent className="pt-8 pb-8 text-center">
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              <div className="absolute inset-0 bg-red-100 rounded-full animate-pulse" />
-              <AlertCircle className="relative h-16 w-16 text-red-500" />
+    <div className="min-h-screen w-full flex items-center justify-center bg-[#071510] p-4 text-slate-100">
+      <Card className="w-full max-w-xl shadow-2xl border border-emerald-800/60 bg-[#0c241a]/90 backdrop-blur-md rounded-2xl">
+        <CardContent className="pt-8 pb-8 text-center space-y-6">
+          <div className="flex justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-800 via-emerald-600 to-teal-400 flex items-center justify-center text-white text-2xl shadow-lg border border-emerald-400/40">
+              <Landmark className="w-8 h-8" />
             </div>
           </div>
 
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">404</h1>
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-700/50 text-xs font-bold uppercase tracking-wider mb-2">
+              BancoFé • Holding Multi-Negócio
+            </div>
+            <h1 className="text-3xl font-extrabold text-white tracking-tight">
+              Módulo ou Rota Não Encontrada
+            </h1>
+            <p className="text-slate-300 text-sm mt-2 max-w-md mx-auto">
+              O endereço acessado não corresponde a uma rota ativa. Selecione um dos módulos corporativos oficiais abaixo:
+            </p>
+          </div>
 
-          <h2 className="text-xl font-semibold text-slate-700 mb-4">
-            Page Not Found
-          </h2>
+          {/* Grid de Atalhos Oficiais com Tema Verde BancoFé */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+            <button
+              onClick={() => setLocation("/admin/ecommerce")}
+              className="p-3.5 rounded-xl bg-[#0b1d16] hover:bg-emerald-950/80 border border-emerald-800/40 hover:border-emerald-500/60 transition group flex items-start gap-3 cursor-pointer"
+            >
+              <div className="w-8 h-8 rounded-lg bg-emerald-900/60 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                <Store className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="font-bold text-xs text-white group-hover:text-emerald-400 transition block">
+                  Admin E-Commerce
+                </span>
+                <span className="text-[10px] text-slate-400">
+                  Lojas virtuais, catálogo & split D+0
+                </span>
+              </div>
+            </button>
 
-          <p className="text-slate-600 mb-8 leading-relaxed">
-            Sorry, the page you are looking for doesn't exist.
-            <br />
-            It may have been moved or deleted.
-          </p>
+            <button
+              onClick={() => setLocation("/admin/operacoes-financeiras")}
+              className="p-3.5 rounded-xl bg-[#0b1d16] hover:bg-emerald-950/80 border border-emerald-800/40 hover:border-emerald-500/60 transition group flex items-start gap-3 cursor-pointer"
+            >
+              <div className="w-8 h-8 rounded-lg bg-emerald-900/60 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                <Briefcase className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="font-bold text-xs text-white group-hover:text-emerald-400 transition block">
+                  Operações & Termos
+                </span>
+                <span className="text-[10px] text-slate-400">
+                  Crédito, CCB, SCR e simulador SAC
+                </span>
+              </div>
+            </button>
 
-          <div
-            id="not-found-button-group"
-            className="flex flex-col sm:flex-row gap-3 justify-center"
-          >
+            <button
+              onClick={() => setLocation("/consulta-360")}
+              className="p-3.5 rounded-xl bg-[#0b1d16] hover:bg-emerald-950/80 border border-emerald-800/40 hover:border-emerald-500/60 transition group flex items-start gap-3 cursor-pointer"
+            >
+              <div className="w-8 h-8 rounded-lg bg-emerald-900/60 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                <Search className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="font-bold text-xs text-white group-hover:text-emerald-400 transition block">
+                  Consulta 360° CPF/CNPJ
+                </span>
+                <span className="text-[10px] text-slate-400">
+                  11 abas, grafo, QSA e dossiê pericial
+                </span>
+              </div>
+            </button>
+
+            <button
+              onClick={() => setLocation("/admin")}
+              className="p-3.5 rounded-xl bg-[#0b1d16] hover:bg-emerald-950/80 border border-emerald-800/40 hover:border-emerald-500/60 transition group flex items-start gap-3 cursor-pointer"
+            >
+              <div className="w-8 h-8 rounded-lg bg-emerald-900/60 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                <Building2 className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="font-bold text-xs text-white group-hover:text-emerald-400 transition block">
+                  Gestão de Módulos
+                </span>
+                <span className="text-[10px] text-slate-400">
+                  Cockpit administrativo da holding
+                </span>
+              </div>
+            </button>
+          </div>
+
+          <div className="pt-2">
             <Button
-              onClick={handleGoHome}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+              onClick={() => setLocation("/")}
+              className="bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition shadow-lg cursor-pointer"
             >
               <Home className="w-4 h-4 mr-2" />
-              Go Home
+              Retornar ao Cockpit Geral
             </Button>
           </div>
         </CardContent>

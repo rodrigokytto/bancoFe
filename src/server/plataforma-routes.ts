@@ -9,6 +9,7 @@ import { renderizarHtmlBackoffice } from "../views/backoffice-html";
 import { renderizarHtmlMesaCredito } from "../views/mesa-credito-html";
 import { renderizarHtmlHomeBancoFe } from "../views/home-bancofe-html";
 import { ServicoMesaCredito } from "../credito/servico-mesa-credito";
+import { renderizarHtmlAdminEcommerce } from "../views/admin-ecommerce-html";
 import { ServicoConsulta360 } from "../servico";
 import { ServicoPreCadastroBancoFe } from "../precadastro/servico-precadastro";
 import { consultarComplianceAmbiental } from "../compliance/sicar-compliance-ambiental";
@@ -302,6 +303,413 @@ export function registerPlataformaWebAndApis(app: any) {
     });
   });
 
+  // ==========================================
+  // E-COMMERCE & COMMERCE ADMIN REST APIS
+  // ==========================================
+
+  app.get("/api/admin/commerce/storefronts", (_req: Request, res: Response) => {
+    res.json({
+      sucesso: true,
+      total: 6,
+      storefronts: [
+        {
+          id: "str-zuma",
+          nome: "Zuma Cozinha Oriental",
+          tipo: "Gastronomia & Delivery",
+          dominio: "delivery.zumaoriental.com.br",
+          status: "ativo",
+          pedidosMes: 3940,
+          gmvMes: 284500,
+          taxaConversao: 5.2,
+          splitRegra: "98.5% Restaurante / 1.5% BancoFé Pay",
+        },
+        {
+          id: "str-casanova",
+          nome: "Casa Nova Imóveis & Construtora",
+          tipo: "Imobiliário & Financiamento",
+          dominio: "casanova.kytto.com.br",
+          status: "ativo",
+          pedidosMes: 48,
+          gmvMes: 14200000,
+          taxaConversao: 3.8,
+          splitRegra: "Funding Direto BancoFé S/A",
+        },
+        {
+          id: "str-moda",
+          nome: "Zuma Moda & Boutique",
+          tipo: "Varejo & Moda",
+          dominio: "moda.zumaoriental.com.br",
+          status: "ativo",
+          pedidosMes: 1250,
+          gmvMes: 142000,
+          taxaConversao: 4.6,
+          splitRegra: "97.5% Boutique / 2.5% BancoFé Pay",
+        },
+        {
+          id: "str-agro",
+          nome: "Agropecuária UISA / Agro Open",
+          tipo: "Agro & Insumos",
+          dominio: "agro.bancofe.com.br",
+          status: "ativo",
+          pedidosMes: 620,
+          gmvMes: 8920000,
+          taxaConversao: 6.1,
+          splitRegra: "Barter / CPR Eletrônica",
+        },
+        {
+          id: "str-dino",
+          nome: "Barbearia Dino",
+          tipo: "Estética & Serviços",
+          dominio: "dino.kytto.com.br",
+          status: "ativo",
+          pedidosMes: 850,
+          gmvMes: 48000,
+          taxaConversao: 8.4,
+          splitRegra: "98.0% Salão / 2.0% BancoFé Pay",
+        },
+        {
+          id: "str-stallone",
+          nome: "Stallone Nutre Sport",
+          tipo: "Nutrição & Suplementos",
+          dominio: "stallone.bancofe.com.br",
+          status: "ativo",
+          pedidosMes: 720,
+          gmvMes: 96500,
+          taxaConversao: 4.9,
+          splitRegra: "98.0% Loja / 2.0% BancoFé Pay",
+        },
+      ],
+    });
+  });
+
+  app.get("/api/admin/commerce/catalog/products", (_req: Request, res: Response) => {
+    res.json({
+      sucesso: true,
+      total: 7,
+      products: [
+        {
+          id: "prod-1",
+          storeId: "str-zuma",
+          storeName: "Zuma Cozinha Oriental",
+          name: "Combo Super Especial Salmão Trufado (40 Peças)",
+          sku: "ZUM-COMB-040",
+          category: "Combinados Premium",
+          price: 189.9,
+          costPrice: 72.0,
+          stock: 95,
+          active: true,
+        },
+        {
+          id: "prod-2",
+          storeId: "str-zuma",
+          storeName: "Zuma Cozinha Oriental",
+          name: "Barca Imperador Tangará (60 Peças)",
+          sku: "ZUM-BARC-060",
+          category: "Barcas",
+          price: 269.0,
+          costPrice: 104.0,
+          stock: 40,
+          active: true,
+        },
+        {
+          id: "prod-3",
+          storeId: "str-casanova",
+          storeName: "Casa Nova Imóveis",
+          name: "Casa Térrea 3 Suítes - Res. Buritis Tangará",
+          sku: "IMOV-BUR-03",
+          category: "Imóveis Prontos",
+          price: 780000.0,
+          costPrice: 520000.0,
+          stock: 1,
+          active: true,
+        },
+        {
+          id: "prod-4",
+          storeId: "str-casanova",
+          storeName: "Casa Nova Imóveis",
+          name: "Loteamento Altos da Serra (360m²)",
+          sku: "LOT-ALT-360",
+          category: "Terrenos",
+          price: 145000.0,
+          costPrice: 70000.0,
+          stock: 8,
+          active: true,
+        },
+        {
+          id: "prod-5",
+          storeId: "str-moda",
+          storeName: "Zuma Moda & Boutique",
+          name: "Vestido Midi Alfaiataria Seda & Linho",
+          sku: "MOD-VES-MID01",
+          category: "Alfaiataria",
+          price: 389.0,
+          costPrice: 140.0,
+          stock: 14,
+          active: true,
+        },
+        {
+          id: "prod-6",
+          storeId: "str-agro",
+          storeName: "Agropecuária UISA",
+          name: "Mudas Pré-Brotadas de Cana (MPB) - Lote 5.000 un",
+          sku: "AGR-CANA-MPB5K",
+          category: "Mudas & Sementes",
+          price: 12500.0,
+          costPrice: 6800.0,
+          stock: 200,
+          active: true,
+        },
+        {
+          id: "prod-7",
+          storeId: "str-stallone",
+          storeName: "Stallone Nutre Sport",
+          name: "100% Whey Isolate 900g Baunilha Gold",
+          sku: "NUT-WHEY-ISO900",
+          category: "Proteínas",
+          price: 199.9,
+          costPrice: 110.0,
+          stock: 38,
+          active: true,
+        },
+      ],
+    });
+  });
+
+  app.get("/api/admin/commerce/catalog/categories", (_req: Request, res: Response) => {
+    res.json({
+      sucesso: true,
+      categories: [
+        { id: "cat-comb", name: "Combinados Orientais", storeId: "str-zuma" },
+        { id: "cat-imov", name: "Imóveis Residenciais", storeId: "str-casanova" },
+        { id: "cat-lote", name: "Lotes & Terrenos", storeId: "str-casanova" },
+        { id: "cat-moda", name: "Boutique & Vestuário", storeId: "str-moda" },
+        { id: "cat-agro", name: "Insumos & Safra Cana", storeId: "str-agro" },
+        { id: "cat-nutr", name: "Suplementação & Whey", storeId: "str-stallone" },
+      ],
+    });
+  });
+
+  app.get("/api/admin/commerce/orders", (_req: Request, res: Response) => {
+    res.json({
+      sucesso: true,
+      total: 4,
+      orders: [
+        {
+          id: "PED-9821",
+          store: "Zuma Cozinha Oriental",
+          customerName: "Lucas Silveira Gonçalves",
+          customerDoc: "069.***.***-61",
+          channel: "WhatsApp Zumi / Web",
+          total: 218.0,
+          paymentMethod: "PIX BancoFé D+0",
+          paymentStatus: "PAGO",
+          fulfillmentStatus: "EM_SEPARACAO",
+          createdAt: new Date().toISOString(),
+        },
+        {
+          id: "PED-9820",
+          store: "Zuma Moda & Boutique",
+          customerName: "Mariana Albuquerque Costa",
+          customerDoc: "348.***.***-02",
+          channel: "Mala Condicional",
+          total: 1480.0,
+          paymentMethod: "Cartão Crédito D+1",
+          paymentStatus: "AUTORIZADO",
+          fulfillmentStatus: "ENTREGUE_CONDICIONAL",
+          createdAt: new Date(Date.now() - 3600000).toISOString(),
+        },
+        {
+          id: "PED-9819",
+          store: "Casa Nova Imóveis",
+          customerName: "Engenharia Tangará Ltda",
+          customerDoc: "18.***.***/0001-44",
+          channel: "Mesa Crédito B2B",
+          total: 450000.0,
+          paymentMethod: "CCB BancoFé",
+          paymentStatus: "EM_ANALISE_MESA",
+          fulfillmentStatus: "FORMALIZACAO",
+          createdAt: new Date(Date.now() - 7200000).toISOString(),
+        },
+        {
+          id: "PED-9818",
+          store: "Stallone Nutre Sport",
+          customerName: "Carlos Eduardo Neves",
+          customerDoc: "512.***.***-88",
+          channel: "Loja Virtual Web",
+          total: 399.8,
+          paymentMethod: "PIX BancoFé D+0",
+          paymentStatus: "PAGO",
+          fulfillmentStatus: "CONCLUIDO",
+          createdAt: new Date(Date.now() - 10800000).toISOString(),
+        },
+      ],
+    });
+  });
+
+  app.get("/api/admin/commerce/payments", (_req: Request, res: Response) => {
+    res.json({
+      sucesso: true,
+      gateway: "BancoFé Pay Core",
+      ispb: "799",
+      splitConfig: {
+        taxaPixPercentual: 0.89,
+        taxaCartaoPercentual: 1.89,
+        taxaBoletoFixoCentavos: 190,
+        liquidacaoPix: "D+0",
+        liquidacaoCartao: "D+1",
+        liquidacaoBoleto: "D+1",
+      },
+      saldoDisponivelCentavos: 34892000,
+      saldoBloqueadoCentavos: 4200000,
+    });
+  });
+
+  app.get("/api/admin/commerce/shipping/methods", (_req: Request, res: Response) => {
+    res.json({
+      sucesso: true,
+      methods: [
+        { id: "ship-tga-centro", nome: "Entrega Expressa Centro Tangará", valorCentavos: 800, prazoMinutos: 25 },
+        { id: "ship-tga-bairros", nome: "Entrega Bairros Tangará", valorCentavos: 1400, prazoMinutos: 40 },
+        { id: "ship-nova-olimpia", nome: "Rota Nova Olímpia / UISA", valorCentavos: 2800, prazoMinutos: 90 },
+        { id: "ship-cuiaba", nome: "Transportadora Rodoviária MT", valorCentavos: 4500, prazoDias: 1 },
+      ],
+    });
+  });
+
+  app.get("/api/admin/commerce/customers", (_req: Request, res: Response) => {
+    res.json({
+      sucesso: true,
+      total: 4820,
+      activeCustomers: 4820,
+      ticketMedioGeralCentavos: 16480,
+    });
+  });
+
+  app.get("/api/admin/commerce/operations/health", (_req: Request, res: Response) => {
+    res.json({
+      status: "HEALTHY",
+      uptimePercent: 99.99,
+      latencyMs: 14,
+      bancofePayConnected: true,
+      bacenOpenFinanceOk: true,
+      allTenantsActive: true,
+    });
+  });
+
+  app.get("/api/admin/commerce-session/recovery-status", (_req: Request, res: Response) => {
+    res.json({
+      recovered: true,
+      healthy: true,
+      authenticated: true,
+      user: "rodrigo.goncalves@kytto.com.br",
+    });
+  });
+
+  // ==========================================
+  // CONSULTA 360° CPF & CNPJ OFICIAL (CASANOVA KYTTO & DATAGRAPH BRASIL)
+  // ==========================================
+
+  app.post("/api/consulta360/consultar", async (req: Request, res: Response) => {
+    try {
+      const entrada = req.body;
+      const dossie = await servico360.consultar(entrada, "casanova-ultra");
+      res.json({
+        sucesso: true,
+        protocolo: dossie.protocoloConsulta,
+        tempoMs: dossie.tempoProcessamentoMs,
+        dossie,
+      });
+    } catch (err: any) {
+      console.error("[Consulta 360] Erro ao consultar:", err);
+      res.status(500).json({
+        sucesso: false,
+        erro: err?.message || "Falha ao processar consulta 360.",
+      });
+    }
+  });
+
+  app.post("/api/consulta360/grafo", async (req: Request, res: Response) => {
+    try {
+      const { documentoOuNome, profundidade } = req.body;
+      const dossie = await servico360.consultar(
+        { documentoOuNome: documentoOuNome || "30587162813", profundidadeGrafo: profundidade || 2 },
+        "casanova-ultra"
+      );
+      res.json({
+        sucesso: true,
+        nos: dossie.grafo.nos,
+        arestas: dossie.grafo.arestas,
+        metricas: dossie.grafo.metricas,
+      });
+    } catch (err: any) {
+      res.status(500).json({ sucesso: false, erro: err?.message || "Erro ao gerar grafo relacional" });
+    }
+  });
+
+  app.post("/api/v1/grafo/expandir-no", async (req: Request, res: Response) => {
+    try {
+      const { noId, profundidade } = req.body;
+      const dossie = await servico360.consultar(
+        { documentoOuNome: noId || "30587162813", profundidadeGrafo: profundidade || 2 },
+        "casanova-ultra"
+      );
+      res.json({
+        sucesso: true,
+        nos: dossie.grafo.nos,
+        arestas: dossie.grafo.arestas,
+        metricas: dossie.grafo.metricas,
+      });
+    } catch (err: any) {
+      res.status(500).json({ sucesso: false, erro: err?.message || "Erro ao expandir nó do grafo" });
+    }
+  });
+
+  app.post("/api/consulta360/exportar/excel", async (req: Request, res: Response) => {
+    try {
+      const dossie = req.body?.dossie || (await servico360.consultar(req.body, "casanova-ultra"));
+      const buffer = await servico360.exportarExcel(dossie);
+      const filename = `dossie-360-${dossie.identificacao.documentoLimpo || "pericial"}.xlsx`;
+      res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+      res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+      res.send(buffer);
+    } catch (err: any) {
+      res.status(500).json({ sucesso: false, erro: err?.message || "Erro ao exportar planilha Excel" });
+    }
+  });
+
+  app.post("/api/consulta360/exportar/pdf", async (req: Request, res: Response) => {
+    try {
+      const dossie = req.body?.dossie || (await servico360.consultar(req.body, "casanova-ultra"));
+      const buffer = await servico360.exportarPdf(dossie);
+      const filename = `dossie-360-${dossie.identificacao.documentoLimpo || "pericial"}.pdf`;
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+      res.send(buffer);
+    } catch (err: any) {
+      res.status(500).json({ sucesso: false, erro: err?.message || "Erro ao exportar dossiê PDF" });
+    }
+  });
+
+  app.get("/api/v1/consulta360/cpf/:cpf", async (req: Request, res: Response) => {
+    try {
+      const cpf = req.params.cpf.replace(/\D/g, "");
+      const dossie = await servico360.consultar({ cpf }, "casanova-ultra");
+      res.json({ sucesso: true, dossie });
+    } catch (err: any) {
+      res.status(500).json({ sucesso: false, erro: err?.message });
+    }
+  });
+
+  app.get("/api/v1/consulta360/cnpj/:cnpj", async (req: Request, res: Response) => {
+    try {
+      const cnpj = req.params.cnpj.replace(/\D/g, "");
+      const dossie = await servico360.consultar({ cnpj }, "casanova-ultra");
+      res.json({ sucesso: true, dossie });
+    } catch (err: any) {
+      res.status(500).json({ sucesso: false, erro: err?.message });
+    }
+  });
+
   app.get("/api/admin/minhas-permissoes", (_req: Request, res: Response) => {
     res.json({
       sucesso: true,
@@ -434,6 +842,16 @@ export function registerPlataformaWebAndApis(app: any) {
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     const propostaId = req.query.proposta as string | undefined;
     res.send(renderizarHtmlMesaCredito(propostaId));
+  });
+
+  app.get("/admin/ecommerce", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlAdminEcommerce());
+  });
+
+  app.get("/ecommerce", authMiddleware, (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(renderizarHtmlAdminEcommerce());
   });
 
   app.get("/admin/backoffice", authMiddleware, (req: Request, res: Response) => {

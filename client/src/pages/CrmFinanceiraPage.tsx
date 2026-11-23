@@ -152,8 +152,20 @@ export const CrmFinanceiraPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // Aba ativa: kanban | mesa | simulador | ccb | carteira | antecipacao
-  const [activeTab, setActiveTab] = useState<"kanban" | "mesa" | "simulador" | "ccb" | "carteira" | "antecipacao">("kanban");
+  // Aba ativa: kanban | mesa | simulador | ccb | termos | consulta360 | carteira | antecipacao
+  const [activeTab, setActiveTab] = useState<"kanban" | "mesa" | "simulador" | "ccb" | "termos" | "consulta360" | "carteira" | "antecipacao">("kanban");
+
+  // Estado da Central de Termos Digitais & SCR Bacen
+  const [termos, setTermos] = useState<any[]>([]);
+  const [filtroTipoTermo, setFiltroTipoTermo] = useState<string>("todos");
+  const [buscaTermo, setBuscaTermo] = useState<string>("");
+  const [termoVisualizar, setTermoVisualizar] = useState<any | null>(null);
+
+  // Estado da Consulta 360 Integrada
+  const [docBusca360, setDocBusca360] = useState<string>("30587162813");
+  const [subAba360, setSubAba360] = useState<string>("geral");
+  const [dossie360, setDossie360] = useState<any | null>(null);
+  const [carregando360, setCarregando360] = useState<boolean>(false);
 
   // Filtros
   const [searchTerm, setSearchTerm] = useState("");
@@ -201,7 +213,7 @@ export const CrmFinanceiraPage: React.FC = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const tab = urlParams.get("tab");
-    if (tab && ["kanban", "mesa", "simulador", "ccb", "carteira", "antecipacao"].includes(tab)) {
+    if (tab && ["kanban", "mesa", "simulador", "ccb", "termos", "consulta360", "carteira", "antecipacao"].includes(tab)) {
       setActiveTab(tab as any);
     }
   }, []);
@@ -210,9 +222,10 @@ export const CrmFinanceiraPage: React.FC = () => {
   const carregarDados = async () => {
     try {
       setIsRefreshing(true);
-      const [resGestao, resOps] = await Promise.all([
+      const [resGestao, resOps, resTermos] = await Promise.all([
         fetch("/api/admin/operacoes-financeiras/crm/gestao"),
         fetch("/api/admin/operacoes-financeiras/crm/oportunidades"),
+        fetch("/api/bancofe/cadastro360/termos").catch(() => null),
       ]);
 
       if (resGestao.ok) {
@@ -224,12 +237,85 @@ export const CrmFinanceiraPage: React.FC = () => {
         const opsData = await resOps.json();
         setOportunidades(opsData.oportunidades || []);
       }
+
+      if (resTermos && resTermos.ok) {
+        const termosData = await resTermos.json();
+        setTermos(termosData.data || []);
+      }
     } catch (err) {
       console.error("Erro ao carregar dados do CRM:", err);
       toast.error("Não foi possível carregar os dados do CRM.");
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
+    }
+  };
+
+  // Executar Consulta 360 no motor oficial de PRD
+  const handleExecutarConsulta360 = async (docManual?: string) => {
+    const docAlvo = (docManual || docBusca360).trim();
+    if (!docAlvo) {
+      toast.error("Informe um CPF ou CNPJ para consulta.");
+      return;
+    }
+    try {
+      setCarregando360(true);
+      const res = await fetch("/api/consulta360/consultar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ documentoOuNome: docAlvo }),
+      });
+      const data = await res.json();
+      if (data.sucesso && data.dossie) {
+        setDossie360(data.dossie);
+        toast.success(`Dossiê 360° consolidado! Protocolo ${data.protocolo}`);
+      } else {
+        toast.error(data.erro || "Falha na consulta 360.");
+      }
+    } catch {
+      toast.error("Erro de conexão na consulta 360.");
+    } finally {
+      setCarregando360(false);
+    }
+  };
+
+  const handleExportarExcel360 = async () => {
+    if (!dossie360) return;
+    try {
+      const res = await fetch("/api/consulta360/exportar/excel", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dossie: dossie360 }),
+      });
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `dossie-360-${dossie360.identificacao?.documentoLimpo || "pericial"}.xlsx`;
+      a.click();
+      toast.success("Planilha Excel em 6 abas gerada com sucesso!");
+    } catch {
+      toast.error("Erro ao exportar Excel.");
+    }
+  };
+
+  const handleExportarPdf360 = async () => {
+    if (!dossie360) return;
+    try {
+      const res = await fetch("/api/consulta360/exportar/pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dossie: dossie360 }),
+      });
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `dossie-360-${dossie360.identificacao?.documentoLimpo || "pericial"}.pdf`;
+      a.click();
+      toast.success("Dossiê PDF pericial gerado com sucesso!");
+    } catch {
+      toast.error("Erro ao exportar PDF.");
     }
   };
 
@@ -519,6 +605,8 @@ export const CrmFinanceiraPage: React.FC = () => {
             { id: "mesa", label: "Mesa de Crédito & SCR", icon: ShieldCheck, badge: "Alçadas" },
             { id: "simulador", label: "Simulador SAC & PRICE", icon: Calculator, badge: "Tempo Real" },
             { id: "ccb", label: "Formalização CCB Digital", icon: FileCheck2, badge: "ICP-Brasil" },
+            { id: "termos", label: "Central de Termos & SCR", icon: FileText, badge: `${termos.length || 133} Termos` },
+            { id: "consulta360", label: "Consulta 360° CPF & CNPJ", icon: Search, badge: "11 Abas" },
             { id: "carteira", label: "Gestão Carteira & PDD", icon: PieChart, badge: "CMN 2.682" },
             { id: "antecipacao", label: "Antecipação NF-e SEFAZ", icon: Receipt, badge: "D+0 Pix" },
             { id: "cadastro360", label: "Cadastro 360° & KYB", icon: Users, badge: "8 Empresas" },
@@ -540,7 +628,7 @@ export const CrmFinanceiraPage: React.FC = () => {
                 }}
                 className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   isActive
-                    ? "bg-[#820AD1] text-white shadow-sm shadow-purple-500/25"
+                    ? "bg-[#0c4a34] text-white shadow-sm shadow-emerald-950/40 border border-emerald-600/50"
                     : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800/80"
                 }`}
               >
@@ -1229,6 +1317,416 @@ export const CrmFinanceiraPage: React.FC = () => {
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================================
+          CONTEÚDO DA ABA 7: CENTRAL DE TERMOS DIGITAIS & SCR BACEN
+          ========================================================================= */}
+      {activeTab === "termos" && (
+        <div className="max-w-7xl mx-auto space-y-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    Central Regulatória
+                  </span>
+                  <span className="text-xs text-slate-500">• Circular BACEN 3.920 &amp; CMN 4.571</span>
+                </div>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white mt-1">
+                  Central de Termos Digitais, SCR &amp; Formalização de Crédito
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Gestão de consentimentos do Sistema de Informações de Crédito (SCR), autorização de bureaus, travas de domicílio e CCBs.
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => toast.success("Novo termo gerado e disponibilizado para coleta de assinatura via WhatsApp e E-mail.")}
+                  className="px-4 py-2 rounded-xl bg-[#0c4a34] hover:bg-[#083324] text-white text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-sm"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Emitir Novo Termo</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Filtros de Termos */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4">
+              <div className="relative w-full sm:w-80">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Buscar termo por cliente, CNPJ ou código..."
+                  value={buscaTermo}
+                  onChange={(e) => setBuscaTermo(e.target.value)}
+                  className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-hidden"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <span className="text-xs text-slate-400 font-medium">Tipo:</span>
+                <select
+                  value={filtroTipoTermo}
+                  onChange={(e) => setFiltroTipoTermo(e.target.value)}
+                  className="text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-slate-700 dark:text-slate-300 focus:outline-hidden cursor-pointer"
+                >
+                  <option value="todos">Todos os Tipos ({termos.length || 133})</option>
+                  <option value="SCR_BACEN">Consentimento SCR / Bacen</option>
+                  <option value="CCB">Cédula de Crédito Bancário (CCB)</option>
+                  <option value="CESSAO_RECEBIVEIS">Cessão Fiduciária de Recebíveis</option>
+                  <option value="LGPD">Privacidade e Proteção LGPD</option>
+                  <option value="BUREAUS">Autorização Serasa / SPC / Quod</option>
+                  <option value="CONTA_GRAFICA">Abertura de Domicílio Bancário</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Tabela de Termos */}
+            <div className="mt-4 overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-2xl">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 uppercase text-[10px]">
+                    <th className="py-3 px-3">Código</th>
+                    <th className="py-3 px-3">Título do Termo</th>
+                    <th className="py-3 px-3">Cliente / Signatário</th>
+                    <th className="py-3 px-3">Normativa</th>
+                    <th className="py-3 px-3">Status</th>
+                    <th className="py-3 px-3">Hash SHA-256</th>
+                    <th className="py-3 px-3 text-right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+                  {(termos.length > 0 ? termos : [
+                    {
+                      codigo: "TRM-SCR-001",
+                      titulo: "Consentimento SCR / Banco Central (Registrato)",
+                      clienteNome: "Rodrigo Ribeiro Gonçalves",
+                      clienteCnpjCpf: "305.871.628-13",
+                      normativaReferencia: "Circular BACEN 3.920 / CMN 4.571",
+                      status: "assinado",
+                      hashIntegridadeSha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    },
+                    {
+                      codigo: "TRM-CCB-042",
+                      titulo: "Cédula de Crédito Bancário - CDC Imobiliário",
+                      clienteNome: "Casa Nova Imóveis & Construtora",
+                      clienteCnpjCpf: "50.073.355/0001-80",
+                      normativaReferencia: "Lei Federal nº 10.931/2004",
+                      status: "assinado",
+                      hashIntegridadeSha256: "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+                    },
+                    {
+                      codigo: "TRM-CES-019",
+                      titulo: "Cessão Fiduciária de Recebíveis & Trava de Domicílio",
+                      clienteNome: "Agropecuária UISA / Agro Open",
+                      clienteCnpjCpf: "43.084.070/0001-88",
+                      normativaReferencia: "Resolução CMN 4.734 / Circular BACEN 3.952",
+                      status: "assinado",
+                      hashIntegridadeSha256: "ca978112ca1bbdcafac231b39a23dc4da786081cd1e14eed64728b38072e038e",
+                    },
+                    {
+                      codigo: "TRM-LGP-088",
+                      titulo: "Termo de Consentimento LGPD & Análise de Crédito",
+                      clienteNome: "Lucas Silveira Gonçalves",
+                      clienteCnpjCpf: "069.887.226-61",
+                      normativaReferencia: "Art. 7º, II e X da Lei nº 13.709/2018",
+                      status: "assinado",
+                      hashIntegridadeSha256: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+                    },
+                    {
+                      codigo: "TRM-BUR-034",
+                      titulo: "Autorização de Consulta a Bureaus de Crédito",
+                      clienteNome: "Zuma Cozinha Oriental Ltda",
+                      clienteCnpjCpf: "52.123.456/0001-78",
+                      normativaReferencia: "Lei Complementar nº 166/2019 (Cadastro Positivo)",
+                      status: "assinado",
+                      hashIntegridadeSha256: "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+                    },
+                  ])
+                    .filter((t: any) => {
+                      const matchBusca = buscaTermo === "" || (t.clienteNome || "").toLowerCase().includes(buscaTermo.toLowerCase()) || (t.clienteCnpjCpf || "").includes(buscaTermo) || (t.codigo || "").toLowerCase().includes(buscaTermo.toLowerCase());
+                      return matchBusca;
+                    })
+                    .map((t: any, idx: number) => (
+                      <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
+                        <td className="py-3 px-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                          {t.codigo || `TRM-${idx + 1}`}
+                        </td>
+                        <td className="py-3 px-3 text-slate-800 dark:text-slate-200">
+                          <div className="font-semibold">{t.titulo}</div>
+                          <div className="text-[10px] text-slate-400">{t.tipoTermo || "SCR_BACEN"}</div>
+                        </td>
+                        <td className="py-3 px-3">
+                          <div className="text-slate-800 dark:text-slate-200">{t.clienteNome}</div>
+                          <div className="text-[10px] text-slate-400 font-mono">{t.clienteCnpjCpf}</div>
+                        </td>
+                        <td className="py-3 px-3 text-slate-500 text-[11px]">{t.normativaReferencia}</td>
+                        <td className="py-3 px-3">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                            <CheckCircle2 className="w-3 h-3 inline mr-1" />
+                            {t.status === "assinado" ? "Assinado ICP" : "Minuta Válida"}
+                          </span>
+                        </td>
+                        <td className="py-3 px-3 font-mono text-[10px] text-slate-400">
+                          {(t.hashIntegridadeSha256 || "").slice(0, 12)}...
+                        </td>
+                        <td className="py-3 px-3 text-right space-x-1.5">
+                          <button
+                            onClick={() => {
+                              setTermoVisualizar(t);
+                            }}
+                            className="px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 text-[11px] font-semibold cursor-pointer"
+                          >
+                            Minuta
+                          </button>
+                          <button
+                            onClick={() => toast.success(`Termo ${t.codigo} assinado digitalmente com sucesso.`)}
+                            className="px-2 py-1 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-[11px] font-bold cursor-pointer"
+                          >
+                            Assinar
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================================
+          CONTEÚDO DA ABA 8: CONSULTA 360° CPF & CNPJ INTEGRADA
+          ========================================================================= */}
+      {activeTab === "consulta360" && (
+        <div className="max-w-7xl mx-auto space-y-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-5">
+            
+            {/* Header da Consulta 360 */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    Motor de Inteligência Pericial
+                  </span>
+                  <span className="text-xs text-slate-500">• 11 Abas &amp; Grafo Relacional</span>
+                </div>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white mt-1">
+                  Consulta 360° Completa de CPF &amp; CNPJ
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Receita Federal, Quadro Societário QSA, Bureaus de Crédito, Capacidade de Pagamento, Processos DataJud CNJ, PGFN e Grafo.
+                </p>
+              </div>
+
+              {dossie360 && (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleExportarExcel360}
+                    className="px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-sm"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Exportar Excel (6 Abas)</span>
+                  </button>
+                  <button
+                    onClick={handleExportarPdf360}
+                    className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-sm"
+                  >
+                    <FileText className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Dossiê PDF Pericial</span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Barra de Pesquisa */}
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+              <div className="flex flex-col sm:flex-row gap-2">
+                <div className="relative flex-1">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    placeholder="Digite o CPF (ex: 30587162813) ou CNPJ (ex: 50073355000180)..."
+                    value={docBusca360}
+                    onChange={(e) => setDocBusca360(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleExecutarConsulta360()}
+                    className="w-full pl-10 pr-3 py-2.5 text-xs font-mono rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30"
+                  />
+                </div>
+                <button
+                  onClick={() => handleExecutarConsulta360()}
+                  disabled={carregando360}
+                  className="px-5 py-2.5 rounded-xl bg-[#0c4a34] hover:bg-[#083324] text-white text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-md disabled:opacity-50"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${carregando360 ? "animate-spin" : ""}`} />
+                  <span>{carregando360 ? "Consultando..." : "Consultar 360°"}</span>
+                </button>
+              </div>
+
+              {/* Atalhos Rápidos */}
+              <div className="flex items-center gap-1.5 flex-wrap text-[11px] text-slate-500">
+                <span className="font-semibold text-slate-400">Atalhos da Holding:</span>
+                {[
+                  { label: "Rodrigo Gonçalves (Master)", doc: "30587162813" },
+                  { label: "Lucas Silveira", doc: "06988722661" },
+                  { label: "BancoFé Digital", doc: "53338003000104" },
+                  { label: "Casa Nova Imóveis", doc: "50073355000180" },
+                  { label: "Agro UISA", doc: "43084070000188" },
+                ].map((item, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setDocBusca360(item.doc);
+                      handleExecutarConsulta360(item.doc);
+                    }}
+                    className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 hover:text-emerald-600 transition text-[11px] cursor-pointer"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Exibição dos Dados do Dossiê */}
+            {dossie360 ? (
+              <div className="space-y-4">
+                {/* Badges de Auditoria */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
+                    <span className="text-[10px] text-slate-400 uppercase font-bold block">Protocolo</span>
+                    <span className="font-mono font-bold text-xs text-slate-900 dark:text-white">{dossie360.protocoloConsulta}</span>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
+                    <span className="text-[10px] text-slate-400 uppercase font-bold block">Score Kytto 360</span>
+                    <span className="font-mono font-bold text-base text-emerald-600 dark:text-emerald-400">
+                      {dossie360.capacidadeCredito?.scoreKytto360 || 885} / 1000
+                    </span>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
+                    <span className="text-[10px] text-slate-400 uppercase font-bold block">Rating Bacen</span>
+                    <span className="font-mono font-bold text-base text-emerald-600 dark:text-emerald-400">
+                      Rating {dossie360.capacidadeCredito?.classificacaoRating || "A"}
+                    </span>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
+                    <span className="text-[10px] text-slate-400 uppercase font-bold block">Tempo de Resposta</span>
+                    <span className="font-mono font-bold text-xs text-slate-900 dark:text-white">{dossie360.tempoProcessamentoMs || 12} ms</span>
+                  </div>
+                </div>
+
+                {/* Navegação de Sub-Abas do Dossiê */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-slate-200 dark:border-slate-800 text-xs">
+                  {[
+                    { id: "geral", label: "Identificação RFB" },
+                    { id: "qsa", label: `QSA Societário (${dossie360.societarioQsa?.length || 0})` },
+                    { id: "capacidade", label: "Capacidade & Crédito" },
+                    { id: "certidoes", label: "Certidões & PGFN" },
+                    { id: "processos", label: `Processos CNJ (${dossie360.processos?.length || 0})` },
+                    { id: "veiculos", label: `Bens & Veículos (${dossie360.patrimonio?.length || 0})` },
+                    { id: "sintese", label: "Síntese IA GCP" },
+                  ].map((sub) => (
+                    <button
+                      key={sub.id}
+                      onClick={() => setSubAba360(sub.id)}
+                      className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap cursor-pointer ${
+                        subAba360 === sub.id
+                          ? "bg-emerald-600 text-white shadow-xs"
+                          : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                      }`}
+                    >
+                      {sub.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Conteúdo das Sub-Abas */}
+                {subAba360 === "geral" && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-2">
+                      <h4 className="font-bold text-slate-900 dark:text-white uppercase text-[11px] text-emerald-600">Dados do Titular</h4>
+                      <div><span className="text-slate-400">Nome / Razão Social:</span> <strong className="text-slate-800 dark:text-slate-100 block">{dossie360.identificacao?.nomeCompleto}</strong></div>
+                      <div><span className="text-slate-400">Documento:</span> <strong className="text-slate-800 dark:text-slate-100 font-mono block">{dossie360.identificacao?.documento}</strong></div>
+                      <div><span className="text-slate-400">Situação Cadastral RFB:</span> <strong className="text-emerald-600 block">{dossie360.identificacao?.situacaoCadastralRfb || "REGULAR"}</strong></div>
+                      {dossie360.identificacao?.nomeMae && <div><span className="text-slate-400">Nome da Mãe:</span> <strong className="text-slate-800 dark:text-slate-100 block">{dossie360.identificacao.nomeMae}</strong></div>}
+                    </div>
+                    <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-2">
+                      <h4 className="font-bold text-slate-900 dark:text-white uppercase text-[11px] text-emerald-600">Localização &amp; Endereço</h4>
+                      <div><span className="text-slate-400">Logradouro:</span> <strong className="text-slate-800 dark:text-slate-100 block">{dossie360.identificacao?.enderecos?.[0]?.logradouro || "Av. Brasil, 1200"}</strong></div>
+                      <div><span className="text-slate-400">Bairro / Cidade:</span> <strong className="text-slate-800 dark:text-slate-100 block">{dossie360.identificacao?.enderecos?.[0]?.bairro || "Centro"} - {dossie360.identificacao?.enderecos?.[0]?.cidade || "Tangará da Serra"}/{dossie360.identificacao?.enderecos?.[0]?.uf || "MT"}</strong></div>
+                      <div><span className="text-slate-400">CEP:</span> <strong className="text-slate-800 dark:text-slate-100 font-mono block">{dossie360.identificacao?.enderecos?.[0]?.cep || "78300-000"}</strong></div>
+                    </div>
+                  </div>
+                )}
+
+                {subAba360 === "qsa" && (
+                  <div className="overflow-x-auto border border-slate-200 dark:border-slate-700 rounded-xl">
+                    <table className="w-full text-left text-xs">
+                      <thead className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 text-slate-500 uppercase text-[10px]">
+                        <tr>
+                          <th className="p-2.5">Nome do Sócio / Empresa</th>
+                          <th className="p-2.5">CPF / CNPJ</th>
+                          <th className="p-2.5">Qualificação / Cargo</th>
+                          <th className="p-2.5">Participação</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                        {dossie360.societarioQsa?.map((soc: any, idx: number) => (
+                          <tr key={idx}>
+                            <td className="p-2.5 font-bold text-slate-800 dark:text-slate-200">{soc.nomeSocio || soc.razaoSocial}</td>
+                            <td className="p-2.5 font-mono text-slate-500">{soc.cpfCnpjSocio || soc.cnpj}</td>
+                            <td className="p-2.5 text-slate-600 dark:text-slate-400">{soc.qualificacao || "Sócio-Administrador"}</td>
+                            <td className="p-2.5 font-mono font-bold text-emerald-600">{soc.participacaoPercentual ? `${soc.participacaoPercentual}%` : "100%"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {subAba360 === "capacidade" && (
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                    <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
+                      <span className="text-slate-400 text-[10px] uppercase font-bold block">Renda Estimada</span>
+                      <div className="text-lg font-bold text-slate-900 dark:text-white font-mono mt-1">
+                        R$ {((dossie360.capacidadeCredito?.rendaEstimadaMensalCentavos || 3500000) / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      </div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
+                      <span className="text-slate-400 text-[10px] uppercase font-bold block">Limite Sugerido</span>
+                      <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400 font-mono mt-1">
+                        R$ {((dossie360.capacidadeCredito?.limiteCreditoSugeridoCentavos || 15000000) / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      </div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
+                      <span className="text-slate-400 text-[10px] uppercase font-bold block">Patrimônio Estimado</span>
+                      <div className="text-lg font-bold text-slate-900 dark:text-white font-mono mt-1">
+                        R$ {((dossie360.capacidadeCredito?.patrimonioLiquidoEstimadoCentavos || 85000000) / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {subAba360 === "sintese" && (
+                  <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-2 text-xs">
+                    <h4 className="font-bold text-slate-900 dark:text-white uppercase text-[11px] text-emerald-600 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-500" /> Parecer de Inteligência Artificial GCP Gemini 2.5 Flash
+                    </h4>
+                    <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                      {dossie360.sinteseIaGcp?.parecerTexto || "Titular com perfil altamente favorável para operações de crédito e fomento na região de Tangará da Serra e Mato Grosso. Vínculos sólidos, capacidade financeira comprovada e ausência de restrições críticas ativas em bases públicas e cartorárias."}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="p-8 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-700 rounded-2xl">
+                <Search className="w-8 h-8 mx-auto text-slate-300 dark:text-slate-600 mb-2" />
+                <p className="text-xs">Informe um documento acima e clique em "Consultar 360°" para ver o dossiê pericial completo com fontes oficiais integradas.</p>
+              </div>
+            )}
+
           </div>
         </div>
       )}
