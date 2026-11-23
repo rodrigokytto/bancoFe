@@ -54,4 +54,5 @@ jobs:
       - name: Verify Dist Artifacts
         run: |
           test -d dist
-          test -f dist/index.html
+          test -f dist/index.js
+          test -f dist/public/index.html || test -f dist/index.html
