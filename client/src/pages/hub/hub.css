@@ -1,0 +1,36 @@
+/* Estilos do módulo Consulta CPF + Hub de Integrações. Escopo: .bf-tela (papel claro, legível no tema escuro). */
+.bf-tela {
+  --border: #e2dccf;
+  --card: #ffffff;
+  --muted: #5b6470;
+  --radius: 12px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #fbfaf6;
+  color: #1c2330;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  color-scheme: light;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.bf-tela h1, .bf-tela h2, .bf-tela h3 { color: #12301f; margin: 0 0 8px; }
+.bf-tela input, .bf-tela select, .bf-tela textarea { color: #1c2330; background: #fff; }
+.bf-tela code { font-size: 12px; }
+.bf-tela table { border-collapse: collapse; width: 100%; }
+.bf-tela th { text-align: left; }
+.bf-abas { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+.bf-tela .btn {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  padding: 9px 16px; border-radius: 8px; border: 1px solid transparent;
+  font-size: 14px; font-weight: 600; line-height: 1.2; text-decoration: none;
+}
+.bf-tela .btn-sm { padding: 6px 11px; font-size: 13px; }
+.bf-tela .btn-primary { background: #0c4a34; color: #fff; }
+.bf-tela .btn-primary:hover { background: #0a3b2a; }
+.bf-tela .btn-secondary { background: #e8f5ec; color: #0c4a34; border-color: #b9dcc6; }
+.bf-tela .btn-ghost { background: #fff; color: #1c2330; border-color: var(--border); }
+.bf-tela .btn-ghost:hover { background: #f3f0e7; }
+.bf-tela .btn:disabled { opacity: .55; cursor: not-allowed; }
+.bf-tela a { color: #0c4a34; }

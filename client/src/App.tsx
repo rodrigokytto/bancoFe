@@ -63,6 +63,8 @@ import { NossaGenteRh } from "./pages/NossaGenteRh";
 import { PassaporteSalmaoPublico } from "./pages/PassaporteSalmaoPublico";
 import { MapaMesasSalao } from "./pages/MapaMesasSalao";
 import { BancoFeHub } from "./pages/BancoFeHub";
+import ConsultaCpfPage from "./pages/hub/ConsultaCpfPage";
+import IntegracoesHubPage from "./pages/hub/IntegracoesHubPage";
 import { EcommerceAdminPage } from "./pages/EcommerceAdminPage";
 import PortalClientePage from "./pages/PortalClientePage";
 
@@ -211,13 +213,19 @@ function Router() {
             <Route path="/documentos" component={Cadastro360BancoFePage} />
             <Route path="/termos" component={Cadastro360BancoFePage} />
 
+            {/* Consulta CPF completa (dossiê com 10 abas) e Módulo Único de Integrações */}
+            <Route path="/consulta-cpf" component={ConsultaCpfPage} />
+            <Route path="/admin/consulta-cpf" component={ConsultaCpfPage} />
+            <Route path="/plataforma/consulta-cpf" component={ConsultaCpfPage} />
+            <Route path="/admin/hub-integracoes" component={IntegracoesHubPage} />
+            <Route path="/hub-integracoes" component={IntegracoesHubPage} />
+            <Route path="/admin/integracoes-hub" component={IntegracoesHubPage} />
+            <Route path="/admin/integracoes-corporativas" component={IntegracoesHubPage} />
             {/* Consulta 360° CPF & CNPJ Completa */}
             <Route path="/consulta-360" component={BancoFeHub} />
             <Route path="/consulta360" component={BancoFeHub} />
-            <Route path="/consulta-cpf" component={BancoFeHub} />
             <Route path="/consulta-cnpj" component={BancoFeHub} />
             <Route path="/admin/consulta-360" component={BancoFeHub} />
-            <Route path="/admin/consulta-cpf" component={BancoFeHub} />
             <Route path="/admin/consulta-cnpj" component={BancoFeHub} />
 
             {/* Vendas & Apps */}
