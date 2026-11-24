@@ -67,3 +67,32 @@ Sob as contas institucionais do usuário (**`rodrigo.goncalves@kytto.com.br`** n
     - Disco Persistente: `setpoint-data` (`/var/data`, 1 GB).
     - Agente WhatsApp AI com fila e integrações Meta Cloud API + Evolution.
     - Multi-Tenant total: Barbearia Dino, Agro Open, Palatare Pizzaria, Zuma Oriental e Holding Kytto.
+
+---
+
+## 3. Governança Corporativa: BancoFe Holding S.A. & Banco Unificado
+
+Atendendo à diretriz de governança institucional do Grupo BancoFe:
+
+### 3.1. Hierarquia de Entidades Implementada
+1. **Entidade Superior / Controladora Geral:**
+   - **Razão Social:** `BancoFe Holding S.A. — Controladora Geral do Grupo`
+   - **Papel:** Entidade master no topo da estrutura societária, controladora institucional de todas as 15 subsidiárias e unidades operacionais de negócio.
+   - **Ícone & Destaque:** 👑 Coroa Dourada / Badge "Holding Controladora".
+   - **Módulos Centrais:** Central ERP 360° Master, Matriz de Governança & Cadastro 360°, Auditoria Fiscal SEFAZ-MT e Hub Central de Integrações (77 fontes).
+
+2. **Instituição Bancária Unificada:**
+   - **Razão Social:** `BancoFe — Core Bancário, Open Finance & Securitizadora FIDC`
+   - **Unificação:** Fusão operacional das antigas entidades separadas (*"BancoFe — Open Finance & Banking Digital"* e *"BancoFe Securitizadora & FIDC"*).
+   - **Escopo Integrado:** Core Banking digital, liquidação PIX 24/7 instantânea, Open Finance Bacen, Mesa de Crédito Algorítmica com Dossiê SCR Bacen, Parecer IA, emissão de CCB eletrônica, securitização de recebíveis e estruturação de cotas sênior/subordinadas de FIDC.
+   - **Volume Mensal Gerido:** R$ 17,35M / mês | 152.340 transações / mês | Uptime SLA 99,99%.
+
+3. **Subdivisão no Seletor Executivo (Sidebar):**
+   - O dropdown da Sidebar agora separa visualmente a **Entidade Superior / Controladora** (com cabeçalho âmbar exclusivo e destaque visual) das **15 Unidades Operacionais de Negócio**, garantindo controle de governança em um único clique.
+   - A página de **Cadastro 360°** (`/admin/cadastro-360`) dispõe da aba dedicada **"👑 Matriz de Governança & Empresas"** e filtros consolidados por empresa.
+
+### 3.2. Status de Produção (GCP Cloud Run)
+- **Revisão Ativa:** `erp-bancofe-00039-df2` (100% do tráfego).
+- **Deploy:** Concluído com sucesso via Google Cloud Build (ID: `f1033613-2db7-4115-bc30-c9cf4e1f0571`).
+- **URL de Produção:** [https://erp-bancofe-5xsi5uyoda-rj.a.run.app/admin/cadastro-360](https://erp-bancofe-5xsi5uyoda-rj.a.run.app/admin/cadastro-360)
+- **Ambiente Render:** [https://bancofe-core.onrender.com](https://bancofe-core.onrender.com) 100% ativo e preservado.
