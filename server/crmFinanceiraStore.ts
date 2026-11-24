@@ -1194,6 +1194,20 @@ export class CrmFinanceiraStore {
           taxaPadraoPercentual: 1.08,
           prazoMaximoMeses: 36,
         },
+        {
+          id: "FINANCIAMENTO_RURAL",
+          nome: "Financiamento Rural & Agronegócio Safra",
+          descricao: "Crédito rural e custeio agrícola para produtores e cooperativas da região de Tangará da Serra.",
+          taxaPadraoPercentual: 0.88,
+          prazoMaximoMeses: 36,
+        },
+        {
+          id: "INVESTIMENTO_PROPRIO",
+          nome: "Investimento de Capital Próprio & CDB BancoFé",
+          descricao: "CDB BancoFé Liquidez Diária 100% CDI e alocação de tesouraria própria da holding.",
+          taxaPadraoPercentual: 1.00,
+          prazoMaximoMeses: 24,
+        },
       ],
     };
   }
