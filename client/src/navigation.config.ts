@@ -98,24 +98,40 @@ export interface NavModule {
 
 export const SECTIONS: Record<string, NavSection> = {
   // ---- MÓDULO 1: OPERAÇÃO & SALÃO ----
-  bancofe_core_sec: {
-    id: "bancofe_core_sec",
-    label: "BancoFé Core Bancário & Liquidação",
+  bancofe_mesa_sec: {
+    id: "bancofe_mesa_sec",
+    label: "Mesa de Operações & Crédito",
+    icon: ShieldCheck,
+    items: [
+      { id: "bancofe_mesa_operacoes", path: "/admin/mesa-operacoes", label: "Mesa de Operações & Crédito", icon: ShieldCheck, badge: "Alçadas", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_mesa_credito", path: "/admin/mesa-credito", label: "Mesa de Crédito & SCR Bacen", icon: ShieldCheck, badge: "Rating AA", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_gestao_emprestimos", path: "/admin/gestao-emprestimos", label: "Gestão Empréstimos & Liquidação", icon: Banknote, badge: "Liquidação", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_operacoes", path: "/admin/operacoes-financeiras", label: "Operações & Termos SCR", icon: Building2, badge: "Crédito 360°", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_precadastro", path: "/admin/pre-cadastro", label: "Simulador de Taxas & Pré-Cadastro", icon: Calculator, badge: "Simulador", badgeColor: "bg-emerald-600 text-white", highlight: true },
+    ],
+  },
+  bancofe_compliance_sec: {
+    id: "bancofe_compliance_sec",
+    label: "Compliance, Bureaus & Bacen",
+    icon: Search,
+    items: [
+      { id: "bancofe_cadastro360", path: "/admin/cadastro-360", label: "Cadastro 360° & KYB Bancário", icon: ShieldCheck, badge: "Bacen", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_consulta360", path: "/consulta-360", label: "Consulta 360° CPF/CNPJ (Bureaus)", icon: Search, badge: "48 Bureaus", badgeColor: "bg-cyan-600 text-white", highlight: true },
+      { id: "bancofe_consulta_cpf", path: "/admin/consulta-cpf", label: "Consulta CPF Completa", icon: Search, badge: "10 Abas", badgeColor: "bg-cyan-600 text-white", highlight: true },
+      { id: "bancofe_termos", path: "/admin/termos", label: "Termos Regulatórios & Consentimentos", icon: FileText, badge: "Compliance", badgeColor: "bg-indigo-600 text-white" },
+      { id: "bancofe_fechamento", path: "/admin/fechamento", label: "Fechamento Bancário & COSIF", icon: Receipt, badge: "COSIF", badgeColor: "bg-emerald-600 text-white" },
+    ],
+  },
+  bancofe_digital_sec: {
+    id: "bancofe_digital_sec",
+    label: "Banking Digital & Liquidação BaaS",
     icon: Landmark,
     items: [
-      { id: "bancofe_hub", path: "/bancofe", label: "BancoFé Hub Geral (PRD)", icon: Landmark, badge: "ISPB 799", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_hub", path: "/bancofe", label: "BancoFé Hub Geral (PRD ISPB 799)", icon: Landmark, badge: "ISPB 799", badgeColor: "bg-emerald-600 text-white", highlight: true },
       { id: "bancofe_portal_cliente", path: "/portal-cliente", label: "Portal do Cliente (Pix & Boletos)", icon: CreditCard, badge: "Autoatendimento", badgeColor: "bg-emerald-600 text-white", highlight: true },
-      { id: "bancofe_mesa_operacoes", path: "/admin/mesa-operacoes", label: "Mesa de Operações & Crédito", icon: ShieldCheck, badge: "Alçadas", badgeColor: "bg-emerald-600 text-white", highlight: true },
-      { id: "bancofe_gestao_emprestimos", path: "/admin/gestao-emprestimos", label: "Gestão Empréstimos & Conciliação", icon: Banknote, badge: "Comprovantes", badgeColor: "bg-emerald-600 text-white", highlight: true },
-      { id: "bancofe_consulta_cpf", path: "/admin/consulta-cpf", label: "Consulta CPF Completa", icon: Search, badge: "10 Abas", badgeColor: "bg-cyan-600 text-white", highlight: true },
-      { id: "bancofe_hub_integracoes", path: "/admin/hub-integracoes", label: "Integrações (Módulo Único)", icon: Layers, badge: "Hub", badgeColor: "bg-emerald-600 text-white", highlight: true },
-      { id: "bancofe_consulta360", path: "/consulta-360", label: "Consulta 360° CPF/CNPJ", icon: Search, badge: "11 Abas", badgeColor: "bg-cyan-600 text-white", highlight: true },
-      { id: "bancofe_operacoes", path: "/admin/operacoes-financeiras", label: "Operações & Termos SCR", icon: Building2, badge: "Crédito 360°", badgeColor: "bg-emerald-600 text-white", highlight: true },
-      { id: "bancofe_ecommerce", path: "/admin/ecommerce", label: "E-Commerce & Omnichannel", icon: Store, badge: "Multi-Loja", badgeColor: "bg-emerald-600 text-white", highlight: true },
-      { id: "bancofe_precadastro", path: "/admin/pre-cadastro", label: "Pré-Cadastro 10x Produtos", icon: Calculator, badge: "Simulador", badgeColor: "bg-emerald-600 text-white", highlight: true },
-      { id: "bancofe_radar", path: "/bancofe", label: "Radar MT & 20 Empresas", icon: Target, badge: "Tangará", highlight: true },
-      { id: "bancofe_modulos", path: "/admin", label: "Gestão Módulos & Negócios", icon: Layers, badge: "Holding", badgeColor: "bg-emerald-600 text-white", highlight: true },
-      { id: "bancofe_fechamento", path: "/admin/fechamento", label: "Fechamento & Contabilidade", icon: Receipt, badge: "COSIF", badgeColor: "bg-emerald-600 text-white" },
+      { id: "bancofe_carteira", path: "/plataforma/carteira", label: "Carteira Digital & BaaS Pix", icon: Landmark, badge: "Pix 24/7", badgeColor: "bg-emerald-600 text-white" },
+      { id: "bancofe_hub_integracoes", path: "/admin/hub-integracoes", label: "Open Finance & Integrações Bacen", icon: Layers, badge: "Hub", badgeColor: "bg-emerald-600 text-white", highlight: true },
+      { id: "bancofe_radar", path: "/bancofe", label: "Radar MT & Polo Regional", icon: Target, badge: "Tangará", highlight: true },
     ],
   },
   mesas_balcao: {
@@ -437,10 +453,28 @@ export const SECTIONS: Record<string, NavSection> = {
 
 export const MENU_DOMAINS: NavDomain[] = [
   {
-    id: "bancofe_core_domain",
-    label: "BancoFé Banking & Crédito",
+    id: "bancofe_mesa_domain",
+    label: "Mesa de Operações & Crédito",
+    icon: ShieldCheck,
+    sections: ["bancofe_mesa_sec"],
+  },
+  {
+    id: "bancofe_compliance_domain",
+    label: "Compliance, Bureaus & Bacen",
+    icon: Search,
+    sections: ["bancofe_compliance_sec"],
+  },
+  {
+    id: "bancofe_digital_domain",
+    label: "Banking Digital & Liquidação BaaS",
     icon: Landmark,
-    sections: ["bancofe_core_sec"],
+    sections: ["bancofe_digital_sec"],
+  },
+  {
+    id: "bancofe_core_domain",
+    label: "BancoFé Instituição Financeira",
+    icon: Landmark,
+    sections: ["bancofe_mesa_sec", "bancofe_compliance_sec", "bancofe_digital_sec"],
   },
   // ---- OPERAÇÃO & SALÃO ----
   {
@@ -568,13 +602,13 @@ export const MENU_DOMAINS: NavDomain[] = [
 export const MODULES: NavModule[] = [
   {
     id: "bancofe_banking",
-    label: "BancoFé Banking & Crédito",
+    label: "BancoFé Instituição Financeira",
     icon: Landmark,
     badge: "ISPB 799",
     badgeColor: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-    defaultPath: "/bancofe",
-    description: "Consulta 360° CPF/CNPJ, esteira de pré-cadastro de 10 produtos, radar regional MT, Pix DICT, Open Finance e Mesa Algorítmica.",
-    domains: ["bancofe_core_domain"],
+    defaultPath: "/admin/mesa-operacoes",
+    description: "Mesa de crédito algorítmico, alçadas executivas, SCR Bacen, Pix DICT 24/7 e BaaS corporativo.",
+    domains: ["bancofe_mesa_domain", "bancofe_compliance_domain", "bancofe_digital_domain"],
   },
   {
     id: "operacao",

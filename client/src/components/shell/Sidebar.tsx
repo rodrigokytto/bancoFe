@@ -357,18 +357,32 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const q = menuFilter.trim().toLowerCase();
 
     // Domínios autorizados para a empresa ativa:
-    // Se for a Holding, tem acesso a todos os domínios do ecossistema
-    // Caso contrário, exibe estritamente os domínios de seus módulos configurados
+    // Holding: Acesso consolidado geral a todos os domínios
+    // BancoFe (Instituição Financeira): ESTRITAMENTE os 3 domínios bancários (Mesa de Crédito, Compliance/Bacen e Banking Digital)
+    // Empresas Comerciais Independentes: Apenas os domínios operacionais autorizados da respectiva subsidiária
     const isHolding = activeBusiness.id === "holding_kytto";
+    const isBancoFe = activeBusiness.id === "bancofe";
     const allowedDomainIds = new Set<string>();
 
     if (isHolding) {
       MENU_DOMAINS.forEach((d) => allowedDomainIds.add(d.id));
+    } else if (isBancoFe) {
+      // BancoFe Instituição Financeira: ESTRITAMENTE módulos bancários
+      allowedDomainIds.add("bancofe_mesa_domain");
+      allowedDomainIds.add("bancofe_compliance_domain");
+      allowedDomainIds.add("bancofe_digital_domain");
     } else {
+      // Subsidiárias comerciais independentes: apenas seus domínios autorizados
       effectiveModules.forEach((m) => {
         (m.domains || []).forEach((dId) => allowedDomainIds.add(dId));
       });
-      // Fallback seguro caso os domínios não tenham sido mapeados
+      // Jamais permitir telas bancárias em empresas comerciais
+      allowedDomainIds.delete("bancofe_core_domain");
+      allowedDomainIds.delete("bancofe_mesa_domain");
+      allowedDomainIds.delete("bancofe_compliance_domain");
+      allowedDomainIds.delete("bancofe_digital_domain");
+
+      // Fallback seguro comercial caso os domínios não tenham sido mapeados
       if (allowedDomainIds.size === 0) {
         allowedDomainIds.add("frente_loja");
         allowedDomainIds.add("suprimentos_estoque");
@@ -382,7 +396,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     if (!isSearching && activeTabFilter !== "all") {
       const selectedMod = effectiveModules.find((m) => m.id === activeTabFilter);
       if (selectedMod && selectedMod.domains && selectedMod.domains.length > 0) {
-        targetDomains = MENU_DOMAINS.filter((dom) => selectedMod.domains.includes(dom.id));
+        targetDomains = targetDomains.filter((dom) => selectedMod.domains.includes(dom.id));
       }
     }
 

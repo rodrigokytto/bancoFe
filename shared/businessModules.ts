@@ -695,7 +695,7 @@ export const INITIAL_MODULES_BY_BUSINESS: Record<string, BusinessModuleConfig[]>
       "active": true,
       "permission": "all",
       "domains": [
-        "bancofe_core_domain"
+        "bancofe_mesa_domain"
       ],
       "telemetry": {
         "monthlyRequests": 42800,
@@ -723,8 +723,7 @@ export const INITIAL_MODULES_BY_BUSINESS: Record<string, BusinessModuleConfig[]>
       "active": true,
       "permission": "all",
       "domains": [
-        "bancofe_core_domain",
-        "financas_controladoria"
+        "bancofe_mesa_domain"
       ],
       "telemetry": {
         "monthlyRequests": 19600,
@@ -752,8 +751,7 @@ export const INITIAL_MODULES_BY_BUSINESS: Record<string, BusinessModuleConfig[]>
       "active": true,
       "permission": "all",
       "domains": [
-        "bancofe_core_domain",
-        "crm_fidelidade"
+        "bancofe_mesa_domain"
       ],
       "telemetry": {
         "monthlyRequests": 42800,
@@ -781,8 +779,7 @@ export const INITIAL_MODULES_BY_BUSINESS: Record<string, BusinessModuleConfig[]>
       "active": true,
       "permission": "all",
       "domains": [
-        "bancofe_core_domain",
-        "financas_controladoria"
+        "bancofe_mesa_domain"
       ],
       "telemetry": {
         "monthlyRequests": 26800,
@@ -810,8 +807,7 @@ export const INITIAL_MODULES_BY_BUSINESS: Record<string, BusinessModuleConfig[]>
       "active": true,
       "permission": "all",
       "domains": [
-        "bancofe_core_domain",
-        "frente_loja"
+        "bancofe_digital_domain"
       ],
       "telemetry": {
         "monthlyRequests": 423900,
@@ -839,8 +835,7 @@ export const INITIAL_MODULES_BY_BUSINESS: Record<string, BusinessModuleConfig[]>
       "active": true,
       "permission": "all",
       "domains": [
-        "conectividade_apis",
-        "bancofe_core_domain"
+        "bancofe_digital_domain"
       ],
       "telemetry": {
         "monthlyRequests": 184500,
@@ -868,7 +863,7 @@ export const INITIAL_MODULES_BY_BUSINESS: Record<string, BusinessModuleConfig[]>
       "active": true,
       "permission": "all",
       "domains": [
-        "bancofe_core_domain"
+        "bancofe_compliance_domain"
       ],
       "telemetry": {
         "monthlyRequests": 48200,
@@ -896,7 +891,7 @@ export const INITIAL_MODULES_BY_BUSINESS: Record<string, BusinessModuleConfig[]>
       "active": true,
       "permission": "admin",
       "domains": [
-        "bancofe_core_domain"
+        "bancofe_compliance_domain"
       ],
       "telemetry": {
         "monthlyRequests": 31000,
@@ -924,8 +919,7 @@ export const INITIAL_MODULES_BY_BUSINESS: Record<string, BusinessModuleConfig[]>
       "active": true,
       "permission": "admin",
       "domains": [
-        "bancofe_core_domain",
-        "fiscal_contabil"
+        "bancofe_compliance_domain"
       ],
       "telemetry": {
         "monthlyRequests": 18200,
@@ -952,8 +946,7 @@ export const INITIAL_MODULES_BY_BUSINESS: Record<string, BusinessModuleConfig[]>
       "active": true,
       "permission": "all",
       "domains": [
-        "war_room",
-        "financas_controladoria"
+        "bancofe_mesa_domain"
       ],
       "telemetry": {
         "monthlyRequests": 112000,
