@@ -35,6 +35,8 @@ import { MENU_DOMAINS, SECTIONS, type NavItem } from "../../navigation.config";
 
 const HOLDING_ID = "holding_kytto";
 const BANCOFE_ID = "bancofe";
+const DOMINIOS_BANCARIOS_BANCOFE = ["bancofe_mesa_domain", "bancofe_compliance_domain", "bancofe_digital_domain"];
+const DOMINIOS_BANCARIOS = ["bancofe_core_domain", ...DOMINIOS_BANCARIOS_BANCOFE];
 const STORAGE_KEY_EMPRESAS_ABERTAS = "bancofe_sidebar_empresas_abertas";
 
 interface SidebarSimplesProps {
@@ -104,6 +106,9 @@ export const SidebarSimples: React.FC<SidebarSimplesProps> = ({ isPinned = true,
         const vistos = new Set<string>();
         const telas: NavItem[] = [];
         (m.domains || []).forEach((domId) => {
+          // Isolamento: BancoFe só domínios bancários; empresas comerciais nunca veem telas bancárias
+          if (ativoId === BANCOFE_ID && !DOMINIOS_BANCARIOS_BANCOFE.includes(domId) && domId.startsWith("bancofe_")) return;
+          if (ativoId !== HOLDING_ID && ativoId !== BANCOFE_ID && DOMINIOS_BANCARIOS.includes(domId)) return;
           const dom = MENU_DOMAINS.find((d) => d.id === domId);
           if (!dom) return;
           dom.sections.forEach((secId) => {
@@ -126,7 +131,7 @@ export const SidebarSimples: React.FC<SidebarSimplesProps> = ({ isPinned = true,
           telas,
         };
       });
-  }, [activeModules, user?.role]);
+  }, [activeModules, user?.role, ativoId]);
 
   const q = busca.trim().toLowerCase();
   const modulosFiltrados = useMemo(() => {
