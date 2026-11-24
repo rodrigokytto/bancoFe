@@ -95,6 +95,27 @@ function Router() {
     location === "/" ||
     location === "/bancofe" ||
     location === "/cockpit" ||
+    location === "/pdv" ||
+    location === "/caixa" ||
+    location === "/mesas" ||
+    location === "/mesa" ||
+    location === "/cozinha" ||
+    location === "/erp" ||
+    location === "/zumi" ||
+    location === "/suprimentos" ||
+    location === "/estoque" ||
+    location === "/financeiro" ||
+    location === "/fiscal" ||
+    location === "/fechamento-contabil" ||
+    location === "/nossa-gente" ||
+    location === "/patrimonio" ||
+    location === "/integracoes" ||
+    location === "/conexoes" ||
+    location === "/apps" ||
+    location === "/telemetria" ||
+    location === "/moda" ||
+    location === "/roupas" ||
+    location === "/agro" ||
     location.startsWith("/garcom") || 
     location.startsWith("/kds") || 
     location.startsWith("/kds-v2") || 

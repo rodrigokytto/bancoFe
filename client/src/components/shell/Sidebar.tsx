@@ -309,40 +309,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
     return effectiveModules.find((m) => m.id === activeModuleId) || effectiveModules[0] || MODULES[0];
   }, [effectiveModules, activeModuleId]);
 
-  // Alternar empresa ativa do grupo com readequação inteligente de rota e filtros
+  // Alternar empresa ativa do grupo com atualização dinâmica da Sidebar, módulos e escopo
   const handleSwitchBusiness = (bizId: string) => {
     const targetBiz = businesses.find((b) => b.id === bizId) || businesses[0];
     setActiveBusinessId(targetBiz.id);
     setBusinessDropdownOpen(false);
     setActiveTabFilter("all");
 
-    // Verificar se a rota atual é exclusiva da mesa bancária
-    const bankingOnlyRoutes = [
-      "/admin/mesa-operacoes",
-      "/mesa-operacoes",
-      "/admin/mesa-credito",
-      "/admin/gestao-emprestimos",
-      "/admin/consulta-cpf",
-      "/admin/termos",
-      "/admin/fechamento"
-    ];
-    const isCurrentRouteBankingOnly = bankingOnlyRoutes.some((r) => location.startsWith(r));
-
-    if (targetBiz.id !== "bancofe" && targetBiz.id !== "holding_kytto" && isCurrentRouteBankingOnly) {
-      // Redireciona para o módulo principal da empresa selecionada
-      const bizModules = INITIAL_MODULES_BY_BUSINESS[targetBiz.id] || [];
-      const targetPath = bizModules[0]?.defaultPath || (targetBiz.id === "zuma_gastronomia" ? "/pdv" : targetBiz.id === "zuma_agro" ? "/agro" : "/erp");
-      setLocation(targetPath);
-      toast.info(`Alternado para ${targetBiz.name} — exibindo ERP e módulos operacionais.`);
-    } else if (targetBiz.id === "bancofe" && !isCurrentRouteBankingOnly && (location === "/pdv" || location === "/garcom" || location === "/cozinha" || location === "/mesas")) {
-      setLocation("/admin/mesa-operacoes");
-      toast.info(`Alternado para ${targetBiz.name} — Mesa de Operações Bancárias.`);
-    } else if (targetBiz.id === "holding_kytto" && (location === "/pdv" || location === "/garcom" || location === "/cozinha")) {
-      setLocation("/admin/cadastro-360");
-      toast.info(`Alternado para ${targetBiz.name} — Governança Corporativa Geral.`);
-    } else {
-      toast.success(`Empresa ativa: ${targetBiz.name}`);
-    }
+    toast.success(`Empresa ativa: ${targetBiz.name} — módulos e ERP atualizados.`);
   };
 
   // Ação de troca manual de módulo via dropdown ou abas rápidas
