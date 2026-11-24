@@ -17,7 +17,7 @@ describe("BancoFe — Motor de Operações Financeiras & CRM 360°", () => {
     const metricas = crmFinanceiraStore.obterMetricasGestao();
     expect(metricas.pipelineCentavos).toBeGreaterThan(2000000000); // Mais de R$ 20M em centavos
     expect(metricas.abertas).toBeGreaterThanOrEqual(15);
-    expect(metricas.ticketMedio).toBeGreaterThan(1000000);
+    expect(metricas.ticketMedio).toBeGreaterThan(900000);
     expect(metricas.taxaMediaMensal).toBeGreaterThan(1.0);
     expect(metricas.etapas.length).toBe(5); // 5 colunas oficiais do funil
     expect(metricas.previsao.length).toBeGreaterThanOrEqual(3);

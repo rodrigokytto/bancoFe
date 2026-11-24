@@ -1360,24 +1360,6 @@ export function registerPlataformaWebAndApis(app: any) {
     res.json(MESA_OPERACAO_ESTADO_BANCOFE);
   });
 
-  app.get("/api/admin/operacoes-financeiras/crm/gestao", (_req: Request, res: Response) => {
-    res.json({
-      totalOportunidades: 28,
-      volumeTotalPipeline: 14500000,
-      ticketMedio: 517857,
-      taxaConversao: 84.5,
-      operacoesEsteiraFIDC: 12,
-      ccbsFormalizadas: 18,
-      volumeFormalizado: 8750000,
-      inadimplenciaBacen: 0.027
-    });
-  });
-
-  app.get("/api/admin/operacoes-financeiras/crm/oportunidades", (_req: Request, res: Response) => {
-    const propostas = servicoMesaCredito.listarPropostas();
-    res.json({ oportunidades: propostas });
-  });
-
   app.get("/api/admin/operacoes-financeiras/produtos", (_req: Request, res: Response) => {
     res.json({
       produtos: {

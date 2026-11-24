@@ -32,11 +32,11 @@ async function startServer() {
   app.get("/api/platform/config.js", (_req, res) => {
     res.set("Cache-Control", "no-store").type("application/javascript").send(publicPlatformScript());
   });
+  registerCrmFinanceiraRoutes(app);
+  registerCadastro360Routes(app);
   registerBancoFeRoutes(app);
   registerOAuthRoutes(app);
   registerIntegrationRoutes(app);
-  registerCrmFinanceiraRoutes(app);
-  registerCadastro360Routes(app);
   // tRPC API
   app.use(
     "/api/trpc",

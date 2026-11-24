@@ -138,12 +138,12 @@ export interface ResultadoSimulacao {
 
 // Estágios Oficiais do Funil BancoFe
 const ESTAGIOS_KANBAN = [
-  { id: "prospeccao", label: "1. Prospecção & Originação", cor: "bg-blue-500", border: "border-blue-500", sinonimos: ["prospeccao"] },
-  { id: "qualificacao", label: "2. Qualificação & KYC", cor: "bg-amber-500", border: "border-amber-500", sinonimos: ["qualificacao"] },
-  { id: "mesa_credito", label: "3. Mesa de Crédito & SCR", cor: "bg-emerald-600", border: "border-emerald-600", sinonimos: ["mesa_credito", "proposta"] },
-  { id: "comite_aprovacao", label: "4. Comitê de Alçada", cor: "bg-indigo-500", border: "border-indigo-500", sinonimos: ["comite_aprovacao", "comite", "analise"] },
-  { id: "formalizacao_ccb", label: "5. Formalização CCB", cor: "bg-orange-500", border: "border-orange-500", sinonimos: ["formalizacao_ccb", "formalizacao"] },
-  { id: "liquidado", label: "6. Liquidado & Desembolsado", cor: "bg-emerald-500", border: "border-emerald-500", sinonimos: ["liquidado", "contratado", "concluido"] },
+  { id: "prospeccao", label: "1. Prospecção & Originação", cor: "bg-blue-500", border: "border-blue-500", sinonimos: ["prospeccao", "prospect", "origem", "novo", "em_qualificacao"] },
+  { id: "qualificacao", label: "2. Qualificação & KYC", cor: "bg-amber-500", border: "border-amber-500", sinonimos: ["qualificacao", "kyc", "documentacao", "qualificado", "condicionado"] },
+  { id: "mesa_credito", label: "3. Mesa de Crédito & SCR", cor: "bg-emerald-600", border: "border-emerald-600", sinonimos: ["mesa_credito", "analise", "mesa", "scr", "em_analise", "analise_credito", "recusado"] },
+  { id: "comite_aprovacao", label: "4. Comitê de Alçada", cor: "bg-indigo-500", border: "border-indigo-500", sinonimos: ["comite_aprovacao", "comite", "comite_risco", "alçada", "deliberacao", "aprovado_mesa"] },
+  { id: "formalizacao_ccb", label: "5. Formalização CCB", cor: "bg-orange-500", border: "border-orange-500", sinonimos: ["formalizacao_ccb", "formalizacao", "proposta", "ccb", "minuta", "em_formalizacao"] },
+  { id: "liquidado", label: "6. Liquidado & Desembolsado", cor: "bg-emerald-500", border: "border-emerald-500", sinonimos: ["liquidado", "contratado", "concluido", "desembolsado", "formalizado_ccb", "pago", "liberado"] },
 ];
 
 export const CrmFinanceiraPage: React.FC = () => {
@@ -477,13 +477,17 @@ export const CrmFinanceiraPage: React.FC = () => {
   const filteredOportunidades = useMemo(() => {
     return oportunidades.filter((op) => {
       const matchEmpresa = selectedEmpresa === "todos" || op.empresaOrigemId === selectedEmpresa;
-      const matchEstagio = selectedEstagio === "todos" || op.estagio === selectedEstagio;
+      const matchEstagio =
+        selectedEstagio === "todos" ||
+        op.estagio === selectedEstagio ||
+        (op as any).etapa === selectedEstagio ||
+        ((op as any).status || "").toLowerCase() === selectedEstagio.toLowerCase();
       const matchTermo =
         !searchTerm.trim() ||
-        op.clienteNome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        op.codigoProtocolo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        op.clienteDocumento.includes(searchTerm) ||
-        op.tipoOperacaoLabel.toLowerCase().includes(searchTerm.toLowerCase());
+        (op.clienteNome || (op as any).contraparteNome || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (op.codigoProtocolo || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (op.clienteDocumento || (op as any).contraparteDocumento || "").includes(searchTerm) ||
+        (op.tipoOperacaoLabel || (op as any).produtoNome || "").toLowerCase().includes(searchTerm.toLowerCase());
 
       return matchEmpresa && matchEstagio && matchTermo;
     });
@@ -729,9 +733,19 @@ export const CrmFinanceiraPage: React.FC = () => {
               const opsNaColuna = filteredOportunidades.filter((op) => {
                 const est = (op.estagio || "").toLowerCase();
                 const eta = ((op as any).etapa || "").toLowerCase();
-                return col.sinonimos.includes(est) || col.sinonimos.includes(eta) || est === col.id;
+                const stat = ((op as any).status || "").toLowerCase();
+                return (
+                  col.sinonimos.includes(est) ||
+                  col.sinonimos.includes(eta) ||
+                  col.sinonimos.includes(stat) ||
+                  est === col.id ||
+                  eta === col.id
+                );
               });
-              const volumeColuna = opsNaColuna.reduce((acc, o) => acc + (o.valorAprovado || o.valorSolicitado), 0);
+              const volumeColuna = opsNaColuna.reduce(
+                (acc, o) => acc + (o.valorAprovado || o.valorSolicitado || ((o as any).valorCentavos ? (o as any).valorCentavos / 100 : 0)),
+                0
+              );
 
               return (
                 <div
@@ -771,31 +785,31 @@ export const CrmFinanceiraPage: React.FC = () => {
                               {op.codigoProtocolo}
                             </span>
                             <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-[#0c4a34] dark:text-emerald-300">
-                              Score {op.scoreSerasa} • {op.ratingBacen}
+                              Score {op.scoreSerasa || (op as any).scoreBancoFe || 850} • {op.ratingBacen || (op as any).ratingBancoFe || "A"}
                             </span>
                           </div>
 
                           {/* Nome e Documento */}
                           <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 line-clamp-2 leading-tight">
-                            {op.clienteNome}
+                            {op.clienteNome || (op as any).contraparteNome || "Cliente BancoFé"}
                           </h4>
                           <span className="text-[10px] text-slate-400 font-mono block mb-1">
-                            {op.clienteDocumento}
+                            {op.clienteDocumento || (op as any).contraparteDocumento || "00.000.000/0001-00"}
                           </span>
 
                           {/* Tipo de Operação & Empresa */}
                           <div className="inline-block px-1.5 py-0.5 rounded text-[10px] bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 mb-2 font-medium">
-                            {op.tipoOperacaoLabel}
+                            {op.tipoOperacaoLabel || (op as any).produtoNome || "Operação Financeira"}
                           </div>
 
                           {/* Valor e Condições */}
                           <div className="bg-slate-50 dark:bg-slate-900/60 rounded-lg p-2 border border-slate-100 dark:border-slate-800 mb-2">
                             <div className="text-xs font-black font-mono text-slate-900 dark:text-white">
-                              {formatMoney(op.valorAprovado || op.valorSolicitado)}
+                              {formatMoney(op.valorAprovado || op.valorSolicitado || ((op as any).valorCentavos ? (op as any).valorCentavos / 100 : 0))}
                             </div>
                             <div className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center justify-between mt-0.5">
-                              <span>{op.taxaMensalPercentual}% a.m.</span>
-                              <span>{op.prazoMeses}x {op.sistemaAmortizacao}</span>
+                              <span>{op.taxaMensalPercentual || 1.35}% a.m.</span>
+                              <span>{op.prazoMeses || 24}x {op.sistemaAmortizacao || "SAC"}</span>
                             </div>
                           </div>
 

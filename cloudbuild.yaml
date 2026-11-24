@@ -46,8 +46,6 @@ steps:
       - '10'
       - '--concurrency'
       - '80'
-      - '--traffic'
-      - 'latest=100'
 
 images:
   - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/bancofe/bancofe-erp:$SHORT_SHA'
