@@ -1085,7 +1085,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }`}
                   title="Exibir todas as telas da Holding BancoFé"
                 >
-                  🌐 Holding
+                  🌐 Todas as Telas
                 </button>
                 <button
                   type="button"
@@ -1095,9 +1095,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       ? "bg-emerald-700 text-white shadow-2xs"
                       : "bg-[var(--surface2)] text-[var(--muted)] hover:text-emerald-700"
                   }`}
-                  title="BancoFé Core, Bureaus 360° e Mesa de Crédito"
+                  title="BancoFe — Banco & Operações Financeiras, Bureaus 360°, SCR e Mesa de Crédito"
                 >
-                  🏦 BancoFé Core
+                  🏛️ Banco & Finanças
                 </button>
                 <button
                   type="button"
@@ -1107,9 +1107,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       ? "bg-amber-600 text-white shadow-2xs"
                       : "bg-[var(--surface2)] text-[var(--muted)] hover:text-amber-600"
                   }`}
-                  title="Mesa de Operações e Atendimento"
+                  title="Operações Comerciais, Salão e PDV Touch"
                 >
-                  ⚖️ Operações
+                  🍽️ PDV & Salão
                 </button>
                 <button
                   type="button"
