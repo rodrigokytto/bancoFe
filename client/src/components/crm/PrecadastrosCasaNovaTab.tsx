@@ -1834,7 +1834,6 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
       {/* =========================================================================
           MODAL 2: CONVERSÃO DE PRÉ-CADASTRO EM OPORTUNIDADE NO FUNIL
           ========================================================================= */}
-          ========================================================================= */}
       {modalConverter && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-lg w-full p-6 shadow-2xl flex flex-col">
