@@ -32,7 +32,9 @@ const BusinessContext = createContext<BusinessContextType | undefined>(undefined
 
 export const BusinessProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeBusinessId, setActiveBusinessIdState] = useState<string>(() => {
-    return localStorage.getItem(STORAGE_KEY_BIZ) || "bancofe";
+    const saved = localStorage.getItem(STORAGE_KEY_BIZ);
+    if (saved === "operacoes_financeiras_crm" || saved === "bancofe_credito") return "bancofe";
+    return saved || "bancofe";
   });
 
   const utils = trpc.useUtils();
@@ -126,8 +128,9 @@ export const BusinessProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [modules]);
 
   const setActiveBusinessId = (id: string) => {
-    setActiveBusinessIdState(id);
-    localStorage.setItem(STORAGE_KEY_BIZ, id);
+    const resolvedId = id === "operacoes_financeiras_crm" || id === "bancofe_credito" ? "bancofe" : id;
+    setActiveBusinessIdState(resolvedId);
+    localStorage.setItem(STORAGE_KEY_BIZ, resolvedId);
   };
 
   const refresh = () => {

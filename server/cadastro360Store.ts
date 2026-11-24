@@ -162,7 +162,7 @@ export class Cadastro360Store {
       tipoPessoa: dados.tipoPessoa || "PJ",
       statusCadastral: "pendente_documentos",
       empresaOrigemId: dados.empresaOrigemId || "operacoes_financeiras_crm",
-      empresaOrigemNome: dados.empresaOrigemNome || "BancoFe — Operações & CRM",
+      empresaOrigemNome: dados.empresaOrigemNome || "BancoFe — Banco & Operações Financeiras",
       dadosCadastrais: dados.dadosCadastrais || {
         dataFundacao: "2020-01-01",
         porte: "MEDIO",
@@ -911,7 +911,7 @@ Pela presente Cédula de Crédito Bancário, emitida com fundamento na Lei nº 1
         tipoPessoa: "PJ",
         statusCadastral: "homologado",
         empresaOrigemId: "zuma_agro",
-        empresaOrigemNome: "BancoFe Agro & Safra MT",
+        empresaOrigemNome: "Zuma Agropecuária & Safra MT",
         dadosCadastrais: {
           inscricaoEstadual: "13.112.334-9",
           dataFundacao: "2008-07-22",
@@ -1082,7 +1082,7 @@ Pela presente Cédula de Crédito Bancário, emitida com fundamento na Lei nº 1
         tipoPessoa: "PJ",
         statusCadastral: "homologado",
         empresaOrigemId: "bancofe_logistica",
-        empresaOrigemNome: "BancoFe Logística & Frotas",
+        empresaOrigemNome: "Rota Norte Logística & Frotas",
         dadosCadastrais: {
           inscricaoEstadual: "13.889.001-2",
           dataFundacao: "2016-09-01",
@@ -1239,7 +1239,7 @@ Pela presente Cédula de Crédito Bancário, emitida com fundamento na Lei nº 1
         tipoPessoa: "PJ",
         statusCadastral: "homologado",
         empresaOrigemId: "zuma_moda",
-        empresaOrigemNome: "BancoFe Varejo — Zuma Moda",
+        empresaOrigemNome: "Zuma Moda, Roupas & Boutique",
         dadosCadastrais: {
           inscricaoEstadual: "13.220.887-1",
           dataFundacao: "2019-11-10",
@@ -1396,7 +1396,7 @@ Pela presente Cédula de Crédito Bancário, emitida com fundamento na Lei nº 1
         tipoPessoa: "PJ",
         statusCadastral: "homologado",
         empresaOrigemId: "zuma_gastronomia",
-        empresaOrigemNome: "BancoFe Gastronomia — Zuma Cozinha",
+        empresaOrigemNome: "Zuma Cozinha Oriental",
         dadosCadastrais: {
           inscricaoEstadual: "13.901.442-8",
           dataFundacao: "2022-04-10",
@@ -1710,7 +1710,7 @@ Pela presente Cédula de Crédito Bancário, emitida com fundamento na Lei nº 1
         tipoPessoa: "PJ",
         statusCadastral: "homologado",
         empresaOrigemId: "zuma_agro",
-        empresaOrigemNome: "BancoFe Agro & Safra MT",
+        empresaOrigemNome: "Zuma Agropecuária & Safra MT",
         dadosCadastrais: {
           inscricaoEstadual: "13.440.119-3",
           dataFundacao: "2010-05-18",
@@ -1862,12 +1862,12 @@ Pela presente Cédula de Crédito Bancário, emitida com fundamento na Lei nº 1
         id: "cli-360-008",
         codigo: "BFE-360-0008",
         razaoSocial: "BancoFe S.A. — Instituição Financeira Múltipla & Securitizadora FIDC",
-        nomeFantasia: "BancoFe — Core Bancário, Open Finance & Securitizadora FIDC",
+        nomeFantasia: "BancoFe — Banco & Operações Financeiras",
         cnpjCpf: "34.567.890/0001-12",
         tipoPessoa: "PJ",
         statusCadastral: "homologado",
         empresaOrigemId: "bancofe",
-        empresaOrigemNome: "BancoFe — Core Bancário, Open Finance & Securitizadora FIDC",
+        empresaOrigemNome: "BancoFe — Banco & Operações Financeiras",
         dadosCadastrais: {
           inscricaoEstadual: "13.000.999-9",
           dataFundacao: "2023-01-15",

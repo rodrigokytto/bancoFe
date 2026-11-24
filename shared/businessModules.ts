@@ -155,11 +155,11 @@ export const DEFAULT_BUSINESSES: BusinessUnit[] = [
   },
   {
     "id": "bancofe",
-    "name": "BancoFe — Core Bancário, Open Finance & Securitizadora FIDC",
+    "name": "BancoFe — Banco & Operações Financeiras",
     "slug": "bancofe",
-    "description": "Plataforma bancária e securitizadora unificada: Core Banking digital, Open Finance Bacen, PIX 24/7 instantâneo, emissão de CCB digital, securitização de recebíveis e cotas sênior/subordinadas de FIDC.",
+    "description": "Instituição bancária e financeira única do grupo: Core Banking digital, Open Finance Bacen, liquidação instantânea PIX 24/7, Mesa de Crédito Algorítmica com Dossiê SCR Bacen, Funil CRM Financeiro 360°, emissão de CCBs digitais e Securitizadora FIDC.",
     "iconName": "Landmark",
-    "badge": "Banco & Securitizadora",
+    "badge": "Banco & Finanças",
     "colorScheme": "emerald",
     "cnpj": "52.889.341/0001-92",
     "cidade": "São Paulo - SP & Tangará da Serra - MT",
@@ -180,34 +180,8 @@ export const DEFAULT_BUSINESSES: BusinessUnit[] = [
     "updatedAt": "2026-11-24T00:00:00Z"
   },
   {
-    "id": "operacoes_financeiras_crm",
-    "name": "BancoFe — Operações Financeiras & CRM 360°",
-    "slug": "crm-financeira",
-    "description": "Esteira completa de crédito comercial, funil de oportunidades CRM, formalização CCB digital, mesa de crédito algorítmica, gestão de cedentes/sacados e cobrança automatizada.",
-    "iconName": "TrendingUp",
-    "badge": "Operações & CRM",
-    "colorScheme": "emerald",
-    "cnpj": "52.889.341/0001-92",
-    "cidade": "São Paulo - SP & Tangará da Serra - MT",
-    "unidade": "Mesa de Operações & Crédito Estruturado",
-    "status": "active",
-    "isDefault": true,
-    "metrics": {
-      "monthlyVolume": 22840000,
-      "monthlyTransactions": 8450,
-      "uptimeSla": 99.99,
-      "avgLatencyMs": 14,
-      "monthlySavings": 84500,
-      "activeUsersCount": 34,
-      "hoursSavedMonthly": 240,
-      "complianceScore": 100
-    },
-    "createdAt": "2026-01-01T00:00:00Z",
-    "updatedAt": "2026-11-24T00:00:00Z"
-  },
-  {
     "id": "zuma_agro",
-    "name": "BancoFe Agro — Zuma Agropecuária & Safra MT",
+    "name": "Zuma Agropecuária & Safra MT",
     "slug": "agro",
     "description": "Agronegócio e commodities em MT (Soja, Milho, Algodão), contratos futuros Barter, pesagem rodoviária e frotas de colheitadeiras.",
     "iconName": "Wheat",
@@ -232,7 +206,7 @@ export const DEFAULT_BUSINESSES: BusinessUnit[] = [
   },
   {
     "id": "zuma_gastronomia",
-    "name": "BancoFe Gastronomia — Zuma Cozinha Oriental",
+    "name": "Zuma Cozinha Oriental",
     "slug": "gastronomia",
     "description": "Operação gastronômica 360°, Frente de Caixa Touch (PDV), KDS 2.0 Fire-on-Demand, App do Garçom 27 mesas, Delivery e IoT Térmico.",
     "iconName": "UtensilsCrossed",
@@ -432,7 +406,7 @@ export const DEFAULT_BUSINESSES: BusinessUnit[] = [
   },
   {
     "id": "zuma_moda",
-    "name": "BancoFe Varejo — Zuma Moda, Roupas & Boutique",
+    "name": "Zuma Moda, Roupas & Boutique",
     "slug": "moda",
     "description": "Varejo de moda e boutique conceitual, grade de peças P/M/G/GG, código de barras EAN-13, provador e malas condicionais com crediário.",
     "iconName": "Shirt",
@@ -482,7 +456,7 @@ export const DEFAULT_BUSINESSES: BusinessUnit[] = [
   },
   {
     "id": "bancofe_logistica",
-    "name": "BancoFe Logística — Frota & Roteirização GPS",
+    "name": "Rota Norte Logística & Frotas",
     "slug": "logistica",
     "description": "Hub de logística de entregas, roteirização multiobjetivo para motoboys e carretas, rastreamento GPS e gestão de combustíveis.",
     "iconName": "Truck",

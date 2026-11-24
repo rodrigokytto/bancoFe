@@ -494,12 +494,20 @@ export default function Cadastro360BancoFePage() {
                 >
                   <option value="todas">Todas as Empresas do Grupo</option>
                   <option value="holding_kytto">👑 BancoFe Holding S.A. (Controladora)</option>
-                  <option value="bancofe">🏛️ BancoFe — Core Bancário & Securitizadora FIDC</option>
-                  <option value="operacoes_financeiras_crm">Operações & CRM</option>
-                  <option value="zuma_agro">Zuma Agro MT</option>
-                  <option value="bancofe_logistica">Logística & Frotas</option>
-                  <option value="zuma_moda">Zuma Moda</option>
-                  <option value="zuma_gastronomia">Gastronomia</option>
+                  <option value="bancofe">🏛️ BancoFe — Banco & Operações Financeiras</option>
+                  <option value="zuma_agro">Zuma Agropecuária & Safra MT</option>
+                  <option value="zuma_gastronomia">Zuma Cozinha Oriental</option>
+                  <option value="palatare-pizzaria">Palatare Pizzaria Napolitana</option>
+                  <option value="barbearia-dino">Barbearia Dino Premium</option>
+                  <option value="agro-open-ttc">Agro Open TTC Clube & Esportes</option>
+                  <option value="serrano-concreto">Serrano Concreto & Britagem</option>
+                  <option value="casa-nova-imoveis">Casa Nova Negócios Imobiliários</option>
+                  <option value="stallone-nutre-sport">Stallone Nutre Sport Suplementação</option>
+                  <option value="supermercado-kytto">Supermercado Kytto Atacado & Varejo</option>
+                  <option value="zuma_moda">Zuma Moda, Roupas & Boutique</option>
+                  <option value="kytto-energia-solar">Kytto Energia Solar & Renováveis</option>
+                  <option value="bancofe_logistica">Rota Norte Logística & Frotas</option>
+                  <option value="kytto-tech-software">Kytto Cloud & Software Solutions</option>
                 </select>
 
                 <select
@@ -1331,21 +1339,31 @@ export default function Cadastro360BancoFePage() {
                       const id = e.target.value;
                       const nomes: Record<string, string> = {
                         holding_kytto: "BancoFe Holding S.A. — Controladora Geral do Grupo",
-                        bancofe: "BancoFe — Core Bancário, Open Finance & Securitizadora FIDC",
-                        operacoes_financeiras_crm: "BancoFe — Operações & CRM",
-                        zuma_agro: "BancoFe Agro & Safra MT",
-                        bancofe_logistica: "BancoFe Logística & Frotas",
-                        bancofe_credito: "BancoFe Crédito & Fomento",
+                        bancofe: "BancoFe — Banco & Operações Financeiras",
+                        zuma_agro: "Zuma Agropecuária & Safra MT",
+                        zuma_gastronomia: "Zuma Cozinha Oriental",
+                        palatare_pizzaria: "Palatare Pizzaria Napolitana",
+                        barbearia_dino: "Barbearia Dino Premium",
+                        agro_open_ttc: "Agro Open TTC Clube & Esportes",
+                        serrano_concreto: "Serrano Concreto & Britagem",
+                        casa_nova_imoveis: "Casa Nova Negócios Imobiliários",
+                        stallone_nutre_sport: "Stallone Nutre Sport Suplementação",
+                        supermercado_kytto: "Supermercado Kytto Atacado & Varejo",
+                        zuma_moda: "Zuma Moda, Roupas & Boutique",
+                        kytto_energia_solar: "Kytto Energia Solar & Renováveis",
+                        bancofe_logistica: "Rota Norte Logística & Frotas",
+                        kytto_tech_software: "Kytto Cloud & Software Solutions",
                       };
                       setNovoClienteForm({ ...novoClienteForm, empresaOrigemId: id, empresaOrigemNome: nomes[id] || id });
                     }}
                     className="w-full mt-1 p-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
                   >
                     <option value="holding_kytto">👑 BancoFe Holding S.A. — Controladora Geral</option>
-                    <option value="bancofe">🏛️ BancoFe — Core Bancário & Securitizadora FIDC</option>
-                    <option value="operacoes_financeiras_crm">BancoFe — Operações & CRM</option>
-                    <option value="zuma_agro">BancoFe Agro & Safra MT</option>
-                    <option value="bancofe_logistica">BancoFe Logística & Frotas</option>
+                    <option value="bancofe">🏛️ BancoFe — Banco & Operações Financeiras</option>
+                    <option value="zuma_agro">Zuma Agropecuária & Safra MT</option>
+                    <option value="zuma_gastronomia">Zuma Cozinha Oriental</option>
+                    <option value="zuma_moda">Zuma Moda, Roupas & Boutique</option>
+                    <option value="bancofe_logistica">Rota Norte Logística & Frotas</option>
                   </select>
                 </div>
               </div>

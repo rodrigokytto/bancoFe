@@ -28,11 +28,11 @@
     },
     {
       "id": "bancofe",
-      "name": "BancoFe — Core Bancário, Open Finance & Securitizadora FIDC",
+      "name": "BancoFe — Banco & Operações Financeiras",
       "slug": "bancofe",
-      "description": "Plataforma bancária e securitizadora unificada: Core Banking digital, Open Finance Bacen, PIX 24/7 instantâneo, emissão de CCB digital, securitização de recebíveis e cotas sênior/subordinadas de FIDC.",
+      "description": "Instituição bancária e financeira única do grupo: Core Banking digital, Open Finance Bacen, liquidação instantânea PIX 24/7, Mesa de Crédito Algorítmica com Dossiê SCR Bacen, Funil CRM Financeiro 360°, emissão de CCBs digitais e Securitizadora FIDC.",
       "iconName": "Landmark",
-      "badge": "Banco & Securitizadora",
+      "badge": "Banco & Finanças",
       "colorScheme": "emerald",
       "cnpj": "52.889.341/0001-92",
       "cidade": "São Paulo - SP & Tangará da Serra - MT",
@@ -53,34 +53,8 @@
       "updatedAt": "2026-11-24T00:00:00Z"
     },
     {
-      "id": "operacoes_financeiras_crm",
-      "name": "BancoFe — Operações Financeiras & CRM 360°",
-      "slug": "crm-financeira",
-      "description": "Esteira completa de crédito comercial, funil de oportunidades CRM, formalização CCB digital, mesa de crédito algorítmica, gestão de cedentes/sacados e cobrança automatizada.",
-      "iconName": "TrendingUp",
-      "badge": "Operações & CRM",
-      "colorScheme": "emerald",
-      "cnpj": "52.889.341/0001-92",
-      "cidade": "São Paulo - SP & Tangará da Serra - MT",
-      "unidade": "Mesa de Operações & Crédito Estruturado",
-      "status": "active",
-      "isDefault": true,
-      "metrics": {
-        "monthlyVolume": 22840000,
-        "monthlyTransactions": 8450,
-        "uptimeSla": 99.99,
-        "avgLatencyMs": 14,
-        "monthlySavings": 84500,
-        "activeUsersCount": 34,
-        "hoursSavedMonthly": 240,
-        "complianceScore": 100
-      },
-      "createdAt": "2026-01-01T00:00:00Z",
-      "updatedAt": "2026-11-24T00:00:00Z"
-    },
-    {
       "id": "zuma_agro",
-      "name": "BancoFe Agro — Zuma Agropecuária & Safra MT",
+      "name": "Zuma Agropecuária & Safra MT",
       "slug": "agro",
       "description": "Agronegócio e commodities em MT (Soja, Milho, Algodão), contratos futuros Barter, pesagem rodoviária e frotas de colheitadeiras.",
       "iconName": "Wheat",
@@ -105,7 +79,7 @@
     },
     {
       "id": "zuma_gastronomia",
-      "name": "BancoFe Gastronomia — Zuma Cozinha Oriental",
+      "name": "Zuma Cozinha Oriental",
       "slug": "gastronomia",
       "description": "Operação gastronômica 360°, Frente de Caixa Touch (PDV), KDS 2.0 Fire-on-Demand, App do Garçom 27 mesas, Delivery e IoT Térmico.",
       "iconName": "UtensilsCrossed",
@@ -305,11 +279,11 @@
     },
     {
       "id": "zuma_moda",
-      "name": "BancoFe Varejo — Zuma Moda, Roupas & Boutique",
+      "name": "Zuma Moda, Roupas & Boutique",
       "slug": "moda",
       "description": "Varejo de moda e boutique conceitual, grade de peças P/M/G/GG, código de barras EAN-13, provador e malas condicionais com crediário.",
       "iconName": "Shirt",
-      "badge": "Boutique",
+      "badge": "Boutique & Moda",
       "colorScheme": "rose",
       "cnpj": "36.296.848/0003-19",
       "cidade": "Tangará da Serra - MT",
@@ -355,11 +329,11 @@
     },
     {
       "id": "bancofe_logistica",
-      "name": "BancoFe Logística — Frota & Roteirização GPS",
+      "name": "Rota Norte Logística & Frotas",
       "slug": "logistica",
       "description": "Hub de logística de entregas, roteirização multiobjetivo para motoboys e carretas, rastreamento GPS e gestão de combustíveis.",
       "iconName": "Truck",
-      "badge": "Logística",
+      "badge": "Logística & Frotas",
       "colorScheme": "cyan",
       "cnpj": "52.889.341/0004-35",
       "cidade": "Tangará da Serra & Cuiabá - MT",
@@ -691,6 +665,267 @@
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "crm_pipeline_oportunidades",
+        "businessId": "bancofe",
+        "label": "Funil & Pipeline de Oportunidades CRM",
+        "description": "Quadro Kanban interativo de prospecção, qualificação, comitê e formalização de operações financeiras.",
+        "iconName": "TrendingUp",
+        "badge": "Kanban 360°",
+        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+        "defaultPath": "/admin/crm-financeira",
+        "order": 1,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "crm_comercial",
+          "pipeline_vendas"
+        ],
+        "telemetry": {
+          "monthlyRequests": 42800,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 12500000,
+          "costReduction": 28400,
+          "usersCount": 24,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T12:01:17.423Z"
+      },
+      {
+        "id": "crm_mesa_credito_algoritmica",
+        "businessId": "bancofe",
+        "label": "Mesa de Crédito & Risco Algorítmico",
+        "description": "Análise automatizada de risco com parecer instantâneo SCR Bacen, Serasa, CENPROT e SICAR.",
+        "iconName": "ShieldCheck",
+        "badge": "Mesa de Risco",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/admin/crm-financeira?tab=mesa",
+        "order": 2,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "analise_risco",
+          "credito_bacen"
+        ],
+        "telemetry": {
+          "monthlyRequests": 19600,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 18,
+          "status": "healthy",
+          "monthlyVolume": 8900000,
+          "costReduction": 19800,
+          "usersCount": 16,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T12:01:17.423Z"
+      },
+      {
+        "id": "crm_simulador_taxas_retorno",
+        "businessId": "bancofe",
+        "label": "Simulador de Taxas, Spread & Retorno",
+        "description": "Calculadora de retorno financeiro, TIR líquida, IOF, TAC, tabelas SAC/PRICE e margem líquida BancoFe.",
+        "iconName": "Calculator",
+        "badge": "Simulador",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/admin/crm-financeira?tab=simulador",
+        "order": 3,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "calculadora_financeira",
+          "precificacao"
+        ],
+        "telemetry": {
+          "monthlyRequests": 14200,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 8,
+          "status": "healthy",
+          "monthlyVolume": 5600000,
+          "costReduction": 11200,
+          "usersCount": 22,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T12:01:17.424Z"
+      },
+      {
+        "id": "crm_formalizacao_ccb_digital",
+        "businessId": "bancofe",
+        "label": "Formalização & Emissão de CCB Digital",
+        "description": "Geração de Cédulas de Crédito Bancário, assinatura eletrônica ICP-Brasil e registro eletrônico.",
+        "iconName": "FileText",
+        "badge": "CCB ICP-Brasil",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/admin/crm-financeira?tab=formalizacao",
+        "order": 4,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "formalizacao_juridica",
+          "cartorios"
+        ],
+        "telemetry": {
+          "monthlyRequests": 8700,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 24,
+          "status": "healthy",
+          "monthlyVolume": 7400000,
+          "costReduction": 15400,
+          "usersCount": 14,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T12:01:17.425Z"
+      },
+      {
+        "id": "crm_gestao_carteira_cobranca",
+        "businessId": "bancofe",
+        "label": "Gestão de Carteira & Cobrança Amigável",
+        "description": "Monitoramento de vencimentos, régua automatizada WhatsApp/Pix e recuperação de créditos com inadimplência zero.",
+        "iconName": "Users",
+        "badge": "Cobrança Pix",
+        "badgeColor": "bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30",
+        "defaultPath": "/admin/crm-financeira?tab=carteira",
+        "order": 5,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "cobranca_ativa",
+          "recuperacao_credito"
+        ],
+        "telemetry": {
+          "monthlyRequests": 26800,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 18400000,
+          "costReduction": 32600,
+          "usersCount": 20,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T12:01:17.425Z"
+      },
+      {
+        "id": "crm_antecipacao_recebiveis_nfe",
+        "businessId": "bancofe",
+        "label": "Portal Cedentes & Antecipação de NF-e",
+        "description": "Consulta de chaves NF-e na Sefaz, checagem de lastro mercantil e borderô automático com liquidação instantânea.",
+        "iconName": "Receipt",
+        "badge": "Borderô Sefaz",
+        "badgeColor": "bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
+        "defaultPath": "/admin/crm-financeira?tab=antecipacao",
+        "order": 6,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "antecipacao_nfe",
+          "fidc_operacoes"
+        ],
+        "telemetry": {
+          "monthlyRequests": 16400,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 16,
+          "status": "healthy",
+          "monthlyVolume": 9200000,
+          "costReduction": 18200,
+          "usersCount": 18,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T12:01:17.425Z"
+      },
+      {
+        "id": "crm_cadastro_360_empresas",
+        "businessId": "bancofe",
+        "label": "Cadastro 360° Corporativo & Mesa KYB/KYC",
+        "description": "Visão holística de clientes PJ/PF, QSA/UBO, balanço sintético, compliance PLD-FT e limites operacionais.",
+        "iconName": "Users",
+        "badge": "360° KYB",
+        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+        "defaultPath": "/admin/cadastro-360",
+        "order": 7,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "kyb_compliance",
+          "cadastro_360"
+        ],
+        "telemetry": {
+          "monthlyRequests": 28400,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 24800000,
+          "costReduction": 38500,
+          "usersCount": 26,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "crm_precadastro_dossie_documental",
+        "businessId": "bancofe",
+        "label": "Pré-Cadastro & Vault Documental Digital",
+        "description": "Checklist de 13 documentos obrigatórios, upload, validação com hash SHA-256 e controle de validade de certidões.",
+        "iconName": "Boxes",
+        "badge": "Dossiê Digital",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/admin/pre-cadastro",
+        "order": 8,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "onboarding_digital",
+          "vault_documental"
+        ],
+        "telemetry": {
+          "monthlyRequests": 21200,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 16500000,
+          "costReduction": 24000,
+          "usersCount": 22,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "crm_central_termos_contratos",
+        "businessId": "bancofe",
+        "label": "Central de Termos & Formalizações Digitais",
+        "description": "Termos SCR Bacen, Domicílio Bancário, PLD-FT, Open Finance, Cessão Fiduciária e CCB Eletrônica com hash e IP.",
+        "iconName": "Scale",
+        "badge": "Termos & SCR",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/admin/termos",
+        "order": 9,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "formalizacao_juridica",
+          "termos_scr"
+        ],
+        "telemetry": {
+          "monthlyRequests": 18900,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 15,
+          "status": "healthy",
+          "monthlyVolume": 14200000,
+          "costReduction": 19500,
+          "usersCount": 20,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
       }
     ],
     "zuma_gastronomia": [
@@ -1307,8 +1542,294 @@
     ],
     "operacoes_financeiras_crm": [
       {
+        "id": "banco_open_finance",
+        "businessId": "bancofe",
+        "label": "Open Finance & APIs Bacen",
+        "description": "Conexões seguras Bacen, dados abertos bancários, consentimentos e Webhooks bancários.",
+        "iconName": "Radio",
+        "badge": "Bacen",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/conexoes",
+        "order": 1,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "conectividade_apis",
+          "open_apis"
+        ],
+        "telemetry": {
+          "monthlyRequests": 184500,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 22,
+          "status": "healthy",
+          "monthlyVolume": 4850000,
+          "costReduction": 14500,
+          "usersCount": 38,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "banco_pix_pagamentos",
+        "businessId": "bancofe",
+        "label": "PIX 24/7 & Central de Pagamentos",
+        "description": "Liquidação instantânea PIX Sicredi/Banco Central, checkout Apple Pay, QR dinâmico e estático.",
+        "iconName": "Zap",
+        "badge": "Instantâneo",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/pagamentos",
+        "order": 2,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "frente_loja",
+          "financas_controladoria"
+        ],
+        "telemetry": {
+          "monthlyRequests": 423900,
+          "uptimePercent": 100,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 12400000,
+          "costReduction": 28900,
+          "usersCount": 154,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "banco_credito_fomento",
+        "businessId": "bancofe",
+        "label": "Crédito, Antecipação & Fomento",
+        "description": "Antecipação de recebíveis de cartões, duplicatas eletrônicas, análise de risco e billing.",
+        "iconName": "CircleDollarSign",
+        "badge": "Fomento",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/erp?tab=billing",
+        "order": 3,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "financas_controladoria",
+          "vendas_b2b"
+        ],
+        "telemetry": {
+          "monthlyRequests": 54100,
+          "uptimePercent": 99.95,
+          "avgLatencyMs": 19,
+          "status": "healthy",
+          "monthlyVolume": 2150000,
+          "costReduction": 12300,
+          "usersCount": 18,
+          "lastSync": "Há 4 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "banco_controladoria_conciliacao",
+        "businessId": "bancofe",
+        "label": "Controladoria & Conciliação",
+        "description": "DRE gerencial, conciliação de extratos OFX/CNAB, auditoria contábil e balancetes.",
+        "iconName": "ShieldCheck",
+        "badge": "Auditoria",
+        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/financeiro",
+        "order": 4,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "financas_controladoria",
+          "fiscal_contabil"
+        ],
+        "telemetry": {
+          "monthlyRequests": 82000,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 15,
+          "status": "healthy",
+          "costReduction": 18500,
+          "usersCount": 24,
+          "lastSync": "Há 2 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "banco_cambio_mercado",
+        "businessId": "bancofe",
+        "label": "Câmbio, Mercado & War Room",
+        "description": "Cotações PTAX, Dólar Pescados, commodities Chicago/B3 e inteligência financeira.",
+        "iconName": "TrendingUp",
+        "badge": "Mercado",
+        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+        "defaultPath": "/mercado",
+        "order": 5,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "war_room",
+          "modelagem_preditiva"
+        ],
+        "telemetry": {
+          "monthlyRequests": 112000,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "usersCount": 31,
+          "lastSync": "Em tempo real"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "banco_integracoes_git_mcp",
+        "businessId": "bancofe",
+        "label": "Integrações Git, MCPs & Skills",
+        "description": "Conexões com repositórios GitHub, MCP Servers, Model Context Protocol e agentes de IA.",
+        "iconName": "Share2",
+        "badge": "MCP & Git",
+        "badgeColor": "bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
+        "defaultPath": "/integracoes",
+        "order": 6,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "conectividade_apis",
+          "infra_aplicacoes"
+        ],
+        "telemetry": {
+          "monthlyRequests": 32400,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 11,
+          "status": "healthy",
+          "costReduction": 8400,
+          "usersCount": 15,
+          "lastSync": "Há 1 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "banco_cadastro_360",
+        "businessId": "bancofe",
+        "label": "Cadastro 360° & KYB Bancário",
+        "description": "Dossiê único de clientes, QSA, UBO, score de compliance e domicílio bancário centralizado.",
+        "iconName": "Users",
+        "badge": "KYB Bacen",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/admin/cadastro-360",
+        "order": 7,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "kyb_compliance",
+          "cadastro_360"
+        ],
+        "telemetry": {
+          "monthlyRequests": 48200,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 35000000,
+          "costReduction": 42000,
+          "usersCount": 38,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "banco_termos_regulatorios",
+        "businessId": "bancofe",
+        "label": "Termos Regulatórios & Consentimentos Bacen",
+        "description": "Gestão de termos SCR (CMN 4.571), Open Finance, PLD-FT e travas de domicílio CERC/CIP.",
+        "iconName": "Scale",
+        "badge": "Regulatório",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/admin/termos",
+        "order": 8,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "formalizacao_juridica",
+          "termos_scr"
+        ],
+        "telemetry": {
+          "monthlyRequests": 31000,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 28000000,
+          "costReduction": 29000,
+          "usersCount": 28,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-23T00:00:00Z"
+      },
+      {
+        "id": "banco_mesa_credito",
+        "businessId": "bancofe",
+        "label": "Mesa de Crédito, SCR Bacen & Parecer IA",
+        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e parecer automatizado de crédito.",
+        "iconName": "Landmark",
+        "badge": "Crédito AAA",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/admin/mesa-credito",
+        "order": 3,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "financas_controladoria",
+          "mesa_credito"
+        ],
+        "telemetry": {
+          "monthlyRequests": 42800,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 22800000,
+          "costReduction": 68000,
+          "usersCount": 34,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "banco_securitizadora_fidc",
+        "businessId": "bancofe",
+        "label": "Securitização de Recebíveis & FIDC",
+        "description": "Securitização de direitos creditórios, emissão de CRI/CRA/CPR, cotas de FIDC e funding estruturado no mercado de capitais.",
+        "iconName": "TrendingUp",
+        "badge": "FIDC & CCB",
+        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+        "defaultPath": "/admin/crm-financeira",
+        "order": 4,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "financas_controladoria",
+          "securitizacao"
+        ],
+        "telemetry": {
+          "monthlyRequests": 18500,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 12500000,
+          "costReduction": 92000,
+          "usersCount": 18,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
         "id": "crm_pipeline_oportunidades",
-        "businessId": "operacoes_financeiras_crm",
+        "businessId": "bancofe",
         "label": "Funil & Pipeline de Oportunidades CRM",
         "description": "Quadro Kanban interativo de prospecção, qualificação, comitê e formalização de operações financeiras.",
         "iconName": "TrendingUp",
@@ -1337,7 +1858,7 @@
       },
       {
         "id": "crm_mesa_credito_algoritmica",
-        "businessId": "operacoes_financeiras_crm",
+        "businessId": "bancofe",
         "label": "Mesa de Crédito & Risco Algorítmico",
         "description": "Análise automatizada de risco com parecer instantâneo SCR Bacen, Serasa, CENPROT e SICAR.",
         "iconName": "ShieldCheck",
@@ -1366,7 +1887,7 @@
       },
       {
         "id": "crm_simulador_taxas_retorno",
-        "businessId": "operacoes_financeiras_crm",
+        "businessId": "bancofe",
         "label": "Simulador de Taxas, Spread & Retorno",
         "description": "Calculadora de retorno financeiro, TIR líquida, IOF, TAC, tabelas SAC/PRICE e margem líquida BancoFe.",
         "iconName": "Calculator",
@@ -1395,7 +1916,7 @@
       },
       {
         "id": "crm_formalizacao_ccb_digital",
-        "businessId": "operacoes_financeiras_crm",
+        "businessId": "bancofe",
         "label": "Formalização & Emissão de CCB Digital",
         "description": "Geração de Cédulas de Crédito Bancário, assinatura eletrônica ICP-Brasil e registro eletrônico.",
         "iconName": "FileText",
@@ -1424,7 +1945,7 @@
       },
       {
         "id": "crm_gestao_carteira_cobranca",
-        "businessId": "operacoes_financeiras_crm",
+        "businessId": "bancofe",
         "label": "Gestão de Carteira & Cobrança Amigável",
         "description": "Monitoramento de vencimentos, régua automatizada WhatsApp/Pix e recuperação de créditos com inadimplência zero.",
         "iconName": "Users",
@@ -1453,7 +1974,7 @@
       },
       {
         "id": "crm_antecipacao_recebiveis_nfe",
-        "businessId": "operacoes_financeiras_crm",
+        "businessId": "bancofe",
         "label": "Portal Cedentes & Antecipação de NF-e",
         "description": "Consulta de chaves NF-e na Sefaz, checagem de lastro mercantil e borderô automático com liquidação instantânea.",
         "iconName": "Receipt",
@@ -1482,7 +2003,7 @@
       },
       {
         "id": "crm_cadastro_360_empresas",
-        "businessId": "operacoes_financeiras_crm",
+        "businessId": "bancofe",
         "label": "Cadastro 360° Corporativo & Mesa KYB/KYC",
         "description": "Visão holística de clientes PJ/PF, QSA/UBO, balanço sintético, compliance PLD-FT e limites operacionais.",
         "iconName": "Users",
@@ -1511,7 +2032,7 @@
       },
       {
         "id": "crm_precadastro_dossie_documental",
-        "businessId": "operacoes_financeiras_crm",
+        "businessId": "bancofe",
         "label": "Pré-Cadastro & Vault Documental Digital",
         "description": "Checklist de 13 documentos obrigatórios, upload, validação com hash SHA-256 e controle de validade de certidões.",
         "iconName": "Boxes",
@@ -1540,7 +2061,7 @@
       },
       {
         "id": "crm_central_termos_contratos",
-        "businessId": "operacoes_financeiras_crm",
+        "businessId": "bancofe",
         "label": "Central de Termos & Formalizações Digitais",
         "description": "Termos SCR Bacen, Domicílio Bancário, PLD-FT, Open Finance, Cessão Fiduciária e CCB Eletrônica com hash e IP.",
         "iconName": "Scale",
