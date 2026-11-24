@@ -45,6 +45,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useBusiness } from "../../contexts/BusinessContext";
 import { DynamicIcon } from "../DynamicIcon";
 import * as Icons from "lucide-react";
+import { toast } from "sonner";
+import { INITIAL_MODULES_BY_BUSINESS } from "@shared/businessModules";
 import { ZumiMascot } from "./ZumiMascot";
 import { SimuladorSerendipidadeModal } from "./SimuladorSerendipidadeModal";
 import {
@@ -209,6 +211,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
     });
   }, [location]);
 
+  // Atalhos operacionais dinâmicos da empresa ativa
+  const companyShortcuts = useMemo(() => {
+    return effectiveModules.slice(0, 5).map((m) => {
+      let shortLabel = m.label;
+      if (shortLabel.includes("&")) {
+        shortLabel = shortLabel.split("&")[0].trim();
+      }
+      if (shortLabel.length > 14) {
+        shortLabel = shortLabel.substring(0, 13) + "…";
+      }
+      return {
+        label: shortLabel,
+        path: m.defaultPath,
+      };
+    });
+  }, [effectiveModules]);
+
   // Derivação automática do módulo ativo a partir da rota atual
   const [activeModuleId, setActiveModuleId] = useState<string>(() => {
     try {
@@ -260,6 +279,42 @@ export const Sidebar: React.FC<SidebarProps> = ({
     return effectiveModules.find((m) => m.id === activeModuleId) || effectiveModules[0] || MODULES[0];
   }, [effectiveModules, activeModuleId]);
 
+  // Alternar empresa ativa do grupo com readequação inteligente de rota e filtros
+  const handleSwitchBusiness = (bizId: string) => {
+    const targetBiz = businesses.find((b) => b.id === bizId) || businesses[0];
+    setActiveBusinessId(targetBiz.id);
+    setBusinessDropdownOpen(false);
+    setActiveTabFilter("all");
+
+    // Verificar se a rota atual é exclusiva da mesa bancária
+    const bankingOnlyRoutes = [
+      "/admin/mesa-operacoes",
+      "/mesa-operacoes",
+      "/admin/mesa-credito",
+      "/admin/gestao-emprestimos",
+      "/admin/consulta-cpf",
+      "/admin/termos",
+      "/admin/fechamento"
+    ];
+    const isCurrentRouteBankingOnly = bankingOnlyRoutes.some((r) => location.startsWith(r));
+
+    if (targetBiz.id !== "bancofe" && targetBiz.id !== "holding_kytto" && isCurrentRouteBankingOnly) {
+      // Redireciona para o módulo principal da empresa selecionada
+      const bizModules = INITIAL_MODULES_BY_BUSINESS[targetBiz.id] || [];
+      const targetPath = bizModules[0]?.defaultPath || (targetBiz.id === "zuma_gastronomia" ? "/pdv" : targetBiz.id === "zuma_agro" ? "/agro" : "/erp");
+      setLocation(targetPath);
+      toast.info(`Alternado para ${targetBiz.name} — exibindo ERP e módulos operacionais.`);
+    } else if (targetBiz.id === "bancofe" && !isCurrentRouteBankingOnly && (location === "/pdv" || location === "/garcom" || location === "/cozinha" || location === "/mesas")) {
+      setLocation("/admin/mesa-operacoes");
+      toast.info(`Alternado para ${targetBiz.name} — Mesa de Operações Bancárias.`);
+    } else if (targetBiz.id === "holding_kytto" && (location === "/pdv" || location === "/garcom" || location === "/cozinha")) {
+      setLocation("/admin/cadastro-360");
+      toast.info(`Alternado para ${targetBiz.name} — Governança Corporativa Geral.`);
+    } else {
+      toast.success(`Empresa ativa: ${targetBiz.name}`);
+    }
+  };
+
   // Ação de troca manual de módulo via dropdown ou abas rápidas
   const handleSelectModule = (modId: string) => {
     if (modId === "all") {
@@ -292,16 +347,37 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const isSearching = menuFilter.trim().length > 0;
 
-  // Filtragem de permissões e busca: Exibe os domínios do filtro selecionado ou todos (360°)
+  // Filtragem de permissões e busca: Exibe os domínios da empresa ativa e do filtro selecionado
   const visibleDomains = useMemo(() => {
     const userRole = user?.role || "admin";
     const q = menuFilter.trim().toLowerCase();
 
-    // Se estiver buscando ou a aba for "all", mostra todos os domínios
-    let targetDomains = MENU_DOMAINS;
+    // Domínios autorizados para a empresa ativa:
+    // Se for a Holding, tem acesso a todos os domínios do ecossistema
+    // Caso contrário, exibe estritamente os domínios de seus módulos configurados
+    const isHolding = activeBusiness.id === "holding_kytto";
+    const allowedDomainIds = new Set<string>();
+
+    if (isHolding) {
+      MENU_DOMAINS.forEach((d) => allowedDomainIds.add(d.id));
+    } else {
+      effectiveModules.forEach((m) => {
+        (m.domains || []).forEach((dId) => allowedDomainIds.add(dId));
+      });
+      // Fallback seguro caso os domínios não tenham sido mapeados
+      if (allowedDomainIds.size === 0) {
+        allowedDomainIds.add("frente_loja");
+        allowedDomainIds.add("suprimentos_estoque");
+        allowedDomainIds.add("financas_controladoria");
+        allowedDomainIds.add("fiscal_contabil");
+      }
+    }
+
+    let targetDomains = MENU_DOMAINS.filter((dom) => allowedDomainIds.has(dom.id));
+
     if (!isSearching && activeTabFilter !== "all") {
-      const selectedMod = effectiveModules.find((m) => m.id === activeTabFilter) || MODULES.find((m) => m.id === activeTabFilter);
-      if (selectedMod) {
+      const selectedMod = effectiveModules.find((m) => m.id === activeTabFilter);
+      if (selectedMod && selectedMod.domains && selectedMod.domains.length > 0) {
         targetDomains = MENU_DOMAINS.filter((dom) => selectedMod.domains.includes(dom.id));
       }
     }
@@ -349,7 +425,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         };
       })
       .filter(Boolean) as (NavDomain & { label: string; sectionsData: NavSection[]; totalItems: number })[];
-  }, [activeTabFilter, menuFilter, isSearching, user?.role]);
+  }, [activeBusiness.id, effectiveModules, activeTabFilter, menuFilter, isSearching, user?.role]);
 
   // Total de itens folha visíveis
   const totalVisibleItemsCount = useMemo(() => {
@@ -704,10 +780,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   return (
                     <button
                       type="button"
-                      onClick={() => {
-                        setActiveBusinessId("holding_kytto");
-                        setBusinessDropdownOpen(false);
-                      }}
+                      onClick={() => handleSwitchBusiness("holding_kytto")}
                       className={`w-full text-left p-2 rounded-xl flex items-center justify-between transition-all cursor-pointer group ${
                         isHoldingActive
                           ? "bg-amber-500/15 dark:bg-amber-950/40 border-2 border-amber-500 text-amber-900 dark:text-amber-200 shadow-xs"
@@ -839,10 +912,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             </div>
                             <button
                               type="button"
-                              onClick={() => {
-                                setActiveBusinessId("bancofe");
-                                setBusinessDropdownOpen(false);
-                              }}
+                              onClick={() => handleSwitchBusiness("bancofe")}
                               className={`w-full text-left p-2 rounded-xl flex items-center justify-between transition-colors cursor-pointer ${
                                 isSel
                                   ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 font-bold border-l-2 border-emerald-500"
@@ -886,10 +956,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                   <button
                                     key={biz.id}
                                     type="button"
-                                    onClick={() => {
-                                      setActiveBusinessId(biz.id);
-                                      setBusinessDropdownOpen(false);
-                                    }}
+                                    onClick={() => handleSwitchBusiness(biz.id)}
                                     className={`w-full text-left p-2 rounded-xl flex items-center justify-between transition-colors cursor-pointer ${
                                       isSel
                                         ? "bg-blue-50 dark:bg-blue-950/40 text-blue-600 font-bold border-l-2 border-blue-600"
@@ -940,7 +1007,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="flex items-center gap-1 pt-0.5 text-[10px]">
                   <button
                     type="button"
-                    onClick={() => setActiveBusinessId("holding_kytto")}
+                    onClick={() => handleSwitchBusiness("holding_kytto")}
                     className={`flex-1 py-1.5 px-1 rounded-lg font-bold flex items-center justify-center gap-1 transition-all cursor-pointer ${
                       activeBusiness.id === "holding_kytto"
                         ? "bg-amber-500 text-white shadow-xs"
@@ -954,7 +1021,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                   <button
                     type="button"
-                    onClick={() => setActiveBusinessId("bancofe")}
+                    onClick={() => handleSwitchBusiness("bancofe")}
                     className={`flex-1 py-1.5 px-1 rounded-lg font-bold flex items-center justify-center gap-1 transition-all cursor-pointer ${
                       activeBusiness.id === "bancofe"
                         ? "bg-emerald-600 text-white shadow-xs"
@@ -1073,7 +1140,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 )}
               </div>
 
-              {/* BARRA DE ABAS RÁPIDAS DOS 5 MÓDULOS + VISÃO 360° COMPLETA */}
+              {/* BARRA DE ABAS RÁPIDAS DOS MÓDULOS DA EMPRESA ATIVA */}
               <div className="flex items-center gap-1 overflow-x-auto pb-1 no-scrollbar text-[10px]">
                 <button
                   type="button"
@@ -1083,70 +1150,31 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       ? "bg-[var(--salmon)] text-white shadow-2xs"
                       : "bg-[var(--surface2)] text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--line)]"
                   }`}
-                  title="Exibir todas as telas da Holding BancoFé"
+                  title={`Exibir todas as telas e ERP de ${activeBusiness.name}`}
                 >
                   🌐 Todas as Telas
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveTabFilter("bancofe_banking")}
-                  className={`px-2 py-1 rounded-lg font-bold shrink-0 transition-all cursor-pointer ${
-                    activeTabFilter === "bancofe_banking"
-                      ? "bg-emerald-700 text-white shadow-2xs"
-                      : "bg-[var(--surface2)] text-[var(--muted)] hover:text-emerald-700"
-                  }`}
-                  title="BancoFe — Banco & Operações Financeiras, Bureaus 360°, SCR e Mesa de Crédito"
-                >
-                  🏛️ Banco & Finanças
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveTabFilter("operacao")}
-                  className={`px-2 py-1 rounded-lg font-bold shrink-0 transition-all cursor-pointer ${
-                    activeTabFilter === "operacao"
-                      ? "bg-amber-600 text-white shadow-2xs"
-                      : "bg-[var(--surface2)] text-[var(--muted)] hover:text-amber-600"
-                  }`}
-                  title="Operações Comerciais, Salão e PDV Touch"
-                >
-                  🍽️ PDV & Salão
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveTabFilter("erp_kytto")}
-                  className={`px-2 py-1 rounded-lg font-bold shrink-0 transition-all cursor-pointer ${
-                    activeTabFilter === "erp_kytto"
-                      ? "bg-indigo-600 text-white shadow-2xs"
-                      : "bg-[var(--surface2)] text-[var(--muted)] hover:text-indigo-600"
-                  }`}
-                  title="ERP, Finanças, Backoffice e Fiscal"
-                >
-                  💼 ERP &amp; Gestão
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveTabFilter("vendas_crm")}
-                  className={`px-2 py-1 rounded-lg font-bold shrink-0 transition-all cursor-pointer ${
-                    activeTabFilter === "vendas_crm"
-                      ? "bg-purple-600 text-white shadow-2xs"
-                      : "bg-[var(--surface2)] text-[var(--muted)] hover:text-purple-600"
-                  }`}
-                  title="CRM e Relacionamento de Clientes"
-                >
-                  💬 CRM
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveTabFilter("tecnologia_ti")}
-                  className={`px-2 py-1 rounded-lg font-bold shrink-0 transition-all cursor-pointer ${
-                    activeTabFilter === "tecnologia_ti"
-                      ? "bg-cyan-600 text-white shadow-2xs"
-                      : "bg-[var(--surface2)] text-[var(--muted)] hover:text-cyan-600"
-                  }`}
-                  title="APIs, Integrações e Apps"
-                >
-                  🔌 APIs
-                </button>
+                {effectiveModules.map((mod) => {
+                  const isSelected = activeTabFilter === mod.id;
+                  return (
+                    <button
+                      key={mod.id}
+                      type="button"
+                      onClick={() => {
+                        setActiveTabFilter(mod.id);
+                        setActiveModuleId(mod.id);
+                      }}
+                      className={`px-2 py-1 rounded-lg font-bold shrink-0 transition-all cursor-pointer whitespace-nowrap ${
+                        isSelected
+                          ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-2xs"
+                          : "bg-[var(--surface2)] text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--line)]"
+                      }`}
+                      title={mod.description}
+                    >
+                      {mod.label}
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Campo de Busca Rápida no Menu (⌘K) */}
@@ -1330,6 +1358,39 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
             {/* RODAPÉ: RECENTES & CARD DO USUÁRIO */}
             <div className="p-3 border-t border-[var(--line)] bg-[var(--surface2)]/40 shrink-0 space-y-2">
+              {/* Atalhos Operacionais da Empresa Ativa */}
+              {!isSearching && companyShortcuts.length > 0 && (
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between px-1 text-[8.5px] uppercase font-bold tracking-wider text-[var(--muted)]">
+                    <span className="flex items-center gap-1">
+                      <Compass className="w-2.5 h-2.5 text-blue-600 dark:text-blue-400" />
+                      Atalhos: {activeBusiness.name.split("—")[0].trim()}
+                    </span>
+                    <span className="text-[7.5px] font-bold text-blue-600 dark:text-blue-400">{activeBusiness.badge}</span>
+                  </div>
+                  <div className="flex items-center gap-1 overflow-x-auto pb-0.5 no-scrollbar">
+                    {companyShortcuts.map((sc) => {
+                      const isCur = location === sc.path || location.startsWith(sc.path + "?");
+                      return (
+                        <Link
+                          key={sc.path}
+                          href={sc.path}
+                          onClick={() => setMobileOpen(false)}
+                          className={`text-[9.5px] font-semibold px-2 py-0.5 rounded-md truncate max-w-[95px] transition-colors no-underline shrink-0 border ${
+                            isCur
+                              ? "bg-blue-600 text-white border-blue-600 font-bold shadow-2xs"
+                              : "bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--ink)] hover:border-[var(--line)] border-[var(--line)]"
+                          }`}
+                          title={sc.label}
+                        >
+                          {sc.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               {recentPaths.length > 0 && !isSearching && (
                 <div className="space-y-1">
                   <div className="flex items-center gap-1 px-1 text-[9px] uppercase font-bold tracking-wider text-[var(--muted)]">

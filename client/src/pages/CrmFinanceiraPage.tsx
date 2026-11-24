@@ -50,6 +50,7 @@ import { Banknote, UploadCloud, QrCode } from "lucide-react";
 import { PrecadastrosCasaNovaTab } from "../components/crm/PrecadastrosCasaNovaTab";
 import { DEFAULT_BUSINESSES } from "@shared/businessModules";
 import OPORTUNIDADES_PADRAO from "../../../data/crmFinanceiraOportunidades.json";
+import { useBusiness } from "../contexts/BusinessContext";
 
 // Interface dos tipos de operações
 export interface OportunidadeOperacaoFinanceira {
@@ -150,7 +151,8 @@ const ESTAGIOS_KANBAN = [
 ];
 
 export const CrmFinanceiraPage: React.FC = () => {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
+  const { activeBusiness, setActiveBusinessId } = useBusiness();
 
   // Estados principais
   const [oportunidades, setOportunidades] = useState<OportunidadeOperacaoFinanceira[]>([]);
@@ -604,6 +606,59 @@ export const CrmFinanceiraPage: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* Banner Contextual da Empresa Selecionada */}
+        {activeBusiness.id !== "bancofe" && activeBusiness.id !== "holding_kytto" && (
+          <div className="mt-4 p-3.5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                <Building2 className="w-4 h-4" />
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 dark:text-blue-300">
+                    EMPRESA INDEPENDENTE: {activeBusiness.name}
+                  </span>
+                  <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-blue-600/10 text-blue-700 dark:text-blue-300 border border-blue-600/20">
+                    {activeBusiness.badge}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-700 dark:text-slate-300 truncate mt-0.5">
+                  Você está na Mesa de Crédito BancoFe visualizando as operações vinculadas a <strong>{activeBusiness.name}</strong>.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  const defaultPath =
+                    activeBusiness.id === "zuma_gastronomia"
+                      ? "/pdv"
+                      : activeBusiness.id === "zuma_agro"
+                      ? "/agro"
+                      : activeBusiness.id === "zuma_moda"
+                      ? "/moda"
+                      : activeBusiness.id === "bancofe_logistica"
+                      ? "/entregador"
+                      : "/erp";
+                  setLocation(defaultPath);
+                }}
+                className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
+              >
+                Abrir ERP de {activeBusiness.name.split("—")[0].trim()}
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveBusinessId("bancofe")}
+                className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs flex items-center gap-1"
+              >
+                <Landmark className="w-3.5 h-3.5" />
+                <span>Ver Carteira Geral BancoFe</span>
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* =========================================================================
             BIG NUMBERS NUBANK STYLE (CARDS COM CÁLCULOS COMPLETOS)

@@ -379,159 +379,104 @@
     }
   ],
   "modulesByBusiness": {
-    "bancofe": [
+    "holding_kytto": [
       {
-        "id": "banco_open_finance",
-        "businessId": "bancofe",
-        "label": "Open Finance & APIs Bacen",
-        "description": "Conexões seguras Bacen, dados abertos bancários, consentimentos e Webhooks bancários.",
-        "iconName": "Radio",
-        "badge": "Bacen",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/conexoes",
+        "id": "holding_governanca_empresas",
+        "businessId": "holding_kytto",
+        "label": "Matriz de Governança & Cadastro 360°",
+        "description": "Painel de controle institucional de todas as empresas do grupo, alçadas consolidadas e compliance KYB.",
+        "iconName": "Crown",
+        "badge": "Governança",
+        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/admin/cadastro-360",
         "order": 1,
         "active": true,
-        "permission": "all",
+        "permission": "admin",
         "domains": [
-          "conectividade_apis",
-          "open_apis"
+          "governanca_holding",
+          "kyb_compliance",
+          "bancofe_core_domain"
         ],
         "telemetry": {
-          "monthlyRequests": 184500,
+          "monthlyRequests": 38900,
           "uptimePercent": 99.99,
-          "avgLatencyMs": 22,
+          "avgLatencyMs": 13,
           "status": "healthy",
-          "monthlyVolume": 4850000,
-          "costReduction": 14500,
-          "usersCount": 38,
+          "monthlyVolume": 55300000,
+          "costReduction": 54000,
+          "usersCount": 45,
           "lastSync": "Agora mesmo"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "banco_pix_pagamentos",
-        "businessId": "bancofe",
-        "label": "PIX 24/7 & Central de Pagamentos",
-        "description": "Liquidação instantânea PIX Sicredi/Banco Central, checkout Apple Pay, QR dinâmico e estático.",
-        "iconName": "Zap",
-        "badge": "Instantâneo",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/pagamentos",
+        "id": "holding_central_erp",
+        "businessId": "holding_kytto",
+        "label": "Central ERP 360° Master",
+        "description": "Visão consolidada multi-CNPJ, fluxo de caixa unificado e dashboards corporativos.",
+        "iconName": "Building2",
+        "badge": "Multi-CNPJ",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/erp",
         "order": 2,
         "active": true,
-        "permission": "all",
+        "permission": "admin",
         "domains": [
-          "frente_loja",
-          "financas_controladoria"
+          "governanca_holding",
+          "cockpits_executivos"
         ],
         "telemetry": {
-          "monthlyRequests": 423900,
-          "uptimePercent": 100,
+          "monthlyRequests": 142000,
+          "uptimePercent": 99.99,
           "avgLatencyMs": 12,
           "status": "healthy",
-          "monthlyVolume": 12400000,
-          "costReduction": 28900,
-          "usersCount": 154,
-          "lastSync": "Agora mesmo"
+          "monthlyVolume": 14200000,
+          "costReduction": 68000,
+          "usersCount": 45,
+          "lastSync": "Em tempo real"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "banco_credito_fomento",
-        "businessId": "bancofe",
-        "label": "Crédito, Antecipação & Fomento",
-        "description": "Antecipação de recebíveis de cartões, duplicatas eletrônicas, análise de risco e billing.",
-        "iconName": "CircleDollarSign",
-        "badge": "Fomento",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
-        "defaultPath": "/erp?tab=billing",
+        "id": "holding_auditoria_fiscal",
+        "businessId": "holding_kytto",
+        "label": "Auditoria Fiscal & SPED Bloco K",
+        "description": "Malha fina preventiva SEFAZ-MT, conciliação tributária e arquivos magnéticos do grupo.",
+        "iconName": "ShieldCheck",
+        "badge": "SEFAZ-MT",
+        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/fiscal",
         "order": 3,
         "active": true,
         "permission": "admin",
         "domains": [
-          "financas_controladoria",
-          "vendas_b2b"
+          "fiscal_contabil",
+          "financas_controladoria"
         ],
         "telemetry": {
-          "monthlyRequests": 54100,
-          "uptimePercent": 99.95,
-          "avgLatencyMs": 19,
-          "status": "healthy",
-          "monthlyVolume": 2150000,
-          "costReduction": 12300,
-          "usersCount": 18,
-          "lastSync": "Há 4 min"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "banco_controladoria_conciliacao",
-        "businessId": "bancofe",
-        "label": "Controladoria & Conciliação",
-        "description": "DRE gerencial, conciliação de extratos OFX/CNAB, auditoria contábil e balancetes.",
-        "iconName": "ShieldCheck",
-        "badge": "Auditoria",
-        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
-        "defaultPath": "/financeiro",
-        "order": 4,
-        "active": true,
-        "permission": "admin",
-        "domains": [
-          "financas_controladoria",
-          "fiscal_contabil"
-        ],
-        "telemetry": {
-          "monthlyRequests": 82000,
-          "uptimePercent": 99.98,
+          "monthlyRequests": 48900,
+          "uptimePercent": 100,
           "avgLatencyMs": 15,
           "status": "healthy",
-          "costReduction": 18500,
-          "usersCount": 24,
-          "lastSync": "Há 2 min"
+          "costReduction": 42000,
+          "usersCount": 18,
+          "lastSync": "Há 12 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "banco_cambio_mercado",
-        "businessId": "bancofe",
-        "label": "Câmbio, Mercado & War Room",
-        "description": "Cotações PTAX, Dólar Pescados, commodities Chicago/B3 e inteligência financeira.",
-        "iconName": "TrendingUp",
-        "badge": "Mercado",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/mercado",
-        "order": 5,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "war_room",
-          "modelagem_preditiva"
-        ],
-        "telemetry": {
-          "monthlyRequests": 112000,
-          "uptimePercent": 99.97,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "usersCount": 31,
-          "lastSync": "Em tempo real"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "banco_integracoes_git_mcp",
-        "businessId": "bancofe",
-        "label": "Integrações Git, MCPs & Skills",
-        "description": "Conexões com repositórios GitHub, MCP Servers, Model Context Protocol e agentes de IA.",
+        "id": "holding_integracoes_mcp",
+        "businessId": "holding_kytto",
+        "label": "Barramento de Integrações 77 Conexões",
+        "description": "Conexões centrais MCP, GitHub, Open APIs e barramento de dados corporativo.",
         "iconName": "Share2",
-        "badge": "MCP & Git",
+        "badge": "77 Conexões",
         "badgeColor": "bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
         "defaultPath": "/integracoes",
-        "order": 6,
+        "order": 4,
         "active": true,
         "permission": "admin",
         "domains": [
@@ -548,7 +493,239 @@
           "lastSync": "Há 1 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "holding_patrimonio_ativos",
+        "businessId": "holding_kytto",
+        "label": "Gestão Patrimonial de Ativos do Grupo",
+        "description": "Imobilizados, frotas de carretas, usinas solares, pátios de britagem e imóveis em carteira.",
+        "iconName": "Layers",
+        "badge": "Patrimônio",
+        "badgeColor": "bg-slate-500/15 text-slate-600 dark:text-slate-400 border-slate-500/30",
+        "defaultPath": "/patrimonio",
+        "order": 5,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "governanca_holding",
+          "suprimentos_estoque"
+        ],
+        "telemetry": {
+          "monthlyRequests": 36200,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "costReduction": 36000,
+          "usersCount": 22,
+          "lastSync": "Há 6 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "holding_mesa_operacoes",
+        "businessId": "holding_kytto",
+        "label": "Mesa de Operações & Alçadas Grupo",
+        "description": "Aprovações do comitê executivo da holding, limites corporativos e governança de crédito.",
+        "iconName": "Landmark",
+        "badge": "Alçadas",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/admin/mesa-operacoes",
+        "order": 6,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "bancofe_core_domain",
+          "governanca_holding"
+        ],
+        "telemetry": {
+          "monthlyRequests": 42800,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 40190000,
+          "costReduction": 68000,
+          "usersCount": 34,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      }
+    ],
+    "bancofe": [
+      {
+        "id": "banco_mesa_operacoes",
+        "businessId": "bancofe",
+        "label": "Mesa de Operações & Crédito",
+        "description": "Esteira de crédito, alçadas de aprovação, dossiê do proponente e comitê executivo de risco.",
+        "iconName": "ShieldCheck",
+        "badge": "Alçadas",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/admin/mesa-operacoes",
+        "order": 1,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "bancofe_core_domain"
+        ],
+        "telemetry": {
+          "monthlyRequests": 42800,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 40190000,
+          "costReduction": 68000,
+          "usersCount": 34,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "banco_mesa_credito",
+        "businessId": "bancofe",
+        "label": "Mesa de Crédito & SCR Bacen",
+        "description": "Análise algorítmica de risco com parecer instantâneo SCR Bacen, Serasa, CENPROT e SICAR.",
+        "iconName": "Landmark",
+        "badge": "SCR Bacen",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/admin/mesa-credito",
+        "order": 2,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "bancofe_core_domain",
+          "financas_controladoria"
+        ],
+        "telemetry": {
+          "monthlyRequests": 19600,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 18,
+          "status": "healthy",
+          "monthlyVolume": 29430000,
+          "costReduction": 19800,
+          "usersCount": 16,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "banco_crm_financeira",
+        "businessId": "bancofe",
+        "label": "Funil CRM & Securitizadora FIDC",
+        "description": "Pipeline Kanban 360°, originação de recebíveis, emissão de CCBs e formalização estruturada.",
+        "iconName": "TrendingUp",
+        "badge": "FIDC & CCB",
+        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+        "defaultPath": "/admin/crm-financeira",
+        "order": 3,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "bancofe_core_domain",
+          "crm_fidelidade"
+        ],
+        "telemetry": {
+          "monthlyRequests": 42800,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 12500000,
+          "costReduction": 28400,
+          "usersCount": 24,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "banco_gestao_emprestimos",
+        "businessId": "bancofe",
+        "label": "Gestão de Empréstimos & Liquidação",
+        "description": "Controle de parcelas, emissão de comprovantes autenticados, conciliação e liquidação via Pix.",
+        "iconName": "Banknote",
+        "badge": "Comprovantes",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/admin/gestao-emprestimos",
+        "order": 4,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "bancofe_core_domain",
+          "financas_controladoria"
+        ],
+        "telemetry": {
+          "monthlyRequests": 26800,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 18400000,
+          "costReduction": 32600,
+          "usersCount": 20,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "banco_pix_pagamentos",
+        "businessId": "bancofe",
+        "label": "PIX 24/7 & Central de Pagamentos",
+        "description": "Liquidação instantânea PIX Sicredi/Banco Central, checkout Apple Pay, QR dinâmico e estático.",
+        "iconName": "Zap",
+        "badge": "Instantâneo",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/pagamentos",
+        "order": 5,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "bancofe_core_domain",
+          "frente_loja"
+        ],
+        "telemetry": {
+          "monthlyRequests": 423900,
+          "uptimePercent": 100,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "monthlyVolume": 12400000,
+          "costReduction": 28900,
+          "usersCount": 154,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "banco_open_finance",
+        "businessId": "bancofe",
+        "label": "Open Finance & APIs Bacen",
+        "description": "Conexões seguras Bacen, dados abertos bancários, consentimentos e Webhooks bancários.",
+        "iconName": "Radio",
+        "badge": "Bacen",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/conexoes",
+        "order": 6,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "conectividade_apis",
+          "bancofe_core_domain"
+        ],
+        "telemetry": {
+          "monthlyRequests": 184500,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 22,
+          "status": "healthy",
+          "monthlyVolume": 4850000,
+          "costReduction": 14500,
+          "usersCount": 38,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
         "id": "banco_cadastro_360",
@@ -563,8 +740,7 @@
         "active": true,
         "permission": "all",
         "domains": [
-          "kyb_compliance",
-          "cadastro_360"
+          "bancofe_core_domain"
         ],
         "telemetry": {
           "monthlyRequests": 48200,
@@ -577,7 +753,7 @@
           "lastSync": "Agora mesmo"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
         "id": "banco_termos_regulatorios",
@@ -592,8 +768,7 @@
         "active": true,
         "permission": "admin",
         "domains": [
-          "formalizacao_juridica",
-          "termos_scr"
+          "bancofe_core_domain"
         ],
         "telemetry": {
           "monthlyRequests": 31000,
@@ -606,326 +781,62 @@
           "lastSync": "Agora mesmo"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "banco_mesa_credito",
-        "businessId": "bancofe",
-        "label": "Mesa de Crédito, SCR Bacen & Parecer IA",
-        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e parecer automatizado de crédito.",
-        "iconName": "Landmark",
-        "badge": "Crédito AAA",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/admin/mesa-credito",
-        "order": 3,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "financas_controladoria",
-          "mesa_credito"
-        ],
-        "telemetry": {
-          "monthlyRequests": 42800,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "monthlyVolume": 22800000,
-          "costReduction": 68000,
-          "usersCount": 34,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "banco_securitizadora_fidc",
+        "id": "banco_fechamento_cosif",
         "businessId": "bancofe",
-        "label": "Securitização de Recebíveis & FIDC",
-        "description": "Securitização de direitos creditórios, emissão de CRI/CRA/CPR, cotas de FIDC e funding estruturado no mercado de capitais.",
-        "iconName": "TrendingUp",
-        "badge": "FIDC & CCB",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/crm-financeira",
-        "order": 4,
+        "label": "Fechamento Bancário & COSIF",
+        "description": "Plano de contas padronizado Bacen COSIF, balancetes contábeis e demonstrativo de resultados.",
+        "iconName": "Receipt",
+        "badge": "COSIF",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/admin/fechamento",
+        "order": 9,
         "active": true,
         "permission": "admin",
         "domains": [
-          "financas_controladoria",
-          "securitizacao"
+          "bancofe_core_domain",
+          "fiscal_contabil"
         ],
         "telemetry": {
-          "monthlyRequests": 18500,
+          "monthlyRequests": 18200,
           "uptimePercent": 99.99,
-          "avgLatencyMs": 12,
+          "avgLatencyMs": 15,
           "status": "healthy",
-          "monthlyVolume": 12500000,
-          "costReduction": 92000,
-          "usersCount": 18,
-          "lastSync": "Agora mesmo"
+          "costReduction": 18500,
+          "usersCount": 14,
+          "lastSync": "Há 5 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "crm_pipeline_oportunidades",
+        "id": "banco_war_room_cambio",
         "businessId": "bancofe",
-        "label": "Funil & Pipeline de Oportunidades CRM",
-        "description": "Quadro Kanban interativo de prospecção, qualificação, comitê e formalização de operações financeiras.",
+        "label": "War Room, Câmbio & Mercado",
+        "description": "Cotações PTAX, Dólar Pescados, commodities Chicago/B3 e inteligência financeira.",
         "iconName": "TrendingUp",
-        "badge": "Kanban 360°",
+        "badge": "Mercado",
         "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/crm-financeira",
-        "order": 1,
+        "defaultPath": "/mercado",
+        "order": 10,
         "active": true,
         "permission": "all",
         "domains": [
-          "crm_comercial",
-          "pipeline_vendas"
+          "war_room",
+          "financas_controladoria"
         ],
         "telemetry": {
-          "monthlyRequests": 42800,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 12,
-          "status": "healthy",
-          "monthlyVolume": 12500000,
-          "costReduction": 28400,
-          "usersCount": 24,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.423Z"
-      },
-      {
-        "id": "crm_mesa_credito_algoritmica",
-        "businessId": "bancofe",
-        "label": "Mesa de Crédito & Risco Algorítmico",
-        "description": "Análise automatizada de risco com parecer instantâneo SCR Bacen, Serasa, CENPROT e SICAR.",
-        "iconName": "ShieldCheck",
-        "badge": "Mesa de Risco",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
-        "defaultPath": "/admin/crm-financeira?tab=mesa",
-        "order": 2,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "analise_risco",
-          "credito_bacen"
-        ],
-        "telemetry": {
-          "monthlyRequests": 19600,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 18,
-          "status": "healthy",
-          "monthlyVolume": 8900000,
-          "costReduction": 19800,
-          "usersCount": 16,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.423Z"
-      },
-      {
-        "id": "crm_simulador_taxas_retorno",
-        "businessId": "bancofe",
-        "label": "Simulador de Taxas, Spread & Retorno",
-        "description": "Calculadora de retorno financeiro, TIR líquida, IOF, TAC, tabelas SAC/PRICE e margem líquida BancoFe.",
-        "iconName": "Calculator",
-        "badge": "Simulador",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/admin/crm-financeira?tab=simulador",
-        "order": 3,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "calculadora_financeira",
-          "precificacao"
-        ],
-        "telemetry": {
-          "monthlyRequests": 14200,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 8,
-          "status": "healthy",
-          "monthlyVolume": 5600000,
-          "costReduction": 11200,
-          "usersCount": 22,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.424Z"
-      },
-      {
-        "id": "crm_formalizacao_ccb_digital",
-        "businessId": "bancofe",
-        "label": "Formalização & Emissão de CCB Digital",
-        "description": "Geração de Cédulas de Crédito Bancário, assinatura eletrônica ICP-Brasil e registro eletrônico.",
-        "iconName": "FileText",
-        "badge": "CCB ICP-Brasil",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/crm-financeira?tab=formalizacao",
-        "order": 4,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "formalizacao_juridica",
-          "cartorios"
-        ],
-        "telemetry": {
-          "monthlyRequests": 8700,
+          "monthlyRequests": 112000,
           "uptimePercent": 99.97,
-          "avgLatencyMs": 24,
-          "status": "healthy",
-          "monthlyVolume": 7400000,
-          "costReduction": 15400,
-          "usersCount": 14,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.425Z"
-      },
-      {
-        "id": "crm_gestao_carteira_cobranca",
-        "businessId": "bancofe",
-        "label": "Gestão de Carteira & Cobrança Amigável",
-        "description": "Monitoramento de vencimentos, régua automatizada WhatsApp/Pix e recuperação de créditos com inadimplência zero.",
-        "iconName": "Users",
-        "badge": "Cobrança Pix",
-        "badgeColor": "bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30",
-        "defaultPath": "/admin/crm-financeira?tab=carteira",
-        "order": 5,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "cobranca_ativa",
-          "recuperacao_credito"
-        ],
-        "telemetry": {
-          "monthlyRequests": 26800,
-          "uptimePercent": 99.99,
           "avgLatencyMs": 14,
           "status": "healthy",
-          "monthlyVolume": 18400000,
-          "costReduction": 32600,
-          "usersCount": 20,
-          "lastSync": "Agora mesmo"
+          "usersCount": 31,
+          "lastSync": "Em tempo real"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.425Z"
-      },
-      {
-        "id": "crm_antecipacao_recebiveis_nfe",
-        "businessId": "bancofe",
-        "label": "Portal Cedentes & Antecipação de NF-e",
-        "description": "Consulta de chaves NF-e na Sefaz, checagem de lastro mercantil e borderô automático com liquidação instantânea.",
-        "iconName": "Receipt",
-        "badge": "Borderô Sefaz",
-        "badgeColor": "bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
-        "defaultPath": "/admin/crm-financeira?tab=antecipacao",
-        "order": 6,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "antecipacao_nfe",
-          "fidc_operacoes"
-        ],
-        "telemetry": {
-          "monthlyRequests": 16400,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 16,
-          "status": "healthy",
-          "monthlyVolume": 9200000,
-          "costReduction": 18200,
-          "usersCount": 18,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.425Z"
-      },
-      {
-        "id": "crm_cadastro_360_empresas",
-        "businessId": "bancofe",
-        "label": "Cadastro 360° Corporativo & Mesa KYB/KYC",
-        "description": "Visão holística de clientes PJ/PF, QSA/UBO, balanço sintético, compliance PLD-FT e limites operacionais.",
-        "iconName": "Users",
-        "badge": "360° KYB",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/cadastro-360",
-        "order": 7,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "kyb_compliance",
-          "cadastro_360"
-        ],
-        "telemetry": {
-          "monthlyRequests": 28400,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 12,
-          "status": "healthy",
-          "monthlyVolume": 24800000,
-          "costReduction": 38500,
-          "usersCount": 26,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "crm_precadastro_dossie_documental",
-        "businessId": "bancofe",
-        "label": "Pré-Cadastro & Vault Documental Digital",
-        "description": "Checklist de 13 documentos obrigatórios, upload, validação com hash SHA-256 e controle de validade de certidões.",
-        "iconName": "Boxes",
-        "badge": "Dossiê Digital",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/admin/pre-cadastro",
-        "order": 8,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "onboarding_digital",
-          "vault_documental"
-        ],
-        "telemetry": {
-          "monthlyRequests": 21200,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "monthlyVolume": 16500000,
-          "costReduction": 24000,
-          "usersCount": 22,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "crm_central_termos_contratos",
-        "businessId": "bancofe",
-        "label": "Central de Termos & Formalizações Digitais",
-        "description": "Termos SCR Bacen, Domicílio Bancário, PLD-FT, Open Finance, Cessão Fiduciária e CCB Eletrônica com hash e IP.",
-        "iconName": "Scale",
-        "badge": "Termos & SCR",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
-        "defaultPath": "/admin/termos",
-        "order": 9,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "formalizacao_juridica",
-          "termos_scr"
-        ],
-        "telemetry": {
-          "monthlyRequests": 18900,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 15,
-          "status": "healthy",
-          "monthlyVolume": 14200000,
-          "costReduction": 19500,
-          "usersCount": 20,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-24T00:00:00Z"
       }
     ],
     "zuma_gastronomia": [
@@ -947,8 +858,6 @@
           "delivery_logistica",
           "apps_mobile_op"
         ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
         "telemetry": {
           "monthlyRequests": 98400,
           "uptimePercent": 99.98,
@@ -958,7 +867,9 @@
           "costReduction": 6200,
           "usersCount": 27,
           "lastSync": "Em tempo real"
-        }
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
         "id": "vendas_crm",
@@ -975,11 +886,8 @@
         "domains": [
           "atendimento_omni",
           "crm_fidelidade",
-          "marketing_aquisicao",
-          "vendas_b2b"
+          "marketing_aquisicao"
         ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
         "telemetry": {
           "monthlyRequests": 42100,
           "uptimePercent": 99.95,
@@ -989,7 +897,9 @@
           "costReduction": 4800,
           "usersCount": 14,
           "lastSync": "Há 30s"
-        }
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
         "id": "comando",
@@ -1009,8 +919,6 @@
           "modelagem_preditiva",
           "otimizacao_receita"
         ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
         "telemetry": {
           "monthlyRequests": 18200,
           "uptimePercent": 99.99,
@@ -1019,7 +927,9 @@
           "costReduction": 3500,
           "usersCount": 8,
           "lastSync": "Há 1 min"
-        }
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
         "id": "erp_kytto",
@@ -1039,8 +949,6 @@
           "fiscal_contabil",
           "governanca_holding"
         ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
         "telemetry": {
           "monthlyRequests": 64500,
           "uptimePercent": 99.97,
@@ -1049,7 +957,9 @@
           "costReduction": 5900,
           "usersCount": 16,
           "lastSync": "Há 3 min"
-        }
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
         "id": "tecnologia_ti",
@@ -1067,8 +977,6 @@
           "conectividade_apis",
           "infra_aplicacoes"
         ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
         "telemetry": {
           "monthlyRequests": 89300,
           "uptimePercent": 100,
@@ -1077,120 +985,9 @@
           "costReduction": 2000,
           "usersCount": 11,
           "lastSync": "Agora mesmo"
-        }
-      }
-    ],
-    "zuma_moda": [
-      {
-        "id": "moda_frente_loja",
-        "businessId": "zuma_moda",
-        "label": "Boutique & Frente de Loja",
-        "description": "Ponto de venda com leitor de código de barras, checkout ágil, promoções e provador.",
-        "iconName": "Shirt",
-        "badge": "Boutique",
-        "badgeColor": "bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30",
-        "defaultPath": "/moda",
-        "order": 1,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "frente_loja"
-        ],
+        },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
-        "telemetry": {
-          "monthlyRequests": 28400,
-          "uptimePercent": 99.96,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "monthlyVolume": 142000,
-          "costReduction": 2400,
-          "usersCount": 8,
-          "lastSync": "Há 1 min"
-        }
-      },
-      {
-        "id": "moda_estoque_grade",
-        "businessId": "zuma_moda",
-        "label": "Grade, Tamanhos & Estoque",
-        "description": "Gestão por grade P/M/G/GG, variações de cor, etiquetas EAN-13 e inventário.",
-        "iconName": "Boxes",
-        "badge": "Grade & EAN",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
-        "defaultPath": "/erp?tab=estoque",
-        "order": 2,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "suprimentos_estoque"
-        ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
-        "telemetry": {
-          "monthlyRequests": 19800,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 16,
-          "status": "healthy",
-          "costReduction": 1800,
-          "usersCount": 6,
-          "lastSync": "Há 5 min"
-        }
-      },
-      {
-        "id": "moda_crm_condicional",
-        "businessId": "zuma_moda",
-        "label": "Clientes & Malas Condicionais",
-        "description": "Controle de malas entregues para prova em domicílio, CRM fashion e pós-venda.",
-        "iconName": "ShoppingBag",
-        "badge": "Condicional",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/clientes",
-        "order": 3,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "crm_fidelidade",
-          "marketing_aquisicao"
-        ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
-        "telemetry": {
-          "monthlyRequests": 14200,
-          "uptimePercent": 99.95,
-          "avgLatencyMs": 15,
-          "status": "healthy",
-          "costReduction": 1600,
-          "usersCount": 7,
-          "lastSync": "Há 10 min"
-        }
-      },
-      {
-        "id": "moda_financeiro_fiscal",
-        "businessId": "zuma_moda",
-        "label": "Financeiro & Emissão NFC-e",
-        "description": "Fechamento de caixa, cartões, crediário próprio, emissão fiscal e DRE da boutique.",
-        "iconName": "Receipt",
-        "badge": "Fiscal",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/fiscal",
-        "order": 4,
-        "active": true,
-        "permission": "admin",
-        "domains": [
-          "financas_controladoria",
-          "fiscal_contabil"
-        ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
-        "telemetry": {
-          "monthlyRequests": 22100,
-          "uptimePercent": 99.97,
-          "avgLatencyMs": 17,
-          "status": "healthy",
-          "costReduction": 1400,
-          "usersCount": 5,
-          "lastSync": "Há 2 min"
-        }
+        "updatedAt": "2026-11-24T00:00:00Z"
       }
     ],
     "zuma_agro": [
@@ -1210,8 +1007,6 @@
           "vendas_b2b",
           "governanca_holding"
         ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
         "telemetry": {
           "monthlyRequests": 48900,
           "uptimePercent": 99.99,
@@ -1221,7 +1016,9 @@
           "costReduction": 42000,
           "usersCount": 16,
           "lastSync": "Em tempo real"
-        }
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
         "id": "agro_contratos_barter",
@@ -1239,8 +1036,6 @@
           "vendas_b2b",
           "financas_controladoria"
         ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
         "telemetry": {
           "monthlyRequests": 14200,
           "uptimePercent": 99.98,
@@ -1249,26 +1044,54 @@
           "costReduction": 28000,
           "usersCount": 9,
           "lastSync": "Há 15 min"
-        }
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "agro_balanca_silos",
+        "businessId": "zuma_agro",
+        "label": "Balança Rodoviária & Silos",
+        "description": "Pesagem Toledo Prix, romaneios de entrada/saída, silos de secagem e armazenagem de grãos.",
+        "iconName": "Boxes",
+        "badge": "Balança",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/erp?tab=estoque",
+        "order": 3,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "suprimentos_estoque",
+          "modelagem_preditiva"
+        ],
+        "telemetry": {
+          "monthlyRequests": 24800,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "costReduction": 18000,
+          "usersCount": 14,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
         "id": "agro_patrimonio_maquinas",
         "businessId": "zuma_agro",
         "label": "Maquinários, Tratores & Frotas",
-        "description": "Horímetro de colheitadeiras, manutenção preventiva, diesel e imobilizados rurais.",
+        "description": "Horímetro de colheitadeiras John Deere, manutenção preventiva, diesel e imobilizados rurais.",
         "iconName": "Truck",
         "badge": "Frotas",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "badgeColor": "bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
         "defaultPath": "/patrimonio",
-        "order": 3,
+        "order": 4,
         "active": true,
         "permission": "admin",
         "domains": [
           "governanca_holding",
           "suprimentos_estoque"
         ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
         "telemetry": {
           "monthlyRequests": 18600,
           "uptimePercent": 99.96,
@@ -1277,149 +1100,150 @@
           "costReduction": 16000,
           "usersCount": 12,
           "lastSync": "Há 8 min"
-        }
-      }
-    ],
-    "holding_kytto": [
-      {
-        "id": "holding_central_erp",
-        "businessId": "holding_kytto",
-        "label": "Central ERP 360° Master",
-        "description": "Visão consolidada multi-CNPJ, fluxo de caixa unificado e dashboards corporativos.",
-        "iconName": "Building2",
-        "badge": "Multi-CNPJ",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
-        "defaultPath": "/erp",
-        "order": 1,
-        "active": true,
-        "permission": "admin",
-        "domains": [
-          "governanca_holding",
-          "cockpits_executivos"
-        ],
+        },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
-        "telemetry": {
-          "monthlyRequests": 142000,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 12,
-          "status": "healthy",
-          "monthlyVolume": 14200000,
-          "costReduction": 68000,
-          "usersCount": 45,
-          "lastSync": "Em tempo real"
-        }
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "holding_concreto",
-        "businessId": "holding_kytto",
-        "label": "Usinas de Concreto Serrano",
-        "description": "Cargas de betoneira, m³ de concreto dosado, rastreamento de caminhões e traços.",
-        "iconName": "Wrench",
-        "badge": "Obras",
-        "badgeColor": "bg-stone-500/15 text-stone-600 dark:text-stone-400 border-stone-500/30",
-        "defaultPath": "/erp?tab=concreto",
-        "order": 2,
-        "active": true,
-        "permission": "admin",
-        "domains": [
-          "governanca_holding"
-        ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
-        "telemetry": {
-          "monthlyRequests": 12500,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "costReduction": 2500,
-          "usersCount": 8,
-          "lastSync": "Agora"
-        }
-      },
-      {
-        "id": "holding_contabil_sped",
-        "businessId": "holding_kytto",
-        "label": "Fechamento Mensal SPED",
-        "description": "SPED Fiscal, EFD Contribuições, ECD/ECF e pacote contábil auditado.",
-        "iconName": "FileArchive",
-        "badge": "SPED",
+        "id": "agro_fiscal_produtor",
+        "businessId": "zuma_agro",
+        "label": "Fiscal Agro & Produtor Rural",
+        "description": "Emissão NF-e Produtor Rural SEFAZ-MT, Livro Caixa Digital do Produtor Rural (LCDPR).",
+        "iconName": "Receipt",
+        "badge": "SEFAZ-MT",
         "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/fechamento-contabil",
-        "order": 3,
+        "defaultPath": "/fiscal",
+        "order": 5,
         "active": true,
         "permission": "admin",
         "domains": [
           "fiscal_contabil",
           "financas_controladoria"
         ],
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z",
         "telemetry": {
-          "monthlyRequests": 12500,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "costReduction": 2500,
-          "usersCount": 8,
-          "lastSync": "Agora"
-        }
-      },
-      {
-        "id": "holding_auditoria_fiscal",
-        "businessId": "holding_kytto",
-        "label": "Auditoria Fiscal & SPED Bloco K",
-        "description": "Malha fina preventiva SEFAZ-MT, conciliação tributária e arquivos magnéticos.",
-        "iconName": "ShieldCheck",
-        "badge": "SEFAZ-MT",
-        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
-        "defaultPath": "/fiscal",
-        "order": 2,
-        "active": true,
-        "permission": "admin",
-        "domains": [
-          "fiscal_contabil",
-          "governanca_holding"
-        ],
-        "telemetry": {
-          "monthlyRequests": 48900,
-          "uptimePercent": 100,
+          "monthlyRequests": 12400,
+          "uptimePercent": 99.97,
           "avgLatencyMs": 15,
           "status": "healthy",
-          "costReduction": 42000,
-          "usersCount": 18,
+          "costReduction": 11000,
+          "usersCount": 8,
           "lastSync": "Há 12 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-24T00:00:00Z"
+      }
+    ],
+    "zuma_moda": [
+      {
+        "id": "moda_frente_loja",
+        "businessId": "zuma_moda",
+        "label": "Boutique & Frente de Loja",
+        "description": "Ponto de venda com leitor de código de barras, checkout ágil, promoções e provador.",
+        "iconName": "Shirt",
+        "badge": "Boutique",
+        "badgeColor": "bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30",
+        "defaultPath": "/moda",
+        "order": 1,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "frente_loja"
+        ],
+        "telemetry": {
+          "monthlyRequests": 28400,
+          "uptimePercent": 99.96,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 142000,
+          "costReduction": 2400,
+          "usersCount": 8,
+          "lastSync": "Há 1 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "holding_concreto_industria",
-        "businessId": "holding_kytto",
-        "label": "Usinas de Concreto & Pedreiras",
-        "description": "Traço de concreto, pesagem de agregados, frotas de betoneiras e obras civis.",
-        "iconName": "Layers",
-        "badge": "Usinas",
-        "badgeColor": "bg-slate-500/15 text-slate-600 dark:text-slate-400 border-slate-500/30",
-        "defaultPath": "/patrimonio",
+        "id": "moda_estoque_grade",
+        "businessId": "zuma_moda",
+        "label": "Grade, Tamanhos & Estoque",
+        "description": "Gestão por grade P/M/G/GG, variações de cor, etiquetas EAN-13 e inventário.",
+        "iconName": "Boxes",
+        "badge": "Grade & EAN",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/erp?tab=estoque",
+        "order": 2,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "suprimentos_estoque"
+        ],
+        "telemetry": {
+          "monthlyRequests": 19800,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 16,
+          "status": "healthy",
+          "costReduction": 1800,
+          "usersCount": 6,
+          "lastSync": "Há 5 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "moda_crm_condicional",
+        "businessId": "zuma_moda",
+        "label": "Clientes & Malas Condicionais",
+        "description": "Controle de malas entregues para prova em domicílio, CRM fashion e pós-venda.",
+        "iconName": "ShoppingBag",
+        "badge": "Condicional",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/clientes",
         "order": 3,
         "active": true,
         "permission": "all",
         "domains": [
-          "governanca_holding",
-          "suprimentos_estoque"
+          "crm_fidelidade",
+          "marketing_aquisicao"
         ],
         "telemetry": {
-          "monthlyRequests": 36200,
-          "uptimePercent": 99.97,
-          "avgLatencyMs": 14,
+          "monthlyRequests": 14200,
+          "uptimePercent": 99.95,
+          "avgLatencyMs": 15,
           "status": "healthy",
-          "costReduction": 36000,
-          "usersCount": 22,
-          "lastSync": "Há 6 min"
+          "costReduction": 1600,
+          "usersCount": 7,
+          "lastSync": "Há 10 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "moda_financeiro_fiscal",
+        "businessId": "zuma_moda",
+        "label": "Financeiro & Emissão NFC-e",
+        "description": "Fechamento de caixa, cartões, crediário próprio, emissão fiscal e DRE da boutique.",
+        "iconName": "Receipt",
+        "badge": "Fiscal",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/fiscal",
+        "order": 4,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "financas_controladoria",
+          "fiscal_contabil"
+        ],
+        "telemetry": {
+          "monthlyRequests": 22100,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 17,
+          "status": "healthy",
+          "costReduction": 1400,
+          "usersCount": 5,
+          "lastSync": "Há 2 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
       }
     ],
     "bancofe_logistica": [
@@ -1450,18 +1274,45 @@
           "lastSync": "Em tempo real"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "logistica_tabela_fretes",
+        "businessId": "bancofe_logistica",
+        "label": "Tabela de Fretes & CEPs MT",
+        "description": "Precificação por raio km, bairros de Tangará da Serra e municípios do estado de MT.",
+        "iconName": "MapPin",
+        "badge": "Tarifas MT",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/tabela-entregas",
+        "order": 2,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "delivery_logistica"
+        ],
+        "telemetry": {
+          "monthlyRequests": 32100,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 10,
+          "status": "healthy",
+          "costReduction": 8500,
+          "usersCount": 19,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
         "id": "logistica_combustivel_manutencao",
         "businessId": "bancofe_logistica",
         "label": "Gestão de Combustíveis & Frotas",
-        "description": "Controle de consumo km/l, cartão combustível com conciliação BancoFe e revisões preventivas.",
+        "description": "Controle de consumo km/l, telemetria de tanques e revisões preventivas de carretas.",
         "iconName": "Fuel",
-        "badge": "Combustível",
+        "badge": "Frotas",
         "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
         "defaultPath": "/patrimonio",
-        "order": 2,
+        "order": 3,
         "active": true,
         "permission": "admin",
         "domains": [
@@ -1478,164 +1329,241 @@
           "lastSync": "Há 10 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      }
-    ],
-    "bancofe_credito": [
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
       {
-        "id": "credito_antecipacao_duplicatas",
-        "businessId": "bancofe_credito",
-        "label": "Mesa de Antecipação & Duplicatas",
-        "description": "Esteira de crédito 100% digital, desconto de títulos eletrônicos e funding intercompany.",
-        "iconName": "CircleDollarSign",
-        "badge": "Funding",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/erp?tab=billing",
-        "order": 1,
+        "id": "logistica_cte_fiscal",
+        "businessId": "bancofe_logistica",
+        "label": "CT-e & MDF-e Carga Fiscal",
+        "description": "Emissão de Conhecimento de Transporte Eletrônico e Manifesto de Documentos Fiscais SEFAZ-MT.",
+        "iconName": "Receipt",
+        "badge": "CT-e SEFAZ",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/fiscal",
+        "order": 4,
         "active": true,
         "permission": "admin",
         "domains": [
-          "financas_controladoria",
-          "vendas_b2b"
-        ],
-        "telemetry": {
-          "monthlyRequests": 62400,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 13,
-          "status": "healthy",
-          "monthlyVolume": 5600000,
-          "costReduction": 28000,
-          "usersCount": 16,
-          "lastSync": "Em tempo real"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "credito_score_bureau",
-        "businessId": "bancofe_credito",
-        "label": "Motor de Risco & Bureau de Crédito",
-        "description": "Score proprietário BancoFe com dados Serasa/Boa Vista e limite rotativo PJ garantido.",
-        "iconName": "ShieldCheck",
-        "badge": "Score IA",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/financeiro",
-        "order": 2,
-        "active": true,
-        "permission": "admin",
-        "domains": [
-          "financas_controladoria",
-          "modelagem_preditiva"
-        ],
-        "telemetry": {
-          "monthlyRequests": 41200,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "costReduction": 14000,
-          "usersCount": 12,
-          "lastSync": "Há 2 min"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      }
-    ],
-    "operacoes_financeiras_crm": [
-      {
-        "id": "banco_open_finance",
-        "businessId": "bancofe",
-        "label": "Open Finance & APIs Bacen",
-        "description": "Conexões seguras Bacen, dados abertos bancários, consentimentos e Webhooks bancários.",
-        "iconName": "Radio",
-        "badge": "Bacen",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/conexoes",
-        "order": 1,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "conectividade_apis",
-          "open_apis"
-        ],
-        "telemetry": {
-          "monthlyRequests": 184500,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 22,
-          "status": "healthy",
-          "monthlyVolume": 4850000,
-          "costReduction": 14500,
-          "usersCount": 38,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "banco_pix_pagamentos",
-        "businessId": "bancofe",
-        "label": "PIX 24/7 & Central de Pagamentos",
-        "description": "Liquidação instantânea PIX Sicredi/Banco Central, checkout Apple Pay, QR dinâmico e estático.",
-        "iconName": "Zap",
-        "badge": "Instantâneo",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/pagamentos",
-        "order": 2,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "frente_loja",
+          "fiscal_contabil",
           "financas_controladoria"
         ],
         "telemetry": {
-          "monthlyRequests": 423900,
-          "uptimePercent": 100,
-          "avgLatencyMs": 12,
+          "monthlyRequests": 14500,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 15,
           "status": "healthy",
-          "monthlyVolume": 12400000,
-          "costReduction": 28900,
-          "usersCount": 154,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "banco_credito_fomento",
-        "businessId": "bancofe",
-        "label": "Crédito, Antecipação & Fomento",
-        "description": "Antecipação de recebíveis de cartões, duplicatas eletrônicas, análise de risco e billing.",
-        "iconName": "CircleDollarSign",
-        "badge": "Fomento",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
-        "defaultPath": "/erp?tab=billing",
-        "order": 3,
-        "active": true,
-        "permission": "admin",
-        "domains": [
-          "financas_controladoria",
-          "vendas_b2b"
-        ],
-        "telemetry": {
-          "monthlyRequests": 54100,
-          "uptimePercent": 99.95,
-          "avgLatencyMs": 19,
-          "status": "healthy",
-          "monthlyVolume": 2150000,
-          "costReduction": 12300,
-          "usersCount": 18,
+          "costReduction": 6200,
+          "usersCount": 10,
           "lastSync": "Há 4 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
+        "updatedAt": "2026-11-24T00:00:00Z"
+      }
+    ],
+    "palatare-pizzaria": [
+      {
+        "id": "palatare_pdv_salao",
+        "businessId": "palatare-pizzaria",
+        "label": "Frente de Caixa & Salão Napolitano",
+        "description": "Comandas eletrônicas, mesas, checkout rápido, TEF integrado e fechamento de conta.",
+        "iconName": "UtensilsCrossed",
+        "badge": "PDV Forno",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/pdv",
+        "order": 1,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "frente_loja"
+        ],
+        "telemetry": {
+          "monthlyRequests": 48200,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 195000,
+          "costReduction": 4200,
+          "usersCount": 18,
+          "lastSync": "Em tempo real"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "banco_controladoria_conciliacao",
-        "businessId": "bancofe",
-        "label": "Controladoria & Conciliação",
-        "description": "DRE gerencial, conciliação de extratos OFX/CNAB, auditoria contábil e balancetes.",
-        "iconName": "ShieldCheck",
-        "badge": "Auditoria",
+        "id": "palatare_kds_forno",
+        "businessId": "palatare-pizzaria",
+        "label": "KDS Pizzaiolo & Forno Napolitano",
+        "description": "Monitor de produção por praça: massas, montagem, forno automatizado e expedição.",
+        "iconName": "Flame",
+        "badge": "KDS Forno",
+        "badgeColor": "bg-orange-500/15 text-orange-600 dark:text-orange-400 border-orange-500/30",
+        "defaultPath": "/cozinha",
+        "order": 2,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "cozinha_kds"
+        ],
+        "telemetry": {
+          "monthlyRequests": 34100,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "costReduction": 3800,
+          "usersCount": 12,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "palatare_delivery_despacho",
+        "businessId": "palatare-pizzaria",
+        "label": "Delivery & Motoboys Napolitanos",
+        "description": "App do entregador, despacho de pizzas quentes com embalagem térmica e rastreio GPS.",
+        "iconName": "Bike",
+        "badge": "Delivery",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/entregador",
+        "order": 3,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "delivery_logistica"
+        ],
+        "telemetry": {
+          "monthlyRequests": 28400,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 15,
+          "status": "healthy",
+          "costReduction": 3100,
+          "usersCount": 14,
+          "lastSync": "Há 1 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "palatare_fiscal_suprimentos",
+        "businessId": "palatare-pizzaria",
+        "label": "Estoque Farinhas, DRE & NFC-e",
+        "description": "Controle de farinhas italianas 00, queijos especiais, emissão fiscal NFC-e e DRE gerencial.",
+        "iconName": "Boxes",
+        "badge": "ERP Pizzaria",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/fiscal",
+        "order": 4,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "suprimentos_estoque",
+          "financas_controladoria",
+          "fiscal_contabil"
+        ],
+        "telemetry": {
+          "monthlyRequests": 19800,
+          "uptimePercent": 99.96,
+          "avgLatencyMs": 16,
+          "status": "healthy",
+          "costReduction": 2900,
+          "usersCount": 8,
+          "lastSync": "Há 3 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      }
+    ],
+    "barbearia-dino": [
+      {
+        "id": "dino_recepcao_comandas",
+        "businessId": "barbearia-dino",
+        "label": "Recepção, Comanda & Barbeiros",
+        "description": "Gestão da grade de atendimento, comanda de corte, barba, produtos pomadas e bebidas.",
+        "iconName": "Calculator",
+        "badge": "Recepção",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/pdv",
+        "order": 1,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "frente_loja"
+        ],
+        "telemetry": {
+          "monthlyRequests": 18200,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "monthlyVolume": 68000,
+          "costReduction": 2100,
+          "usersCount": 9,
+          "lastSync": "Em tempo real"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "dino_clube_assinaturas",
+        "businessId": "barbearia-dino",
+        "label": "Clube Dino & Assinaturas Mensais",
+        "description": "Planos recorrentes de corte ilimitado no cartão de crédito/Pix e fidelidade.",
+        "iconName": "Star",
+        "badge": "Clube VIP",
         "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/clube",
+        "order": 2,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "crm_fidelidade"
+        ],
+        "telemetry": {
+          "monthlyRequests": 12400,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 12,
+          "status": "healthy",
+          "costReduction": 1800,
+          "usersCount": 8,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "dino_whatsapp_zumi",
+        "businessId": "barbearia-dino",
+        "label": "WhatsApp Agendamento Zumi IA",
+        "description": "Confirmação automática de horários, reagendamento e lembretes anti-falta via WhatsApp.",
+        "iconName": "MessageSquare",
+        "badge": "Zumi IA",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/zumi",
+        "order": 3,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "atendimento_omni"
+        ],
+        "telemetry": {
+          "monthlyRequests": 21500,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 11,
+          "status": "healthy",
+          "costReduction": 2400,
+          "usersCount": 7,
+          "lastSync": "Há 1 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "dino_comissoes_dre",
+        "businessId": "barbearia-dino",
+        "label": "Comissões dos Barbeiros & DRE",
+        "description": "Rateio percentual de serviços e produtos por profissional, DRE e emissão fiscal NFS-e.",
+        "iconName": "CircleDollarSign",
+        "badge": "Financeiro",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
         "defaultPath": "/financeiro",
         "order": 4,
         "active": true,
@@ -1645,679 +1573,13 @@
           "fiscal_contabil"
         ],
         "telemetry": {
-          "monthlyRequests": 82000,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 15,
-          "status": "healthy",
-          "costReduction": 18500,
-          "usersCount": 24,
-          "lastSync": "Há 2 min"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "banco_cambio_mercado",
-        "businessId": "bancofe",
-        "label": "Câmbio, Mercado & War Room",
-        "description": "Cotações PTAX, Dólar Pescados, commodities Chicago/B3 e inteligência financeira.",
-        "iconName": "TrendingUp",
-        "badge": "Mercado",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/mercado",
-        "order": 5,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "war_room",
-          "modelagem_preditiva"
-        ],
-        "telemetry": {
-          "monthlyRequests": 112000,
-          "uptimePercent": 99.97,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "usersCount": 31,
-          "lastSync": "Em tempo real"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "banco_integracoes_git_mcp",
-        "businessId": "bancofe",
-        "label": "Integrações Git, MCPs & Skills",
-        "description": "Conexões com repositórios GitHub, MCP Servers, Model Context Protocol e agentes de IA.",
-        "iconName": "Share2",
-        "badge": "MCP & Git",
-        "badgeColor": "bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
-        "defaultPath": "/integracoes",
-        "order": 6,
-        "active": true,
-        "permission": "admin",
-        "domains": [
-          "conectividade_apis",
-          "infra_aplicacoes"
-        ],
-        "telemetry": {
-          "monthlyRequests": 32400,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 11,
-          "status": "healthy",
-          "costReduction": 8400,
-          "usersCount": 15,
-          "lastSync": "Há 1 min"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "banco_cadastro_360",
-        "businessId": "bancofe",
-        "label": "Cadastro 360° & KYB Bancário",
-        "description": "Dossiê único de clientes, QSA, UBO, score de compliance e domicílio bancário centralizado.",
-        "iconName": "Users",
-        "badge": "KYB Bacen",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
-        "defaultPath": "/admin/cadastro-360",
-        "order": 7,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "kyb_compliance",
-          "cadastro_360"
-        ],
-        "telemetry": {
-          "monthlyRequests": 48200,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 12,
-          "status": "healthy",
-          "monthlyVolume": 35000000,
-          "costReduction": 42000,
-          "usersCount": 38,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "banco_termos_regulatorios",
-        "businessId": "bancofe",
-        "label": "Termos Regulatórios & Consentimentos Bacen",
-        "description": "Gestão de termos SCR (CMN 4.571), Open Finance, PLD-FT e travas de domicílio CERC/CIP.",
-        "iconName": "Scale",
-        "badge": "Regulatório",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/termos",
-        "order": 8,
-        "active": true,
-        "permission": "admin",
-        "domains": [
-          "formalizacao_juridica",
-          "termos_scr"
-        ],
-        "telemetry": {
-          "monthlyRequests": 31000,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "monthlyVolume": 28000000,
-          "costReduction": 29000,
-          "usersCount": 28,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "banco_mesa_credito",
-        "businessId": "bancofe",
-        "label": "Mesa de Crédito, SCR Bacen & Parecer IA",
-        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e parecer automatizado de crédito.",
-        "iconName": "Landmark",
-        "badge": "Crédito AAA",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/admin/mesa-credito",
-        "order": 3,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "financas_controladoria",
-          "mesa_credito"
-        ],
-        "telemetry": {
-          "monthlyRequests": 42800,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "monthlyVolume": 22800000,
-          "costReduction": 68000,
-          "usersCount": 34,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      },
-      {
-        "id": "banco_securitizadora_fidc",
-        "businessId": "bancofe",
-        "label": "Securitização de Recebíveis & FIDC",
-        "description": "Securitização de direitos creditórios, emissão de CRI/CRA/CPR, cotas de FIDC e funding estruturado no mercado de capitais.",
-        "iconName": "TrendingUp",
-        "badge": "FIDC & CCB",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/crm-financeira",
-        "order": 4,
-        "active": true,
-        "permission": "admin",
-        "domains": [
-          "financas_controladoria",
-          "securitizacao"
-        ],
-        "telemetry": {
-          "monthlyRequests": 18500,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 12,
-          "status": "healthy",
-          "monthlyVolume": 12500000,
-          "costReduction": 92000,
-          "usersCount": 18,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      },
-      {
-        "id": "crm_pipeline_oportunidades",
-        "businessId": "bancofe",
-        "label": "Funil & Pipeline de Oportunidades CRM",
-        "description": "Quadro Kanban interativo de prospecção, qualificação, comitê e formalização de operações financeiras.",
-        "iconName": "TrendingUp",
-        "badge": "Kanban 360°",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/crm-financeira",
-        "order": 1,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "crm_comercial",
-          "pipeline_vendas"
-        ],
-        "telemetry": {
-          "monthlyRequests": 42800,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 12,
-          "status": "healthy",
-          "monthlyVolume": 12500000,
-          "costReduction": 28400,
-          "usersCount": 24,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.423Z"
-      },
-      {
-        "id": "crm_mesa_credito_algoritmica",
-        "businessId": "bancofe",
-        "label": "Mesa de Crédito & Risco Algorítmico",
-        "description": "Análise automatizada de risco com parecer instantâneo SCR Bacen, Serasa, CENPROT e SICAR.",
-        "iconName": "ShieldCheck",
-        "badge": "Mesa de Risco",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
-        "defaultPath": "/admin/crm-financeira?tab=mesa",
-        "order": 2,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "analise_risco",
-          "credito_bacen"
-        ],
-        "telemetry": {
-          "monthlyRequests": 19600,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 18,
-          "status": "healthy",
-          "monthlyVolume": 8900000,
-          "costReduction": 19800,
-          "usersCount": 16,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.423Z"
-      },
-      {
-        "id": "crm_simulador_taxas_retorno",
-        "businessId": "bancofe",
-        "label": "Simulador de Taxas, Spread & Retorno",
-        "description": "Calculadora de retorno financeiro, TIR líquida, IOF, TAC, tabelas SAC/PRICE e margem líquida BancoFe.",
-        "iconName": "Calculator",
-        "badge": "Simulador",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/admin/crm-financeira?tab=simulador",
-        "order": 3,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "calculadora_financeira",
-          "precificacao"
-        ],
-        "telemetry": {
-          "monthlyRequests": 14200,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 8,
-          "status": "healthy",
-          "monthlyVolume": 5600000,
-          "costReduction": 11200,
-          "usersCount": 22,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.424Z"
-      },
-      {
-        "id": "crm_formalizacao_ccb_digital",
-        "businessId": "bancofe",
-        "label": "Formalização & Emissão de CCB Digital",
-        "description": "Geração de Cédulas de Crédito Bancário, assinatura eletrônica ICP-Brasil e registro eletrônico.",
-        "iconName": "FileText",
-        "badge": "CCB ICP-Brasil",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/crm-financeira?tab=formalizacao",
-        "order": 4,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "formalizacao_juridica",
-          "cartorios"
-        ],
-        "telemetry": {
-          "monthlyRequests": 8700,
-          "uptimePercent": 99.97,
-          "avgLatencyMs": 24,
-          "status": "healthy",
-          "monthlyVolume": 7400000,
-          "costReduction": 15400,
-          "usersCount": 14,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.425Z"
-      },
-      {
-        "id": "crm_gestao_carteira_cobranca",
-        "businessId": "bancofe",
-        "label": "Gestão de Carteira & Cobrança Amigável",
-        "description": "Monitoramento de vencimentos, régua automatizada WhatsApp/Pix e recuperação de créditos com inadimplência zero.",
-        "iconName": "Users",
-        "badge": "Cobrança Pix",
-        "badgeColor": "bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30",
-        "defaultPath": "/admin/crm-financeira?tab=carteira",
-        "order": 5,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "cobranca_ativa",
-          "recuperacao_credito"
-        ],
-        "telemetry": {
-          "monthlyRequests": 26800,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "monthlyVolume": 18400000,
-          "costReduction": 32600,
-          "usersCount": 20,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.425Z"
-      },
-      {
-        "id": "crm_antecipacao_recebiveis_nfe",
-        "businessId": "bancofe",
-        "label": "Portal Cedentes & Antecipação de NF-e",
-        "description": "Consulta de chaves NF-e na Sefaz, checagem de lastro mercantil e borderô automático com liquidação instantânea.",
-        "iconName": "Receipt",
-        "badge": "Borderô Sefaz",
-        "badgeColor": "bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
-        "defaultPath": "/admin/crm-financeira?tab=antecipacao",
-        "order": 6,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "antecipacao_nfe",
-          "fidc_operacoes"
-        ],
-        "telemetry": {
-          "monthlyRequests": 16400,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 16,
-          "status": "healthy",
-          "monthlyVolume": 9200000,
-          "costReduction": 18200,
-          "usersCount": 18,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T12:01:17.425Z"
-      },
-      {
-        "id": "crm_cadastro_360_empresas",
-        "businessId": "bancofe",
-        "label": "Cadastro 360° Corporativo & Mesa KYB/KYC",
-        "description": "Visão holística de clientes PJ/PF, QSA/UBO, balanço sintético, compliance PLD-FT e limites operacionais.",
-        "iconName": "Users",
-        "badge": "360° KYB",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/cadastro-360",
-        "order": 7,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "kyb_compliance",
-          "cadastro_360"
-        ],
-        "telemetry": {
-          "monthlyRequests": 28400,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 12,
-          "status": "healthy",
-          "monthlyVolume": 24800000,
-          "costReduction": 38500,
-          "usersCount": 26,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "crm_precadastro_dossie_documental",
-        "businessId": "bancofe",
-        "label": "Pré-Cadastro & Vault Documental Digital",
-        "description": "Checklist de 13 documentos obrigatórios, upload, validação com hash SHA-256 e controle de validade de certidões.",
-        "iconName": "Boxes",
-        "badge": "Dossiê Digital",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/admin/pre-cadastro",
-        "order": 8,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "onboarding_digital",
-          "vault_documental"
-        ],
-        "telemetry": {
-          "monthlyRequests": 21200,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "monthlyVolume": 16500000,
-          "costReduction": 24000,
-          "usersCount": 22,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      },
-      {
-        "id": "crm_central_termos_contratos",
-        "businessId": "bancofe",
-        "label": "Central de Termos & Formalizações Digitais",
-        "description": "Termos SCR Bacen, Domicílio Bancário, PLD-FT, Open Finance, Cessão Fiduciária e CCB Eletrônica com hash e IP.",
-        "iconName": "Scale",
-        "badge": "Termos & SCR",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
-        "defaultPath": "/admin/termos",
-        "order": 9,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "formalizacao_juridica",
-          "termos_scr"
-        ],
-        "telemetry": {
-          "monthlyRequests": 18900,
+          "monthlyRequests": 9800,
           "uptimePercent": 99.99,
           "avgLatencyMs": 15,
           "status": "healthy",
-          "monthlyVolume": 14200000,
-          "costReduction": 19500,
-          "usersCount": 20,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-23T00:00:00Z"
-      }
-    ],
-    "palatare-pizzaria": [
-      {
-        "id": "palatare-pizzaria_mesa_credito",
-        "businessId": "palatare-pizzaria",
-        "label": "Mesa de Crédito & Rating AAA",
-        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e emissão de parecer.",
-        "iconName": "Landmark",
-        "badge": "Crédito AAA",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30",
-        "defaultPath": "/admin/mesa-credito",
-        "order": 1,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "financas_controladoria",
-          "mesa_credito"
-        ],
-        "telemetry": {
-          "monthlyRequests": 14500,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "monthlyVolume": 2800000,
-          "costReduction": 34000,
-          "usersCount": 12,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      },
-      {
-        "id": "palatare-pizzaria_financeiro_dre",
-        "businessId": "palatare-pizzaria",
-        "label": "Financeiro & DRE Consolidado",
-        "description": "Fluxo de caixa em tempo real, conciliação PIX instantânea, livro-razão double entry e demonstrativo de resultados.",
-        "iconName": "TrendingUp",
-        "badge": "DRE",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/dre",
-        "order": 2,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "financas_controladoria"
-        ],
-        "telemetry": {
-          "monthlyRequests": 38200,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 12,
-          "status": "healthy",
-          "monthlyVolume": 1850000,
-          "costReduction": 19500,
-          "usersCount": 24,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      },
-      {
-        "id": "palatare-pizzaria_operacoes_crm",
-        "businessId": "palatare-pizzaria",
-        "label": "Operações & Funil CRM",
-        "description": "Pipeline de contratos e oportunidades, formalização CCB digital, cobrança inteligente e régua de retenção.",
-        "iconName": "Users",
-        "badge": "CRM 360°",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/crm-financeira",
-        "order": 3,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "vendas_crm",
-          "frente_loja"
-        ],
-        "telemetry": {
-          "monthlyRequests": 24900,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 15,
-          "status": "healthy",
-          "monthlyVolume": 1200000,
-          "costReduction": 15000,
-          "usersCount": 18,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      },
-      {
-        "id": "palatare-pizzaria_integracoes_mcp",
-        "businessId": "palatare-pizzaria",
-        "label": "Barramento de Integrações & MCPs",
-        "description": "Conexão aberta com 77 fontes: SEFAZ, Bacen, SCR, SICAR, Serasa, DICT PIX, WhatsApp Meta, Git e Skills de IA.",
-        "iconName": "Radio",
-        "badge": "77 Fontes",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/integracoes",
-        "order": 4,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "conectividade_apis",
-          "open_apis"
-        ],
-        "telemetry": {
-          "monthlyRequests": 89000,
-          "uptimePercent": 100,
-          "avgLatencyMs": 9,
-          "status": "healthy",
-          "monthlyVolume": 4500000,
-          "costReduction": 42000,
-          "usersCount": 45,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      }
-    ],
-    "barbearia-dino": [
-      {
-        "id": "barbearia-dino_mesa_credito",
-        "businessId": "barbearia-dino",
-        "label": "Mesa de Crédito & Rating AAA",
-        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e emissão de parecer.",
-        "iconName": "Landmark",
-        "badge": "Crédito AAA",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30",
-        "defaultPath": "/admin/mesa-credito",
-        "order": 1,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "financas_controladoria",
-          "mesa_credito"
-        ],
-        "telemetry": {
-          "monthlyRequests": 14500,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
-          "status": "healthy",
-          "monthlyVolume": 2800000,
-          "costReduction": 34000,
-          "usersCount": 12,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      },
-      {
-        "id": "barbearia-dino_financeiro_dre",
-        "businessId": "barbearia-dino",
-        "label": "Financeiro & DRE Consolidado",
-        "description": "Fluxo de caixa em tempo real, conciliação PIX instantânea, livro-razão double entry e demonstrativo de resultados.",
-        "iconName": "TrendingUp",
-        "badge": "DRE",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/dre",
-        "order": 2,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "financas_controladoria"
-        ],
-        "telemetry": {
-          "monthlyRequests": 38200,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 12,
-          "status": "healthy",
-          "monthlyVolume": 1850000,
-          "costReduction": 19500,
-          "usersCount": 24,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      },
-      {
-        "id": "barbearia-dino_operacoes_crm",
-        "businessId": "barbearia-dino",
-        "label": "Operações & Funil CRM",
-        "description": "Pipeline de contratos e oportunidades, formalização CCB digital, cobrança inteligente e régua de retenção.",
-        "iconName": "Users",
-        "badge": "CRM 360°",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/crm-financeira",
-        "order": 3,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "vendas_crm",
-          "frente_loja"
-        ],
-        "telemetry": {
-          "monthlyRequests": 24900,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 15,
-          "status": "healthy",
-          "monthlyVolume": 1200000,
-          "costReduction": 15000,
-          "usersCount": 18,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      },
-      {
-        "id": "barbearia-dino_integracoes_mcp",
-        "businessId": "barbearia-dino",
-        "label": "Barramento de Integrações & MCPs",
-        "description": "Conexão aberta com 77 fontes: SEFAZ, Bacen, SCR, SICAR, Serasa, DICT PIX, WhatsApp Meta, Git e Skills de IA.",
-        "iconName": "Radio",
-        "badge": "77 Fontes",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/integracoes",
-        "order": 4,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "conectividade_apis",
-          "open_apis"
-        ],
-        "telemetry": {
-          "monthlyRequests": 89000,
-          "uptimePercent": 100,
-          "avgLatencyMs": 9,
-          "status": "healthy",
-          "monthlyVolume": 4500000,
-          "costReduction": 42000,
-          "usersCount": 45,
-          "lastSync": "Agora mesmo"
+          "costReduction": 1900,
+          "usersCount": 6,
+          "lastSync": "Há 5 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
@@ -2325,115 +1587,110 @@
     ],
     "agro-open-ttc": [
       {
-        "id": "agro-open-ttc_mesa_credito",
+        "id": "ttc_reservas_quadras",
         "businessId": "agro-open-ttc",
-        "label": "Mesa de Crédito & Rating AAA",
-        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e emissão de parecer.",
-        "iconName": "Landmark",
-        "badge": "Crédito AAA",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30",
-        "defaultPath": "/admin/mesa-credito",
+        "label": "Reservas de Quadras & Tatames",
+        "description": "Agendamento online de quadras de Beach Tennis, Tênis de saibro, Futevôlei e iluminação noturna.",
+        "iconName": "Clock",
+        "badge": "Quadras",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/reservas",
         "order": 1,
         "active": true,
         "permission": "all",
         "domains": [
-          "financas_controladoria",
-          "mesa_credito"
+          "otimizacao_receita"
         ],
         "telemetry": {
-          "monthlyRequests": 14500,
+          "monthlyRequests": 29400,
           "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
+          "avgLatencyMs": 12,
           "status": "healthy",
-          "monthlyVolume": 2800000,
-          "costReduction": 34000,
-          "usersCount": 12,
-          "lastSync": "Agora mesmo"
+          "monthlyVolume": 120000,
+          "costReduction": 3800,
+          "usersCount": 22,
+          "lastSync": "Em tempo real"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "agro-open-ttc_financeiro_dre",
+        "id": "ttc_bar_clube_pdv",
         "businessId": "agro-open-ttc",
-        "label": "Financeiro & DRE Consolidado",
-        "description": "Fluxo de caixa em tempo real, conciliação PIX instantânea, livro-razão double entry e demonstrativo de resultados.",
-        "iconName": "TrendingUp",
-        "badge": "DRE",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/dre",
+        "label": "Bar & Restaurante do Clube (PDV)",
+        "description": "Comandas de consumo dos atletas, bebidas geladas, açaí, espetos e pagamentos via Pix.",
+        "iconName": "UtensilsCrossed",
+        "badge": "Bar do Clube",
+        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/pdv",
         "order": 2,
         "active": true,
         "permission": "all",
         "domains": [
-          "financas_controladoria"
+          "frente_loja"
         ],
         "telemetry": {
-          "monthlyRequests": 38200,
+          "monthlyRequests": 22100,
           "uptimePercent": 99.98,
-          "avgLatencyMs": 12,
+          "avgLatencyMs": 14,
           "status": "healthy",
-          "monthlyVolume": 1850000,
-          "costReduction": 19500,
-          "usersCount": 24,
+          "costReduction": 2900,
+          "usersCount": 16,
           "lastSync": "Agora mesmo"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "agro-open-ttc_operacoes_crm",
+        "id": "ttc_torneios_ranking",
         "businessId": "agro-open-ttc",
-        "label": "Operações & Funil CRM",
-        "description": "Pipeline de contratos e oportunidades, formalização CCB digital, cobrança inteligente e régua de retenção.",
-        "iconName": "Users",
-        "badge": "CRM 360°",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/crm-financeira",
+        "label": "Sócios, Torneios & Ranking Elo",
+        "description": "Gestão do quadro de associados, chaves de torneios amadores/profissionais e ranking Elo.",
+        "iconName": "Crown",
+        "badge": "Ranking Elo",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/clube",
         "order": 3,
         "active": true,
         "permission": "all",
         "domains": [
-          "vendas_crm",
-          "frente_loja"
+          "crm_fidelidade"
         ],
         "telemetry": {
-          "monthlyRequests": 24900,
+          "monthlyRequests": 18400,
           "uptimePercent": 99.99,
-          "avgLatencyMs": 15,
+          "avgLatencyMs": 13,
           "status": "healthy",
-          "monthlyVolume": 1200000,
-          "costReduction": 15000,
+          "costReduction": 2400,
           "usersCount": 18,
-          "lastSync": "Agora mesmo"
+          "lastSync": "Há 2 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "agro-open-ttc_integracoes_mcp",
+        "id": "ttc_telemetria_portaria",
         "businessId": "agro-open-ttc",
-        "label": "Barramento de Integrações & MCPs",
-        "description": "Conexão aberta com 77 fontes: SEFAZ, Bacen, SCR, SICAR, Serasa, DICT PIX, WhatsApp Meta, Git e Skills de IA.",
-        "iconName": "Radio",
-        "badge": "77 Fontes",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/integracoes",
+        "label": "Portaria Eletrônica & Telemetria",
+        "description": "Controle de catracas com QR Code dinâmico, biometria e telemetria de refletores LED.",
+        "iconName": "Thermometer",
+        "badge": "Catracas",
+        "badgeColor": "bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
+        "defaultPath": "/telemetria",
         "order": 4,
         "active": true,
-        "permission": "all",
+        "permission": "admin",
         "domains": [
-          "conectividade_apis",
-          "open_apis"
+          "modelagem_preditiva",
+          "governanca_holding"
         ],
         "telemetry": {
-          "monthlyRequests": 89000,
+          "monthlyRequests": 14200,
           "uptimePercent": 100,
-          "avgLatencyMs": 9,
+          "avgLatencyMs": 10,
           "status": "healthy",
-          "monthlyVolume": 4500000,
-          "costReduction": 42000,
-          "usersCount": 45,
+          "costReduction": 3200,
+          "usersCount": 10,
           "lastSync": "Agora mesmo"
         },
         "createdAt": "2026-01-01T00:00:00Z",
@@ -2442,116 +1699,112 @@
     ],
     "serrano-concreto": [
       {
-        "id": "serrano-concreto_mesa_credito",
+        "id": "concreto_usina_frotas",
         "businessId": "serrano-concreto",
-        "label": "Mesa de Crédito & Rating AAA",
-        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e emissão de parecer.",
-        "iconName": "Landmark",
-        "badge": "Crédito AAA",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30",
-        "defaultPath": "/admin/mesa-credito",
+        "label": "Usina Central, Pátio & Betoneiras",
+        "description": "Automação de traço de concreto, pátio de britagem e gestão de caminhões-betoneira.",
+        "iconName": "Building2",
+        "badge": "Usina",
+        "badgeColor": "bg-slate-500/15 text-slate-600 dark:text-slate-400 border-slate-500/30",
+        "defaultPath": "/patrimonio",
         "order": 1,
         "active": true,
         "permission": "all",
         "domains": [
-          "financas_controladoria",
-          "mesa_credito"
+          "governanca_holding"
         ],
         "telemetry": {
-          "monthlyRequests": 14500,
+          "monthlyRequests": 32500,
           "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
+          "avgLatencyMs": 13,
           "status": "healthy",
-          "monthlyVolume": 2800000,
-          "costReduction": 34000,
-          "usersCount": 12,
-          "lastSync": "Agora mesmo"
+          "monthlyVolume": 3200000,
+          "costReduction": 54000,
+          "usersCount": 35,
+          "lastSync": "Em tempo real"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "serrano-concreto_financeiro_dre",
+        "id": "concreto_balanca_romaneios",
         "businessId": "serrano-concreto",
-        "label": "Financeiro & DRE Consolidado",
-        "description": "Fluxo de caixa em tempo real, conciliação PIX instantânea, livro-razão double entry e demonstrativo de resultados.",
-        "iconName": "TrendingUp",
-        "badge": "DRE",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/dre",
+        "label": "Balança Rodoviária & Romaneios",
+        "description": "Pesagem automatizada de agregados brita/areia/cimento com ticket balança Toledo e Kardex.",
+        "iconName": "Boxes",
+        "badge": "Balança",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/erp?tab=estoque",
         "order": 2,
         "active": true,
         "permission": "all",
         "domains": [
+          "suprimentos_estoque"
+        ],
+        "telemetry": {
+          "monthlyRequests": 28400,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 14,
+          "status": "healthy",
+          "costReduction": 24000,
+          "usersCount": 22,
+          "lastSync": "Agora mesmo"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "concreto_vendas_obras",
+        "businessId": "serrano-concreto",
+        "label": "Vendas B2B & Obras Civis",
+        "description": "Propostas comerciais para construtoras, faturamento programado fck 20/25/30/35 MPa.",
+        "iconName": "Target",
+        "badge": "Obras B2B",
+        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/erp?tab=comercial",
+        "order": 3,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "vendas_b2b",
           "financas_controladoria"
         ],
         "telemetry": {
-          "monthlyRequests": 38200,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 12,
+          "monthlyRequests": 18200,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 16,
           "status": "healthy",
-          "monthlyVolume": 1850000,
-          "costReduction": 19500,
-          "usersCount": 24,
-          "lastSync": "Agora mesmo"
+          "costReduction": 19000,
+          "usersCount": 14,
+          "lastSync": "Há 4 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "serrano-concreto_operacoes_crm",
+        "id": "concreto_fiscal_nfe",
         "businessId": "serrano-concreto",
-        "label": "Operações & Funil CRM",
-        "description": "Pipeline de contratos e oportunidades, formalização CCB digital, cobrança inteligente e régua de retenção.",
-        "iconName": "Users",
-        "badge": "CRM 360°",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/crm-financeira",
-        "order": 3,
+        "label": "Fiscal NF-e 55 & DRE Usina",
+        "description": "Emissão de NF-e mod. 55 para concreto usinado SEFAZ-MT, conciliação e DRE industrial.",
+        "iconName": "Receipt",
+        "badge": "NF-e 55",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/fiscal",
+        "order": 4,
         "active": true,
-        "permission": "all",
+        "permission": "admin",
         "domains": [
-          "vendas_crm",
-          "frente_loja"
+          "fiscal_contabil",
+          "financas_controladoria"
         ],
         "telemetry": {
-          "monthlyRequests": 24900,
+          "monthlyRequests": 16400,
           "uptimePercent": 99.99,
           "avgLatencyMs": 15,
           "status": "healthy",
-          "monthlyVolume": 1200000,
-          "costReduction": 15000,
-          "usersCount": 18,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      },
-      {
-        "id": "serrano-concreto_integracoes_mcp",
-        "businessId": "serrano-concreto",
-        "label": "Barramento de Integrações & MCPs",
-        "description": "Conexão aberta com 77 fontes: SEFAZ, Bacen, SCR, SICAR, Serasa, DICT PIX, WhatsApp Meta, Git e Skills de IA.",
-        "iconName": "Radio",
-        "badge": "77 Fontes",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/integracoes",
-        "order": 4,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "conectividade_apis",
-          "open_apis"
-        ],
-        "telemetry": {
-          "monthlyRequests": 89000,
-          "uptimePercent": 100,
-          "avgLatencyMs": 9,
-          "status": "healthy",
-          "monthlyVolume": 4500000,
-          "costReduction": 42000,
-          "usersCount": 45,
-          "lastSync": "Agora mesmo"
+          "costReduction": 17000,
+          "usersCount": 12,
+          "lastSync": "Há 2 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
@@ -2559,28 +1812,55 @@
     ],
     "casa-nova-imoveis": [
       {
-        "id": "casa-nova-imoveis_mesa_credito",
+        "id": "casanova_loteamentos_carteira",
         "businessId": "casa-nova-imoveis",
-        "label": "Mesa de Crédito & Rating AAA",
-        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e emissão de parecer.",
-        "iconName": "Landmark",
-        "badge": "Crédito AAA",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30",
-        "defaultPath": "/admin/mesa-credito",
+        "label": "Loteamentos & Carteira de Imóveis",
+        "description": "Gestão de lotes, quadras, empreendimentos residenciais, contratos de venda e locação.",
+        "iconName": "Building",
+        "badge": "Imóveis",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/erp",
         "order": 1,
         "active": true,
         "permission": "all",
         "domains": [
-          "financas_controladoria",
-          "mesa_credito"
+          "governanca_holding",
+          "vendas_b2b"
         ],
         "telemetry": {
-          "monthlyRequests": 14500,
+          "monthlyRequests": 21400,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 15,
+          "status": "healthy",
+          "monthlyVolume": 2100000,
+          "costReduction": 38000,
+          "usersCount": 16,
+          "lastSync": "Em tempo real"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "casanova_crm_proponentes",
+        "businessId": "casa-nova-imoveis",
+        "label": "CRM Proponentes & Pré-Cadastros",
+        "description": "Esteira de 20 proponentes da base Casa Nova com checklist documental e conformidade LGPD.",
+        "iconName": "Users",
+        "badge": "20 Proponentes",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/admin/crm-financeira?aba=precadastros",
+        "order": 2,
+        "active": true,
+        "permission": "all",
+        "domains": [
+          "crm_fidelidade"
+        ],
+        "telemetry": {
+          "monthlyRequests": 18500,
           "uptimePercent": 99.99,
           "avgLatencyMs": 14,
           "status": "healthy",
-          "monthlyVolume": 2800000,
-          "costReduction": 34000,
+          "costReduction": 18000,
           "usersCount": 12,
           "lastSync": "Agora mesmo"
         },
@@ -2588,87 +1868,56 @@
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "casa-nova-imoveis_financeiro_dre",
+        "id": "casanova_vistorias_patrimonio",
         "businessId": "casa-nova-imoveis",
-        "label": "Financeiro & DRE Consolidado",
-        "description": "Fluxo de caixa em tempo real, conciliação PIX instantânea, livro-razão double entry e demonstrativo de resultados.",
-        "iconName": "TrendingUp",
-        "badge": "DRE",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/dre",
-        "order": 2,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "financas_controladoria"
-        ],
-        "telemetry": {
-          "monthlyRequests": 38200,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 12,
-          "status": "healthy",
-          "monthlyVolume": 1850000,
-          "costReduction": 19500,
-          "usersCount": 24,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      },
-      {
-        "id": "casa-nova-imoveis_operacoes_crm",
-        "businessId": "casa-nova-imoveis",
-        "label": "Operações & Funil CRM",
-        "description": "Pipeline de contratos e oportunidades, formalização CCB digital, cobrança inteligente e régua de retenção.",
-        "iconName": "Users",
-        "badge": "CRM 360°",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/crm-financeira",
+        "label": "Vistorias Digitais & Laudos",
+        "description": "Laudos com fotos, checklist de entrega e devolução de chaves, inventário de bens locados.",
+        "iconName": "FileCheck2",
+        "badge": "Vistorias",
+        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/patrimonio",
         "order": 3,
         "active": true,
-        "permission": "all",
+        "permission": "admin",
         "domains": [
-          "vendas_crm",
-          "frente_loja"
+          "governanca_holding"
         ],
         "telemetry": {
-          "monthlyRequests": 24900,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 15,
+          "monthlyRequests": 12800,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 16,
           "status": "healthy",
-          "monthlyVolume": 1200000,
-          "costReduction": 15000,
-          "usersCount": 18,
-          "lastSync": "Agora mesmo"
+          "costReduction": 14000,
+          "usersCount": 9,
+          "lastSync": "Há 6 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "casa-nova-imoveis_integracoes_mcp",
+        "id": "casanova_alugueis_cobranca",
         "businessId": "casa-nova-imoveis",
-        "label": "Barramento de Integrações & MCPs",
-        "description": "Conexão aberta com 77 fontes: SEFAZ, Bacen, SCR, SICAR, Serasa, DICT PIX, WhatsApp Meta, Git e Skills de IA.",
-        "iconName": "Radio",
-        "badge": "77 Fontes",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/integracoes",
+        "label": "Cobrança de Aluguéis & DRE",
+        "description": "Boletos automáticos, repasse aos proprietários, retenção de taxa de administração e DRE.",
+        "iconName": "CircleDollarSign",
+        "badge": "Repasses",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/financeiro",
         "order": 4,
         "active": true,
-        "permission": "all",
+        "permission": "admin",
         "domains": [
-          "conectividade_apis",
-          "open_apis"
+          "financas_controladoria",
+          "fiscal_contabil"
         ],
         "telemetry": {
-          "monthlyRequests": 89000,
-          "uptimePercent": 100,
-          "avgLatencyMs": 9,
+          "monthlyRequests": 14200,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 13,
           "status": "healthy",
-          "monthlyVolume": 4500000,
-          "costReduction": 42000,
-          "usersCount": 45,
-          "lastSync": "Agora mesmo"
+          "costReduction": 16000,
+          "usersCount": 11,
+          "lastSync": "Há 3 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
@@ -2676,116 +1925,111 @@
     ],
     "stallone-nutre-sport": [
       {
-        "id": "stallone-nutre-sport_mesa_credito",
+        "id": "stallone_pdv_loja",
         "businessId": "stallone-nutre-sport",
-        "label": "Mesa de Crédito & Rating AAA",
-        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e emissão de parecer.",
-        "iconName": "Landmark",
-        "badge": "Crédito AAA",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30",
-        "defaultPath": "/admin/mesa-credito",
+        "label": "Loja & Frente de Caixa Touch",
+        "description": "Venda rápida de suplementos, creatina, whey protein, vitaminas e vestuário esportivo.",
+        "iconName": "ShoppingBag",
+        "badge": "PDV Fitness",
+        "badgeColor": "bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30",
+        "defaultPath": "/pdv",
         "order": 1,
         "active": true,
         "permission": "all",
         "domains": [
-          "financas_controladoria",
-          "mesa_credito"
+          "frente_loja"
         ],
         "telemetry": {
-          "monthlyRequests": 14500,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
+          "monthlyRequests": 21000,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 16,
           "status": "healthy",
-          "monthlyVolume": 2800000,
-          "costReduction": 34000,
-          "usersCount": 12,
-          "lastSync": "Agora mesmo"
+          "monthlyVolume": 185000,
+          "costReduction": 9400,
+          "usersCount": 14,
+          "lastSync": "Em tempo real"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "stallone-nutre-sport_financeiro_dre",
+        "id": "stallone_ecommerce_omni",
         "businessId": "stallone-nutre-sport",
-        "label": "Financeiro & DRE Consolidado",
-        "description": "Fluxo de caixa em tempo real, conciliação PIX instantânea, livro-razão double entry e demonstrativo de resultados.",
-        "iconName": "TrendingUp",
-        "badge": "DRE",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/dre",
+        "label": "E-Commerce & Omnichannel",
+        "description": "Catálogo virtual integrado, estoque em tempo real e despacho express para todo o estado de MT.",
+        "iconName": "Store",
+        "badge": "E-Commerce",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/admin/ecommerce",
         "order": 2,
         "active": true,
         "permission": "all",
         "domains": [
-          "financas_controladoria"
+          "delivery_logistica"
         ],
         "telemetry": {
-          "monthlyRequests": 38200,
+          "monthlyRequests": 18200,
           "uptimePercent": 99.98,
-          "avgLatencyMs": 12,
+          "avgLatencyMs": 14,
           "status": "healthy",
-          "monthlyVolume": 1850000,
-          "costReduction": 19500,
-          "usersCount": 24,
+          "costReduction": 6800,
+          "usersCount": 10,
           "lastSync": "Agora mesmo"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "stallone-nutre-sport_operacoes_crm",
+        "id": "stallone_estoque_lotes",
         "businessId": "stallone-nutre-sport",
-        "label": "Operações & Funil CRM",
-        "description": "Pipeline de contratos e oportunidades, formalização CCB digital, cobrança inteligente e régua de retenção.",
-        "iconName": "Users",
-        "badge": "CRM 360°",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/crm-financeira",
+        "label": "Estoque, Lotes & Validade Anvisa",
+        "description": "Controle de lotes de importação, laudos laboratoriais, validade Anvisa e curva ABC.",
+        "iconName": "Boxes",
+        "badge": "Anvisa",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/estoque",
         "order": 3,
         "active": true,
         "permission": "all",
         "domains": [
-          "vendas_crm",
-          "frente_loja"
+          "suprimentos_estoque"
         ],
         "telemetry": {
-          "monthlyRequests": 24900,
+          "monthlyRequests": 14800,
           "uptimePercent": 99.99,
-          "avgLatencyMs": 15,
+          "avgLatencyMs": 12,
           "status": "healthy",
-          "monthlyVolume": 1200000,
-          "costReduction": 15000,
-          "usersCount": 18,
-          "lastSync": "Agora mesmo"
+          "costReduction": 5200,
+          "usersCount": 8,
+          "lastSync": "Há 4 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "stallone-nutre-sport_integracoes_mcp",
+        "id": "stallone_clube_cashback",
         "businessId": "stallone-nutre-sport",
-        "label": "Barramento de Integrações & MCPs",
-        "description": "Conexão aberta com 77 fontes: SEFAZ, Bacen, SCR, SICAR, Serasa, DICT PIX, WhatsApp Meta, Git e Skills de IA.",
-        "iconName": "Radio",
-        "badge": "77 Fontes",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/integracoes",
+        "label": "Clube Atletas & Cashback",
+        "description": "Pontuação por compras, descontos para atletas federados e parceiros de academias.",
+        "iconName": "Star",
+        "badge": "Cashback",
+        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/clube",
         "order": 4,
         "active": true,
         "permission": "all",
         "domains": [
-          "conectividade_apis",
-          "open_apis"
+          "crm_fidelidade",
+          "financas_controladoria"
         ],
         "telemetry": {
-          "monthlyRequests": 89000,
-          "uptimePercent": 100,
-          "avgLatencyMs": 9,
+          "monthlyRequests": 12600,
+          "uptimePercent": 99.98,
+          "avgLatencyMs": 15,
           "status": "healthy",
-          "monthlyVolume": 4500000,
-          "costReduction": 42000,
-          "usersCount": 45,
-          "lastSync": "Agora mesmo"
+          "costReduction": 4100,
+          "usersCount": 9,
+          "lastSync": "Há 2 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
@@ -2793,85 +2037,55 @@
     ],
     "supermercado-kytto": [
       {
-        "id": "supermercado-kytto_mesa_credito",
+        "id": "supermercado_pdv_balanca",
         "businessId": "supermercado-kytto",
-        "label": "Mesa de Crédito & Rating AAA",
-        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e emissão de parecer.",
-        "iconName": "Landmark",
-        "badge": "Crédito AAA",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30",
-        "defaultPath": "/admin/mesa-credito",
+        "label": "Frente de Caixa & Balança Toledo",
+        "description": "Checkout super rápido, balança Toledo conectada no caixa, leitor óptico e TEF.",
+        "iconName": "ShoppingBag",
+        "badge": "PDV Atacado",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/pdv",
         "order": 1,
         "active": true,
         "permission": "all",
         "domains": [
-          "financas_controladoria",
-          "mesa_credito"
+          "frente_loja"
         ],
         "telemetry": {
-          "monthlyRequests": 14500,
+          "monthlyRequests": 480000,
           "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
+          "avgLatencyMs": 11,
           "status": "healthy",
-          "monthlyVolume": 2800000,
-          "costReduction": 34000,
-          "usersCount": 12,
-          "lastSync": "Agora mesmo"
+          "monthlyVolume": 4100000,
+          "costReduction": 62000,
+          "usersCount": 52,
+          "lastSync": "Em tempo real"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "supermercado-kytto_financeiro_dre",
+        "id": "supermercado_compras_cotacoes",
         "businessId": "supermercado-kytto",
-        "label": "Financeiro & DRE Consolidado",
-        "description": "Fluxo de caixa em tempo real, conciliação PIX instantânea, livro-razão double entry e demonstrativo de resultados.",
-        "iconName": "TrendingUp",
-        "badge": "DRE",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/dre",
+        "label": "Compras & Cotações Atacado",
+        "description": "Entrada por XML NF-e 55, cotação com indústrias alimentícias e controle de margem de gôndola.",
+        "iconName": "Boxes",
+        "badge": "Cotações 3 Vias",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/erp?tab=compras",
         "order": 2,
         "active": true,
-        "permission": "all",
+        "permission": "admin",
         "domains": [
-          "financas_controladoria"
+          "suprimentos_estoque",
+          "vendas_b2b"
         ],
         "telemetry": {
           "monthlyRequests": 38200,
           "uptimePercent": 99.98,
-          "avgLatencyMs": 12,
+          "avgLatencyMs": 14,
           "status": "healthy",
-          "monthlyVolume": 1850000,
-          "costReduction": 19500,
-          "usersCount": 24,
-          "lastSync": "Agora mesmo"
-        },
-        "createdAt": "2026-01-01T00:00:00Z",
-        "updatedAt": "2026-11-24T00:00:00Z"
-      },
-      {
-        "id": "supermercado-kytto_operacoes_crm",
-        "businessId": "supermercado-kytto",
-        "label": "Operações & Funil CRM",
-        "description": "Pipeline de contratos e oportunidades, formalização CCB digital, cobrança inteligente e régua de retenção.",
-        "iconName": "Users",
-        "badge": "CRM 360°",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/crm-financeira",
-        "order": 3,
-        "active": true,
-        "permission": "all",
-        "domains": [
-          "vendas_crm",
-          "frente_loja"
-        ],
-        "telemetry": {
-          "monthlyRequests": 24900,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 15,
-          "status": "healthy",
-          "monthlyVolume": 1200000,
-          "costReduction": 15000,
+          "costReduction": 38000,
           "usersCount": 18,
           "lastSync": "Agora mesmo"
         },
@@ -2879,30 +2093,56 @@
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "supermercado-kytto_integracoes_mcp",
+        "id": "supermercado_wms_ruptura",
         "businessId": "supermercado-kytto",
-        "label": "Barramento de Integrações & MCPs",
-        "description": "Conexão aberta com 77 fontes: SEFAZ, Bacen, SCR, SICAR, Serasa, DICT PIX, WhatsApp Meta, Git e Skills de IA.",
-        "iconName": "Radio",
-        "badge": "77 Fontes",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/integracoes",
-        "order": 4,
+        "label": "WMS, Almoxarifado & Ruptura",
+        "description": "Prevenção de perdas e ruptura, giro de estoque, conferência cega e inventário por leitor coletor.",
+        "iconName": "PackageCheck",
+        "badge": "WMS Kardex",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/estoque",
+        "order": 3,
         "active": true,
         "permission": "all",
         "domains": [
-          "conectividade_apis",
-          "open_apis"
+          "suprimentos_estoque"
         ],
         "telemetry": {
-          "monthlyRequests": 89000,
-          "uptimePercent": 100,
-          "avgLatencyMs": 9,
+          "monthlyRequests": 42100,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 13,
           "status": "healthy",
-          "monthlyVolume": 4500000,
-          "costReduction": 42000,
-          "usersCount": 45,
-          "lastSync": "Agora mesmo"
+          "costReduction": 29000,
+          "usersCount": 24,
+          "lastSync": "Há 1 min"
+        },
+        "createdAt": "2026-01-01T00:00:00Z",
+        "updatedAt": "2026-11-24T00:00:00Z"
+      },
+      {
+        "id": "supermercado_fiscal_sped",
+        "businessId": "supermercado-kytto",
+        "label": "Fiscal NFC-e em Lote & SPED",
+        "description": "Transmissão contingência offline SEFAZ-MT, fechamento fiscal do mês e conciliação de cartões.",
+        "iconName": "Receipt",
+        "badge": "NFC-e & SPED",
+        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/fiscal",
+        "order": 4,
+        "active": true,
+        "permission": "admin",
+        "domains": [
+          "fiscal_contabil",
+          "financas_controladoria"
+        ],
+        "telemetry": {
+          "monthlyRequests": 62400,
+          "uptimePercent": 99.99,
+          "avgLatencyMs": 15,
+          "status": "healthy",
+          "costReduction": 41000,
+          "usersCount": 16,
+          "lastSync": "Há 3 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
@@ -2910,116 +2150,112 @@
     ],
     "kytto-energia-solar": [
       {
-        "id": "kytto-energia-solar_mesa_credito",
+        "id": "solar_telemetria_inversores",
         "businessId": "kytto-energia-solar",
-        "label": "Mesa de Crédito & Rating AAA",
-        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e emissão de parecer.",
-        "iconName": "Landmark",
-        "badge": "Crédito AAA",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30",
-        "defaultPath": "/admin/mesa-credito",
+        "label": "Telemetria Usinas Fotovoltaicas",
+        "description": "Monitoramento em tempo real de inversores Sungrow/Growatt, geração diária kWh e irradiação solar.",
+        "iconName": "Sun",
+        "badge": "Telemetria GD",
+        "badgeColor": "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30",
+        "defaultPath": "/telemetria",
         "order": 1,
         "active": true,
         "permission": "all",
         "domains": [
-          "financas_controladoria",
-          "mesa_credito"
+          "modelagem_preditiva",
+          "governanca_holding"
         ],
         "telemetry": {
-          "monthlyRequests": 14500,
+          "monthlyRequests": 84000,
           "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
+          "avgLatencyMs": 12,
           "status": "healthy",
-          "monthlyVolume": 2800000,
-          "costReduction": 34000,
-          "usersCount": 12,
-          "lastSync": "Agora mesmo"
+          "monthlyVolume": 580000,
+          "costReduction": 45000,
+          "usersCount": 14,
+          "lastSync": "Em tempo real"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "kytto-energia-solar_financeiro_dre",
+        "id": "solar_creditos_energisa",
         "businessId": "kytto-energia-solar",
-        "label": "Financeiro & DRE Consolidado",
-        "description": "Fluxo de caixa em tempo real, conciliação PIX instantânea, livro-razão double entry e demonstrativo de resultados.",
-        "iconName": "TrendingUp",
-        "badge": "DRE",
+        "label": "Gestão de Créditos Energisa",
+        "description": "Rateio e compensação de créditos de energia distribuída em unidades consumidoras (UCs).",
+        "iconName": "Receipt",
+        "badge": "Energisa MT",
         "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/dre",
+        "defaultPath": "/erp?tab=billing",
         "order": 2,
         "active": true,
-        "permission": "all",
+        "permission": "admin",
         "domains": [
           "financas_controladoria"
         ],
         "telemetry": {
-          "monthlyRequests": 38200,
+          "monthlyRequests": 24100,
           "uptimePercent": 99.98,
-          "avgLatencyMs": 12,
+          "avgLatencyMs": 14,
           "status": "healthy",
-          "monthlyVolume": 1850000,
-          "costReduction": 19500,
-          "usersCount": 24,
+          "costReduction": 28000,
+          "usersCount": 9,
           "lastSync": "Agora mesmo"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "kytto-energia-solar_operacoes_crm",
+        "id": "solar_contratos_locacao",
         "businessId": "kytto-energia-solar",
-        "label": "Operações & Funil CRM",
-        "description": "Pipeline de contratos e oportunidades, formalização CCB digital, cobrança inteligente e régua de retenção.",
-        "iconName": "Users",
-        "badge": "CRM 360°",
+        "label": "Contratos de Locação GD & Vendas",
+        "description": "Contratos de arrendamento de cotas de usina solar com empresas do grupo e clientes externos.",
+        "iconName": "FileText",
+        "badge": "Contratos GD",
         "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/crm-financeira",
+        "defaultPath": "/erp?tab=comercial",
         "order": 3,
         "active": true,
-        "permission": "all",
+        "permission": "admin",
         "domains": [
-          "vendas_crm",
-          "frente_loja"
+          "vendas_b2b",
+          "financas_controladoria"
         ],
         "telemetry": {
-          "monthlyRequests": 24900,
+          "monthlyRequests": 16200,
           "uptimePercent": 99.99,
           "avgLatencyMs": 15,
           "status": "healthy",
-          "monthlyVolume": 1200000,
-          "costReduction": 15000,
-          "usersCount": 18,
-          "lastSync": "Agora mesmo"
+          "costReduction": 19000,
+          "usersCount": 8,
+          "lastSync": "Há 4 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "kytto-energia-solar_integracoes_mcp",
+        "id": "solar_parques_manutencao",
         "businessId": "kytto-energia-solar",
-        "label": "Barramento de Integrações & MCPs",
-        "description": "Conexão aberta com 77 fontes: SEFAZ, Bacen, SCR, SICAR, Serasa, DICT PIX, WhatsApp Meta, Git e Skills de IA.",
-        "iconName": "Radio",
-        "badge": "77 Fontes",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/integracoes",
+        "label": "Manutenção de Parques & Módulos",
+        "description": "Laudos termográficos com drones, limpeza preventiva de módulos e histórico de paradas.",
+        "iconName": "Building2",
+        "badge": "Ativos Solares",
+        "badgeColor": "bg-slate-500/15 text-slate-600 dark:text-slate-400 border-slate-500/30",
+        "defaultPath": "/patrimonio",
         "order": 4,
         "active": true,
         "permission": "all",
         "domains": [
-          "conectividade_apis",
-          "open_apis"
+          "governanca_holding"
         ],
         "telemetry": {
-          "monthlyRequests": 89000,
-          "uptimePercent": 100,
-          "avgLatencyMs": 9,
+          "monthlyRequests": 11400,
+          "uptimePercent": 99.97,
+          "avgLatencyMs": 16,
           "status": "healthy",
-          "monthlyVolume": 4500000,
-          "costReduction": 42000,
-          "usersCount": 45,
-          "lastSync": "Agora mesmo"
+          "costReduction": 14000,
+          "usersCount": 7,
+          "lastSync": "Há 10 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
@@ -3027,115 +2263,110 @@
     ],
     "kytto-tech-software": [
       {
-        "id": "kytto-tech-software_mesa_credito",
+        "id": "tech_barramento_mcp",
         "businessId": "kytto-tech-software",
-        "label": "Mesa de Crédito & Rating AAA",
-        "description": "Esteira completa de crédito com 5 etapas, análise de risco algorítmica, SCR Bacen e emissão de parecer.",
-        "iconName": "Landmark",
-        "badge": "Crédito AAA",
-        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30",
-        "defaultPath": "/admin/mesa-credito",
+        "label": "Barramento MCP & 77 Conexões",
+        "description": "Servidores Model Context Protocol (MCP), GitHub connectors, IA Gemini e orquestrador de automações.",
+        "iconName": "Share2",
+        "badge": "77 MCPs",
+        "badgeColor": "bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/30",
+        "defaultPath": "/integracoes",
         "order": 1,
         "active": true,
         "permission": "all",
         "domains": [
-          "financas_controladoria",
-          "mesa_credito"
+          "conectividade_apis"
         ],
         "telemetry": {
-          "monthlyRequests": 14500,
-          "uptimePercent": 99.99,
-          "avgLatencyMs": 14,
+          "monthlyRequests": 850000,
+          "uptimePercent": 100,
+          "avgLatencyMs": 8,
           "status": "healthy",
-          "monthlyVolume": 2800000,
-          "costReduction": 34000,
-          "usersCount": 12,
-          "lastSync": "Agora mesmo"
+          "monthlyVolume": 1850000,
+          "costReduction": 78000,
+          "usersCount": 25,
+          "lastSync": "Em tempo real"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "kytto-tech-software_financeiro_dre",
+        "id": "tech_open_apis_webhooks",
         "businessId": "kytto-tech-software",
-        "label": "Financeiro & DRE Consolidado",
-        "description": "Fluxo de caixa em tempo real, conciliação PIX instantânea, livro-razão double entry e demonstrativo de resultados.",
-        "iconName": "TrendingUp",
-        "badge": "DRE",
-        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-        "defaultPath": "/dre",
+        "label": "Open APIs & Webhooks",
+        "description": "APIs públicas, chaves de autenticação, endpoints REST/tRPC e monitoramento de requisições.",
+        "iconName": "Radio",
+        "badge": "REST & tRPC",
+        "badgeColor": "bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
+        "defaultPath": "/conexoes",
         "order": 2,
         "active": true,
         "permission": "all",
         "domains": [
-          "financas_controladoria"
+          "conectividade_apis"
         ],
         "telemetry": {
-          "monthlyRequests": 38200,
-          "uptimePercent": 99.98,
-          "avgLatencyMs": 12,
+          "monthlyRequests": 420000,
+          "uptimePercent": 100,
+          "avgLatencyMs": 9,
           "status": "healthy",
-          "monthlyVolume": 1850000,
-          "costReduction": 19500,
-          "usersCount": 24,
+          "costReduction": 45000,
+          "usersCount": 22,
           "lastSync": "Agora mesmo"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "kytto-tech-software_operacoes_crm",
+        "id": "tech_apps_pwa_apks",
         "businessId": "kytto-tech-software",
-        "label": "Operações & Funil CRM",
-        "description": "Pipeline de contratos e oportunidades, formalização CCB digital, cobrança inteligente e régua de retenção.",
-        "iconName": "Users",
-        "badge": "CRM 360°",
-        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
-        "defaultPath": "/admin/crm-financeira",
+        "label": "Central de APKs, PWAs & Apps",
+        "description": "Distribuição e atualização over-the-air (OTA) de aplicativos operacionais para motoboys, garçons e frotas.",
+        "iconName": "Smartphone",
+        "badge": "APKs & PWA",
+        "badgeColor": "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+        "defaultPath": "/apps",
         "order": 3,
         "active": true,
         "permission": "all",
         "domains": [
-          "vendas_crm",
-          "frente_loja"
+          "infra_aplicacoes"
         ],
         "telemetry": {
-          "monthlyRequests": 24900,
+          "monthlyRequests": 68000,
           "uptimePercent": 99.99,
-          "avgLatencyMs": 15,
+          "avgLatencyMs": 11,
           "status": "healthy",
-          "monthlyVolume": 1200000,
-          "costReduction": 15000,
-          "usersCount": 18,
-          "lastSync": "Agora mesmo"
+          "costReduction": 21000,
+          "usersCount": 28,
+          "lastSync": "Há 1 min"
         },
         "createdAt": "2026-01-01T00:00:00Z",
         "updatedAt": "2026-11-24T00:00:00Z"
       },
       {
-        "id": "kytto-tech-software_integracoes_mcp",
+        "id": "tech_cockpit_cloudrun",
         "businessId": "kytto-tech-software",
-        "label": "Barramento de Integrações & MCPs",
-        "description": "Conexão aberta com 77 fontes: SEFAZ, Bacen, SCR, SICAR, Serasa, DICT PIX, WhatsApp Meta, Git e Skills de IA.",
-        "iconName": "Radio",
-        "badge": "77 Fontes",
-        "badgeColor": "bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
-        "defaultPath": "/admin/integracoes",
+        "label": "Cockpit Cloud Run & SLA 99.99%",
+        "description": "Monitoramento de instâncias Google Cloud Run, banco Neon PostgreSQL e logs de auditoria GCP.",
+        "iconName": "Crown",
+        "badge": "Cloud Run",
+        "badgeColor": "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30",
+        "defaultPath": "/cockpit",
         "order": 4,
         "active": true,
-        "permission": "all",
+        "permission": "admin",
         "domains": [
-          "conectividade_apis",
-          "open_apis"
+          "cockpits_executivos",
+          "governanca_holding"
         ],
         "telemetry": {
-          "monthlyRequests": 89000,
+          "monthlyRequests": 195000,
           "uptimePercent": 100,
-          "avgLatencyMs": 9,
+          "avgLatencyMs": 12,
           "status": "healthy",
-          "monthlyVolume": 4500000,
-          "costReduction": 42000,
-          "usersCount": 45,
+          "costReduction": 52000,
+          "usersCount": 19,
           "lastSync": "Agora mesmo"
         },
         "createdAt": "2026-01-01T00:00:00Z",
@@ -3143,5 +2374,5 @@
       }
     ]
   },
-  "updatedAt": "2026-11-24T00:03:33.746Z"
+  "updatedAt": "2026-11-24T13:50:24.694Z"
 }
