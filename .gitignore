@@ -116,3 +116,4 @@ storage/*
 
 # Manus version file (auto-generated, not part of source)
 client/public/__manus__/version.json
+data/consulta-cpf-hub.json
