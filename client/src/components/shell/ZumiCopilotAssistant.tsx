@@ -5,11 +5,6 @@ import {
   Send, 
   Bot, 
   User, 
-  Flame, 
-  Users, 
-  DollarSign, 
-  Camera, 
-  CloudRain, 
   ChevronRight, 
   Maximize2, 
   Minimize2,
@@ -17,15 +12,21 @@ import {
   AlertTriangle,
   Zap,
   TrendingUp,
-  Boxes
+  Landmark,
+  Scale,
+  Home,
+  ShieldCheck,
+  Building2,
+  CreditCard,
+  FileCheck2,
+  Search
 } from "lucide-react";
-import { ZumiMascot } from "./ZumiMascot";
 import { toast } from "sonner";
 import { Link } from "wouter";
 
 interface ChatMessage {
   id: string;
-  sender: "zumi" | "user";
+  sender: "copilot" | "user";
   text: string;
   time: string;
   actions?: { label: string; href?: string; onClick?: () => void }[];
@@ -34,14 +35,14 @@ interface ChatMessage {
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: "msg-1",
-    sender: "zumi",
-    text: "Olá, Rodrigo! Sou a Zumi, sua copiloto operacional e executiva do Zuma Pilot. O restaurante está com 19 de 27 mesas ativas no turno de jantar e faturamento de R$ 10.420,00 até o momento. Como posso te apoiar agora?",
+    sender: "copilot",
+    text: "Olá, Rodrigo! Sou o Copilot BancoFé, seu assistente executivo de crédito, compliance e holding. A esteira conta com 31 operações em andamento (R$ 29,43M) e 20 pré-cadastros Casa Nova prontos para deliberação de risco. Como posso apoiá-lo agora?",
     time: "agora",
     actions: [
-      { label: "📊 Resumo Executivo", onClick: () => {} },
-      { label: "🍽️ Mesas & Salão", href: "/mesas" },
-      { label: "👥 Ponto Nossa Gente", href: "/nossa-gente" },
-      { label: "👁️ Ultra Vision AI", href: "/ultra" }
+      { label: "⚖️ Mesa de Crédito", href: "/admin/mesa-credito" },
+      { label: "📈 Funil de Operações", href: "/admin/crm-financeira?aba=funil" },
+      { label: "🏡 Casa Nova Imóveis", href: "/admin/crm-financeira?aba=precadastros" },
+      { label: "🔍 Consulta 360° Bureaus", href: "/consulta-360" },
     ]
   }
 ];
@@ -84,65 +85,53 @@ export const ZumiCopilotAssistant: React.FC = () => {
       let botActions: { label: string; href?: string; onClick?: () => void }[] = [];
 
       const lower = text.toLowerCase();
-      if (lower.includes("resumo") || lower.includes("faturamento") || lower.includes("vendas")) {
-        botResponse = "📈 **Resumo Operacional do Turno Atual**:\n\n• **Faturamento Bruto**: R$ 10.420,00 (+14% vs quinta passada)\n• **Mesas Ativas**: 19 de 27 (70.3% ocupação)\n• **Ticket Médio**: R$ 242,32\n• **CMV Teórico**: 28.4% (meta < 30%)\n• **Taxa de Serviço 10%**: R$ 1.042,00 a ratear entre os 8 colaboradores.";
+      if (lower.includes("mesa") || lower.includes("credito") || lower.includes("crédito") || lower.includes("risco") || lower.includes("parecer")) {
+        botResponse = "⚖️ **Mesa de Crédito & SCR Bacen**:\n\n• **Operações em Análise**: 31 operações somando R$ 29,43M.\n• **Ticket Médio**: R$ 949.354,84.\n• **Score Médio de Crédito**: 812 (Rating Nível AA).\n• **LTV Médio das Garantias**: 58.2% (margem de segurança prudencial excelente).\n• **SCR Bacen**: 100% dos proponentes sem inadimplência sistêmica ativa.";
         botActions = [
-          { label: "Ver DRE Completo", href: "/financeiro" },
-          { label: "Rateio Caixinha", href: "/nossa-gente" }
+          { label: "Mesa de Crédito", href: "/admin/mesa-credito" },
+          { label: "Funil de Operações", href: "/admin/crm-financeira?aba=funil" }
         ];
-      } else if (lower.includes("mesa") || lower.includes("salão") || lower.includes("salao")) {
-        botResponse = "🍽️ **Status das Mesas no Salão**:\n\n• **19 mesas ocupadas**, 8 livres.\n• **Alerta**: Mesa #07 cliente fez gesto de mão detectado por IA na CAM-01 há 45s.\n• **Mesa com maior consumo**: Tatame VIP #21 (R$ 648,00 - Barca Omakase Imperial).\n• **Giro médio de mesa**: 52 minutos.";
+      } else if (lower.includes("funil") || lower.includes("operações") || lower.includes("operacoes") || lower.includes("crm") || lower.includes("vendas")) {
+        botResponse = "📈 **Funil de Operações Financeiras BancoFé**:\n\n• **1. Novo Lead**: 7 ops (R$ 5,40M)\n• **2. Qualificação**: 6 ops (R$ 4,80M)\n• **3. Mesa de Crédito**: 5 ops (R$ 6,20M)\n• **4. Formalização CCB**: 5 ops (R$ 5,10M)\n• **5. Assinatura Digital**: 4 ops (R$ 3,90M)\n• **6. Liquidado / Pago**: 4 ops (R$ 4,03M)\n\n• **Total da Carteira**: 31 Operações · R$ 29,43M distribuídos.";
         botActions = [
-          { label: "Abrir Mapa de Mesas", href: "/mesas" },
-          { label: "Ver Câmera CAM-01", href: "/ultra" }
+          { label: "Ver Funil Completo", href: "/admin/crm-financeira?aba=funil" },
+          { label: "Simulador SAC/PRICE", href: "/admin/crm-financeira?aba=simulador" }
         ];
-      } else if (lower.includes("equipe") || lower.includes("gente") || lower.includes("rh") || lower.includes("ponto")) {
-        botResponse = "👥 **Telemetria de Equipe (Nossa Gente x Ultra AI)**:\n\n• **8/8 colaboradores ativos** com ponto facial confirmado.\n• **Latência do Event Bus**: 2.4 ms (In-Memory / Redis).\n• **Conformidade ANVISA RDC 216**: 98.6% (todas as toucas e aventais conferidos).\n• **Destaque**: Sushichef Hiroshi Tanaka com 18 peças/min e zero falhas de assepsia.";
+      } else if (lower.includes("casa nova") || lower.includes("casanova") || lower.includes("imóveis") || lower.includes("imoveis") || lower.includes("proponentes") || lower.includes("pre-cadastro") || lower.includes("precadastro")) {
+        botResponse = "🏡 **Esteira de Pré-Cadastros Casa Nova Imóveis**:\n\n• **Base Total**: 20 proponentes migrados com sucesso de `casanova.kytto.com.br`.\n• **Checklist Documental**: CND Federal, FGTS, CNDT e Certidões de Registro de Imóveis em conformidade.\n• **LTV Médio**: 61% (todas as operações com lastro imobiliário).\n• **LGPD**: 20/20 com Termos de Consentimento SCR Bacen assinados digitalmente.";
         botActions = [
-          { label: "Abrir Nossa Gente RH", href: "/nossa-gente" },
-          { label: "Event Bus & APIs", href: "/integracoes?tab=nossa_gente_ultra" }
+          { label: "Abrir Pré-Cadastros", href: "/admin/crm-financeira?aba=precadastros" },
+          { label: "Central de Termos SCR", href: "/admin/termos" }
         ];
-      } else if (lower.includes("salmão") || lower.includes("salmao") || lower.includes("estoque") || lower.includes("compras")) {
-        botResponse = "🐟 **Previsão de Salmão Chileno Nobre**:\n\n• **Estoque Atual**: 6.4 kg na câmara fria.\n• **Consumo Projetado Fim de Semana**: 45.0 kg.\n• **Necessidade de Compra**: 38.6 kg sugeridos no pedido 3 vias (fornecedor Cuiabá Frigorífico do Pescador).\n• **Preço Médio Cotação**: R$ 68,50/kg com entrega em Tangará da Serra amanhã às 10h.";
+      } else if (lower.includes("bureaus") || lower.includes("consulta") || lower.includes("360") || lower.includes("cpf") || lower.includes("cnpj")) {
+        botResponse = "🔍 **Motor de Consulta 360° & Bureaus Federais**:\n\n• **Bases Auditadas**: 48+ bureaus em tempo real (Receita Federal, Bacen SCR, TJ-MT, PGFN, Serasa, CNDT).\n• **Conformidade**: 100% dos dossiês com hash SHA-256 no cofre criptográfico BancoFé.\n• **Risco de Fraude**: Zero alertas de inconsistência cadastral ou duplicidade documental.";
         botActions = [
-          { label: "Motor de Compras 360", href: "/previsao-compras" },
-          { label: "Estoque Frio IoT", href: "/estoque" }
+          { label: "Consulta 360° Bureaus", href: "/consulta-360" },
+          { label: "Termos & Consentimentos", href: "/admin/termos" }
         ];
-      } else if (lower.includes("chuva") || lower.includes("clima") || lower.includes("delivery")) {
-        botResponse = "🌧️ **Dr. Clima & Serendipidade IA Tangará da Serra**:\n\n• **Previsão**: 75% de probabilidade de pancada de chuva entre 19h45 e 21h30.\n• **Impacto Esperado**: Queda de 18% no salão presencial e aumento de +42% nos pedidos delivery de combinados quentes e lamen.\n• **Recomendação**: Ativar Plano Chuva de Vendas com foco em motoboys próprios.";
+      } else if (lower.includes("holding") || lower.includes("empresas") || lower.includes("coligadas") || lower.includes("grupo")) {
+        botResponse = "🏢 **Governança & 12 Empresas da Holding BancoFé**:\n\n1. **BancoFé Digital & Banking Core** (BaaS / Pix)\n2. **BancoFé Operações Financeiras** (Crédito & CRM)\n3. **BancoFé Cadastro 360 & Vault** (KYC/AML)\n4. **Casa Nova Imóveis** (Loteamentos & Vendas)\n5. **Agropecuária UISA** (Biorrefinaria & Barter)\n6. **Construtora Ultra** (Engenharia Pesada)\n7. **Barbearia Dino** (Assinaturas Recorrentes)\n8. **Zuma Cozinha Oriental** (Gastronomia)\n9. **Zuma Moda & Boutique** (Varejo)\n10. **Kytto Logística & Frotas** (GPS)\n11. **Kytto Concreto & Mineração**\n12. **BancoFé Holding S/A** (CNPJ: 53.338.003/0001-04).";
         botActions = [
-          { label: "Simulador Dr. Clima", href: "/dr-clima" },
-          { label: "Loja Delivery Próprio", href: "/loja" }
+          { label: "Gestão da Holding /admin", href: "/admin" },
+          { label: "Backoffice Corporativo", href: "/admin/backoffice" }
         ];
-      } else if (lower.includes("saipos") || lower.includes("migrador") || lower.includes("migra")) {
-        botResponse = "🔄 **Comparativo & Migrador Saipos 1-Clique**:\n\n• **Economia Total Estimada**: R$ 38.640,00/ano (R$ 3.220,00/mês).\n• **Zero Taxas de Cartão/Intermediação**: Economia de R$ 2.450/mês usando Pix Sicredi Direto vs Gateway Saipos.\n• **Mensalidade**: R$ 0,00 no Zuma Pilot vs R$ 770,00/mês do plano intermediário Saipos.\n• **Migração 100% Compatível**: 142 itens de cardápio, 21 fichas técnicas e histórico importados.";
+      } else if (lower.includes("pix") || lower.includes("carteira") || lower.includes("baas") || lower.includes("bancario") || lower.includes("bancário")) {
+        botResponse = "💳 **Carteira Digital & BaaS BancoFé**:\n\n• **Liquidação Pix 24/7**: Conexão direta via DICT Bacen.\n• **Contas Digitais PJ**: Conciliação automática de recebíveis e duplicatas.\n• **Volume Mensal Liquidado**: R$ 22,84M com 99.99% de Uptime SLA.";
         botActions = [
-          { label: "Ver Comparativo Saipos", href: "/comparativo-saipos" },
-          { label: "Central de Integrações", href: "/integracoes?tab=saipos_sync" }
-        ];
-      } else if (lower.includes("kds") || lower.includes("cozinha") || lower.includes("praça")) {
-        botResponse = "🔥 **Telemetria de Cozinha KDS 2.0 Fire on Demand**:\n\n• **4 Praças Operacionais**: Sushibar, Cozinha Quente, Fritura/Hot e Bar.\n• **Tempo Médio de Preparo**: 11 min e 40 seg (meta < 14 min).\n• **Pedidos Ativos no KDS**: 12 pedidos em produção simultânea.\n• **Sincronização**: Despacho automático de itens quentes sincronizado ao término dos sushis.";
-        botActions = [
-          { label: "KDS 2.0 Fire on Demand", href: "/kds-2" },
-          { label: "KDS Cozinha Tradicional", href: "/cozinha" }
-        ];
-      } else if (lower.includes("fiscal") || lower.includes("nfc") || lower.includes("sefaz") || lower.includes("imposto")) {
-        botResponse = "🧾 **Status Fiscal SEFAZ-MT (NFC-e & Sped)**:\n\n• **Conexão SEFAZ-MT**: 100% Online (latência 142ms).\n• **Notas Transmitidas Hoje**: 38 NFC-e emitidas sem contingência.\n• **Chave de Acesso**: Assinatura digital A1 com certificado ICP-Brasil.\n• **Automação**: Emissão no mesmo clique do recebimento via Pix Sicredi.";
-        botActions = [
-          { label: "Módulo Fiscal NFC-e", href: "/fiscal" },
-          { label: "Fechamento Contábil", href: "/fechamento-contabil" }
+          { label: "Abrir Carteira Digital", href: "/plataforma/carteira" },
+          { label: "BancoFé Core Bancário", href: "/bancofe" }
         ];
       } else {
-        botResponse = `Compreendido! Processei sua solicitação sobre "${text}". O motor preditivo do Zuma Pilot correlacionou os dados de vendas, câmeras Ultra AI e estoque para apoiar a decisão com máxima lucratividade.`;
+        botResponse = `Compreendido! Processei sua solicitação sobre "${text}". O motor de governança, mesa de crédito e compliance da Holding BancoFé está operando com integridade total em produção no Cloud Run.`;
         botActions = [
-          { label: "Cockpit Geral", href: "/cockpit" },
-          { label: "Central de Integrações", href: "/integracoes" }
+          { label: "Mesa de Crédito", href: "/admin/mesa-credito" },
+          { label: "Funil de Operações", href: "/admin/crm-financeira?aba=funil" }
         ];
       }
 
       const botMsg: ChatMessage = {
         id: `bot_${Date.now()}`,
-        sender: "zumi",
+        sender: "copilot",
         text: botResponse,
         time: new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
         actions: botActions
@@ -150,55 +139,59 @@ export const ZumiCopilotAssistant: React.FC = () => {
 
       setMessages(prev => [...prev, botMsg]);
       setIsTyping(false);
-    }, 600);
+    }, 500);
   };
 
   return (
     <>
-      {/* Botão Flutuante (Trigger) */}
+      {/* Botão Flutuante (Trigger BancoFé Copilot) */}
       {!open && (
         <button
           onClick={() => {
             setOpen(true);
             setMinimized(false);
           }}
-          className="fixed bottom-20 lg:bottom-6 right-6 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 text-white font-extrabold shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer group ring-2 ring-purple-400/40"
-          title="Abrir Copiloto Executivo Zumi IA"
+          className="fixed bottom-20 lg:bottom-6 right-6 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-white font-extrabold shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer group ring-2 ring-emerald-500/40"
+          title="Abrir BancoFé Copilot IA"
         >
           <div className="relative">
-            <ZumiMascot size={26} />
+            <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-emerald-300">
+              <Landmark className="w-4 h-4" />
+            </div>
             <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-white animate-pulse" />
           </div>
           <div className="text-left">
-            <span className="block text-xs font-black leading-tight tracking-wide">Zumi Copilot</span>
-            <span className="block text-[9.5px] text-purple-200 font-semibold leading-tight">Inteligência 360°</span>
+            <span className="block text-xs font-black leading-tight tracking-wide">BancoFé Copilot</span>
+            <span className="block text-[9.5px] text-emerald-200 font-semibold leading-tight">Mesa &amp; Holding IA</span>
           </div>
-          <Sparkles className="w-4 h-4 text-amber-300 animate-spin group-hover:rotate-45 transition-transform" />
+          <Sparkles className="w-4 h-4 text-emerald-300 animate-spin group-hover:rotate-45 transition-transform" />
         </button>
       )}
 
       {/* Painel Flutuante do Chatbot Copiloto */}
       {open && (
-        <div className={`fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-50 rounded-3xl border border-white/20 bg-[#0d131a] text-white shadow-2xl overflow-hidden flex flex-col transition-all duration-200 ${
+        <div className={`fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-50 rounded-3xl border border-emerald-500/30 bg-[#071510] text-white shadow-2xl overflow-hidden flex flex-col transition-all duration-200 ${
           minimized 
             ? "w-80 h-14" 
-            : "w-[92vw] sm:w-[420px] h-[580px] max-h-[85vh]"
+            : "w-[92vw] sm:w-[440px] h-[580px] max-h-[85vh]"
         }`}>
           {/* Header do Copiloto */}
-          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-purple-900/90 via-indigo-900/90 to-[#0e1622] border-b border-white/10 shrink-0">
+          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-emerald-950 via-emerald-900 to-[#071510] border-b border-emerald-500/20 shrink-0">
             <div className="flex items-center gap-2.5">
               <div className="relative">
-                <ZumiMascot size={28} />
+                <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-300 shadow-2xs">
+                  <Landmark className="w-4 h-4" />
+                </div>
                 <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 ring-1 ring-black" />
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <h3 className="text-xs font-black tracking-tight text-white">Zumi Copilot IA</h3>
+                  <h3 className="text-xs font-black tracking-tight text-white">BancoFé Copilot IA</h3>
                   <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-[9.5px] font-mono font-bold">
-                    Ao Vivo
+                    Conectado PRD
                   </span>
                 </div>
-                <p className="text-[10px] text-white/50">Restaurante Zuma · Tangará da Serra MT</p>
+                <p className="text-[10px] text-white/60">Holding BancoFé S/A · CNPJ: 53.338.003/0001-04</p>
               </div>
             </div>
 
@@ -225,34 +218,34 @@ export const ZumiCopilotAssistant: React.FC = () => {
               {/* Sugestões Rápidas de Perguntas (Chips) */}
               <div className="px-3 py-2 border-b border-white/10 bg-white/[0.02] flex items-center gap-1.5 overflow-x-auto shrink-0 text-[10.5px]">
                 <button
-                  onClick={() => handleSendMessage("Como está o resumo do faturamento e vendas hoje?")}
-                  className="px-2.5 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-300 font-bold hover:bg-purple-500/25 whitespace-nowrap cursor-pointer transition-all"
+                  onClick={() => handleSendMessage("Como está o parecer e métricas da Mesa de Crédito?")}
+                  className="px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-bold hover:bg-emerald-500/25 whitespace-nowrap cursor-pointer transition-all"
                 >
-                  📊 Resumo Vendas
+                  ⚖️ Mesa de Crédito
                 </button>
                 <button
-                  onClick={() => handleSendMessage("Qual o status das 27 mesas do salão?")}
-                  className="px-2.5 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-300 font-bold hover:bg-blue-500/25 whitespace-nowrap cursor-pointer transition-all"
+                  onClick={() => handleSendMessage("Qual a distribuição das 31 operações no Funil de Crédito?")}
+                  className="px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-bold hover:bg-emerald-500/25 whitespace-nowrap cursor-pointer transition-all"
                 >
-                  🍽️ Mesas & Salão
+                  📈 Funil 31 Ops
                 </button>
                 <button
-                  onClick={() => handleSendMessage("Como está a equipe no Nossa Gente e as câmeras Ultra AI?")}
-                  className="px-2.5 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 font-bold hover:bg-indigo-500/25 whitespace-nowrap cursor-pointer transition-all"
-                >
-                  👥 Equipe & Ponto
-                </button>
-                <button
-                  onClick={() => handleSendMessage("Como está o estoque e previsão de compra de salmão?")}
+                  onClick={() => handleSendMessage("Qual o status dos 20 proponentes da Casa Nova Imóveis?")}
                   className="px-2.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 font-bold hover:bg-amber-500/25 whitespace-nowrap cursor-pointer transition-all"
                 >
-                  🐟 Salmão & Estoque
+                  🏡 Casa Nova Imóveis
                 </button>
                 <button
-                  onClick={() => handleSendMessage("Qual a previsão do Dr. Clima para delivery com chuva?")}
-                  className="px-2.5 py-1 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 font-bold hover:bg-cyan-500/25 whitespace-nowrap cursor-pointer transition-all"
+                  onClick={() => handleSendMessage("Como funciona a auditoria 360° e bureaus Bacen?")}
+                  className="px-2.5 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-300 font-bold hover:bg-purple-500/25 whitespace-nowrap cursor-pointer transition-all"
                 >
-                  🌧️ Dr. Clima & Chuva
+                  🔍 Bureaus 360°
+                </button>
+                <button
+                  onClick={() => handleSendMessage("Quais são as 12 empresas coligadas da Holding BancoFé?")}
+                  className="px-2.5 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-300 font-bold hover:bg-blue-500/25 whitespace-nowrap cursor-pointer transition-all"
+                >
+                  🏢 12 Empresas Holding
                 </button>
               </div>
 
@@ -268,8 +261,8 @@ export const ZumiCopilotAssistant: React.FC = () => {
                     <div
                       className={`max-w-[85%] rounded-2xl p-3.5 leading-relaxed ${
                         msg.sender === "user"
-                          ? "bg-purple-600 text-white rounded-tr-none font-medium"
-                          : "bg-white/[0.06] border border-white/10 text-neutral-200 rounded-tl-none shadow-inner"
+                          ? "bg-emerald-700 text-white rounded-tr-none font-medium"
+                          : "bg-white/[0.06] border border-emerald-500/20 text-neutral-200 rounded-tl-none shadow-inner"
                       }`}
                     >
                       <div className="whitespace-pre-line">{msg.text}</div>
@@ -282,16 +275,16 @@ export const ZumiCopilotAssistant: React.FC = () => {
                                 key={idx}
                                 href={act.href}
                                 onClick={() => setOpen(false)}
-                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold text-[10.5px] transition-all no-underline"
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 font-bold text-[10.5px] transition-all no-underline border border-emerald-500/30"
                               >
                                 <span>{act.label}</span>
-                                <ChevronRight className="w-3 h-3 text-purple-300" />
+                                <ChevronRight className="w-3 h-3 text-emerald-300" />
                               </Link>
                             ) : (
                               <button
                                 key={idx}
                                 onClick={act.onClick}
-                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-200 font-bold text-[10.5px] transition-all cursor-pointer"
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 font-bold text-[10.5px] transition-all cursor-pointer border border-emerald-500/25"
                               >
                                 <span>{act.label}</span>
                               </button>
@@ -305,18 +298,18 @@ export const ZumiCopilotAssistant: React.FC = () => {
                 ))}
 
                 {isTyping && (
-                  <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/[0.04] border border-white/10 w-fit">
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce [animation-delay:0.2s]" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-bounce [animation-delay:0.4s]" />
-                    <span className="text-[10px] text-neutral-400 font-mono ml-1">Zumi analisando dados...</span>
+                  <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/[0.04] border border-emerald-500/20 w-fit">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-bounce" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-bounce [animation-delay:0.2s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-bounce [animation-delay:0.4s]" />
+                    <span className="text-[10px] text-emerald-300 font-mono ml-1">BancoFé Copilot analisando carteira...</span>
                   </div>
                 )}
                 <div ref={messagesEndRef} />
               </div>
 
               {/* Input de Mensagem */}
-              <div className="p-3 border-t border-white/10 bg-[#090d12] shrink-0">
+              <div className="p-3 border-t border-white/10 bg-[#050e0a] shrink-0">
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -328,13 +321,13 @@ export const ZumiCopilotAssistant: React.FC = () => {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Pergunte à Zumi sobre mesas, CMV, equipe, salmão..."
-                    className="flex-1 bg-white/[0.06] border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-purple-400 transition-all"
+                    placeholder="Pergunte ao Copilot sobre mesa de crédito, funil, Casa Nova..."
+                    className="flex-1 bg-white/[0.06] border border-emerald-500/30 rounded-xl px-3.5 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-emerald-400 transition-all"
                   />
                   <button
                     type="submit"
                     disabled={!input.trim()}
-                    className="p-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold hover:brightness-110 active:scale-95 transition-all disabled:opacity-40 cursor-pointer"
+                    className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-700 to-teal-700 text-white font-bold hover:brightness-110 active:scale-95 transition-all disabled:opacity-40 cursor-pointer"
                   >
                     <Send className="w-4 h-4" />
                   </button>

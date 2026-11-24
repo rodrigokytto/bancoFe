@@ -32,6 +32,13 @@ import {
   Maximize2,
   Minimize2,
   ArrowRight,
+  Scale,
+  TrendingUp,
+  Home,
+  FileCheck2,
+  Landmark,
+  PieChart,
+  ShieldCheck,
 } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useAuth } from "../../contexts/AuthContext";
@@ -62,67 +69,58 @@ export interface DicaSerendipidade {
   texto: string;
   rota: string;
   acao: string;
-  simuladorType: "clima" | "gap" | "salmao" | "ifood" | "tatames" | "cftv";
+  simuladorType?: string;
 }
 
 export const DICAS_SERENDIPIDADE: DicaSerendipidade[] = [
   {
-    id: "clima",
-    titulo: "Previsão Meteorológica & Delivery",
-    tag: "METEOROLOGIA & DELIVERY",
-    texto: "Previsão de pancadas de chuva em Tangará da Serra: ative o 'Plano Chuva de Vendas' para focar em combos quentes e reforçar entregadores.",
-    rota: "/dr-clima",
-    acao: "Abrir Dr. Clima",
-    simuladorType: "clima",
+    id: "credito_funil",
+    titulo: "Mesa de Crédito & SCR Bacen",
+    tag: "31 OPERAÇÕES ATIVAS",
+    texto: "31 operações em andamento totalizando R$ 29,43M. Propostas com LTV < 65% prontas para homologação no comitê executivo de risco.",
+    rota: "/admin/crm-financeira?aba=funil",
+    acao: "Ver Funil de Crédito",
+    simuladorType: "credito",
   },
   {
-    id: "gap",
-    titulo: "Atraso no Concorrente",
-    tag: "Gap Competitivo",
-    texto: "Bonsai tem 68 min de espera no delivery às sextas: dispare contra-ataque para o Jardim Europa com entrega garantida em 35 min.",
-    rota: "/mercado",
-    acao: "Ver no War Room",
-    simuladorType: "gap",
+    id: "casanova_proponentes",
+    titulo: "Esteira Casa Nova Imóveis",
+    tag: "20 PROPONENTES",
+    texto: "20 proponentes da base Casa Nova com checklist documental e conformidade LGPD aprovada para emissão de CCB Digital.",
+    rota: "/admin/crm-financeira?aba=precadastros",
+    acao: "Ver Pré-Cadastros",
+    simuladorType: "casanova",
   },
   {
-    id: "salmao",
-    titulo: "Cotação do Salmão Nobre",
-    tag: "Insumos & Dólar",
-    texto: "Dólar estável mantém custo CIF do Salmão Nobre Fresco a R$ 80,60/kg entregue em Tangará da Serra via rota Puerto Montt.",
-    rota: "/mercado",
-    acao: "Conferir Câmbio",
-    simuladorType: "salmao",
+    id: "bureaus_360",
+    titulo: "Auditoria Cadastral 360°",
+    tag: "COMPLIANCE BACEN",
+    texto: "Varredura contínua em 48+ bureaus oficiais (Receita, TJ-MT, PGFN e SCR). Rating médio da carteira classificado em nível AA.",
+    rota: "/consulta-360",
+    acao: "Consultar Bureaus",
+    simuladorType: "bureaus",
   },
   {
-    id: "ifood",
-    titulo: "Desintermediação iFood",
-    tag: "Margem Líquida",
-    texto: "70% das vendas rivais estão presas no iFood: use 10% de cashback no Zuma PWA e economize até 27% de taxas de marketplace.",
-    rota: "/mercado",
-    acao: "Plano de Ataque",
-    simuladorType: "ifood",
+    id: "baas_pix",
+    titulo: "Banking Digital & BaaS Pix",
+    tag: "LIQUIDAÇÃO 24/7",
+    texto: "Contas digitais corporativas com liquidação instantânea via Pix 24/7 e conciliação multibancos automática.",
+    rota: "/plataforma/carteira",
+    acao: "Ver Carteira Digital",
+    simuladorType: "baas",
   },
   {
-    id: "tatames",
-    titulo: "Ocupação dos Tatames",
-    tag: "Ociosidade Salão",
-    texto: "Identificado buraco de ocupação na terça-feira às 19h: ative reserva nos Tatames VIP com brinde autoral do Chef.",
-    rota: "/mapa-de-calor",
-    acao: "Ver Mapa de Calor",
-    simuladorType: "tatames",
-  },
-  {
-    id: "cftv",
-    titulo: "CFTV & Ultra Vision",
-    tag: "Visão Computacional",
-    texto: "CAM-01 identificou mesa com gesto de mão levantada há 48s: acione ronda preventiva de garçons no Salão Nobre.",
-    rota: "/ultra",
-    acao: "Abrir Ultra Vision",
-    simuladorType: "cftv",
+    id: "holding_governanca",
+    titulo: "Governança Holding BancoFé",
+    tag: "12 COLIGADAS",
+    texto: "Unificação operacional e contábil COSIF das 12 coligadas do grupo BancoFé sob o CNPJ matriz 53.338.003/0001-04.",
+    rota: "/admin",
+    acao: "Gerenciar Holding",
+    simuladorType: "holding",
   },
 ];
 
-const STORAGE_KEY_RECENTS = "zuma_recent_routes_v1";
+const STORAGE_KEY_RECENTS = "bancofe_recent_routes_v1";
 
 export interface SidebarProps {
   isPinned?: boolean;
@@ -177,7 +175,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   // Serendipidade IA
   const [serendipidadeIndex, setSerendipidadeIndex] = useState(0);
   const [simulatorOpen, setSimulatorOpen] = useState(false);
-  const [criterioInicial, setCriterioInicial] = useState<"clima" | "gap" | "salmao" | "ifood" | "tatames" | "cftv">("clima");
+  const [criterioInicial, setCriterioInicial] = useState<any>("credito");
   const dicaAtual = DICAS_SERENDIPIDADE[serendipidadeIndex];
 
   const proximaDica = () => {
@@ -188,9 +186,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const [recentPaths, setRecentPaths] = useState<string[]>(() => {
     try {
       const saved = sessionStorage.getItem(STORAGE_KEY_RECENTS) || localStorage.getItem(STORAGE_KEY_RECENTS);
-      return saved ? JSON.parse(saved) : ["/cockpit", "/pdv", "/apps"];
+      return saved ? JSON.parse(saved) : ["/admin/crm-financeira?aba=funil", "/admin/mesa-credito", "/admin/crm-financeira?aba=precadastros", "/consulta-360"];
     } catch {
-      return ["/cockpit", "/pdv", "/apps"];
+      return ["/admin/crm-financeira?aba=funil", "/admin/mesa-credito", "/admin/crm-financeira?aba=precadastros", "/consulta-360"];
     }
   });
 
@@ -379,16 +377,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* ==================== BARRA MOBILE TOP ==================== */}
       <div className="lg:hidden sticky top-0 z-40 flex items-center justify-between px-4 py-3 bg-[var(--surface)] text-[var(--ink)] border-b border-[var(--line)] shadow-2xs">
         <div className="flex items-center gap-2.5">
-          <ZumiMascot size={28} />
+          <div className="w-8 h-8 rounded-xl bg-emerald-600/15 border border-emerald-500/30 flex items-center justify-center text-emerald-600">
+            <Landmark className="w-4 h-4" />
+          </div>
           <div>
             <div className="flex items-center gap-1.5">
               <span className="font-sans font-black text-sm tracking-tight text-[var(--ink)]">
-                zuma<span className="text-[var(--salmon)] font-light">pilot</span>
+                banco<span className="text-emerald-600 font-bold ml-0.5">Fe</span>
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             </div>
             <span className="text-[10px] text-[var(--muted)] font-semibold block leading-none">
-              Módulo: {activeModule.label}
+              Holding &amp; Operações Financeiras
             </span>
           </div>
         </div>
@@ -433,11 +433,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {/* Topo do Mini-Rail: Logo e Botão de Expandir */}
             <div className="flex flex-col items-center gap-2.5 w-full">
               <Link
-                href="/cockpit"
-                className="w-11 h-11 rounded-xl bg-[var(--salmon)]/10 border border-[var(--salmon)]/25 flex items-center justify-center p-1 shadow-2xs hover:scale-105 transition-transform"
-                title="Zuma Pilot - Painel Executivo"
+                href="/admin"
+                className="w-11 h-11 rounded-xl bg-emerald-600/10 border border-emerald-500/25 flex items-center justify-center p-1 shadow-2xs hover:scale-105 transition-transform text-emerald-700"
+                title="BancoFé Holding - Painel Corporativo"
               >
-                <ZumiMascot size={28} />
+                <Landmark className="w-5 h-5" />
               </Link>
 
               {/* Botão para Reabrir / Expandir Menu Completo */}
@@ -464,132 +464,132 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
             {/* Centro: Todos os Atalhos Rápidos Operacionais Reais */}
             <div className="flex flex-col items-center gap-1.5 w-full my-auto overflow-y-auto no-scrollbar py-2">
-              {/* Cockpit */}
+              {/* Funil CRM */}
               <Link
-                href="/cockpit"
+                href="/admin/crm-financeira?aba=funil"
                 className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                  location === "/cockpit" || location === "/"
+                  location.includes("crm-financeira") && location.includes("funil")
                     ? "bg-[var(--salmon)] text-white shadow-xs font-black ring-2 ring-[var(--salmon)]/30"
                     : "text-[var(--muted)] hover:text-[var(--salmon)] hover:bg-[var(--salmon)]/10"
                 }`}
-                title="👑 Cockpit Executivo & D-7"
+                title="📈 Funil de Operações (31 Ops - R$ 29,43M)"
               >
-                <Crown className="w-5 h-5" />
+                <TrendingUp className="w-5 h-5" />
               </Link>
 
-              {/* PDV Touch */}
+              {/* Mesa de Crédito & SCR Bacen */}
               <Link
-                href="/pdv"
+                href="/admin/mesa-credito"
                 className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                  location === "/pdv"
-                    ? "bg-[var(--salmon)] text-white shadow-xs font-black ring-2 ring-[var(--salmon)]/30"
-                    : "text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--surface2)]"
+                  location === "/admin/mesa-credito"
+                    ? "bg-emerald-700 text-white shadow-xs font-black ring-2 ring-emerald-700/30"
+                    : "text-[var(--muted)] hover:text-emerald-700 hover:bg-emerald-500/10"
                 }`}
-                title="🧾 Frente de Caixa Touch & NFC-e (Gastronomia & Moda)"
+                title="⚖️ Mesa de Crédito & SCR Bacen"
               >
-                <Calculator className="w-5 h-5" />
+                <Scale className="w-5 h-5" />
               </Link>
 
-              {/* Mesas Salão */}
+              {/* Esteira Casa Nova */}
               <Link
-                href="/mesas"
+                href="/admin/crm-financeira?aba=precadastros"
                 className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                  location === "/mesas"
-                    ? "bg-amber-500 text-white shadow-xs font-black ring-2 ring-amber-500/30"
+                  location.includes("precadastros")
+                    ? "bg-amber-600 text-white shadow-xs font-black ring-2 ring-amber-600/30"
                     : "text-[var(--muted)] hover:text-amber-600 hover:bg-amber-500/10"
                 }`}
-                title="🍽️ Mesas & Salão (27 Mesas)"
+                title="🏡 Esteira Casa Nova (20 Proponentes)"
               >
-                <UtensilsCrossed className="w-5 h-5" />
+                <Home className="w-5 h-5" />
               </Link>
 
-              {/* KDS Cozinha */}
+              {/* Consulta 360° Bureaus */}
               <Link
-                href="/cozinha"
+                href="/consulta-360"
                 className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                  location === "/cozinha"
-                    ? "bg-orange-500 text-white shadow-xs font-black ring-2 ring-orange-500/30"
-                    : "text-[var(--muted)] hover:text-orange-600 hover:bg-orange-500/10"
-                }`}
-                title="👨‍🍳 KDS Cozinha (4 Praças de Preparo)"
-              >
-                <ChefHat className="w-5 h-5" />
-              </Link>
-
-              {/* Delivery Tangará */}
-              <Link
-                href="/delivery"
-                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                  location === "/delivery" || location === "/entregador"
-                    ? "bg-blue-600 text-white shadow-xs font-black ring-2 ring-blue-600/30"
-                    : "text-[var(--muted)] hover:text-blue-600 hover:bg-blue-500/10"
-                }`}
-                title="🛵 Delivery & Motoboys Tangará"
-              >
-                <Bike className="w-5 h-5" />
-              </Link>
-
-              {/* WhatsApp IA Zumi */}
-              <Link
-                href="/zumi"
-                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                  location === "/zumi"
-                    ? "bg-emerald-600 text-white shadow-xs font-black"
-                    : "text-[var(--muted)] hover:text-emerald-600 hover:bg-emerald-500/10"
-                }`}
-                title="💬 WhatsApp com IA Zumi"
-              >
-                <MessageSquare className="w-5 h-5" />
-              </Link>
-
-              {/* IA & Mercado War Room */}
-              <Link
-                href="/mercado"
-                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                  location === "/mercado"
+                  location === "/consulta-360"
                     ? "bg-purple-600 text-white shadow-xs font-black ring-2 ring-purple-600/30"
                     : "text-[var(--muted)] hover:text-purple-600 hover:bg-purple-500/10"
                 }`}
-                title="🤖 IA & Mercado War Room Tangará"
+                title="🔍 Consulta 360° Bureaus & CPF/CNPJ"
               >
-                <Sparkles className="w-5 h-5" />
+                <Search className="w-5 h-5" />
               </Link>
 
-              {/* Central ERP */}
+              {/* Central de Termos SCR */}
               <Link
-                href="/erp"
+                href="/admin/termos"
                 className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                  location === "/erp"
-                    ? "bg-purple-700 text-white shadow-xs font-black ring-2 ring-purple-700/30"
-                    : "text-[var(--muted)] hover:text-purple-700 hover:bg-purple-500/10"
+                  location === "/admin/termos"
+                    ? "bg-blue-600 text-white shadow-xs font-black ring-2 ring-blue-600/30"
+                    : "text-[var(--muted)] hover:text-blue-600 hover:bg-blue-500/10"
                 }`}
-                title="💼 Central ERP Zuma 360°"
+                title="📜 Central de Termos SCR & LGPD"
+              >
+                <FileCheck2 className="w-5 h-5" />
+              </Link>
+
+              {/* BancoFé Core */}
+              <Link
+                href="/bancofe"
+                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
+                  location === "/bancofe"
+                    ? "bg-emerald-800 text-white shadow-xs font-black"
+                    : "text-[var(--muted)] hover:text-emerald-800 hover:bg-emerald-500/10"
+                }`}
+                title="🏦 BancoFé Core Bancário & BaaS"
+              >
+                <Landmark className="w-5 h-5" />
+              </Link>
+
+              {/* Carteira BaaS Pix */}
+              <Link
+                href="/plataforma/carteira"
+                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
+                  location === "/plataforma/carteira"
+                    ? "bg-indigo-600 text-white shadow-xs font-black ring-2 ring-indigo-600/30"
+                    : "text-[var(--muted)] hover:text-indigo-600 hover:bg-indigo-500/10"
+                }`}
+                title="💳 Carteira Digital & BaaS Pix"
+              >
+                <CreditCard className="w-5 h-5" />
+              </Link>
+
+              {/* Gestão da Holding /admin */}
+              <Link
+                href="/admin"
+                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
+                  location === "/admin"
+                    ? "bg-emerald-900 text-white shadow-xs font-black ring-2 ring-emerald-900/30"
+                    : "text-[var(--muted)] hover:text-emerald-900 hover:bg-emerald-500/10"
+                }`}
+                title="🏢 Gestão da Holding & 12 Coligadas"
               >
                 <Building2 className="w-5 h-5" />
               </Link>
 
-              {/* Nossa Gente RH */}
+              {/* Backoffice Corporativo */}
               <Link
-                href="/nossa-gente"
+                href="/admin/backoffice"
                 className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                  location === "/nossa-gente"
-                    ? "bg-indigo-600 text-white shadow-xs font-black"
-                    : "text-[var(--muted)] hover:text-indigo-600 hover:bg-indigo-500/10"
+                  location === "/admin/backoffice"
+                    ? "bg-slate-700 text-white shadow-xs font-black"
+                    : "text-[var(--muted)] hover:text-slate-700 hover:bg-slate-500/10"
                 }`}
-                title="👥 Nossa Gente (RH 360° & Ponto Facial AI)"
+                title="💼 Backoffice Corporativo & DRE"
               >
                 <Users className="w-5 h-5" />
               </Link>
 
-              {/* Integrações */}
+              {/* Central de Integrações */}
               <Link
                 href="/integracoes"
                 className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
                   location === "/integracoes"
-                    ? "bg-emerald-600 text-white shadow-xs font-black"
-                    : "text-[var(--muted)] hover:text-emerald-600 hover:bg-emerald-500/10"
+                    ? "bg-cyan-700 text-white shadow-xs font-black"
+                    : "text-[var(--muted)] hover:text-cyan-700 hover:bg-cyan-500/10"
                 }`}
-                title="🔌 Central de Integrações & APIs"
+                title="🔌 Central de APIs & Conexões Bacen"
               >
                 <Share2 className="w-5 h-5" />
               </Link>
@@ -618,7 +618,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </button>
 
               <div
-                className="w-8 h-8 rounded-full border border-[var(--line)] bg-gradient-to-tr from-[#ff6b4a] to-amber-500 text-white font-black text-[11px] flex items-center justify-center shrink-0 shadow-2xs"
+                className="w-8 h-8 rounded-full border border-[var(--line)] bg-gradient-to-tr from-emerald-800 to-emerald-600 text-white font-black text-[11px] flex items-center justify-center shrink-0 shadow-2xs"
                 title={`Usuário: ${user?.name || "Rodrigo Ribeiro Gonçalves"}`}
               >
                 RG
@@ -639,15 +639,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   className="flex items-center gap-2 no-underline group"
                   onClick={() => setMobileOpen(false)}
                 >
-                  <div className="w-8 h-8 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center p-1 shadow-2xs group-hover:scale-105 transition-transform text-blue-600">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-600/15 border border-emerald-500/30 flex items-center justify-center p-1 shadow-2xs group-hover:scale-105 transition-transform text-emerald-700">
                     <Icons.Landmark className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="font-sans font-black text-base tracking-tight text-[var(--ink)] block leading-none">
-                      banco<span className="text-blue-600 font-normal ml-0.5">Fe</span>
+                      banco<span className="text-emerald-600 font-bold ml-0.5">Fe</span>
                     </span>
                     <span className="text-[9px] text-[var(--muted)] tracking-wider uppercase font-bold block mt-0.5">
-                      ERP &amp; Multi-Negócio
+                      Holding &amp; Operações Financeiras
                     </span>
                   </div>
                 </Link>
@@ -777,7 +777,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   type="button"
                   onClick={() => setModuleDropdownOpen(!moduleDropdownOpen)}
                   className="w-full text-left p-2 rounded-xl bg-[var(--surface2)]/60 hover:bg-[var(--surface2)] border border-[var(--line)] flex items-center justify-between transition-colors cursor-pointer group shadow-2xs"
-                  title="Clique para alternar entre os Módulos da Holding Zuma"
+                  title="Clique para alternar entre os Módulos da Holding BancoFé"
                 >
                   <div className="flex items-center gap-2 min-w-0">
                     <div className="w-7 h-7 rounded-lg bg-[var(--salmon)]/15 text-[var(--salmon)] border border-[var(--salmon)]/25 flex items-center justify-center shrink-0">
@@ -811,7 +811,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <div className="absolute top-full left-0 right-0 mt-1.5 z-50 rounded-2xl bg-[var(--surface)] border border-[var(--line)] p-1.5 shadow-xl space-y-1">
                     <div className="px-2 py-1 text-[9px] uppercase font-extrabold tracking-wider text-[var(--muted)] border-b border-[var(--line)] mb-1 flex items-center justify-between">
                       <span>Selecione a Área de Negócio</span>
-                      <span className="text-[8.5px] text-[var(--salmon)] font-bold">5 Módulos</span>
+                      <span className="text-[8.5px] text-[var(--salmon)] font-bold">Módulos BancoFé</span>
                     </div>
 
                     {effectiveModules.map((mod) => {
@@ -872,9 +872,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       ? "bg-[var(--salmon)] text-white shadow-2xs"
                       : "bg-[var(--surface2)] text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--line)]"
                   }`}
-                  title="Exibir todas as 39 telas reais da Holding Zuma"
+                  title="Exibir todas as telas da Holding BancoFé"
                 >
-                  🌐 Todos (39)
+                  🌐 Holding
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTabFilter("bancofe_banking")}
+                  className={`px-2 py-1 rounded-lg font-bold shrink-0 transition-all cursor-pointer ${
+                    activeTabFilter === "bancofe_banking"
+                      ? "bg-emerald-700 text-white shadow-2xs"
+                      : "bg-[var(--surface2)] text-[var(--muted)] hover:text-emerald-700"
+                  }`}
+                  title="BancoFé Core, Bureaus 360° e Mesa de Crédito"
+                >
+                  🏦 BancoFé Core
                 </button>
                 <button
                   type="button"
@@ -884,21 +896,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       ? "bg-amber-600 text-white shadow-2xs"
                       : "bg-[var(--surface2)] text-[var(--muted)] hover:text-amber-600"
                   }`}
-                  title="Operação de Mesas, KDS e Delivery"
+                  title="Mesa de Operações e Atendimento"
                 >
-                  🍽️ Salão
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveTabFilter("comando")}
-                  className={`px-2 py-1 rounded-lg font-bold shrink-0 transition-all cursor-pointer ${
-                    activeTabFilter === "comando"
-                      ? "bg-purple-600 text-white shadow-2xs"
-                      : "bg-[var(--surface2)] text-[var(--muted)] hover:text-purple-600"
-                  }`}
-                  title="Cockpits, War Room e Modelagem IA"
-                >
-                  👑 Comando
+                  ⚖️ Operações
                 </button>
                 <button
                   type="button"
@@ -908,19 +908,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       ? "bg-indigo-600 text-white shadow-2xs"
                       : "bg-[var(--surface2)] text-[var(--muted)] hover:text-indigo-600"
                   }`}
-                  title="ERP, Finanças, Estoque e Fiscal"
+                  title="ERP, Finanças, Backoffice e Fiscal"
                 >
-                  💼 ERP
+                  💼 ERP &amp; Gestão
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveTabFilter("vendas_crm")}
                   className={`px-2 py-1 rounded-lg font-bold shrink-0 transition-all cursor-pointer ${
                     activeTabFilter === "vendas_crm"
-                      ? "bg-emerald-600 text-white shadow-2xs"
-                      : "bg-[var(--surface2)] text-[var(--muted)] hover:text-emerald-600"
+                      ? "bg-purple-600 text-white shadow-2xs"
+                      : "bg-[var(--surface2)] text-[var(--muted)] hover:text-purple-600"
                   }`}
-                  title="WhatsApp Zumi e CRM de Clientes"
+                  title="CRM e Relacionamento de Clientes"
                 >
                   💬 CRM
                 </button>
@@ -934,7 +934,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }`}
                   title="APIs, Integrações e Apps"
                 >
-                  🔌 TI
+                  🔌 APIs
                 </button>
               </div>
 
@@ -966,19 +966,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
               {/* Card de Serendipidade IA */}
               <div
                 onClick={() => {
-                  setCriterioInicial(dicaAtual.simuladorType || "clima");
-                  setSimulatorOpen(true);
+                  setLocation(dicaAtual.rota);
                 }}
-                className="p-2.5 rounded-xl bg-gradient-to-br from-[var(--salmon)]/8 via-amber-500/8 to-purple-500/8 border border-[var(--salmon)]/25 text-xs space-y-1.5 shadow-2xs hover:border-[var(--salmon)]/40 transition-colors cursor-pointer group"
+                className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-500/10 via-emerald-600/5 to-teal-500/10 border border-emerald-500/25 text-xs space-y-1.5 shadow-2xs hover:border-emerald-500/40 transition-colors cursor-pointer group"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-[var(--salmon)]">
-                    <Sparkles className="w-3 h-3 text-[var(--salmon)] animate-pulse" />
+                  <div className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400">
+                    <Scale className="w-3.5 h-3.5 animate-pulse" />
                     <span className="text-[9px] font-black uppercase tracking-wider">
-                      Serendipidade IA
+                      Mesa de Crédito &amp; SCR
                     </span>
                   </div>
-                  <span className="px-1.5 py-0.2 rounded-full text-[8px] font-bold uppercase tracking-wider bg-[var(--salmon)]/15 text-[var(--salmon)] border border-[var(--salmon)]/25">
+                  <span className="px-1.5 py-0.2 rounded-full text-[8px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25">
                     {dicaAtual.tag}
                   </span>
                 </div>
@@ -990,32 +989,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     type="button"
                     onClick={proximaDica}
                     className="text-[var(--muted)] hover:text-[var(--salmon)] flex items-center gap-1 cursor-pointer transition-colors"
-                    title="Próxima sugestão"
+                    title="Próximo alerta da mesa"
                   >
                     <RotateCcw className="w-2.5 h-2.5" />
-                    <span>Nova dica</span>
+                    <span>Próximo</span>
                   </button>
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCriterioInicial(dicaAtual.simuladorType || "clima");
-                        setSimulatorOpen(true);
-                      }}
-                      className="px-2 py-0.5 rounded-md bg-[var(--salmon)] hover:brightness-105 text-white font-bold text-[9px] flex items-center gap-1 cursor-pointer shadow-2xs"
-                    >
-                      <Sliders className="w-2.5 h-2.5" />
-                      <span>Simular</span>
-                    </button>
-                    <Link
-                      href={dicaAtual.rota}
-                      className="text-[var(--salmon)] hover:underline font-bold flex items-center gap-0.5 cursor-pointer no-underline"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <span>{dicaAtual.acao}</span>
-                      <ChevronRight className="w-3 h-3" />
-                    </Link>
-                  </div>
+                  <Link
+                    href={dicaAtual.rota}
+                    className="text-emerald-700 dark:text-emerald-400 hover:underline font-bold flex items-center gap-0.5 cursor-pointer no-underline text-[9.5px]"
+                  >
+                    <span>{dicaAtual.acao}</span>
+                    <ChevronRight className="w-3 h-3" />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -1143,18 +1128,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <div className="flex items-center gap-1 overflow-x-auto pb-0.5">
                     {recentPaths.map((p) => {
                       const label =
-                        p === "/cockpit"
-                          ? "Cockpit"
-                          : p === "/pdv"
-                          ? "PDV Touch"
-                          : p === "/apps"
-                          ? "Apps & APKs"
-                          : p === "/zumi"
-                          ? "Zumi IA"
-                          : p === "/erp"
-                          ? "ERP Master"
-                          : p === "/nossa-gente"
-                          ? "Nossa Gente"
+                        p.includes("funil")
+                          ? "CRM Funil"
+                          : p.includes("mesa-credito")
+                          ? "Mesa Crédito"
+                          : p.includes("precadastros")
+                          ? "Casa Nova"
+                          : p === "/consulta-360"
+                          ? "Bureaus 360"
+                          : p === "/admin/termos"
+                          ? "Termos SCR"
+                          : p === "/bancofe"
+                          ? "Core BaaS"
+                          : p === "/admin"
+                          ? "Holding"
+                          : p === "/plataforma/carteira"
+                          ? "Carteira Pix"
+                          : p === "/admin/backoffice"
+                          ? "Backoffice"
                           : p.replace("/", "").substring(0, 10);
                       const isCur = location === p;
 
@@ -1180,15 +1171,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
               {/* User Profile Card com Cargo Real */}
               <div className="flex items-center justify-between gap-2 px-1 pt-1 border-t border-[var(--line)]">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-full border border-[var(--line)] bg-gradient-to-tr from-[#ff6b4a] to-amber-500 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-2xs">
+                  <div className="w-8 h-8 rounded-full border border-[var(--line)] bg-gradient-to-tr from-emerald-800 to-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-2xs">
                     RG
                   </div>
                   <div className="truncate min-w-0">
                     <p className="text-xs font-semibold text-[var(--ink)] truncate leading-tight">
-                      {user?.name || "Rodrigo Gonçalves"}
+                      {user?.name || "Rodrigo Ribeiro Gonçalves"}
                     </p>
                     <p className="text-[10px] text-[var(--muted)] truncate leading-tight">
-                      {user?.cargo || "Proprietário & ADM Geral"}
+                      {user?.cargo || "CEO & Diretoria Executiva BancoFé"}
                     </p>
                   </div>
                 </div>
@@ -1196,12 +1187,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <button
                   type="button"
                   onClick={async () => {
-                    if (window.confirm("Deseja desconectar do Zuma Pilot?")) {
+                    if (window.confirm("Deseja desconectar do BancoFé Holding?")) {
                       await logout();
                     }
                   }}
                   className="p-1.5 rounded-lg text-[var(--muted)] hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer border border-transparent hover:border-red-500/20"
-                  title="Sair do Zuma Pilot"
+                  title="Sair do BancoFé Holding"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>

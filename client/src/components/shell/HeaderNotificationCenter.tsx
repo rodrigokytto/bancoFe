@@ -12,14 +12,18 @@ import {
   ExternalLink,
   ChevronRight,
   ShieldCheck,
-  Sparkles
+  Sparkles,
+  Scale,
+  Home,
+  Landmark,
+  TrendingUp
 } from "lucide-react";
 import { Link } from "wouter";
 import { toast } from "sonner";
 
 export interface SystemNotification {
   id: string;
-  category: "ULTRA_AI" | "NOSSA_GENTE" | "ESTOQUE" | "FINANCEIRO";
+  category: "CREDITO" | "SCR_BACEN" | "CASA_NOVA" | "BAAS_PIX";
   title: string;
   description: string;
   timeAgo: string;
@@ -32,54 +36,54 @@ export interface SystemNotification {
 const INITIAL_NOTIFICATIONS: SystemNotification[] = [
   {
     id: "notif-01",
-    category: "ULTRA_AI",
-    title: "Gesto de Mão Detectado (Mesa #07)",
-    description: "CAM-01 identificou cliente solicitando garçom há 42s no Salão Nobre.",
-    timeAgo: "há 1 min",
+    category: "CASA_NOVA",
+    title: "Nova Proposta Casa Nova (R$ 680.000)",
+    description: "Proponente Marcos Aurelio Silva: LTV de 58%, DTI 24% e certidões 100% conformes.",
+    timeAgo: "há 2 min",
     read: false,
-    actionUrl: "/ultra",
-    actionLabel: "Ver Câmera",
-    severity: "warning"
+    actionUrl: "/admin/crm-financeira?aba=funil",
+    actionLabel: "Analisar no Funil",
+    severity: "success"
   },
   {
     id: "notif-02",
-    category: "NOSSA_GENTE",
-    title: "Entrada Facial Confirmada",
-    description: "Hiroshi Tanaka (Sushichef) registrado via CAM-03 com 100% conformidade Anvisa.",
-    timeAgo: "há 4 min",
+    category: "SCR_BACEN",
+    title: "Consulta 360° Concluída sem Restrições",
+    description: "Varredura Bacen SCR + Receita Federal + TJ-MT aprovada com Score 840 (Nível AA).",
+    timeAgo: "há 5 min",
     read: false,
-    actionUrl: "/nossa-gente",
-    actionLabel: "Espelho Ponto",
+    actionUrl: "/consulta-360",
+    actionLabel: "Ver Consulta 360°",
     severity: "success"
   },
   {
     id: "notif-03",
-    category: "FINANCEIRO",
-    title: "Pix Sicredi Recebido R$ 342,00",
-    description: "Mesa #14 fechada com taxa de serviço 10% rateada para a equipe.",
-    timeAgo: "há 8 min",
+    category: "CREDITO",
+    title: "Parecer da Mesa de Crédito Emitido",
+    description: "Operação OP-2026-089 (R$ 1.250.000,00) pré-aprovada pelo comitê executivo de risco.",
+    timeAgo: "há 9 min",
     read: false,
-    actionUrl: "/financeiro",
-    actionLabel: "Ver DRE",
-    severity: "success"
+    actionUrl: "/admin/mesa-credito",
+    actionLabel: "Ver Parecer da Mesa",
+    severity: "info"
   },
   {
     id: "notif-04",
-    category: "ESTOQUE",
-    title: "Estoque Crítico: Salmão Chileno",
-    description: "Saldo atual de 6.4 kg. Sugestão automática de compra de 20 kg emitida.",
-    timeAgo: "há 15 min",
+    category: "BAAS_PIX",
+    title: "Liquidação Pix DICT R$ 348.500,00",
+    description: "Repasse de funding da carteira estruturada liquidado no SPB Bacen com sucesso.",
+    timeAgo: "há 18 min",
     read: true,
-    actionUrl: "/previsao-compras",
-    actionLabel: "Gerar Cotação",
-    severity: "warning"
+    actionUrl: "/plataforma/carteira",
+    actionLabel: "Ver Carteira Digital",
+    severity: "info"
   }
 ];
 
 export const HeaderNotificationCenter: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState<SystemNotification[]>(INITIAL_NOTIFICATIONS);
-  const [filter, setFilter] = useState<"ALL" | "ULTRA_AI" | "NOSSA_GENTE">("ALL");
+  const [filter, setFilter] = useState<"ALL" | "CREDITO" | "CASA_NOVA">("ALL");
   const panelRef = useRef<HTMLDivElement>(null);
 
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -130,8 +134,8 @@ export const HeaderNotificationCenter: React.FC = () => {
           {/* Cabeçalho do Dropdown */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--line)] bg-[var(--surface2)]/60">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-              <span className="font-bold text-xs text-[var(--ink)]">Alertas & Telemetria em Tempo Real</span>
+              <Scale className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span className="font-bold text-xs text-[var(--ink)]">Alertas da Mesa de Crédito &amp; Bacen</span>
             </div>
             {unreadCount > 0 && (
               <button
@@ -156,26 +160,26 @@ export const HeaderNotificationCenter: React.FC = () => {
               Todos ({notifications.length})
             </button>
             <button
-              onClick={() => setFilter("ULTRA_AI")}
+              onClick={() => setFilter("CREDITO")}
               className={`px-2.5 py-1 rounded-lg font-bold transition-all flex items-center gap-1 ${
-                filter === "ULTRA_AI" 
-                  ? "bg-purple-600 text-white" 
+                filter === "CREDITO" 
+                  ? "bg-emerald-700 text-white" 
                   : "bg-[var(--surface2)] text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
-              <Camera className="w-3 h-3" />
-              Ultra AI
+              <Scale className="w-3 h-3" />
+              Mesa Crédito
             </button>
             <button
-              onClick={() => setFilter("NOSSA_GENTE")}
+              onClick={() => setFilter("CASA_NOVA")}
               className={`px-2.5 py-1 rounded-lg font-bold transition-all flex items-center gap-1 ${
-                filter === "NOSSA_GENTE" 
-                  ? "bg-indigo-600 text-white" 
+                filter === "CASA_NOVA" 
+                  ? "bg-amber-600 text-white" 
                   : "bg-[var(--surface2)] text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
-              <Users className="w-3 h-3" />
-              Nossa Gente
+              <Home className="w-3 h-3" />
+              Casa Nova
             </button>
           </div>
 
@@ -196,24 +200,24 @@ export const HeaderNotificationCenter: React.FC = () => {
                 >
                   <div className="flex items-start gap-2.5">
                     <div className="mt-0.5">
-                      {notif.category === "ULTRA_AI" && (
-                        <div className="w-6 h-6 rounded-lg bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-                          <Camera className="w-3.5 h-3.5" />
-                        </div>
-                      )}
-                      {notif.category === "NOSSA_GENTE" && (
-                        <div className="w-6 h-6 rounded-lg bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
-                          <Users className="w-3.5 h-3.5" />
-                        </div>
-                      )}
-                      {notif.category === "FINANCEIRO" && (
+                      {notif.category === "CREDITO" && (
                         <div className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                          <DollarSign className="w-3.5 h-3.5" />
+                          <Scale className="w-3.5 h-3.5" />
                         </div>
                       )}
-                      {notif.category === "ESTOQUE" && (
+                      {notif.category === "SCR_BACEN" && (
+                        <div className="w-6 h-6 rounded-lg bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+                          <ShieldCheck className="w-3.5 h-3.5" />
+                        </div>
+                      )}
+                      {notif.category === "CASA_NOVA" && (
                         <div className="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center">
-                          <AlertTriangle className="w-3.5 h-3.5" />
+                          <Home className="w-3.5 h-3.5" />
+                        </div>
+                      )}
+                      {notif.category === "BAAS_PIX" && (
+                        <div className="w-6 h-6 rounded-lg bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                          <Landmark className="w-3.5 h-3.5" />
                         </div>
                       )}
                     </div>
@@ -250,14 +254,14 @@ export const HeaderNotificationCenter: React.FC = () => {
           {/* Rodapé do Dropdown */}
           <div className="p-2.5 border-t border-[var(--line)] bg-[var(--surface2)]/40 flex items-center justify-between text-[11px]">
             <Link
-              href="/integracoes?tab=nossa_gente_ultra"
+              href="/admin/mesa-credito"
               onClick={() => setOpen(false)}
-              className="text-purple-600 dark:text-purple-400 font-bold hover:underline flex items-center gap-1"
+              className="text-emerald-700 dark:text-emerald-400 font-bold hover:underline flex items-center gap-1"
             >
               <Activity className="w-3 h-3" />
-              Event Bus em Tempo Real
+              Mesa &amp; SCR Bacen Ao Vivo
             </Link>
-            <span className="text-[10px] text-[var(--muted)]">Zuma Pilot v3.0</span>
+            <span className="text-[10px] text-[var(--muted)]">BancoFé Holding v4.0</span>
           </div>
         </div>
       )}
