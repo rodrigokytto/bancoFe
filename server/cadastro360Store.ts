@@ -724,7 +724,7 @@ Pela presente Cédula de Crédito Bancário, emitida com fundamento na Lei nº 1
         tipoPessoa: "PJ",
         statusCadastral: "homologado",
         empresaOrigemId: "holding_kytto",
-        empresaOrigemNome: "Holding Kytto Controladoria",
+        empresaOrigemNome: "BancoFe Holding S.A. — Controladora Geral do Grupo",
         dadosCadastrais: {
           inscricaoEstadual: "13.456.789-0",
           dataFundacao: "2014-03-15",
@@ -1553,7 +1553,7 @@ Pela presente Cédula de Crédito Bancário, emitida com fundamento na Lei nº 1
         tipoPessoa: "PJ",
         statusCadastral: "homologado",
         empresaOrigemId: "holding_kytto",
-        empresaOrigemNome: "Holding Kytto Controladoria",
+        empresaOrigemNome: "BancoFe Holding S.A. — Controladora Geral do Grupo",
         dadosCadastrais: {
           inscricaoEstadual: "13.665.441-0",
           dataFundacao: "2012-08-14",
@@ -1861,13 +1861,13 @@ Pela presente Cédula de Crédito Bancário, emitida com fundamento na Lei nº 1
       {
         id: "cli-360-008",
         codigo: "BFE-360-0008",
-        razaoSocial: "Fintech Soluções de Pagamento e Crédito Fe S.A.",
-        nomeFantasia: "BancoFe Instituição de Pagamento",
+        razaoSocial: "BancoFe S.A. — Instituição Financeira Múltipla & Securitizadora FIDC",
+        nomeFantasia: "BancoFe — Core Bancário, Open Finance & Securitizadora FIDC",
         cnpjCpf: "34.567.890/0001-12",
         tipoPessoa: "PJ",
         statusCadastral: "homologado",
         empresaOrigemId: "bancofe",
-        empresaOrigemNome: "BancoFe Core Banking & Open Finance",
+        empresaOrigemNome: "BancoFe — Core Bancário, Open Finance & Securitizadora FIDC",
         dadosCadastrais: {
           inscricaoEstadual: "13.000.999-9",
           dataFundacao: "2023-01-15",

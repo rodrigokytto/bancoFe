@@ -462,7 +462,7 @@ export default function Cadastro360BancoFePage() {
               : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
-          <Building2 className="w-4 h-4" /> Radar 8 Empresas BancoFe
+          <Crown className="w-4 h-4 text-amber-500" /> Matriz de Governança & Empresas
         </button>
       </div>
 
@@ -491,12 +491,12 @@ export default function Cadastro360BancoFePage() {
                   onChange={(e) => setFiltroEmpresa(e.target.value)}
                   className="w-1/2 p-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs"
                 >
-                  <option value="todas">Todas Empresas</option>
-                  <option value="bancofe">BancoFe Core</option>
+                  <option value="todas">Todas as Empresas do Grupo</option>
+                  <option value="holding_kytto">👑 BancoFe Holding S.A. (Controladora)</option>
+                  <option value="bancofe">🏛️ BancoFe — Core Bancário & Securitizadora FIDC</option>
                   <option value="operacoes_financeiras_crm">Operações & CRM</option>
                   <option value="zuma_agro">Zuma Agro MT</option>
                   <option value="bancofe_logistica">Logística & Frotas</option>
-                  <option value="holding_kytto">Holding Kytto</option>
                   <option value="zuma_moda">Zuma Moda</option>
                   <option value="zuma_gastronomia">Gastronomia</option>
                 </select>
@@ -1210,10 +1210,10 @@ export default function Cadastro360BancoFePage() {
           <div className="p-4 md:p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 space-y-4">
             <div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Building2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" /> Matriz de Limites & Risco das 8 Empresas BancoFe
+                <Crown className="w-5 h-5 text-amber-500" /> Matriz de Governança — BancoFe Holding S.A. & Unidades Controladas
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
-                Visão executiva comparativa das unidades de negócio, faturamento auditado, alçadas e ratings CMN 2.682/99.
+                Visão consolidada da entidade superior controladora (Holding) e de todas as unidades de negócio operacionais, faturamento auditado, alçadas e ratings CMN 2.682/99.
               </p>
             </div>
 
@@ -1329,22 +1329,22 @@ export default function Cadastro360BancoFePage() {
                     onChange={(e) => {
                       const id = e.target.value;
                       const nomes: Record<string, string> = {
-                        bancofe: "BancoFe Core Banking",
+                        holding_kytto: "BancoFe Holding S.A. — Controladora Geral do Grupo",
+                        bancofe: "BancoFe — Core Bancário, Open Finance & Securitizadora FIDC",
                         operacoes_financeiras_crm: "BancoFe — Operações & CRM",
                         zuma_agro: "BancoFe Agro & Safra MT",
                         bancofe_logistica: "BancoFe Logística & Frotas",
                         bancofe_credito: "BancoFe Crédito & Fomento",
-                        holding_kytto: "Holding Kytto Controladoria",
                       };
                       setNovoClienteForm({ ...novoClienteForm, empresaOrigemId: id, empresaOrigemNome: nomes[id] || id });
                     }}
                     className="w-full mt-1 p-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
                   >
+                    <option value="holding_kytto">👑 BancoFe Holding S.A. — Controladora Geral</option>
+                    <option value="bancofe">🏛️ BancoFe — Core Bancário & Securitizadora FIDC</option>
                     <option value="operacoes_financeiras_crm">BancoFe — Operações & CRM</option>
-                    <option value="bancofe">BancoFe Core Banking</option>
                     <option value="zuma_agro">BancoFe Agro & Safra MT</option>
                     <option value="bancofe_logistica">BancoFe Logística & Frotas</option>
-                    <option value="holding_kytto">Holding Kytto Controladoria</option>
                   </select>
                 </div>
               </div>
