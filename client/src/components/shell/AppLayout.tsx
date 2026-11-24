@@ -61,7 +61,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       const saved = localStorage.getItem("zuma_sidebar_pinned");
       if (saved !== null) return saved === "true";
     }
-    return true;
+    return false;
   });
 
   const handleTogglePin = () => {

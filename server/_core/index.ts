@@ -12,6 +12,7 @@ import { registerBancoFeRoutes } from "../../src/server/app";
 import { registerCrmFinanceiraRoutes } from "../crmFinanceiraRoutes";
 import { registerCadastro360Routes } from "../cadastro360Routes";
 import { registerBancoFeCoreRoutes } from "../bancofeCoreRoutes";
+import { registerConsultaCpfHub } from "../consultaCpfHub";
 
 async function startServer() {
   const app = express();
@@ -41,6 +42,7 @@ async function startServer() {
   registerCrmFinanceiraRoutes(app);
   registerBancoFeCoreRoutes(app);
   registerCadastro360Routes(app);
+  registerConsultaCpfHub(app);
   // tRPC API
   app.use(
     "/api/trpc",

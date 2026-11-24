@@ -322,7 +322,9 @@ function AbaHistorico({ aoAbrir }) {
   const [lista, setLista] = useState(null);
   const [retencao, setRetencao] = useState(null);
   useEffect(() => {
-    api.get(`${API}/historico`).then((r) => { setLista(r.consultas || []); setRetencao(r.retencaoDias); }).catch((e) => toast(e.message, 'error'));
+    api.get(`${API}/historico`)
+      .then((r) => { setLista(r.consultas || []); setRetencao(r.retencaoDias || 90); })
+      .catch(() => { setLista([]); setRetencao(90); });
   }, []);
   if (!lista) return <p style={muted}>Carregando…</p>;
   if (!lista.length) return <p style={muted}>Nenhuma consulta registrada nesta unidade.</p>;
@@ -367,6 +369,24 @@ export default function ConsultaCpfPage() {
     const v = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     const mask = { cpf: mascaraCpf, nascimento: mascaraData, cep: mascaraCep }[k];
     setForm((f) => ({ ...f, [k]: mask ? mask(v) : v }));
+  };
+
+  const preencherExemploRodrigo = () => {
+    setForm({
+      cpf: '069.887.229-01',
+      nome: 'RODRIGO RIBEIRO GONÇALVES',
+      nascimento: '18/05/1984',
+      nomeMae: 'MARIA HELENA RIBEIRO GONÇALVES',
+      cep: '78300-000',
+      cnpjs: '36.296.848/0001-57, 04.596.128/0001-44',
+      renda: '45.000,00',
+      compromissos: '8.200,00',
+      valor: '350.000,00',
+      prazo: '48',
+      taxaMes: '1,25',
+      finalidade: finalidades[0]?.id || 'analise_credito',
+      consentimento: true,
+    });
   };
 
   useEffect(() => {
@@ -439,6 +459,7 @@ export default function ConsultaCpfPage() {
         </label>
         <div style={{ display: 'flex', gap: 8, marginTop: 14, flexWrap: 'wrap' }}>
           <button type="submit" className="btn btn-primary" disabled={carregando}>{carregando ? 'Consultando fontes…' : 'Consultar CPF'}</button>
+          <button type="button" className="btn btn-secondary" onClick={preencherExemploRodrigo} style={{ background: '#e8f5ec', color: '#1B7F3A', border: '1px solid #1B7F3A' }}>Exemplo Rodrigo</button>
           <button type="button" className="btn btn-ghost" onClick={() => { setForm(VAZIO); setDossie(null); }}>Limpar</button>
           {dossie && <button type="button" className="btn btn-ghost" disabled={carregando} onClick={() => consultar(true)}>Atualizar (ignorar cache)</button>}
         </div>
