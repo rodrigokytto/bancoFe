@@ -96,3 +96,46 @@ Atendendo à diretriz de governança institucional do Grupo BancoFe:
 - **Deploy:** Concluído com sucesso via Google Cloud Build (ID: `f1033613-2db7-4115-bc30-c9cf4e1f0571`).
 - **URL de Produção:** [https://erp-bancofe-5xsi5uyoda-rj.a.run.app/admin/cadastro-360](https://erp-bancofe-5xsi5uyoda-rj.a.run.app/admin/cadastro-360)
 - **Ambiente Render:** [https://bancofe-core.onrender.com](https://bancofe-core.onrender.com) 100% ativo e preservado.
+
+---
+
+## 8. Atualização Societária: Holding Superior, Banco Unificado & Empresas Independentes
+
+### 8.1. Estrutura de Governança Definitiva (Novembro/2026)
+A taxonomia societária e o seletor da plataforma em `/admin/mesa-operacoes`, `/admin/cadastro-360` e em toda a Sidebar foram consolidados na seguinte hierarquia oficial:
+
+1. **Entidade Superior Controladora (Topo Absoluto):**
+   - **Razão Social:** `BancoFe Holding S.A. — Controladora Geral do Grupo`
+   - **Identificador Técnico:** `holding_kytto`
+   - **Badge:** `Holding Controladora` (Âmbar/Dourado)
+   - **Papel:** Controladora geral de todas as subsidiárias do grupo, concentrando os módulos de governança multi-CNPJ, auditoria fiscal SEFAZ-MT, DRE consolidado e barramento geral de integrações (77 fontes).
+
+2. **Instituição Bancária & Financeira Única:**
+   - **Razão Social:** `BancoFe — Banco & Operações Financeiras`
+   - **Identificador Técnico:** `bancofe`
+   - **Badge:** `Banco & Finanças` (Verde Esmeralda)
+   - **Unificação Realizada:** As antigas entidades ("BancoFe Banco / Open Finance" e "BancoFe Operações Financeiras / CRM") foram 100% unificadas em uma única instituição financeira.
+   - **Escopo Integrado:** Core Banking digital, Open Finance Bacen, liquidação instantânea PIX 24/7, Mesa de Crédito Algorítmica com Dossiê SCR Bacen, Parecer IA, emissão de CCBs eletrônicas e Securitizadora FIDC.
+   - **Métricas:** R$ 40,19M/mês de pipeline gerido, mais de 160 mil transações/mês e SLA de 99,99%.
+
+3. **Empresas Consolidadas do Grupo (13 Negócios com Marcas Independentes):**
+   - Nenhuma dessas empresas leva a palavra "BancoFe" no nome, operando com suas marcas próprias e independentes no mercado, consolidadas financeiramente na Holding:
+     1. **Zuma Cozinha Oriental** (`zuma_gastronomia`) — Gastronomia Japonesa Contemporânea (27 mesas, PDV Touch, KDS)
+     2. **Zuma Agropecuária & Safra MT** (`zuma_agro`) — Commodities, Soja, Milho, Barter e Balança Rodoviária
+     3. **Zuma Moda, Roupas & Boutique** (`zuma_moda`) — Varejo e Boutique Conceitual (Grade P/M/G/GG, EAN-13)
+     4. **Rota Norte Logística & Frotas** (`bancofe_logistica`) — Roteirização Multiobjetivo GPS, Motoboys e Carretas
+     5. **Palatare Pizzaria Napolitana** (`palatare-pizzaria`) — Pizzaria artesanal, forno automatizado e TEF
+     6. **Barbearia Dino Premium** (`barbearia-dino`) — Barbearia executiva, agendamento inteligente e comanda
+     7. **Agro Open TTC Clube & Esportes** (`agro-open-ttc`) — Complexo esportivo, ranking Elo e portaria eletrônica
+     8. **Serrano Concreto & Britagem** (`serrano-concreto`) — Concreto usinado, britagem e frotas de betoneiras
+     9. **Casa Nova Negócios Imobiliários** (`casa-nova-imoveis`) — Loteamentos, locação, venda e vistorias digitais
+     10. **Stallone Nutre Sport Suplementação** (`stallone-nutre-sport`) — Nutrição esportiva e catálogo omnichannel
+     11. **Supermercado Kytto Atacado & Varejo** (`supermercado-kytto`) — Frente de caixa com balança conectada e NFC-e
+     12. **Kytto Energia Solar & Renováveis** (`kytto-energia-solar`) — Geração distribuída fotovoltaica e telemetria
+     13. **Kytto Cloud & Software Solutions** (`kytto-tech-software`) — Engenharia de software, barramento MCP e IA Gemini
+
+### 8.2. Seletor Visual na Sidebar (Local Marcado)
+No topo da Sidebar, exatamente no local demarcado pelo operador:
+- **Card Fixo da Holding:** Permite ativar a Holding com 1 clique (com contorno dourado iluminado e badge "ATIVA" quando selecionada).
+- **Seletor de Empresas do Grupo:** Localizado imediatamente abaixo da Holding, exibe a empresa ativa com badge de identificação e, ao abrir, lista no topo a **Instituição Financeira Única (`BancoFe — Banco & Operações Financeiras`)** seguida pelas **13 Empresas Independentes**.
+- **Atalhos Rápidos:** Três botões diretos `[👑 Holding]`, `[🏛️ Finanças]` e `[🏢 Empresas]` para comutação instantânea de contexto operacional.
