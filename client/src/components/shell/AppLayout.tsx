@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Sidebar } from "./Sidebar";
+import { SidebarSimples as Sidebar } from "./SidebarSimples";
 import { useLocation, Link } from "wouter";
 import { 
   Flame, 

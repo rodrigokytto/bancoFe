@@ -553,7 +553,7 @@ export const CrmFinanceiraPage: React.FC = () => {
           <span className="font-semibold">{visaoConsolidada ? "Consolidado de todas as empresas do grupo (Holding)" : `Somente ${nomeEmpresaEscopo}`}</span>
           <span className="text-slate-500 dark:text-slate-400">
             {visaoConsolidada
-              ? "• Selecione uma empresa no topo para ver apenas os dados dela."
+              ? "• Selecione uma empresa no menu lateral para ver apenas os dados dela."
               : empresaEscopo === "bancofe"
                 ? "• Inclui operações próprias e de clientes externos da financeira. Consolidado disponível na Holding."
                 : "• Funil, mesa, CCB, carteira, termos e indicadores exibem apenas operações desta empresa. Consolidado disponível na Holding."}
