@@ -21,7 +21,7 @@
         "monthlySavings": 34800,
         "activeUsersCount": 42,
         "hoursSavedMonthly": 180,
-        "complianceScore": 100.0
+        "complianceScore": 100
       },
       "createdAt": "2026-01-01T00:00:00Z",
       "updatedAt": "2026-11-24T00:00:00Z"
@@ -46,7 +46,7 @@
         "monthlySavings": 92000,
         "activeUsersCount": 18,
         "hoursSavedMonthly": 210,
-        "complianceScore": 100.0
+        "complianceScore": 100
       },
       "createdAt": "2026-01-01T00:00:00Z",
       "updatedAt": "2026-11-24T00:00:00Z"
@@ -146,7 +146,7 @@
         "monthlySavings": 12500,
         "activeUsersCount": 22,
         "hoursSavedMonthly": 105,
-        "complianceScore": 100.0
+        "complianceScore": 100
       },
       "createdAt": "2026-01-01T00:00:00Z",
       "updatedAt": "2026-11-24T00:00:00Z"
@@ -171,7 +171,7 @@
         "monthlySavings": 54000,
         "activeUsersCount": 35,
         "hoursSavedMonthly": 210,
-        "complianceScore": 100.0
+        "complianceScore": 100
       },
       "createdAt": "2026-01-01T00:00:00Z",
       "updatedAt": "2026-11-24T00:00:00Z"
@@ -246,7 +246,7 @@
         "monthlySavings": 62000,
         "activeUsersCount": 52,
         "hoursSavedMonthly": 280,
-        "complianceScore": 100.0
+        "complianceScore": 100
       },
       "createdAt": "2026-01-01T00:00:00Z",
       "updatedAt": "2026-11-24T00:00:00Z"
@@ -271,7 +271,7 @@
         "monthlySavings": 86000,
         "activeUsersCount": 19,
         "hoursSavedMonthly": 210,
-        "complianceScore": 100.0
+        "complianceScore": 100
       },
       "createdAt": "2026-01-01T00:00:00Z",
       "updatedAt": "2026-11-24T00:00:00Z"
@@ -321,7 +321,7 @@
         "monthlySavings": 45000,
         "activeUsersCount": 14,
         "hoursSavedMonthly": 90,
-        "complianceScore": 100.0
+        "complianceScore": 100
       },
       "createdAt": "2026-01-01T00:00:00Z",
       "updatedAt": "2026-11-24T00:00:00Z"
@@ -346,7 +346,7 @@
         "monthlySavings": 19500,
         "activeUsersCount": 32,
         "hoursSavedMonthly": 165,
-        "complianceScore": 100.0
+        "complianceScore": 100
       },
       "createdAt": "2026-01-01T00:00:00Z",
       "updatedAt": "2026-11-24T00:00:00Z"
@@ -366,12 +366,12 @@
       "metrics": {
         "monthlyVolume": 1850000,
         "monthlyTransactions": 850000,
-        "uptimeSla": 100.0,
+        "uptimeSla": 100,
         "avgLatencyMs": 8,
         "monthlySavings": 78000,
         "activeUsersCount": 25,
         "hoursSavedMonthly": 290,
-        "complianceScore": 100.0
+        "complianceScore": 100
       },
       "createdAt": "2026-01-01T00:00:00Z",
       "updatedAt": "2026-11-24T00:00:00Z"
@@ -396,7 +396,33 @@
         "monthlySavings": 310000,
         "activeUsersCount": 75,
         "hoursSavedMonthly": 480,
-        "complianceScore": 100.0
+        "complianceScore": 100
+      },
+      "createdAt": "2026-01-01T00:00:00Z",
+      "updatedAt": "2026-11-24T00:00:00Z"
+    },
+    {
+      "id": "operacoes_financeiras_crm",
+      "name": "BancoFe — Operações Financeiras & CRM 360°",
+      "slug": "crm-financeira",
+      "description": "Esteira completa de crédito comercial, funil de oportunidades CRM, formalização CCB digital, mesa de crédito algorítmica, gestão de cedentes/sacados e cobrança automatizada.",
+      "iconName": "TrendingUp",
+      "badge": "Operações & CRM",
+      "colorScheme": "emerald",
+      "cnpj": "52.889.341/0001-92",
+      "cidade": "São Paulo - SP & Tangará da Serra - MT",
+      "unidade": "Mesa de Operações & Crédito Estruturado",
+      "status": "active",
+      "isDefault": true,
+      "metrics": {
+        "monthlyVolume": 22840000,
+        "monthlyTransactions": 8450,
+        "uptimeSla": 99.99,
+        "avgLatencyMs": 14,
+        "monthlySavings": 84500,
+        "activeUsersCount": 34,
+        "hoursSavedMonthly": 240,
+        "complianceScore": 100
       },
       "createdAt": "2026-01-01T00:00:00Z",
       "updatedAt": "2026-11-24T00:00:00Z"
@@ -1613,7 +1639,7 @@
         ],
         "telemetry": {
           "monthlyRequests": 89000,
-          "uptimePercent": 100.0,
+          "uptimePercent": 100,
           "avgLatencyMs": 9,
           "status": "healthy",
           "monthlyVolume": 4500000,
@@ -1730,7 +1756,7 @@
         ],
         "telemetry": {
           "monthlyRequests": 89000,
-          "uptimePercent": 100.0,
+          "uptimePercent": 100,
           "avgLatencyMs": 9,
           "status": "healthy",
           "monthlyVolume": 4500000,
@@ -1847,7 +1873,7 @@
         ],
         "telemetry": {
           "monthlyRequests": 89000,
-          "uptimePercent": 100.0,
+          "uptimePercent": 100,
           "avgLatencyMs": 9,
           "status": "healthy",
           "monthlyVolume": 4500000,
@@ -1964,7 +1990,7 @@
         ],
         "telemetry": {
           "monthlyRequests": 89000,
-          "uptimePercent": 100.0,
+          "uptimePercent": 100,
           "avgLatencyMs": 9,
           "status": "healthy",
           "monthlyVolume": 4500000,
@@ -2081,7 +2107,7 @@
         ],
         "telemetry": {
           "monthlyRequests": 89000,
-          "uptimePercent": 100.0,
+          "uptimePercent": 100,
           "avgLatencyMs": 9,
           "status": "healthy",
           "monthlyVolume": 4500000,
@@ -2198,7 +2224,7 @@
         ],
         "telemetry": {
           "monthlyRequests": 89000,
-          "uptimePercent": 100.0,
+          "uptimePercent": 100,
           "avgLatencyMs": 9,
           "status": "healthy",
           "monthlyVolume": 4500000,
@@ -2315,7 +2341,7 @@
         ],
         "telemetry": {
           "monthlyRequests": 89000,
-          "uptimePercent": 100.0,
+          "uptimePercent": 100,
           "avgLatencyMs": 9,
           "status": "healthy",
           "monthlyVolume": 4500000,
@@ -2432,7 +2458,7 @@
         ],
         "telemetry": {
           "monthlyRequests": 89000,
-          "uptimePercent": 100.0,
+          "uptimePercent": 100,
           "avgLatencyMs": 9,
           "status": "healthy",
           "monthlyVolume": 4500000,
@@ -2549,7 +2575,7 @@
         ],
         "telemetry": {
           "monthlyRequests": 89000,
-          "uptimePercent": 100.0,
+          "uptimePercent": 100,
           "avgLatencyMs": 9,
           "status": "healthy",
           "monthlyVolume": 4500000,
@@ -2666,7 +2692,7 @@
         ],
         "telemetry": {
           "monthlyRequests": 89000,
-          "uptimePercent": 100.0,
+          "uptimePercent": 100,
           "avgLatencyMs": 9,
           "status": "healthy",
           "monthlyVolume": 4500000,
@@ -2679,5 +2705,5 @@
       }
     ]
   },
-  "updatedAt": "2026-11-24T00:03:33.746Z"
+  "updatedAt": "2026-11-24T01:02:38.381Z"
 }
