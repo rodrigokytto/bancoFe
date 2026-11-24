@@ -24,17 +24,19 @@ export const LoginPage: React.FC = () => {
   const [, setLocation] = useLocation();
   const { isAuthenticated, login, isLoading: authLoading } = useAuth();
 
-  const [email, setEmail] = useState("rrodrigogon@gmail.com");
+  const [email, setEmail] = useState("rodrigo.goncalves@kytto.com.br");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Se já estiver logado, redireciona para o cockpit
+  // Se já estiver logado, redireciona para o admin ou returnTo
   useEffect(() => {
     if (isAuthenticated) {
-      setLocation("/cockpit");
+      const urlParams = new URLSearchParams(window.location.search);
+      const dest = urlParams.get("returnTo") || "/admin";
+      setLocation(dest);
     }
   }, [isAuthenticated, setLocation]);
 
@@ -57,10 +59,12 @@ export const LoginPage: React.FC = () => {
     try {
       await login(email, password, rememberMe);
       toast.success("Acesso autorizado! Bem-vindo de volta, Rodrigo.", {
-        description: "Carregando o Cockpit Geral do Zuma Pilot...",
+        description: "Carregando o ecossistema BancoFe...",
         icon: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
       });
-      setLocation("/cockpit");
+      const urlParams = new URLSearchParams(window.location.search);
+      const dest = urlParams.get("returnTo") || "/admin";
+      setLocation(dest);
     } catch (err: any) {
       setErrorMessage(err.message || "E-mail ou senha incorretos.");
       toast.error("Falha na autenticação", {

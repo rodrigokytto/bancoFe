@@ -11,6 +11,7 @@ import { registerIntegrationRoutes } from "../integrationsService";
 import { registerBancoFeRoutes } from "../../src/server/app";
 import { registerCrmFinanceiraRoutes } from "../crmFinanceiraRoutes";
 import { registerCadastro360Routes } from "../cadastro360Routes";
+import { registerBancoFeCoreRoutes } from "../bancofeCoreRoutes";
 
 async function startServer() {
   const app = express();
@@ -37,6 +38,9 @@ async function startServer() {
   registerBancoFeRoutes(app);
   registerOAuthRoutes(app);
   registerIntegrationRoutes(app);
+  registerCrmFinanceiraRoutes(app);
+  registerBancoFeCoreRoutes(app);
+  registerCadastro360Routes(app);
   // tRPC API
   app.use(
     "/api/trpc",

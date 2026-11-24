@@ -116,7 +116,11 @@ function Router() {
     location.startsWith("/portal") ||
     location.startsWith("/minha-conta") ||
     location.startsWith("/gestao-emprestimos") ||
-    location.startsWith("/fechamento");
+    location.startsWith("/fechamento") ||
+    location.startsWith("/mesa-credito") ||
+    location.startsWith("/credito") ||
+    location.startsWith("/operacoes-financeiras") ||
+    location.startsWith("/investimentos");
 
   if (!isAuthenticated && !isPublicClientRoute) {
     return <LoginPage />;
@@ -178,6 +182,19 @@ function Router() {
             <Route path="/administracao" component={AdminModulosPage} />
             <Route path="/administracao/modulos" component={AdminModulosPage} />
             <Route path="/admin-modulos" component={AdminModulosPage} />
+            <Route path="/admin/empresas" component={AdminModulosPage} />
+            <Route path="/empresas" component={AdminModulosPage} />
+            {/* BancoFe — Mesa de Crédito (5 Etapas & Rating AAA) & Operações Financeiras */}
+            <Route path="/admin/mesa-credito" component={CrmFinanceiraPage} />
+            <Route path="/admin/credito" component={CrmFinanceiraPage} />
+            <Route path="/mesa-credito" component={CrmFinanceiraPage} />
+            <Route path="/credito" component={CrmFinanceiraPage} />
+            <Route path="/admin/mesa-operacoes" component={CrmFinanceiraPage} />
+            <Route path="/mesa-operacoes" component={CrmFinanceiraPage} />
+            <Route path="/admin/investimentos" component={CrmFinanceiraPage} />
+            <Route path="/investimentos" component={CrmFinanceiraPage} />
+            <Route path="/admin/barramento" component={Integracoes} />
+            <Route path="/barramento" component={Integracoes} />
 
             {/* BancoFe — Operações Financeiras & CRM 360° */}
             <Route path="/admin/operacoes" component={CrmFinanceiraPage} />

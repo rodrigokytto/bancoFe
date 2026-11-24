@@ -47,6 +47,7 @@ import { toast } from "sonner";
 import PortalClientePage from "./PortalClientePage";
 import { Banknote, UploadCloud, QrCode } from "lucide-react";
 import { PrecadastrosCasaNovaTab } from "../components/crm/PrecadastrosCasaNovaTab";
+import { DEFAULT_BUSINESSES } from "@shared/businessModules";
 
 // Interface dos tipos de operações
 export interface OportunidadeOperacaoFinanceira {
@@ -226,14 +227,22 @@ export const CrmFinanceiraPage: React.FC = () => {
       } else if (["mesa", "simulador", "ccb", "termos", "consulta360", "carteira", "antecipacao", "gestao_emprestimos", "portal_cliente"].includes(tab)) {
         setActiveTab(tab as any);
       }
-    } else if (window.location.pathname.includes("mesa")) {
+    } else if (location.includes("mesa-credito") || location.includes("/credito") || window.location.pathname.includes("mesa")) {
       setActiveTab("mesa");
+    } else if (location.includes("investimentos") || location.includes("simulador")) {
+      setActiveTab("simulador");
+    } else if (location.includes("ccb") || location.includes("formalizacao")) {
+      setActiveTab("ccb");
+    } else if (location.includes("carteira") || location.includes("pdd")) {
+      setActiveTab("carteira");
+    } else if (location.includes("antecipacao") || location.includes("recebiveis")) {
+      setActiveTab("antecipacao");
     } else if (window.location.pathname.includes("gestao-emprestimos")) {
       setActiveTab("gestao_emprestimos");
     } else if (window.location.pathname.includes("portal-cliente")) {
       setActiveTab("portal_cliente");
     }
-  }, []);
+  }, [location]);
 
   const handleMudarAba = (novaAba: string) => {
     const tabAlvo = novaAba === "kanban" ? "funil" : novaAba;
@@ -716,13 +725,10 @@ export const CrmFinanceiraPage: React.FC = () => {
                 onChange={(e) => setSelectedEmpresa(e.target.value)}
                 className="text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-slate-700 dark:text-slate-300 focus:outline-hidden cursor-pointer"
               >
-                <option value="todos">Todas as Empresas ({oportunidades.length})</option>
-                <option value="bancofe">BancoFe Fintech</option>
-                <option value="holding_kytto">Holding Kytto</option>
-                <option value="zuma_agro">Agro MT Fazendas</option>
-                <option value="zuma_restaurante">Zuma Restaurante</option>
-                <option value="zuma_moda">Zuma Moda & Boutique</option>
-                <option value="bancofe_credito">BancoFe Crédito PJ</option>
+                <option value="todos">Todas as 16 Empresas do Grupo ({oportunidades.length})</option>
+                {DEFAULT_BUSINESSES.map((b) => (
+                  <option key={b.id} value={b.id}>{b.name}</option>
+                ))}
               </select>
             </div>
           </div>
@@ -2082,26 +2088,18 @@ export const CrmFinanceiraPage: React.FC = () => {
                   <select
                     value={formData.empresaOrigemId}
                     onChange={(e) => {
-                      const names: Record<string, string> = {
-                        bancofe: "BancoFe Fintech",
-                        holding_kytto: "Holding Kytto",
-                        zuma_agro: "Agro MT Fazendas",
-                        zuma_restaurante: "Zuma Restaurante",
-                        zuma_moda: "Zuma Moda & Boutique",
-                      };
+                      const emp = DEFAULT_BUSINESSES.find(b => b.id === e.target.value);
                       setFormData({
                         ...formData,
                         empresaOrigemId: e.target.value,
-                        empresaOrigemNome: names[e.target.value] || "BancoFe Fintech",
+                        empresaOrigemNome: emp?.name || "BancoFe Fintech",
                       });
                     }}
                     className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
                   >
-                    <option value="bancofe">BancoFe Fintech</option>
-                    <option value="holding_kytto">Holding Kytto</option>
-                    <option value="zuma_agro">Agro MT Fazendas</option>
-                    <option value="zuma_restaurante">Zuma Restaurante</option>
-                    <option value="zuma_moda">Zuma Moda & Boutique</option>
+                    {DEFAULT_BUSINESSES.map((b) => (
+                      <option key={b.id} value={b.id}>{b.name}</option>
+                    ))}
                   </select>
                 </div>
               </div>
