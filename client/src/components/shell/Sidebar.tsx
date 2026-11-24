@@ -43,6 +43,8 @@ import {
 import { useTheme } from "../../contexts/ThemeContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { useBusiness } from "../../contexts/BusinessContext";
+import { fetchEmpresa } from "../../lib/fetchEmpresa";
+import { normalizarEmpresaId, ehVisaoConsolidada } from "@shared/escopoEmpresa";
 import { DynamicIcon } from "../DynamicIcon";
 import * as Icons from "lucide-react";
 import { toast } from "sonner";
@@ -178,7 +180,35 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const [serendipidadeIndex, setSerendipidadeIndex] = useState(0);
   const [simulatorOpen, setSimulatorOpen] = useState(false);
   const [criterioInicial, setCriterioInicial] = useState<any>("credito");
-  const dicaAtual = DICAS_SERENDIPIDADE[serendipidadeIndex];
+  // Indicadores do widget conforme a empresa ativa (consolidado só na Holding)
+  const [resumoEscopo, setResumoEscopo] = useState<{ ops: number; volume: number; proponentes: number } | null>(null);
+  useEffect(() => {
+    let ativo = true;
+    const id = activeBusiness?.id || "bancofe";
+    Promise.all([
+      fetchEmpresa("/api/admin/operacoes-financeiras/crm/gestao", {}, id).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetchEmpresa("/api/admin/operacoes-financeiras/crm/precadastros?tamanhoPagina=1", {}, id).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    ]).then(([g, p]) => {
+      if (!ativo) return;
+      const ops = Number(g?.totalOportunidadesAtivas ?? g?.totalOportunidades ?? Object.values(g?.distribuicaoPorEstagio || {}).reduce((s: number, e: any) => s + (e?.count || 0), 0) ?? 0);
+      setResumoEscopo({ ops: ops || 0, volume: Number(g?.volumeTotalPipeline || 0), proponentes: Number(p?.total ?? 0) });
+    });
+    return () => { ativo = false; };
+  }, [activeBusiness?.id]);
+  const escopoConsolidado = ehVisaoConsolidada(normalizarEmpresaId(activeBusiness?.id || ""));
+  const nomeEscopo = escopoConsolidado ? "do grupo" : `de ${activeBusiness?.name || "empresa"}`;
+  const fmtMi = (v: number) => (v >= 1_000_000 ? `R$ ${(v / 1_000_000).toFixed(2).replace(".", ",")}M` : v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }));
+  const dicasEscopo: DicaSerendipidade[] = DICAS_SERENDIPIDADE.map((d) => {
+    if (!resumoEscopo) return d;
+    if (d.id === "credito_funil") {
+      return { ...d, tag: `${resumoEscopo.ops} OPERAÇÕES ATIVAS`, texto: `${resumoEscopo.ops} operações em andamento ${nomeEscopo} totalizando ${fmtMi(resumoEscopo.volume)}. Propostas com LTV < 65% prontas para homologação no comitê executivo de risco.` };
+    }
+    if (d.id === "casanova_proponentes") {
+      return { ...d, tag: `${resumoEscopo.proponentes} PROPONENTES`, texto: resumoEscopo.proponentes > 0 ? `${resumoEscopo.proponentes} proponentes da base Casa Nova visíveis ${nomeEscopo} com checklist documental e conformidade LGPD aprovada para emissão de CCB Digital.` : `Nenhum proponente da base Casa Nova no escopo ${nomeEscopo}. Consolidado disponível na Holding.` };
+    }
+    return d;
+  });
+  const dicaAtual = dicasEscopo[serendipidadeIndex] || dicasEscopo[0];
 
   const proximaDica = () => {
     setSerendipidadeIndex((prev) => (prev + 1) % DICAS_SERENDIPIDADE.length);
@@ -548,7 +578,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     ? "bg-[var(--salmon)] text-white shadow-xs font-black ring-2 ring-[var(--salmon)]/30"
                     : "text-[var(--muted)] hover:text-[var(--salmon)] hover:bg-[var(--salmon)]/10"
                 }`}
-                title="📈 Funil de Operações (31 Ops - R$ 29,43M)"
+                title={`📈 Funil de Operações (${resumoEscopo?.ops ?? 0} Ops - ${fmtMi(resumoEscopo?.volume ?? 0)})`}
               >
                 <TrendingUp className="w-5 h-5" />
               </Link>

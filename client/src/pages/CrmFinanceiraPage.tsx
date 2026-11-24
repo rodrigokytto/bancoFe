@@ -51,6 +51,8 @@ import { PrecadastrosCasaNovaTab } from "../components/crm/PrecadastrosCasaNovaT
 import { DEFAULT_BUSINESSES } from "@shared/businessModules";
 import OPORTUNIDADES_PADRAO from "../../../data/crmFinanceiraOportunidades.json";
 import { useBusiness } from "../contexts/BusinessContext";
+import { fetchEmpresa as fetchEmpresaBase } from "@/lib/fetchEmpresa";
+import { normalizarEmpresaId, origemNoEscopo, ehVisaoConsolidada } from "@shared/escopoEmpresa";
 
 // Interface dos tipos de operações
 export interface OportunidadeOperacaoFinanceira {
@@ -152,7 +154,15 @@ const ESTAGIOS_KANBAN = [
 
 export const CrmFinanceiraPage: React.FC = () => {
   const [location, setLocation] = useLocation();
-  const { activeBusiness, setActiveBusinessId } = useBusiness();
+  // Escopo por empresa: a empresa selecionada no topo define TODOS os dados da página
+  const { activeBusinessId, activeBusiness, setActiveBusinessId } = useBusiness();
+  const empresaEscopo = normalizarEmpresaId(activeBusinessId);
+  const visaoConsolidada = ehVisaoConsolidada(empresaEscopo);
+  const nomeEmpresaEscopo = visaoConsolidada
+    ? "Consolidado do Grupo"
+    : (activeBusiness?.name || DEFAULT_BUSINESSES.find((b) => normalizarEmpresaId(b.id) === empresaEscopo)?.name || activeBusinessId);
+  const noEscopo = (origem?: string | null) => origemNoEscopo(empresaEscopo, origem);
+  const fetchEmpresa = (input: RequestInfo | URL, init: RequestInit = {}) => fetchEmpresaBase(input, init, activeBusinessId);
 
   // Estados principais
   const [oportunidades, setOportunidades] = useState<OportunidadeOperacaoFinanceira[]>([]);
@@ -167,6 +177,7 @@ export const CrmFinanceiraPage: React.FC = () => {
 
   // Estado da Central de Termos Digitais & SCR Bacen
   const [termos, setTermos] = useState<any[]>([]);
+  const [totalPrecadastros, setTotalPrecadastros] = useState<number>(0);
   const [filtroTipoTermo, setFiltroTipoTermo] = useState<string>("todos");
   const [buscaTermo, setBuscaTermo] = useState<string>("");
   const [termoVisualizar, setTermoVisualizar] = useState<any | null>(null);
@@ -260,48 +271,45 @@ export const CrmFinanceiraPage: React.FC = () => {
   };
 
   // Carregar dados da API
+  // Contingência (API indisponível): dados locais, porém filtrados pela empresa ativa
+  const fallbackEscopo = () =>
+    ((OPORTUNIDADES_PADRAO as any[]) || []).filter((o: any) => noEscopo(o.empresaOrigemId)) as any;
   const carregarDados = async () => {
     try {
       setIsRefreshing(true);
       const [resGestao, resOps, resTermos] = await Promise.all([
-        fetch("/api/admin/operacoes-financeiras/crm/gestao"),
-        fetch("/api/admin/operacoes-financeiras/crm/oportunidades"),
-        fetch("/api/bancofe/cadastro360/termos").catch(() => null),
+        fetchEmpresa("/api/admin/operacoes-financeiras/crm/gestao"),
+        fetchEmpresa("/api/admin/operacoes-financeiras/crm/oportunidades"),
+        fetchEmpresa("/api/bancofe/cadastro360/termos").catch(() => null),
       ]);
 
       if (resGestao.ok) {
         const gestaoData = await resGestao.json();
         setMetricas(gestaoData);
       } else {
-        setMetricas({
-          volumeTotalPipeline: 23770000,
-          volumeLiquidadoMes: 1820000,
-          totalOportunidadesAtivas: 22,
-          ticketMedio: 3395714,
-          taxaMediaMensal: 1.29,
-          spreadLiquidoMedio: 0.85,
-          taxaInadimplenciaPercentual: 0.0,
-          distribuicaoPorEstagio: {},
-          distribuicaoPorEmpresa: {},
-          slaMedioHorasAprovacao: 3.5,
-          economiaGeradaClientes: 420000
-        });
+        setMetricas(null);
       }
 
       if (resOps.ok) {
         const opsData = await resOps.json();
-        setOportunidades(opsData.oportunidades && opsData.oportunidades.length > 0 ? opsData.oportunidades : (OPORTUNIDADES_PADRAO as any));
+        const lista = Array.isArray(opsData) ? opsData : opsData.oportunidades;
+        setOportunidades(Array.isArray(lista) ? lista : fallbackEscopo());
       } else {
-        setOportunidades(OPORTUNIDADES_PADRAO as any);
+        setOportunidades(fallbackEscopo());
       }
 
+      fetchEmpresa("/api/admin/operacoes-financeiras/crm/precadastros?tamanhoPagina=1")
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => setTotalPrecadastros(Number(d?.total ?? 0)))
+        .catch(() => setTotalPrecadastros(0));
+      setTermos([]);
       if (resTermos && resTermos.ok) {
         const termosData = await resTermos.json();
         setTermos(termosData.data || []);
       }
     } catch (err) {
       console.warn("Utilizando dados de contingencia BancoFe:", err);
-      setOportunidades(OPORTUNIDADES_PADRAO as any);
+      setOportunidades(fallbackEscopo());
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
@@ -317,7 +325,7 @@ export const CrmFinanceiraPage: React.FC = () => {
     }
     try {
       setCarregando360(true);
-      const res = await fetch("/api/consulta360/consultar", {
+      const res = await fetchEmpresa("/api/consulta360/consultar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ documentoOuNome: docAlvo }),
@@ -339,7 +347,7 @@ export const CrmFinanceiraPage: React.FC = () => {
   const handleExportarExcel360 = async () => {
     if (!dossie360) return;
     try {
-      const res = await fetch("/api/consulta360/exportar/excel", {
+      const res = await fetchEmpresa("/api/consulta360/exportar/excel", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dossie: dossie360 }),
@@ -359,7 +367,7 @@ export const CrmFinanceiraPage: React.FC = () => {
   const handleExportarPdf360 = async () => {
     if (!dossie360) return;
     try {
-      const res = await fetch("/api/consulta360/exportar/pdf", {
+      const res = await fetchEmpresa("/api/consulta360/exportar/pdf", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dossie: dossie360 }),
@@ -377,8 +385,10 @@ export const CrmFinanceiraPage: React.FC = () => {
   };
 
   useEffect(() => {
+    setSelectedEmpresa("todos");
+    setFormData((f) => ({ ...f, empresaOrigemId: visaoConsolidada ? "bancofe" : activeBusinessId, empresaOrigemNome: visaoConsolidada ? "BancoFe Fintech" : nomeEmpresaEscopo }));
     carregarDados();
-  }, []);
+  }, [activeBusinessId]);
 
   // Executar simulação inicial
   useEffect(() => {
@@ -388,7 +398,7 @@ export const CrmFinanceiraPage: React.FC = () => {
   const handleSimular = async () => {
     try {
       setIsSimulando(true);
-      const res = await fetch("/api/admin/operacoes-financeiras/crm/simular", {
+      const res = await fetchEmpresa("/api/admin/operacoes-financeiras/crm/simular", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(simuladorParams),
@@ -407,7 +417,7 @@ export const CrmFinanceiraPage: React.FC = () => {
   // Mudar estágio no Kanban
   const handleMudarEstagio = async (opId: string, novoEstagio: string, observacao = "") => {
     try {
-      const res = await fetch(`/api/admin/operacoes-financeiras/crm/oportunidades/${opId}`, {
+      const res = await fetchEmpresa(`/api/admin/operacoes-financeiras/crm/oportunidades/${opId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -437,7 +447,7 @@ export const CrmFinanceiraPage: React.FC = () => {
     }
 
     try {
-      const res = await fetch("/api/admin/operacoes-financeiras/crm/oportunidades", {
+      const res = await fetchEmpresa("/api/admin/operacoes-financeiras/crm/oportunidades", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -479,7 +489,7 @@ export const CrmFinanceiraPage: React.FC = () => {
   const handleExcluir = async (id: string) => {
     if (!confirm("Tem certeza que deseja excluir esta operação do funil?")) return;
     try {
-      const res = await fetch(`/api/admin/operacoes-financeiras/crm/oportunidades/${id}`, {
+      const res = await fetchEmpresa(`/api/admin/operacoes-financeiras/crm/oportunidades/${id}`, {
         method: "DELETE",
       });
       if (res.ok) {
@@ -505,7 +515,7 @@ export const CrmFinanceiraPage: React.FC = () => {
   // Filtragem de oportunidades
   const filteredOportunidades = useMemo(() => {
     return oportunidades.filter((op) => {
-      const matchEmpresa = selectedEmpresa === "todos" || op.empresaOrigemId === selectedEmpresa;
+      const matchEmpresa = selectedEmpresa === "todos" || normalizarEmpresaId(op.empresaOrigemId) === normalizarEmpresaId(selectedEmpresa);
       const matchEstagio =
         selectedEstagio === "todos" ||
         op.estagio === selectedEstagio ||
@@ -521,6 +531,12 @@ export const CrmFinanceiraPage: React.FC = () => {
       return matchEmpresa && matchEstagio && matchTermo;
     });
   }, [oportunidades, selectedEmpresa, selectedEstagio, searchTerm]);
+  // PDD (CMN 2.682/99) calculado sobre a carteira do escopo ativo
+  const opsLiquidadas = oportunidades.filter((o: any) => o.etapa === "contratado" || o.estagio === "liquidado");
+  const opsAbertas = oportunidades.filter((o: any) => o.etapa !== "contratado" && o.etapa !== "perdido" && o.estagio !== "liquidado" && o.estagio !== "perdido");
+  const pddAA = opsLiquidadas.length;
+  const pddA = opsAbertas.length;
+  const pddProvisaoA = Math.round(opsAbertas.reduce((s: number, o: any) => s + (o.valorAprovado || o.valorSolicitado || Math.round((o.valorCentavos || 0) / 100) || 0), 0) * 0.005);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 p-4 sm:p-6 lg:p-8">
@@ -528,6 +544,21 @@ export const CrmFinanceiraPage: React.FC = () => {
           TOPO: BREADCRUMB & HEADER INSTITUCIONAL BANCOFÉ INSTITUCIONAL CLEAN (#0c4a34)
           ========================================================================= */}
       <div className="max-w-7xl mx-auto mb-6">
+        <div
+          data-testid="escopo-empresa"
+          className={`mb-4 flex flex-wrap items-center gap-2 rounded-2xl border px-4 py-2.5 text-xs ${visaoConsolidada ? "border-indigo-500/30 bg-indigo-500/5 text-indigo-700 dark:text-indigo-300" : "border-emerald-600/30 bg-emerald-600/5 text-[#0c4a34] dark:text-emerald-300"}`}
+        >
+          <Building2 className="w-4 h-4" />
+          <span className="font-bold uppercase tracking-wide">Escopo de dados:</span>
+          <span className="font-semibold">{visaoConsolidada ? "Consolidado de todas as empresas do grupo (Holding)" : `Somente ${nomeEmpresaEscopo}`}</span>
+          <span className="text-slate-500 dark:text-slate-400">
+            {visaoConsolidada
+              ? "• Selecione uma empresa no topo para ver apenas os dados dela."
+              : empresaEscopo === "bancofe"
+                ? "• Inclui operações próprias e de clientes externos da financeira. Consolidado disponível na Holding."
+                : "• Funil, mesa, CCB, carteira, termos e indicadores exibem apenas operações desta empresa. Consolidado disponível na Holding."}
+          </span>
+        </div>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-slate-200 dark:border-slate-800">
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-1">
@@ -670,20 +701,20 @@ export const CrmFinanceiraPage: React.FC = () => {
               <span className="font-medium">Pipeline Total em Esteira</span>
               <DollarSign className="w-4 h-4 text-[#0c4a34]" />
             </div>
-            <div className="text-lg sm:text-xl lg:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-mono truncate" title={formatMoney(metricas?.volumeTotalPipeline || 23770000)}>
-              {formatMoney(metricas?.volumeTotalPipeline || 23770000)}
+            <div className="text-lg sm:text-xl lg:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-mono truncate" title={formatMoney(metricas?.volumeTotalPipeline ?? 0)}>
+              {formatMoney(metricas?.volumeTotalPipeline ?? 0)}
             </div>
             <div className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 mt-1">
               <TrendingUp className="w-3 h-3" />
-              <span>{oportunidades.length} operações registradas no grupo</span>
+              <span>{oportunidades.length} operações registradas {visaoConsolidada ? "no grupo" : `em ${nomeEmpresaEscopo}`}</span>
             </div>
           </div>
 
           {/* Card 2: Liquidado */}
           <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 p-4 shadow-xs min-w-0 overflow-hidden">
             <div className="text-xs text-slate-500 dark:text-slate-400 mb-1">Liquidado no Mês</div>
-            <div className="text-[13px] sm:text-[14px] xl:text-[15px] font-black text-slate-900 dark:text-slate-100 font-mono tracking-tight whitespace-nowrap" title={formatMoney(metricas?.volumeLiquidadoMes || 1820000)}>
-              {formatMoney(metricas?.volumeLiquidadoMes || 1820000)}
+            <div className="text-[13px] sm:text-[14px] xl:text-[15px] font-black text-slate-900 dark:text-slate-100 font-mono tracking-tight whitespace-nowrap" title={formatMoney(metricas?.volumeLiquidadoMes ?? 0)}>
+              {formatMoney(metricas?.volumeLiquidadoMes ?? 0)}
             </div>
             <div className="text-[11px] text-slate-500 mt-1">Desembolso D+0 Pix</div>
           </div>
@@ -691,8 +722,8 @@ export const CrmFinanceiraPage: React.FC = () => {
           {/* Card 3: Ticket Médio */}
           <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 p-4 shadow-xs min-w-0 overflow-hidden">
             <div className="text-xs text-slate-500 dark:text-slate-400 mb-1">Ticket Médio</div>
-            <div className="text-[13px] sm:text-[14px] xl:text-[15px] font-black text-slate-900 dark:text-slate-100 font-mono tracking-tight whitespace-nowrap" title={formatMoney(metricas?.ticketMedio || 3395714)}>
-              {formatMoney(metricas?.ticketMedio || 3395714)}
+            <div className="text-[13px] sm:text-[14px] xl:text-[15px] font-black text-slate-900 dark:text-slate-100 font-mono tracking-tight whitespace-nowrap" title={formatMoney(metricas?.ticketMedio ?? 0)}>
+              {formatMoney(metricas?.ticketMedio ?? 0)}
             </div>
             <div className="text-[11px] text-slate-500 mt-1">PJ & Agronegócio MT</div>
           </div>
@@ -701,7 +732,7 @@ export const CrmFinanceiraPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 p-4 shadow-xs min-w-0 overflow-hidden">
             <div className="text-xs text-slate-500 dark:text-slate-400 mb-1">Taxa Média Ponderada</div>
             <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400 font-mono">
-              {metricas?.taxaMediaMensal || 1.29}% a.m.
+              {oportunidades.length ? (metricas?.taxaMediaMensal ?? 0) : 0}% a.m.
             </div>
             <div className="text-[11px] text-slate-500 mt-1">Spread líq: ~0.85%</div>
           </div>
@@ -723,15 +754,15 @@ export const CrmFinanceiraPage: React.FC = () => {
             ========================================================================= */}
         <div className="flex items-center gap-1.5 overflow-x-auto py-4 scrollbar-none border-b border-slate-200 dark:border-slate-800">
           {[
-            { id: "funil", label: "Funil & Pipeline", icon: Layers, badge: `${oportunidades.length || 22} Ops` },
-            { id: "precadastros", label: "Pré-cadastros Casa Nova", icon: Building2, badge: "20 Proponentes" },
+            { id: "funil", label: "Funil & Pipeline", icon: Layers, badge: `${oportunidades.length} Ops` },
+            { id: "precadastros", label: "Pré-cadastros Casa Nova", icon: Building2, badge: `${totalPrecadastros} Proponentes` },
             { id: "mesa", label: "Mesa de Crédito & SCR", icon: ShieldCheck, badge: "Alçadas" },
             { id: "gestao_emprestimos", label: "Gestão Empréstimos & Boletos", icon: Landmark, badge: "Mesa Fila" },
             { id: "portal_cliente", label: "Portal do Cliente (Visão Cliente)", icon: CreditCard, badge: "Pix & Boletos" },
             { id: "mesa", label: "Mesa de Crédito & SCR", icon: ShieldCheck, badge: "Alçadas" },
             { id: "simulador", label: "Simulador SAC & PRICE", icon: Calculator, badge: "Tempo Real" },
             { id: "ccb", label: "Formalização CCB Digital", icon: FileCheck2, badge: "ICP-Brasil" },
-            { id: "termos", label: "Central de Termos & SCR", icon: FileText, badge: `${termos.length || 133} Termos` },
+            { id: "termos", label: "Central de Termos & SCR", icon: FileText, badge: `${termos.length} Termos` },
             { id: "consulta360", label: "Consulta 360° CPF & CNPJ", icon: Search, badge: "11 Abas" },
             { id: "carteira", label: "Gestão Carteira & PDD", icon: PieChart, badge: "CMN 2.682" },
             { id: "antecipacao", label: "Antecipação NF-e SEFAZ", icon: Receipt, badge: "D+0 Pix" },
@@ -794,14 +825,22 @@ export const CrmFinanceiraPage: React.FC = () => {
             <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto">
               <span className="text-xs text-slate-400 font-medium whitespace-nowrap">Empresa:</span>
               <select
-                value={selectedEmpresa}
+                value={visaoConsolidada ? selectedEmpresa : "todos"}
+                disabled={!visaoConsolidada}
+                title={visaoConsolidada ? "Filtrar empresa dentro do consolidado" : "Escopo travado na empresa selecionada no topo"}
                 onChange={(e) => setSelectedEmpresa(e.target.value)}
                 className="text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-slate-700 dark:text-slate-300 focus:outline-hidden cursor-pointer"
               >
-                <option value="todos">Todas as 16 Empresas do Grupo ({oportunidades.length})</option>
-                {DEFAULT_BUSINESSES.map((b) => (
-                  <option key={b.id} value={b.id}>{b.name}</option>
-                ))}
+                {visaoConsolidada ? (
+                  <>
+                    <option value="todos">Todas as Empresas do Grupo ({oportunidades.length})</option>
+                    {DEFAULT_BUSINESSES.map((b) => (
+                      <option key={b.id} value={b.id}>{b.name}</option>
+                    ))}
+                  </>
+                ) : (
+                  <option value="todos">{nomeEmpresaEscopo} ({oportunidades.length})</option>
+                )}
               </select>
             </div>
           </div>
@@ -936,6 +975,8 @@ export const CrmFinanceiraPage: React.FC = () => {
       {activeTab === "precadastros" && (
         <div className="max-w-7xl mx-auto">
           <PrecadastrosCasaNovaTab
+            key={activeBusinessId}
+            empresaId={activeBusinessId}
             onAbrirOportunidade={(id) => {
               const op = oportunidades.find((o) => o.id === id);
               if (op) setDetalhesOp(op);
@@ -1359,8 +1400,8 @@ export const CrmFinanceiraPage: React.FC = () => {
 
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
               {[
-                { rating: "AA", perc: "0.0%", provision: "R$ 0,00", ops: 3, cor: "border-emerald-500 bg-emerald-500/5 text-emerald-600" },
-                { rating: "A", perc: "0.5%", provision: "R$ 67.500,00", ops: 4, cor: "border-emerald-400 bg-emerald-400/5 text-emerald-600" },
+                { rating: "AA", perc: "0.0%", provision: "R$ 0,00", ops: pddAA, cor: "border-emerald-500 bg-emerald-500/5 text-emerald-600" },
+                { rating: "A", perc: "0.5%", provision: formatMoney(pddProvisaoA), ops: pddA, cor: "border-emerald-400 bg-emerald-400/5 text-emerald-600" },
                 { rating: "B", perc: "1.0%", provision: "R$ 0,00", ops: 0, cor: "border-blue-400 bg-blue-400/5 text-blue-600" },
                 { rating: "C", perc: "3.0%", provision: "R$ 0,00", ops: 0, cor: "border-blue-500 bg-blue-500/5 text-blue-600" },
                 { rating: "D", perc: "10.0%", provision: "R$ 0,00", ops: 0, cor: "border-amber-400 bg-amber-400/5 text-amber-600" },
@@ -1453,10 +1494,10 @@ export const CrmFinanceiraPage: React.FC = () => {
               </h3>
               <div className="divide-y divide-slate-100 dark:divide-slate-800 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
                 {[
-                  { nfe: "NF-89241", sacado: "Bunge Alimentos S.A. / Cargill", valor: 8200000, taxa: 1.15, status: "Aprovado" },
-                  { nfe: "NF-55102", sacado: "Construtora Noroeste MT Ltda", valor: 5200000, taxa: 1.18, status: "Em Checagem" },
-                  { nfe: "NF-44091", sacado: "Atacadão dos Tecidos Premium", valor: 650000, taxa: 1.45, status: "Aprovado" },
-                ].map((b, i) => (
+                  { empresa: "zuma_agro", nfe: "NF-89241", sacado: "Bunge Alimentos S.A. / Cargill", valor: 8200000, taxa: 1.15, status: "Aprovado" },
+                  { empresa: "bancofe", nfe: "NF-55102", sacado: "Construtora Noroeste MT Ltda", valor: 5200000, taxa: 1.18, status: "Em Checagem" },
+                  { empresa: "zuma_moda", nfe: "NF-44091", sacado: "Atacadão dos Tecidos Premium", valor: 650000, taxa: 1.45, status: "Aprovado" },
+                ].filter((b) => noEscopo(b.empresa)).map((b, i) => (
                   <div key={i} className="p-4 flex items-center justify-between text-xs hover:bg-slate-50 dark:hover:bg-slate-800/40">
                     <div>
                       <div className="font-bold text-slate-900 dark:text-white">{b.nfe} • {b.sacado}</div>
@@ -2053,11 +2094,11 @@ export const CrmFinanceiraPage: React.FC = () => {
                   </thead>
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                     {[
-                      { id: "CTR-2026-069-001", tomador: "Rodrigo Ribeiro Gonçalves", doc: "069.887.226-61", linha: "Capital de Giro PJ Estruturado", total: "R$ 510.000,00", saldo: "R$ 331.500,00", parcelas: "8 de 24 (33%)", status: "ATIVO" },
-                      { id: "CTR-2026-512-002", tomador: "Dr. Valdomiro Parecis de Andrade", doc: "512.984.101-53", linha: "CPR Verde Sustentável Safra 2026", total: "R$ 875.000,00", saldo: "R$ 875.000,00", parcelas: "2 de 12 (17%)", status: "ATIVO" },
-                      { id: "CTR-2026-362-003", tomador: "Zuma Gastronomia & Alimentos", doc: "36.296.848/0001-57", linha: "Giro Expansão Comercial", total: "R$ 270.000,00", saldo: "R$ 225.000,00", parcelas: "3 de 18 (17%)", status: "ATIVO" },
-                      { id: "CTR-2026-045-004", tomador: "UISA - Usinas Itamarati S/A", doc: "04.596.128/0001-44", linha: "Fomento Industrial & Bioenergia", total: "R$ 7.200.000,00", saldo: "R$ 4.800.000,00", parcelas: "12 de 36 (33%)", status: "ATIVO" },
-                    ].map((row, idx) => (
+                      { empresa: "bancofe", id: "CTR-2026-069-001", tomador: "Rodrigo Ribeiro Gonçalves", doc: "069.887.226-61", linha: "Capital de Giro PJ Estruturado", total: "R$ 510.000,00", saldo: "R$ 331.500,00", parcelas: "8 de 24 (33%)", status: "ATIVO" },
+                      { empresa: "zuma_agro", id: "CTR-2026-512-002", tomador: "Dr. Valdomiro Parecis de Andrade", doc: "512.984.101-53", linha: "CPR Verde Sustentável Safra 2026", total: "R$ 875.000,00", saldo: "R$ 875.000,00", parcelas: "2 de 12 (17%)", status: "ATIVO" },
+                      { empresa: "zuma_gastronomia", id: "CTR-2026-362-003", tomador: "Zuma Gastronomia & Alimentos", doc: "36.296.848/0001-57", linha: "Giro Expansão Comercial", total: "R$ 270.000,00", saldo: "R$ 225.000,00", parcelas: "3 de 18 (17%)", status: "ATIVO" },
+                      { empresa: "bancofe", id: "CTR-2026-045-004", tomador: "UISA - Usinas Itamarati S/A", doc: "04.596.128/0001-44", linha: "Fomento Industrial & Bioenergia", total: "R$ 7.200.000,00", saldo: "R$ 4.800.000,00", parcelas: "12 de 36 (33%)", status: "ATIVO" },
+                    ].filter((row) => noEscopo(row.empresa)).map((row, idx) => (
                       <tr key={idx} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
                         <td className="p-3 font-mono font-bold text-emerald-600">{row.id}</td>
                         <td className="p-3">

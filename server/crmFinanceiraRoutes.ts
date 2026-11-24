@@ -1,12 +1,22 @@
 import { type Express, type Request, type Response } from "express";
 import { crmFinanceiraStore } from "./crmFinanceiraStore";
+import { empresaAtivaDaRequisicao, filtrarPorEscopo, precadastroNoEscopo, ehVisaoConsolidada } from "./escopoEmpresa";
+
+/** Oportunidades visíveis para a empresa ativa (header x-empresa-id). */
+function oportunidadesDoEscopo(req: Request) {
+  const empresa = empresaAtivaDaRequisicao(req);
+  return filtrarPorEscopo(empresa, crmFinanceiraStore.listarOportunidades(), (o: any) => o.empresaOrigemId);
+}
 
 export function registerCrmFinanceiraRoutes(app: Express) {
   // 1. Visão Geral da Gestão da Mesa e Métricas Consolidadas (Painel)
-  app.get("/api/admin/operacoes-financeiras/crm/gestao", (_req: Request, res: Response) => {
+  app.get("/api/admin/operacoes-financeiras/crm/gestao", (req: Request, res: Response) => {
     try {
-      const metricas = crmFinanceiraStore.obterMetricasGestao();
-      res.json(metricas);
+      const empresa = empresaAtivaDaRequisicao(req);
+      const metricas = ehVisaoConsolidada(empresa)
+        ? crmFinanceiraStore.obterMetricasGestao()
+        : crmFinanceiraStore.obterMetricasGestao(oportunidadesDoEscopo(req));
+      res.json({ ...metricas, escopoEmpresa: empresa || "holding_kytto", visaoConsolidada: ehVisaoConsolidada(empresa) });
     } catch (e: any) {
       res.status(500).json({ erro: e?.message || "Erro ao obter métricas de gestão" });
     }
@@ -26,14 +36,19 @@ export function registerCrmFinanceiraRoutes(app: Express) {
   app.get("/api/admin/operacoes-financeiras/crm/oportunidades", (req: Request, res: Response) => {
     try {
       const { estagio, etapa, empresaOrigemId, termo, responsavel, produto, todas } = req.query as Record<string, string>;
-      const oportunidades = crmFinanceiraStore.listarOportunidades({
-        estagio,
-        etapa,
-        empresaOrigemId,
-        termo,
-        responsavel,
-        produto,
-      });
+      const empresaAtiva = empresaAtivaDaRequisicao(req);
+      const oportunidades = filtrarPorEscopo(
+        empresaAtiva,
+        crmFinanceiraStore.listarOportunidades({
+          estagio,
+          etapa,
+          empresaOrigemId,
+          termo,
+          responsavel,
+          produto,
+        }),
+        (o: any) => o.empresaOrigemId,
+      );
 
       // Se solicitado pelo React bundle com ?todas=1, retorna array direto
       if (todas === "1") {
@@ -254,6 +269,7 @@ export function registerCrmFinanceiraRoutes(app: Express) {
         situacao,
         consentimento,
         origem,
+        filtroEscopo: (o: string) => precadastroNoEscopo(empresaAtivaDaRequisicao(req), o),
         pagina: pagina ? Number(pagina) : 1,
         tamanhoPagina: tamanhoPagina ? Number(tamanhoPagina) : 10,
       });
@@ -343,7 +359,7 @@ export function registerCrmFinanceiraRoutes(app: Express) {
   app.get("/api/admin/operacoes-financeiras/crm/carteira", (req: Request, res: Response) => {
     try {
       const { busca, status } = req.query as Record<string, string>;
-      const dados = crmFinanceiraStore.listarCarteira({ busca, status });
+      const dados = crmFinanceiraStore.listarCarteira({ busca, status, listaEscopo: oportunidadesDoEscopo(req) });
       res.json(dados);
     } catch (e: any) {
       res.status(500).json({ erro: e?.message || "Erro ao listar carteira" });

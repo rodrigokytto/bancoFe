@@ -43,6 +43,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import PRECADASTROS_FALLBACK from "../../../../data/crmFinanceiraPrecadastros.json";
+import { fetchEmpresa } from "@/lib/fetchEmpresa";
+import { precadastroNoEscopo, normalizarEmpresaId } from "@shared/escopoEmpresa";
 
 export interface PreCadastroCasaNovaItem {
   id: string;
@@ -100,6 +102,8 @@ interface PrecadastrosResumo {
 }
 
 interface PrecadastrosCasaNovaTabProps {
+  /** Empresa ativa (seletor do topo): define o escopo dos pré-cadastros exibidos. */
+  empresaId?: string;
   onAbrirOportunidade?: (id: string) => void;
   onNavegarParaFunil?: () => void;
 }
@@ -107,18 +111,22 @@ interface PrecadastrosCasaNovaTabProps {
 export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = ({
   onAbrirOportunidade,
   onNavegarParaFunil,
+  empresaId,
 }) => {
+  const escopo = normalizarEmpresaId(empresaId || "");
+  const fallbackEscopo = () =>
+    ((PRECADASTROS_FALLBACK as any[]) || []).filter((p: any) => precadastroNoEscopo(escopo, p.origem)) as any;
   // Estados de dados
   const [itens, setItens] = useState<PreCadastroCasaNovaItem[]>([]);
   const [resumo, setResumo] = useState<PrecadastrosResumo>({
-    total: 20,
-    novo: 12,
-    qualificado: 6,
-    convertido: 2,
+    total: 0,
+    novo: 0,
+    qualificado: 0,
+    convertido: 0,
     descartado: 0,
     oposicao: 0,
-    comConsentimento: 20,
-    comContato: 20,
+    comConsentimento: 0,
+    comContato: 0,
   });
   const [lotes, setLotes] = useState<Array<{ lote: string; quantidade: number }>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -233,18 +241,18 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
       params.set("pagina", String(pagina));
       params.set("tamanhoPagina", "50");
 
-      const res = await fetch(`/api/admin/operacoes-financeiras/crm/precadastros?${params.toString()}`);
+      const res = await fetchEmpresa(`/api/admin/operacoes-financeiras/crm/precadastros?${params.toString()}`, {}, empresaId);
       if (res.ok) {
         const data = await res.json();
-        setItens(data.precadastros && data.precadastros.length > 0 ? data.precadastros : (PRECADASTROS_FALLBACK as any));
+        setItens(Array.isArray(data.precadastros) ? data.precadastros : fallbackEscopo());
         if (data.resumo) setResumo(data.resumo);
         if (data.lotes) setLotes(data.lotes);
       } else {
-        setItens(PRECADASTROS_FALLBACK as any);
+        setItens(fallbackEscopo());
       }
     } catch (err) {
       console.warn("Utilizando pré-cadastros locais Casa Nova:", err);
-      setItens(PRECADASTROS_FALLBACK as any);
+      setItens(fallbackEscopo());
     } finally {
       setIsLoading(false);
     }
@@ -252,13 +260,13 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
 
   useEffect(() => {
     carregarPrecadastros();
-  }, [busca, situacaoFiltro, consentimentoFiltro, origemFiltro, pagina]);
+  }, [busca, situacaoFiltro, consentimentoFiltro, origemFiltro, pagina, empresaId]);
 
   // Processar carga oficial da Casa Nova Imóveis
   const handleProcessarCargaCasaNova = async () => {
     try {
       setIsProcessandoCarga(true);
-      const res = await fetch("/api/admin/operacoes-financeiras/crm/precadastros/carga/processar", {
+      const res = await fetchEmpresa("/api/admin/operacoes-financeiras/crm/precadastros/carga/processar", {
         method: "POST",
       });
       const data = await res.json();
@@ -279,7 +287,7 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
   const handleProcessarRegua = async () => {
     try {
       setIsProcessandoRegua(true);
-      const res = await fetch("/api/admin/operacoes-financeiras/crm/regua/processar", {
+      const res = await fetchEmpresa("/api/admin/operacoes-financeiras/crm/regua/processar", {
         method: "POST",
       });
       const data = await res.json();
@@ -299,7 +307,7 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
   // Executar comando no pré-cadastro (qualificar / descartar)
   const handleComandoPrecadastro = async (id: string, comando: "qualificar" | "descartar" | "oposicao") => {
     try {
-      const res = await fetch(`/api/admin/operacoes-financeiras/crm/precadastros/${id}/comando`, {
+      const res = await fetchEmpresa(`/api/admin/operacoes-financeiras/crm/precadastros/${id}/comando`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ comando }),
@@ -321,7 +329,7 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
     if (!modalConverter) return;
     try {
       setIsConvertendo(true);
-      const res = await fetch(`/api/admin/operacoes-financeiras/crm/precadastros/${modalConverter.id}/converter`, {
+      const res = await fetchEmpresa(`/api/admin/operacoes-financeiras/crm/precadastros/${modalConverter.id}/converter`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -359,7 +367,7 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
     }
     try {
       setIsCriando(true);
-      const res = await fetch("/api/admin/operacoes-financeiras/crm/precadastros", {
+      const res = await fetchEmpresa("/api/admin/operacoes-financeiras/crm/precadastros", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -522,7 +530,7 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
             {resumo.total}
           </div>
           <div className="text-[11px] font-semibold text-emerald-600 mt-1">
-            20 de Casa Nova Imóveis
+            {lotes.find((l) => l.lote.includes("Casa Nova"))?.quantidade ?? 0} de Casa Nova Imóveis
           </div>
         </div>
 
@@ -587,7 +595,7 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
             100%
           </div>
           <div className="text-[11px] text-slate-500 mt-1">
-            20/20 com aceite
+            {resumo.total}/{resumo.total} com aceite
           </div>
         </div>
       </div>

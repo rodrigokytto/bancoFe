@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { Cadastro360Store } from "./cadastro360Store";
+import { empresaAtivaDaRequisicao, origemNoEscopo } from "./escopoEmpresa";
 
 export function registerCadastro360Routes(app: any) {
   const router = Router();
@@ -154,9 +155,12 @@ export function registerCadastro360Routes(app: any) {
   });
 
   // 10.1 Listar Todos os Termos da Holding (Central de Termos)
-  router.get("/termos", (_req: Request, res: Response) => {
+  router.get("/termos", (req: Request, res: Response) => {
     try {
-      const termos = store.listarTodosTermos();
+      const empresaAtiva = empresaAtivaDaRequisicao(req);
+      const termos = store
+        .listarTodosTermos()
+        .filter((t: any) => origemNoEscopo(empresaAtiva, store.obterClientePorId(t.clienteId)?.empresaOrigemId || t.empresaOrigemId));
       res.json({ success: true, count: termos.length, data: termos });
     } catch (err: any) {
       res.status(500).json({ success: false, error: err.message });

@@ -703,10 +703,12 @@ export class CrmFinanceiraStore {
     situacao?: string;
     consentimento?: string;
     origem?: string;
+    filtroEscopo?: (origem: string) => boolean;
     pagina?: number;
     tamanhoPagina?: number;
   }) {
-    let lista = [...this.precadastros];
+    const baseEscopo = filtros?.filtroEscopo ? this.precadastros.filter((p) => filtros.filtroEscopo!(String(p.origem || ""))) : this.precadastros;
+    let lista = [...baseEscopo];
 
     if (filtros?.situacao && filtros.situacao !== "todos") {
       lista = lista.filter((p) => p.situacao === filtros.situacao);
@@ -737,12 +739,12 @@ export class CrmFinanceiraStore {
     const paginados = lista.slice(offset, offset + tamanhoPagina);
 
     const resumo = {
-      total: this.precadastros.length,
-      novo: this.precadastros.filter((p) => p.situacao === "novo").length,
-      qualificado: this.precadastros.filter((p) => p.situacao === "qualificado").length,
-      convertido: this.precadastros.filter((p) => p.situacao === "convertido").length,
-      descartado: this.precadastros.filter((p) => p.situacao === "descartado").length,
-      oposicao: this.precadastros.filter((p) => p.situacao === "oposicao").length,
+      total: baseEscopo.length,
+      novo: baseEscopo.filter((p) => p.situacao === "novo").length,
+      qualificado: baseEscopo.filter((p) => p.situacao === "qualificado").length,
+      convertido: baseEscopo.filter((p) => p.situacao === "convertido").length,
+      descartado: baseEscopo.filter((p) => p.situacao === "descartado").length,
+      oposicao: baseEscopo.filter((p) => p.situacao === "oposicao").length,
     };
 
     return {
@@ -752,8 +754,8 @@ export class CrmFinanceiraStore {
       cargaPendente: 0,
       resumo,
       lotes: [
-        { lote: "Lote Oficial Casa Nova Imóveis (casanova.kytto.com.br)", quantidade: 20 },
-        { lote: "Lote Esteira BancoFé Holding", quantidade: 2 },
+        { lote: "Lote Oficial Casa Nova Imóveis (casanova.kytto.com.br)", quantidade: baseEscopo.filter((p) => p.origem === "casanova").length },
+        { lote: "Lote Esteira BancoFé Holding", quantidade: baseEscopo.filter((p) => p.origem !== "casanova").length },
       ],
       precadastros: paginados,
     };
@@ -1034,8 +1036,8 @@ export class CrmFinanceiraStore {
     return this.metas.length !== len;
   }
 
-  public listarCarteira(filtros?: { busca?: string; status?: string }) {
-    const itens = this.oportunidades.map((o) => {
+  public listarCarteira(filtros?: { busca?: string; status?: string; listaEscopo?: OportunidadeOperacaoFinanceira[] }) {
+    const itens = (filtros?.listaEscopo ?? this.oportunidades).map((o) => {
       const isLiquidado = o.etapa === "contratado" || o.estagio === "liquidado";
       return {
         id: o.id,
@@ -1212,7 +1214,8 @@ export class CrmFinanceiraStore {
     };
   }
 
-  public obterMetricasGestao(): MetricasGestaoCrmFinanceira {
+  public obterMetricasGestao(listaEscopo?: OportunidadeOperacaoFinanceira[]): MetricasGestaoCrmFinanceira {
+    const opsBase = listaEscopo ?? this.oportunidades;
     let volumeTotalPipeline = 0;
     let pipelineCentavos = 0;
     let pipelinePonderadoCentavos = 0;
@@ -1241,9 +1244,9 @@ export class CrmFinanceiraStore {
       perdido: 0.0,
     };
 
-    const abertas = this.oportunidades.filter((o) => o.etapa !== "contratado" && o.etapa !== "perdido");
+    const abertas = opsBase.filter((o) => o.etapa !== "contratado" && o.etapa !== "perdido");
 
-    for (const op of this.oportunidades) {
+    for (const op of opsBase) {
       const val = op.valorAprovado || op.valorSolicitado || Math.round(op.valorCentavos / 100);
       const valCentavos = op.valorCentavos || val * 100;
 
@@ -1275,7 +1278,7 @@ export class CrmFinanceiraStore {
       empresas[empId].volumeTotal += val;
     }
 
-    const total = this.oportunidades.length || 1;
+    const total = opsBase.length || 1;
     const ticketMedio = volumeTotalPipeline / total;
     const taxaMediaMensal = Number((somaTaxas / total).toFixed(2));
 
@@ -1288,7 +1291,7 @@ export class CrmFinanceiraStore {
     ];
 
     const etapasKpi = colunasFunil.map((c) => {
-      const opsCol = this.oportunidades.filter((o) => o.etapa === c.etapa);
+      const opsCol = opsBase.filter((o) => o.etapa === c.etapa);
       const colValorCentavos = opsCol.reduce((sum, o) => sum + (o.valorCentavos || 0), 0);
       const peso = pesosEtapa[c.etapa] || 0.5;
       const ponderadoCentavos = Math.round(colValorCentavos * peso);
