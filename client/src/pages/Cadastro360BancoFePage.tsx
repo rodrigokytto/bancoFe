@@ -32,7 +32,8 @@ import {
   CheckSquare,
   Sparkles,
   ArrowUpRight,
-  Fingerprint
+  Fingerprint,
+  Crown
 } from "lucide-react";
 import { toast } from "sonner";
 import {
