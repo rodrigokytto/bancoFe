@@ -55,13 +55,13 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [simuladorModalOpen, setSimuladorModalOpen] = useState(false);
 
-  // Estado de fixação da Sidebar (por padrão falso = auto-recolhe e abre no hover)
+  // Estado de fixação da Sidebar (por padrão true = sempre visível e aberta)
   const [sidebarPinned, setSidebarPinned] = useState<boolean>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("zuma_sidebar_pinned");
       if (saved !== null) return saved === "true";
     }
-    return false;
+    return true;
   });
 
   const handleTogglePin = () => {
