@@ -212,6 +212,8 @@ function Router() {
             <Route path="/gestao-emprestimos" component={CrmFinanceiraPage} />
 
             {/* BancoFe — Portal do Cliente (Autoatendimento, Pix, Boletos & Quitação) */}
+            <Route path="/portal/cliente" component={PortalClientePage} />
+            <Route path="/portal/autoatendimento" component={PortalClientePage} />
             <Route path="/portal-cliente" component={PortalClientePage} />
             <Route path="/portal" component={PortalClientePage} />
             <Route path="/minha-conta" component={PortalClientePage} />
@@ -221,6 +223,8 @@ function Router() {
             <Route path="/admin/cadastro-360" component={Cadastro360BancoFePage} />
             <Route path="/admin/pre-cadastro" component={Cadastro360BancoFePage} />
             <Route path="/admin/precadastro" component={Cadastro360BancoFePage} />
+            <Route path="/plataforma/precadastro" component={Cadastro360BancoFePage} />
+            <Route path="/plataforma/clientes-potenciais" component={Cadastro360BancoFePage} />
             <Route path="/admin/documentos" component={Cadastro360BancoFePage} />
             <Route path="/admin/termos" component={Cadastro360BancoFePage} />
             <Route path="/cadastro-360" component={Cadastro360BancoFePage} />
