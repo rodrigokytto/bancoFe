@@ -15,14 +15,20 @@ export function negocioAtivoId(): string {
 }
 
 async function chamar(metodo: string, url: string, corpo?: unknown) {
+  const token = typeof localStorage !== "undefined" ? (localStorage.getItem("zuma_token") || localStorage.getItem("zuma_auth_session")) : null;
+  const headers: Record<string, string> = {
+    "content-type": "application/json",
+    accept: "application/json",
+    "x-empresa-id": negocioAtivoId(),
+  };
+  if (token) {
+    headers["authorization"] = `Bearer ${token}`;
+  }
+
   const resp = await fetch(url, {
     method: metodo,
     credentials: "same-origin",
-    headers: {
-      "content-type": "application/json",
-      accept: "application/json",
-      "x-empresa-id": negocioAtivoId(),
-    },
+    headers,
     body: corpo === undefined ? undefined : JSON.stringify(corpo),
   });
   const tipo = resp.headers.get("content-type") || "";

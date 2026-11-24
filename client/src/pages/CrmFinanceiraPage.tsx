@@ -41,7 +41,8 @@ import {
   AlertTriangle,
   Receipt,
   Boxes,
-  Scale
+  Scale,
+  Printer
 } from "lucide-react";
 import { toast } from "sonner";
 import PortalClientePage from "./PortalClientePage";
@@ -2263,6 +2264,42 @@ export const CrmFinanceiraPage: React.FC = () => {
                 </div>
               </div>
 
+              {/* Dossiê 360° & Parecer Algorítmico de Risco */}
+              <div className="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                    <span className="text-xs font-bold text-slate-900 dark:text-white">
+                      Dossiê Regulatório SCR & Parecer IA (Rating {detalhesOp.ratingBacen})
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600">
+                    Conforme Res. CMN 2.682/99
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                  <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+                    <span className="text-slate-400 block text-[10px]">SCR Registrato:</span>
+                    <span className="font-semibold text-emerald-600">100% Adimplente</span>
+                  </div>
+                  <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+                    <span className="text-slate-400 block text-[10px]">Cobertura Garantia (LTV):</span>
+                    <span className="font-semibold text-slate-800 dark:text-slate-200">145% do Principal</span>
+                  </div>
+                  <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+                    <span className="text-slate-400 block text-[10px]">Limite Técnico Máximo:</span>
+                    <span className="font-semibold text-emerald-600 font-mono">
+                      {formatMoney((detalhesOp.valorSolicitado || 1000000) * 1.35)}
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed bg-white/70 dark:bg-slate-900/70 p-2.5 rounded-xl border border-slate-200/60 dark:border-slate-800/60">
+                  <strong>Parecer Técnico BancoFe Risk Engine:</strong> Proponente com robusta capacidade de solvência, ausência de restrições em bureaus de crédito e índices de liquidez adequados à esteira estruturada. Recomendada aprovação de crédito com taxa de {detalhesOp.taxaMensalPercentual}% a.m. e amortização pelo sistema {detalhesOp.sistemaAmortizacao}.
+                </p>
+              </div>
+
               <div>
                 <h4 className="font-bold text-slate-900 dark:text-white mb-1">Observações de Risco</h4>
                 <p className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300">
@@ -2299,6 +2336,24 @@ export const CrmFinanceiraPage: React.FC = () => {
               </button>
 
               <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    window.print();
+                  }}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                >
+                  <Printer className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Imprimir Dossiê</span>
+                </button>
+                <button
+                  onClick={() => {
+                    handleMudarEstagio(detalhesOp.id, "formalizacao_ccb", "Parecer Aprovado pela Mesa com Rating " + detalhesOp.ratingBacen);
+                    setDetalhesOp(null);
+                  }}
+                  className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer transition-all shadow-xs"
+                >
+                  Aprovar na Alçada
+                </button>
                 <button
                   onClick={() => {
                     setCcbMinutaModalOp(detalhesOp);

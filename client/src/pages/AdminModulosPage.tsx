@@ -543,7 +543,7 @@ export const AdminModulosPage: React.FC = () => {
                     </h2>
                   </div>
                   <p className="text-xs sm:text-sm text-purple-100/90 mt-1 max-w-2xl">
-                    Painel executivo unificado das 7 empresas operacionais. Liquidação instantânea Pix, esteira de antecipação de crédito intercompany e auditoria consolidada.
+                    Painel executivo unificado das 17 empresas e unidades operacionais. Liquidação instantânea Pix, esteira de antecipação de crédito intercompany e auditoria consolidada.
                   </p>
                 </div>
               </div>
