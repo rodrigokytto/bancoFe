@@ -1,36 +1,45 @@
 import React, { useState, useEffect, useMemo } from "react";
 import {
-  Building2,
-  Users,
-  Search,
-  Filter,
-  RefreshCw,
-  Plus,
-  Download,
-  Eye,
-  CheckCircle2,
-  Clock,
+  AlertCircle,
   ArrowRight,
-  ShieldCheck,
-  FileText,
-  Phone,
-  Mail,
-  MapPin,
-  ExternalLink,
+  Award,
+  Briefcase,
+  Building2,
+  Calculator,
+  Check,
+  CheckCircle2,
   ChevronLeft,
   ChevronRight,
-  Sparkles,
-  AlertCircle,
-  FileCheck2,
-  X,
-  Send,
-  Zap,
-  TrendingUp,
+  Clock,
   DollarSign,
-  Tag,
+  Download,
+  ExternalLink,
+  Eye,
+  FileCheck,
+  FileCheck2,
+  FileText,
+  Filter,
+  Home,
+  Landmark,
   Lock,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Paperclip,
+  Phone,
+  Plus,
+  RefreshCw,
+  Search,
+  Send,
+  ShieldCheck,
+  Sparkles,
+  Tag,
+  TrendingUp,
   Unlock,
-  MessageSquare
+  UploadCloud,
+  Users,
+  X,
+  Zap
 } from "lucide-react";
 import { toast } from "sonner";
 import PRECADASTROS_FALLBACK from "../../../../data/crmFinanceiraPrecadastros.json";
@@ -128,7 +137,64 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
   const [revelarDocumentos, setRevelarDocumentos] = useState<boolean>(false);
 
   // Modais
-  const [modalDossie, setModalDossie] = useState<PreCadastroCasaNovaItem | null>(null);
+    const [modalDossie, setModalDossie] = useState<PreCadastroCasaNovaItem | null>(null);
+  const [subAbaDossie, setSubAbaDossie] = useState<"resumo" | "cadastro" | "documentos" | "credito">("resumo");
+
+  // Estado do Cadastro 360°
+  const [cadastroForm, setCadastroForm] = useState({
+    estadoCivil: "Casado(a)",
+    profissao: "Empresário / Produtor Rural",
+    naturalidade: "Tangará da Serra - MT",
+    dataNasc: "14/05/1984",
+    rg: "12.847.192-3 SSP/MT",
+    nomeMae: "Maria Lúcia Ferreira Gomes",
+    nomePai: "Sebastião Carlos Gomes",
+    conjugeNome: "Camila Ribeiro Gomes",
+    conjugeCpf: "034.912.871-04",
+    conjugeRegime: "Comunhão Parcial de Bens",
+    conjugeRenda: 9500,
+    logradouro: "Avenida das Palmeiras",
+    numero: "1080",
+    complemento: "Quadra 14, Lote 2",
+    bairro: "Jardim Tarumã",
+    cep: "78300-000",
+    cidade: "Tangará da Serra",
+    uf: "MT",
+    tempoResidencia: "7 anos",
+    rendaFormal: 24000,
+    rendaInformal: 8000,
+    outrasRendas: 4500,
+    despesasMensais: 9200,
+    imoveis: 1650000,
+    veiculos: 320000,
+    investimentos: 480000,
+    banco: "BancoFé S.A. (098)",
+    agencia: "0001",
+    conta: "109842-7",
+    chavePix: "contato@proponente.com.br"
+  });
+
+  // Estado do Vault de Documentos
+  const [documentosVault, setDocumentosVault] = useState([
+    { id: "doc-1", nome: "CNH_Digital_Proponente.pdf", categoria: "Identificação", tamanho: "2.4 MB", dataEnvio: "22/11/2026 14:32", status: "homologado", analista: "Rodrigo Gonçalves" },
+    { id: "doc-2", nome: "Comprovante_Residencia_Energisa.pdf", categoria: "Residência", tamanho: "1.1 MB", dataEnvio: "22/11/2026 14:35", status: "homologado", analista: "Rodrigo Gonçalves" },
+    { id: "doc-3", nome: "Holerites_Ultimos_3_Meses.pdf", categoria: "Renda", tamanho: "3.8 MB", dataEnvio: "22/11/2026 15:02", status: "homologado", analista: "Mesa de Crédito" },
+    { id: "doc-4", nome: "Declaracao_IRPF_2026_Completa.pdf", categoria: "Renda / Fiscal", tamanho: "4.5 MB", dataEnvio: "22/11/2026 15:10", status: "homologado", analista: "Mesa de Crédito" },
+    { id: "doc-5", nome: "Matricula_Florais_do_Vale_Q12_L08.pdf", categoria: "Garantia Imobiliária", tamanho: "5.2 MB", dataEnvio: "23/11/2026 09:15", status: "homologado", analista: "Jurídico BancoFé" },
+    { id: "doc-6", nome: "Extratos_Bancarios_90_Dias.pdf", categoria: "Capacidade Financeira", tamanho: "2.9 MB", dataEnvio: "23/11/2026 11:40", status: "analise", analista: "Aguardando Parecer" }
+  ]);
+  const [novoDocNome, setNovoDocNome] = useState("");
+  const [novoDocCategoria, setNovoDocCategoria] = useState("Identificação");
+  const [showModalAnexo, setShowModalAnexo] = useState(false);
+
+  // Estado da Análise de Crédito SAC/PRICE
+  const [simulacaoSistema, setSimulacaoSistema] = useState<"SAC" | "PRICE">("SAC");
+  const [simulacaoValor, setSimulacaoValor] = useState(380000);
+  const [simulacaoEntrada, setSimulacaoEntrada] = useState(76000);
+  const [simulacaoPrazo, setSimulacaoPrazo] = useState(240);
+  const [simulacaoTaxa, setSimulacaoTaxa] = useState(11.5);
+  const [certificadoGerado, setCertificadoGerado] = useState(false);
+
   const [modalConverter, setModalConverter] = useState<PreCadastroCasaNovaItem | null>(null);
   const [modalNovo, setModalNovo] = useState<boolean>(false);
 
@@ -876,147 +942,879 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
       </div>
 
       {/* =========================================================================
-          MODAL 1: DOSSIÊ 360° DO PROPONENTE CASA NOVA
+          MODAL 1: GAVETA / DOSSIÊ 360° COMPLETO DO PROPONENTE & MESA DE CRÉDITO
           ========================================================================= */}
       {modalDossie && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-2xl w-full p-6 shadow-2xl max-h-[90vh] flex flex-col">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
-              <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600">
-                  <Building2 className="w-5 h-5" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-xs">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-4xl w-full p-4 sm:p-6 shadow-2xl max-h-[92vh] flex flex-col">
+            
+            {/* Top Bar com Identificação e Sub-Abas */}
+            <div className="pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-2xl bg-emerald-500/10 text-emerald-600">
+                    <Building2 className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                        {modalDossie.nome}
+                      </h3>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300">
+                        Score 842 · Risco Mínimo (AAA)
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-400">
+                      Protocolo: {modalDossie.protocolo} · Origem: Casa Nova Imóveis · CPF: {modalDossie.documento}
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                    Dossiê 360° · {modalDossie.nome}
-                  </h3>
-                  <span className="text-[10px] font-mono text-slate-400">
-                    Protocolo: {modalDossie.protocolo} · Origem: Casa Nova Imóveis
+                <button
+                  onClick={() => setModalDossie(null)}
+                  className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Seletor de Sub-Abas da Gaveta 360° */}
+              <div className="flex items-center gap-2 mt-4 border-b border-slate-200 dark:border-slate-800 pb-1">
+                <button
+                  onClick={() => setSubAbaDossie("resumo")}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    subAbaDossie === "resumo"
+                      ? "bg-[#0c4a34] text-white shadow-sm"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  }`}
+                >
+                  <Building2 className="w-3.5 h-3.5" />
+                  <span>1. Resumo & Imóvel</span>
+                </button>
+                <button
+                  onClick={() => setSubAbaDossie("cadastro")}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    subAbaDossie === "cadastro"
+                      ? "bg-[#0c4a34] text-white shadow-sm"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  }`}
+                >
+                  <Users className="w-3.5 h-3.5" />
+                  <span>2. Cadastro Completo 360°</span>
+                </button>
+                <button
+                  onClick={() => setSubAbaDossie("documentos")}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    subAbaDossie === "documentos"
+                      ? "bg-[#0c4a34] text-white shadow-sm"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  }`}
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>3. Documentos & Vault</span>
+                  <span className="px-1.5 py-0.2 rounded-full text-[9px] bg-purple-500 text-white font-mono">
+                    {documentosVault.length}
                   </span>
-                </div>
+                </button>
+                <button
+                  onClick={() => setSubAbaDossie("credito")}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    subAbaDossie === "credito"
+                      ? "bg-[#820AD1] text-white shadow-sm"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  }`}
+                >
+                  <Calculator className="w-3.5 h-3.5" />
+                  <span>4. Análise de Crédito SAC/PRICE</span>
+                  <span className="px-1.5 py-0.2 rounded-full text-[9px] bg-emerald-500 text-white font-mono">
+                    Aprovado
+                  </span>
+                </button>
               </div>
-              <button
-                onClick={() => setModalDossie(null)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
             </div>
 
-            <div className="py-4 space-y-4 overflow-y-auto flex-1 text-xs text-slate-700 dark:text-slate-300">
-              {/* Bloco 1: Informações Cadastrais */}
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-2">
-                <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs flex items-center gap-1.5">
-                  <Users className="w-3.5 h-3.5 text-emerald-600" />
-                  Dados do Proponente & Cônjuge
-                </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
-                  <div>
-                    <span className="text-slate-400 text-[10px] block">Nome Completo</span>
-                    <span className="font-semibold text-slate-900 dark:text-white">{modalDossie.nome}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 text-[10px] block">Documento (CPF/CNPJ)</span>
-                    <span className="font-mono font-semibold">{modalDossie.documento}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 text-[10px] block">Tipo de Pessoa</span>
-                    <span className="uppercase font-semibold">{modalDossie.tipo}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 text-[10px] block">Telefone / WhatsApp</span>
-                    <span className="font-mono">{modalDossie.telefone || "Não informado"}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 text-[10px] block">E-mail</span>
-                    <span>{modalDossie.email || "Não informado"}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 text-[10px] block">Município / UF</span>
-                    <span>{modalDossie.cidade}/{modalDossie.uf}</span>
-                  </div>
-                  {modalDossie.conjuge?.nome && (
-                    <>
+            {/* Conteúdo Dinâmico das 4 Sub-Abas */}
+            <div className="py-4 space-y-4 overflow-y-auto flex-1 text-xs text-slate-700 dark:text-slate-300 pr-1">
+              
+              {/* SUB-ABA 1: RESUMO & IMÓVEL DE INTERESSE */}
+              {subAbaDossie === "resumo" && (
+                <div className="space-y-4">
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-2">
+                    <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs flex items-center gap-1.5">
+                      <Users className="w-3.5 h-3.5 text-emerald-600" />
+                      Dados do Proponente & Cônjuge
+                    </h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
                       <div>
-                        <span className="text-slate-400 text-[10px] block">Cônjuge</span>
-                        <span className="font-semibold">{modalDossie.conjuge.nome}</span>
+                        <span className="text-slate-400 text-[10px] block">Nome Completo</span>
+                        <span className="font-semibold text-slate-900 dark:text-white">{modalDossie.nome}</span>
                       </div>
                       <div>
-                        <span className="text-slate-400 text-[10px] block">CPF Cônjuge</span>
-                        <span className="font-mono">{modalDossie.conjuge.cpf}</span>
+                        <span className="text-slate-400 text-[10px] block">Documento (CPF/CNPJ)</span>
+                        <span className="font-mono font-semibold">{modalDossie.documento}</span>
                       </div>
                       <div>
-                        <span className="text-slate-400 text-[10px] block">Regime de Bens</span>
-                        <span>{modalDossie.conjuge.regimeBens || "Comunhão Parcial"}</span>
+                        <span className="text-slate-400 text-[10px] block">Tipo de Pessoa</span>
+                        <span className="uppercase font-semibold">{modalDossie.tipo}</span>
                       </div>
-                    </>
+                      <div>
+                        <span className="text-slate-400 text-[10px] block">Telefone / WhatsApp</span>
+                        <span className="font-mono">{modalDossie.telefone || "Não informado"}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 text-[10px] block">E-mail</span>
+                        <span>{modalDossie.email || "Não informado"}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 text-[10px] block">Município / UF</span>
+                        <span>{modalDossie.cidade}/{modalDossie.uf}</span>
+                      </div>
+                      {modalDossie.conjuge?.nome && (
+                        <>
+                          <div>
+                            <span className="text-slate-400 text-[10px] block">Cônjuge</span>
+                            <span className="font-semibold">{modalDossie.conjuge.nome}</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-400 text-[10px] block">CPF Cônjuge</span>
+                            <span className="font-mono">{modalDossie.conjuge.cpf}</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-400 text-[10px] block">Regime de Bens</span>
+                            <span>{modalDossie.conjuge.regimeBens || "Comunhão Parcial"}</span>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 space-y-2">
+                    <h4 className="font-bold text-emerald-900 dark:text-emerald-300 text-xs flex items-center gap-1.5">
+                      <Building2 className="w-3.5 h-3.5 text-emerald-600" />
+                      Imóvel de Interesse · Casa Nova Imóveis
+                    </h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+                      <div>
+                        <span className="text-slate-400 text-[10px] block">Empreendimento</span>
+                        <span className="font-semibold text-slate-900 dark:text-white">
+                          {modalDossie.imovelInteresse?.loteamento || "Florais do Vale"}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 text-[10px] block">Quadra / Lote</span>
+                        <span className="font-mono font-bold text-emerald-700 dark:text-emerald-300">
+                          {modalDossie.imovelInteresse?.quadra || "Q-12"} · {modalDossie.imovelInteresse?.lote || "L-08"}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 text-[10px] block">Metragem</span>
+                        <span className="font-mono">{modalDossie.imovelInteresse?.metragemM2 || 450} m²</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 text-[10px] block">Valor de Avaliação</span>
+                        <span className="font-mono font-bold text-slate-900 dark:text-white">
+                          R$ {(((modalDossie.imovelInteresse?.valorEstimadoCentavos || 35000000)) / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-2">
+                    <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs flex items-center gap-1.5">
+                      <ShieldCheck className="w-3.5 h-3.5 text-purple-600" />
+                      Conformidade Bacen & Termos Digitais LGPD
+                    </h4>
+                    <div className="grid grid-cols-2 gap-3 pt-1">
+                      <div className="flex items-center gap-2 p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <div>
+                          <span className="font-semibold text-[11px] block">Autorização SCR Banco Central</span>
+                          <span className="text-[10px] text-slate-400">Resolução CMN nº 4.571/2017</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <div>
+                          <span className="font-semibold text-[11px] block">Consentimento LGPD</span>
+                          <span className="text-[10px] text-slate-400">Termo nº 2026-LGPD-CN registrado</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SUB-ABA 2: CADASTRO COMPLETO 360° */}
+              {subAbaDossie === "cadastro" && (
+                <div className="space-y-4">
+                  {/* Bloco Dados Pessoais & Documentação */}
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-3">
+                    <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-700 pb-2">
+                      <Users className="w-4 h-4 text-emerald-600" />
+                      1. Identificação Pessoal e Filiação
+                    </h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Estado Civil</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.estadoCivil}
+                          onChange={(e) => setCadastroForm({...cadastroForm, estadoCivil: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Profissão / Ocupação</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.profissao}
+                          onChange={(e) => setCadastroForm({...cadastroForm, profissao: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Data de Nascimento</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.dataNasc}
+                          onChange={(e) => setCadastroForm({...cadastroForm, dataNasc: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">RG / Órgão Emissor</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.rg}
+                          onChange={(e) => setCadastroForm({...cadastroForm, rg: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Nome da Mãe</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.nomeMae}
+                          onChange={(e) => setCadastroForm({...cadastroForm, nomeMae: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium"
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Nome do Pai</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.nomePai}
+                          onChange={(e) => setCadastroForm({...cadastroForm, nomePai: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bloco Cônjuge / Coobrigado */}
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-3">
+                    <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-700 pb-2">
+                      <Users className="w-4 h-4 text-purple-600" />
+                      2. Cônjuge & Coobrigado Solidário
+                    </h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <div className="col-span-2">
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Nome Completo do Cônjuge</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.conjugeNome}
+                          onChange={(e) => setCadastroForm({...cadastroForm, conjugeNome: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">CPF do Cônjuge</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.conjugeCpf}
+                          onChange={(e) => setCadastroForm({...cadastroForm, conjugeCpf: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Regime de Bens</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.conjugeRegime}
+                          onChange={(e) => setCadastroForm({...cadastroForm, conjugeRegime: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bloco Endereço Residencial */}
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-3">
+                    <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-700 pb-2">
+                      <Home className="w-4 h-4 text-blue-600" />
+                      3. Endereço Residencial Completo
+                    </h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <div className="col-span-2">
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Logradouro (Rua/Avenida)</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.logradouro}
+                          onChange={(e) => setCadastroForm({...cadastroForm, logradouro: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Número</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.numero}
+                          onChange={(e) => setCadastroForm({...cadastroForm, numero: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Complemento</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.complemento}
+                          onChange={(e) => setCadastroForm({...cadastroForm, complemento: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Bairro</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.bairro}
+                          onChange={(e) => setCadastroForm({...cadastroForm, bairro: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">CEP</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.cep}
+                          onChange={(e) => setCadastroForm({...cadastroForm, cep: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Cidade / UF</label>
+                        <input
+                          type="text"
+                          value={`${cadastroForm.cidade} / ${cadastroForm.uf}`}
+                          readOnly
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Tempo de Residência</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.tempoResidencia}
+                          onChange={(e) => setCadastroForm({...cadastroForm, tempoResidencia: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bloco Renda & Patrimônio */}
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-3">
+                    <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-700 pb-2">
+                      <DollarSign className="w-4 h-4 text-emerald-600" />
+                      4. Capacidade Financeira, Renda & Patrimônio Declarado
+                    </h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Renda Formal CLT / Pró-Labore</label>
+                        <input
+                          type="number"
+                          value={cadastroForm.rendaFormal}
+                          onChange={(e) => setCadastroForm({...cadastroForm, rendaFormal: Number(e.target.value)})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono font-bold text-emerald-700 dark:text-emerald-300"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Renda Informal / Agro</label>
+                        <input
+                          type="number"
+                          value={cadastroForm.rendaInformal}
+                          onChange={(e) => setCadastroForm({...cadastroForm, rendaInformal: Number(e.target.value)})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Renda Cônjuge</label>
+                        <input
+                          type="number"
+                          value={cadastroForm.conjugeRenda}
+                          onChange={(e) => setCadastroForm({...cadastroForm, conjugeRenda: Number(e.target.value)})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Despesas Mensais Declaradas</label>
+                        <input
+                          type="number"
+                          value={cadastroForm.despesasMensais}
+                          onChange={(e) => setCadastroForm({...cadastroForm, despesasMensais: Number(e.target.value)})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono text-rose-600 font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Imóveis (R$)</label>
+                        <input
+                          type="number"
+                          value={cadastroForm.imoveis}
+                          onChange={(e) => setCadastroForm({...cadastroForm, imoveis: Number(e.target.value)})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Veículos / Maquinários (R$)</label>
+                        <input
+                          type="number"
+                          value={cadastroForm.veiculos}
+                          onChange={(e) => setCadastroForm({...cadastroForm, veiculos: Number(e.target.value)})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Investimentos / Aplicações (R$)</label>
+                        <input
+                          type="number"
+                          value={cadastroForm.investimentos}
+                          onChange={(e) => setCadastroForm({...cadastroForm, investimentos: Number(e.target.value)})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bloco Domicílio Bancário */}
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-3">
+                    <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-700 pb-2">
+                      <Landmark className="w-4 h-4 text-emerald-600" />
+                      5. Domicílio Bancário Oficial
+                    </h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Banco</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.banco}
+                          onChange={(e) => setCadastroForm({...cadastroForm, banco: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Agência</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.agencia}
+                          onChange={(e) => setCadastroForm({...cadastroForm, agencia: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Conta Corrente</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.conta}
+                          onChange={(e) => setCadastroForm({...cadastroForm, conta: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Chave PIX</label>
+                        <input
+                          type="text"
+                          value={cadastroForm.chavePix}
+                          onChange={(e) => setCadastroForm({...cadastroForm, chavePix: e.target.value})}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <button
+                      onClick={() => toast.success("Cadastro 360° atualizado com sucesso no banco de dados!")}
+                      className="px-4 py-2 rounded-xl bg-[#0c4a34] hover:bg-[#064e3b] text-white font-bold text-xs shadow-md cursor-pointer flex items-center gap-2"
+                    >
+                      <Check className="w-4 h-4" />
+                      <span>Salvar Alterações do Cadastro 360°</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* SUB-ABA 3: DOCUMENTOS & VAULT */}
+              {subAbaDossie === "documentos" && (
+                <div className="space-y-4">
+                  {/* Barra de Ações do Vault */}
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-2xl bg-purple-500/5 border border-purple-500/20 gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2.5 rounded-xl bg-purple-500/10 text-[#820AD1]">
+                        <ShieldCheck className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs">
+                          Vault de Documentos & Comprovantes Homologados
+                        </h4>
+                        <span className="text-[11px] text-slate-500">
+                          {documentosVault.filter(d => d.status === "homologado").length} de {documentosVault.length} documentos validados pela Mesa de Risco BancoFé
+                        </span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setShowModalAnexo(true)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#820AD1] hover:bg-[#7009b5] text-white text-xs font-bold shadow-sm cursor-pointer"
+                    >
+                      <UploadCloud className="w-4 h-4" />
+                      <span>+ Anexar Documento</span>
+                    </button>
+                  </div>
+
+                  {/* Modal / Card de Anexo */}
+                  {showModalAnexo && (
+                    <div className="p-4 rounded-2xl bg-white dark:bg-slate-800 border-2 border-dashed border-purple-300 dark:border-purple-700 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-xs text-purple-900 dark:text-purple-300 flex items-center gap-2">
+                          <Paperclip className="w-4 h-4" />
+                          Novo Documento para o Vault do Proponente
+                        </span>
+                        <button
+                          onClick={() => setShowModalAnexo(false)}
+                          className="text-slate-400 hover:text-slate-600 text-xs cursor-pointer"
+                        >
+                          Cancelar
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-[10px] text-slate-400 block mb-1">Nome do Arquivo</label>
+                          <input
+                            type="text"
+                            placeholder="Ex: CND_Federal_Receita.pdf"
+                            value={novoDocNome}
+                            onChange={(e) => setNovoDocNome(e.target.value)}
+                            className="w-full px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] text-slate-400 block mb-1">Categoria</label>
+                          <select
+                            value={novoDocCategoria}
+                            onChange={(e) => setNovoDocCategoria(e.target.value)}
+                            className="w-full px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs"
+                          >
+                            <option value="Identificação">Identificação (RG/CNH)</option>
+                            <option value="Residência">Comprovante de Residência</option>
+                            <option value="Renda">Comprovante de Renda / Holerite</option>
+                            <option value="Fiscal">Declaração IRPF / Fiscal</option>
+                            <option value="Garantia Imobiliária">Matrícula / Escritura de Imóvel</option>
+                            <option value="Capacidade Financeira">Extratos Bancários / Balanços</option>
+                            <option value="Outros">Outras Certidões & Comprovantes</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="flex justify-end gap-2 pt-1">
+                        <button
+                          onClick={() => {
+                            if (!novoDocNome.trim()) {
+                              toast.error("Informe o nome do arquivo a ser anexado.");
+                              return;
+                            }
+                            const novo = {
+                              id: `doc-${Date.now()}`,
+                              nome: novoDocNome.endsWith(".pdf") ? novoDocNome : `${novoDocNome}.pdf`,
+                              categoria: novoDocCategoria,
+                              tamanho: "1.8 MB",
+                              dataEnvio: "Agora",
+                              status: "homologado",
+                              analista: "Rodrigo Gonçalves"
+                            };
+                            setDocumentosVault([novo, ...documentosVault]);
+                            setNovoDocNome("");
+                            setShowModalAnexo(false);
+                            toast.success(`Documento "${novo.nome}" anexado e homologado com sucesso!`);
+                          }}
+                          className="px-3 py-1.5 rounded-lg bg-[#820AD1] text-white text-xs font-bold hover:bg-[#7009b5] cursor-pointer"
+                        >
+                          Confirmar Upload & Homologar
+                        </button>
+                      </div>
+                    </div>
                   )}
-                </div>
-              </div>
 
-              {/* Bloco 2: Lote e Garantia Imobiliária */}
-              <div className="p-4 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/50 dark:border-emerald-800/40 space-y-2">
-                <h4 className="font-bold text-emerald-900 dark:text-emerald-200 text-xs flex items-center gap-1.5">
-                  <Building2 className="w-3.5 h-3.5 text-emerald-600" />
-                  Imóvel de Interesse · Loteamento Casa Nova
-                </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
-                  <div>
-                    <span className="text-slate-400 text-[10px] block">Empreendimento</span>
-                    <span className="font-semibold text-slate-900 dark:text-white">
-                      {modalDossie.imovelInteresse?.loteamento || "Florais do Vale"}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 text-[10px] block">Quadra / Lote</span>
-                    <span className="font-mono font-bold text-emerald-700 dark:text-emerald-300">
-                      {modalDossie.imovelInteresse?.quadra || "Q-12"} · {modalDossie.imovelInteresse?.lote || "L-08"}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 text-[10px] block">Metragem</span>
-                    <span className="font-mono">{modalDossie.imovelInteresse?.metragemM2 || 450} m²</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 text-[10px] block">Valor de Avaliação</span>
-                    <span className="font-mono font-bold text-slate-900 dark:text-white">
-                      R$ {(((modalDossie.imovelInteresse?.valorEstimadoCentavos || 35000000)) / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                    </span>
-                  </div>
-                </div>
-              </div>
+                  {/* Lista de Documentos no Vault */}
+                  <div className="space-y-2">
+                    {documentosVault.map((doc) => (
+                      <div
+                        key={doc.id}
+                        className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-red-500/10 text-red-600">
+                            <FileText className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <span className="font-semibold text-slate-900 dark:text-white block">
+                              {doc.nome}
+                            </span>
+                            <div className="flex items-center gap-2 text-[10px] text-slate-400">
+                              <span>Categoria: {doc.categoria}</span>
+                              <span>·</span>
+                              <span>{doc.tamanho}</span>
+                              <span>·</span>
+                              <span>Enviado: {doc.dataEnvio}</span>
+                              <span>·</span>
+                              <span>Analista: {doc.analista}</span>
+                            </div>
+                          </div>
+                        </div>
 
-              {/* Bloco 3: Vault Documental e Consentimentos */}
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-2">
-                <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-purple-600" />
-                  Conformidade Bacen & Termos Digitais LGPD
-                </h4>
-                <div className="grid grid-cols-2 gap-3 pt-1">
-                  <div className="flex items-center gap-2 p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <div>
-                      <span className="font-semibold text-[11px] block">Autorização SCR Banco Central</span>
-                      <span className="text-[10px] text-slate-400">Resolução CMN nº 4.571/2017</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <div>
-                      <span className="font-semibold text-[11px] block">Consentimento LGPD</span>
-                      <span className="text-[10px] text-slate-400">Termo nº 2026-LGPD-CN registrado</span>
-                    </div>
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                              doc.status === "homologado"
+                                ? "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300"
+                                : doc.status === "analise"
+                                ? "bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300"
+                                : "bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300"
+                            }`}
+                          >
+                            {doc.status === "homologado" ? "Homologado" : doc.status === "analise" ? "Em Análise" : "Rejeitado"}
+                          </span>
+
+                          {doc.status !== "homologado" ? (
+                            <button
+                              onClick={() => {
+                                setDocumentosVault(documentosVault.map(d => d.id === doc.id ? {...d, status: "homologado", analista: "Mesa de Crédito"} : d));
+                                toast.success(`Documento ${doc.nome} homologado!`);
+                              }}
+                              className="px-2 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold cursor-pointer"
+                            >
+                              Homologar
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => toast.info(`Abrindo visualizador de ${doc.nome}...`)}
+                              className="p-1 rounded-lg text-slate-400 hover:text-slate-600 cursor-pointer"
+                              title="Visualizar documento"
+                            >
+                              <Eye className="w-4 h-4" />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
+              )}
+
+              {/* SUB-ABA 4: ANÁLISE DE CRÉDITO SAC/PRICE */}
+              {subAbaDossie === "credito" && (
+                <div className="space-y-4">
+                  {/* Simulador Interativo */}
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-4">
+                    <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-2">
+                      <div className="flex items-center gap-2">
+                        <Calculator className="w-4 h-4 text-[#820AD1]" />
+                        <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs">
+                          Motor de Scoring & Simulador de Financiamento SAC / PRICE
+                        </h4>
+                      </div>
+                      <div className="flex items-center gap-1 bg-slate-200 dark:bg-slate-700 p-0.5 rounded-lg">
+                        <button
+                          onClick={() => setSimulacaoSistema("SAC")}
+                          className={`px-3 py-1 rounded-md text-[10px] font-bold cursor-pointer transition-all ${
+                            simulacaoSistema === "SAC"
+                              ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs"
+                              : "text-slate-600 dark:text-slate-400"
+                          }`}
+                        >
+                          SAC (Amortização Constante)
+                        </button>
+                        <button
+                          onClick={() => setSimulacaoSistema("PRICE")}
+                          className={`px-3 py-1 rounded-md text-[10px] font-bold cursor-pointer transition-all ${
+                            simulacaoSistema === "PRICE"
+                              ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs"
+                              : "text-slate-600 dark:text-slate-400"
+                          }`}
+                        >
+                          PRICE (Parcelas Fixas)
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Controles do Simulador */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Valor do Imóvel / Crédito (R$)</label>
+                        <input
+                          type="number"
+                          value={simulacaoValor}
+                          onChange={(e) => setSimulacaoValor(Number(e.target.value))}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Entrada Própria (R$)</label>
+                        <input
+                          type="number"
+                          value={simulacaoEntrada}
+                          onChange={(e) => setSimulacaoEntrada(Number(e.target.value))}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Prazo de Pagamento (Meses)</label>
+                        <select
+                          value={simulacaoPrazo}
+                          onChange={(e) => setSimulacaoPrazo(Number(e.target.value))}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold"
+                        >
+                          <option value={60}>60 meses (5 anos)</option>
+                          <option value={120}>120 meses (10 anos)</option>
+                          <option value={180}>180 meses (15 anos)</option>
+                          <option value={240}>240 meses (20 anos)</option>
+                          <option value={360}>360 meses (30 anos)</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-slate-400 block mb-0.5">Taxa de Juros Anual (% a.a.)</label>
+                        <input
+                          type="number"
+                          step="0.1"
+                          value={simulacaoTaxa}
+                          onChange={(e) => setSimulacaoTaxa(Number(e.target.value))}
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-mono font-bold"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Cálculos Financeiros Dinâmicos */}
+                    {(() => {
+                      const financiado = Math.max(0, simulacaoValor - simulacaoEntrada);
+                      const taxaMensal = Math.pow(1 + simulacaoTaxa / 100, 1 / 12) - 1;
+                      let parcelaInicial = 0;
+                      let parcelaFinal = 0;
+                      let totalPago = 0;
+                      if (simulacaoSistema === "SAC") {
+                        const amortizacao = financiado / simulacaoPrazo;
+                        parcelaInicial = amortizacao + financiado * taxaMensal;
+                        parcelaFinal = amortizacao + amortizacao * taxaMensal;
+                        totalPago = ((parcelaInicial + parcelaFinal) / 2) * simulacaoPrazo;
+                      } else {
+                        parcelaInicial = (financiado * taxaMensal) / (1 - Math.pow(1 + taxaMensal, -simulacaoPrazo));
+                        parcelaFinal = parcelaInicial;
+                        totalPago = parcelaInicial * simulacaoPrazo;
+                      }
+                      const rendaTotal = cadastroForm.rendaFormal + cadastroForm.rendaInformal + cadastroForm.outrasRendas + cadastroForm.conjugeRenda;
+                      const comprometimento = rendaTotal > 0 ? (parcelaInicial / rendaTotal) * 100 : 0;
+                      const limiteMaximoAprovado = 680000;
+
+                      return (
+                        <div className="space-y-3 pt-2">
+                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                              <span className="text-[10px] text-slate-400 block">Valor Financiado Líquido</span>
+                              <span className="text-sm font-bold font-mono text-slate-900 dark:text-white">
+                                R$ {financiado.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                              </span>
+                            </div>
+                            <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                              <span className="text-[10px] text-slate-400 block">
+                                {simulacaoSistema === "SAC" ? "1ª Parcela (Decrescente)" : "Parcela Fixa Mensal"}
+                              </span>
+                              <span className="text-sm font-bold font-mono text-[#820AD1]">
+                                R$ {parcelaInicial.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                              </span>
+                            </div>
+                            <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                              <span className="text-[10px] text-slate-400 block">Comprometimento de Renda</span>
+                              <span className="text-sm font-bold font-mono text-emerald-600">
+                                {comprometimento.toFixed(1)}% <span className="text-[10px] text-slate-400">(Máx 30%)</span>
+                              </span>
+                            </div>
+                            <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                              <span className="text-[10px] text-slate-400 block">Limite Máximo Aprovado</span>
+                              <span className="text-sm font-bold font-mono text-emerald-700 dark:text-emerald-300">
+                                R$ {limiteMaximoAprovado.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Certificado Oficial Homologado */}
+                          <div className="p-4 rounded-2xl bg-linear-to-r from-emerald-950/20 via-slate-900/40 to-purple-950/20 border border-emerald-500/30 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Award className="w-5 h-5 text-emerald-500" />
+                                <div>
+                                  <h5 className="font-bold text-xs text-white">
+                                    Certificado Oficial de Pré-Aprovação de Crédito BancoFé
+                                  </h5>
+                                  <span className="text-[10px] text-slate-400 font-mono">
+                                    Autenticação SHA-256: 8f2a09c4...b912d08a · Validade: 90 dias
+                                  </span>
+                                </div>
+                              </div>
+                              <span className="px-2.5 py-1 rounded-full bg-emerald-500 text-white font-bold text-[10px]">
+                                HOMOLOGADO
+                              </span>
+                            </div>
+
+                            <div className="p-3 rounded-xl bg-black/40 border border-emerald-500/20 text-[11px] text-slate-300 space-y-1">
+                              <p>
+                                <strong>Parecer da Mesa de Crédito:</strong> Proponente qualificado com score 842 (AAA), sem restrições no SCR/Bacen. Garantia imobiliária no empreendimento Florais do Vale aceita com LTV de 80%. Operação pré-aprovada para emissão imediata de CCB Digital ou Contrato Habitacional.
+                              </p>
+                            </div>
+
+                            <div className="flex items-center justify-between pt-1">
+                              <button
+                                onClick={() => toast.success("Certificado de Crédito exportado para PDF!")}
+                                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold cursor-pointer flex items-center gap-1.5"
+                              >
+                                <Download className="w-3.5 h-3.5" />
+                                <span>Exportar Certificado em PDF</span>
+                              </button>
+
+                              <button
+                                onClick={() => {
+                                  const target = modalDossie;
+                                  setConversaoValor(financiado);
+                                  setModalDossie(null);
+                                  setModalConverter(target);
+                                  toast.info("Parâmetros do simulador transferidos para a oportunidade!");
+                                }}
+                                className="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md cursor-pointer flex items-center gap-1.5"
+                              >
+                                <span>Converter Oportunidade com Estes Valores</span>
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                </div>
+              )}
+
             </div>
 
+            {/* Rodapé da Gaveta */}
             <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
               <button
                 onClick={() => setModalDossie(null)}
                 className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold hover:bg-slate-200 cursor-pointer"
               >
-                Fechar
+                Fechar Dossiê
               </button>
               <button
                 onClick={() => {
@@ -1026,16 +1824,16 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
                 }}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#0c4a34] hover:bg-[#064e3b] text-white text-xs font-bold shadow-md cursor-pointer"
               >
-                <span>Converter em Oportunidade no Funil</span>
+                <span>Avançar para Conversão no Funil</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
         </div>
       )}
-
       {/* =========================================================================
           MODAL 2: CONVERSÃO DE PRÉ-CADASTRO EM OPORTUNIDADE NO FUNIL
+          ========================================================================= */}
           ========================================================================= */}
       {modalConverter && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
@@ -1072,11 +1870,18 @@ export const PrecadastrosCasaNovaTab: React.FC<PrecadastrosCasaNovaTabProps> = (
                   onChange={(e) => setConversaoProduto(e.target.value)}
                   className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-hidden"
                 >
-                  <option value="CREDITO_IMOBILIARIO">Crédito Imobiliário & Financiamento de Lote (1,15% a.m.)</option>
-                  <option value="CAPITAL_GIRO_PJ">Capital de Giro PJ Estruturado (1,29% a.m.)</option>
-                  <option value="FINANCIAMENTO_RURAL">Financiamento Rural & Agronegócio Safra (1,05% a.m.)</option>
-                  <option value="ANTECIPACAO_RECEBIVEIS">Antecipação de Recebíveis D+0 (1,39% a.m.)</option>
-                  <option value="INVESTIMENTO_PROPRIO">CDB BancoFe Liquidez Diária (100% CDI)</option>
+                  <option value="FINANCIAMENTO_LOTES_ULTRA">Financiamento de Lotes Construtora Ultra (0,95% a.m. · até 144x)</option>
+                  <option value="MCMV_HABITACIONAL">Minha Casa Minha Vida Habitacional Popular (0,58% a.m. · até 360x)</option>
+                  <option value="CREDITO_IMOBILIARIO">Crédito Imobiliário & Hipotecário Casa Nova (1,05% a.m. · até 360x)</option>
+                  <option value="HOME_EQUITY">Home Equity (Garantia de Imóvel · 0,85% a.m. · até 180x)</option>
+                  <option value="CPR_FINANCEIRA">CPR Digital Agro & Barter Safra (0,75% a.m. · até 60x)</option>
+                  <option value="CREDITO_RURAL_CUSTEIO">Custeio Agrícola e Pecuário (0,88% a.m. · até 36x)</option>
+                  <option value="CAPITAL_GIRO_PJ">Capital de Giro Corporativo PJ (1,15% a.m. · até 60x)</option>
+                  <option value="FINANCIAMENTO_FROTAS">Financiamento de Frotas & Maquinários (1,10% a.m. · até 72x)</option>
+                  <option value="ANTECIPACAO_RECEBIVEIS">Antecipação de Recebíveis D+0 (0,95% a.m. · até 12x)</option>
+                  <option value="CCB_DIGITAL">CCB Digital (Cédula de Crédito Bancário · 1,20% a.m. · até 48x)</option>
+                  <option value="CONSIGNADO_FOLHA">Empréstimo Consignado & Desconto em Folha (1,35% a.m. · até 96x)</option>
+                  <option value="MUTUO_INTRAGRUPO">Mútuo Intragrupo Holding (1,08% a.m. · até 36x)</option>
                 </select>
               </div>
 
