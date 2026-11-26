@@ -21,7 +21,7 @@ describe("BancoFe - Cadastro 360°, Pré-Cadastro Documental & Central de Termos
     expect(coopAgro).toBeDefined();
     expect(coopAgro?.empresaOrigemId).toBe("zuma_agro");
 
-    const bancoFeCore = clientes.find((c) => c.empresaOrigemId === "bancofe");
+    const bancoFeCore = clientes.find((c) => c.empresaOrigemId === "bancofe" && c.cnpjCpf === "34.567.890/0001-12");
     expect(bancoFeCore).toBeDefined();
     expect(bancoFeCore?.limitesOperacionais.limiteGlobalAprovado).toBe(50000000);
   });
