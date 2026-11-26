@@ -869,6 +869,23 @@ export default function ConsultaCpfPage() {
       consentimento: true,
     });
   };
+  const preencherExemploCnpj = () => {
+    setForm({
+      cpf: "53.338.003/0001-04",
+      nome: "BANCOFE HOLDING S.A.",
+      nascimento: "",
+      nomeMae: "",
+      cep: "78300-000",
+      cnpjs: "34.567.890/0001-12, 15.009.178/0001-70",
+      renda: "120.000.000,00",
+      compromissos: "0,00",
+      valor: "5.000.000,00",
+      prazo: "60",
+      taxaMes: "1,15",
+      finalidade: finalidades[0]?.id || "analise_credito",
+      consentimento: true,
+    });
+  };
 
   useEffect(() => {
     api.get(`${API}/finalidades`).then((r) => setFinalidades(r.finalidades || [])).catch(() => {});
@@ -960,7 +977,7 @@ export default function ConsultaCpfPage() {
 
       <form onSubmit={(e) => { e.preventDefault(); consultar(false); }} style={{ ...card, marginBottom: 18 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: 12, alignItems: 'end' }}>
-          <Campo label="CPF ou CNPJ *"><input style={input} value={form.cpf} onChange={set('cpf')} placeholder="000.000.000-00 ou 00.000.000/0001-00" inputMode="numeric" required /></Campo>
+          <Campo label={<span style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><span>CPF ou CNPJ *</span>{soDigitos(form.cpf).length > 11 ? <span style={{ fontSize: 10, background: "#e8f1fa", color: "#245B8F", padding: "1px 6px", borderRadius: 4, fontWeight: 700 }}>🏢 CNPJ (PJ)</span> : soDigitos(form.cpf).length > 0 ? <span style={{ fontSize: 10, background: "#e8f5ec", color: "#1B7F3A", padding: "1px 6px", borderRadius: 4, fontWeight: 700 }}>👤 CPF (PF)</span> : null}</span>}><input style={input} value={form.cpf} onChange={set('cpf')} placeholder="000.000.000-00 ou 00.000.000/0001-00" inputMode="numeric" required /></Campo>
           <Campo label="Nome completo"><input style={input} value={form.nome} onChange={set('nome')} /></Campo>
           <Campo label="Data de nascimento (exigida pela Receita)"><input style={input} value={form.nascimento} onChange={set('nascimento')} placeholder="dd/mm/aaaa" inputMode="numeric" /></Campo>
           <Campo label="Nome da mãe (conferência manual)"><input style={input} value={form.nomeMae} onChange={set('nomeMae')} /></Campo>
@@ -983,11 +1000,12 @@ export default function ConsultaCpfPage() {
           <span>Declaro que há base legal (LGPD) e finalidade legítima para esta consulta, que será registrada em auditoria, e que usarei os dados apenas para a finalidade escolhida.</span>
         </label>
         <div style={{ display: 'flex', gap: 8, marginTop: 14, flexWrap: 'wrap' }}>
-          <button type="submit" className="btn btn-primary" disabled={carregando}>{carregando ? 'Consultando fontes…' : 'Consultar CPF'}</button>
+          <button type="submit" className="btn btn-primary" disabled={carregando}>{carregando ? 'Consultando fontes…' : soDigitos(form.cpf).length > 11 ? 'Consultar CNPJ' : 'Consultar CPF'}</button>
           <button type="button" className="btn btn-secondary" disabled={carregandoBusca} onClick={executarBuscaAvancada} style={{ background: '#e8f5ec', color: '#1B7F3A', border: '1px solid #1B7F3A', fontWeight: 600 }}>
             {carregandoBusca ? 'Varrendo rede...' : '🌐 Busca Avançada'}
           </button>
-          <button type="button" className="btn btn-secondary" onClick={preencherExemploRodrigo} style={{ background: '#e8f5ec', color: '#1B7F3A', border: '1px solid #1B7F3A' }}>Exemplo Rodrigo</button>
+          <button type="button" className="btn btn-secondary" onClick={preencherExemploRodrigo} style={{ background: '#e8f5ec', color: '#1B7F3A', border: '1px solid #1B7F3A' }}>Exemplo Rodrigo (CPF)</button>
+          <button type="button" className="btn btn-secondary" onClick={preencherExemploCnpj} style={{ background: '#e8f1fa', color: '#245B8F', border: '1px solid #245B8F' }}>Exemplo Holding (CNPJ)</button>
           <button type="button" className="btn btn-ghost" onClick={() => { setForm(VAZIO); setDossie(null); }}>Limpar</button>
           {dossie && <button type="button" className="btn btn-ghost" disabled={carregando} onClick={() => consultar(true)}>Atualizar (ignorar cache)</button>}
         </div>
