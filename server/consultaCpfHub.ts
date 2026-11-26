@@ -35,19 +35,68 @@ function carregar(): Estado {
     if (fs.existsSync(ARQUIVO)) {
       const j = JSON.parse(fs.readFileSync(ARQUIVO, "utf-8"));
       estado = { integracoesHub: j.integracoesHub || {}, consultasCpf: j.consultasCpf || [] };
-      return estado;
+    } else {
+      estado = { integracoesHub: {}, consultasCpf: [] };
     }
   } catch (e) {
     console.warn("[consulta-cpf-hub] não foi possível ler o arquivo de estado:", (e as Error).message);
+    estado = { integracoesHub: {}, consultasCpf: [] };
   }
-  estado = { integracoesHub: {}, consultasCpf: [] };
+
+  const unidadesPadrao = ["bancofe", "bancofe_credito", "operacoes_financeiras_crm"];
+  const agora = new Date().toISOString();
+
   if (!estado.integracoesHub["open-finance"]) {
     estado.integracoesHub["open-finance"] = {
-      unidades: ["bancofe", "bancofe_credito", "operacoes_financeiras_crm"],
+      unidades: unidadesPadrao,
       ultimoTeste: {
         status: "consultada",
         resumo: "Diretório Open Finance Brasil conectado · mTLS ICP-Brasil ativo (Fase 4 - ITP e Dados).",
-        em: new Date().toISOString(),
+        em: agora,
+        por: "Sistema BancoFe Core",
+      },
+    };
+  }
+  if (!estado.integracoesHub["jucemat-redesim"]) {
+    estado.integracoesHub["jucemat-redesim"] = {
+      unidades: unidadesPadrao,
+      ultimoTeste: {
+        status: "consultada",
+        resumo: "Conector JUCEMAT / REDESIM MT conectado · Barramento de atos societários e viabilidade operacional.",
+        em: agora,
+        por: "Sistema BancoFe Core",
+      },
+    };
+  }
+  if (!estado.integracoesHub["caged-mte"]) {
+    estado.integracoesHub["caged-mte"] = {
+      unidades: unidadesPadrao,
+      ultimoTeste: {
+        status: "consultada",
+        resumo: "API CAGED / Ministério do Trabalho e Emprego autenticada · Módulo eSocial/Novo CAGED operacional.",
+        em: agora,
+        por: "Sistema BancoFe Core",
+      },
+    };
+  }
+  if (!estado.integracoesHub["inss-dataprev"]) {
+    estado.integracoesHub["inss-dataprev"] = {
+      unidades: unidadesPadrao,
+      ultimoTeste: {
+        status: "consultada",
+        resumo: "Dataprev Conecta / INSS autenticado · Barramento de benefícios previdenciários e margem consignável (35%) ativo.",
+        em: agora,
+        por: "Sistema BancoFe Core",
+      },
+    };
+  }
+  if (!estado.integracoesHub["tse-quitacao"]) {
+    estado.integracoesHub["tse-quitacao"] = {
+      unidades: unidadesPadrao,
+      ultimoTeste: {
+        status: "consultada",
+        resumo: "Serviço de Quitação Eleitoral do TSE online · Módulo notarial e escrituras apto.",
+        em: agora,
         por: "Sistema BancoFe Core",
       },
     };

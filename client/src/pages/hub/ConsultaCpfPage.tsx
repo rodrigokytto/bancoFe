@@ -191,6 +191,7 @@ function AbaCompliance({ d }) {
 
 function AbaFiscal({ d }) {
   const p = porId(d, 'pgfn-cnd');
+  const tse = porId(d, 'tse-quitacao');
   return (
     <div>
       <CartaoFonte f={p}>
@@ -204,17 +205,64 @@ function AbaFiscal({ d }) {
           ]} />
         )}
       </CartaoFonte>
-      {listaFontes(d, ['cndt-tst', 'tse-quitacao']).map((f) => <CartaoFonte key={f.id} f={f} />)}
+      {tse && (
+        <CartaoFonte f={tse}>
+          {tse.status === 'consultada' && tse.dados && (
+            <Kv itens={[
+              ['Situação Eleitoral', tse.dados.situacaoEleitoral],
+              ['Título de Eleitor', tse.dados.numeroTituloEleitor],
+              ['Quitação Eleitoral', tse.dados.quitacaoEleitoralValida ? 'REGULAR (Art. 7º Lei 4.737/1965)' : 'PENDENTE'],
+              ['Certidão de Quitação', tse.dados.numeroCertidaoQuitacao],
+              ['Validade da Certidão', tse.dados.validaAte],
+              ['Apto p/ Escritura e Alienação Fiduciária', tse.dados.aptoLavraturaEscrituraImobiliaria ? 'APTO' : 'PENDENTE'],
+              ['Domicílio Eleitoral', `${tse.dados.domicilioEleitoral?.municipio || ''}/${tse.dados.domicilioEleitoral?.uf || ''} · ${tse.dados.domicilioEleitoral?.zonaEleitoral || ''}`],
+            ]} />
+          )}
+        </CartaoFonte>
+      )}
+      {listaFontes(d, ['cndt-tst']).map((f) => <CartaoFonte key={f.id} f={f} />)}
     </div>
   );
 }
 
 function AbaCredito({ d }) {
   const bcb = porId(d, 'bcb-sgs');
+  const inss = porId(d, 'inss-dataprev');
+  const caged = porId(d, 'caged-mte');
   return (
     <div>
-      <p style={{ ...muted, marginTop: 0 }}>Bureaus, SCR e protestos dependem de contrato/credencial e de autorização do titular. Enquanto não estiverem ativos, aparecem como “planejada” — nenhum score é estimado ou inventado.</p>
-      {listaFontes(d, ['serasa', 'boavista-scpc', 'quod', 'scr-bacen', 'cenprot', 'inss-dataprev', 'bigdatacorp']).map((f) => <CartaoFonte key={f.id} f={f} />)}
+      <p style={{ ...muted, marginTop: 0 }}>Fontes integradas de crédito, renda formal e previdenciária. Bureaus privados dependem de credencial contratual.</p>
+      {inss && (
+        <CartaoFonte f={inss}>
+          {inss.status === 'consultada' && inss.dados && (
+            <Kv itens={[
+              ['Benefício Ativo', inss.dados.possuiBeneficioAtivo ? 'SIM (Aposentado/Pensionista)' : 'NÃO CONSTA (Contribuinte Ativo)'],
+              ['Espécie de Benefício', inss.dados.beneficios?.[0]?.descricaoEspecie || 'Sem benefício ativo'],
+              ['Renda Previdenciária Líquida', inss.dados.rendaPrevidenciariaLiquida ? brl(inss.dados.rendaPrevidenciariaLiquida) : 'R$ 0,00'],
+              ['Margem Consignável Disponível (35%)', inss.dados.margemConsignavelTotal35 ? brl(inss.dados.margemConsignavelTotal35) : 'R$ 0,00'],
+              ['Margem Cartão Consignado (5%)', inss.dados.margemCartaoTotal5 ? brl(inss.dados.margemCartaoTotal5) : 'R$ 0,00'],
+              ['Estabilidade da Renda', inss.dados.estabilidadeRendaVitalicia],
+              ['Enquadramento de Risco', inss.dados.enquadramentoCredito || 'PADRÃO'],
+            ]} />
+          )}
+        </CartaoFonte>
+      )}
+      {caged && (
+        <CartaoFonte f={caged}>
+          {caged.status === 'consultada' && caged.dados && (
+            <Kv itens={[
+              ['Vínculo Formal Ativo', caged.dados.possuiVinculoAtivo ? 'SIM (Confirmado no eSocial/CAGED)' : 'Sem vínculo CLT celetista recente'],
+              ['Empregador Formal', caged.dados.vinculos?.[0]?.razaoSocialEmpregador || '—'],
+              ['CNPJ Empregador', caged.dados.vinculos?.[0]?.cnpjEmpregador || '—'],
+              ['Cargo / CBO', caged.dados.vinculos?.[0] ? `${caged.dados.vinculos[0].cargo} (${caged.dados.vinculos[0].cbo})` : '—'],
+              ['Remuneração Formal Comprovada', caged.dados.remuneracaoTotalComprovada ? brl(caged.dados.remuneracaoTotalComprovada) : '—'],
+              ['Data de Admissão', caged.dados.vinculos?.[0]?.dataAdmissao || '—'],
+              ['Estabilidade Empregatícia', caged.dados.estabilidadeVinculo],
+            ]} />
+          )}
+        </CartaoFonte>
+      )}
+      {listaFontes(d, ['serasa', 'boavista-scpc', 'quod', 'scr-bacen', 'cenprot', 'bigdatacorp']).map((f) => <CartaoFonte key={f.id} f={f} />)}
       {bcb && (
         <CartaoFonte f={bcb}>
           {bcb.status === 'consultada' && (
@@ -237,8 +285,42 @@ function AbaJudicial({ d }) {
 
 function AbaSocietario({ d }) {
   const s = porId(d, 'brasilapi-cnpj');
+  const jucemat = porId(d, 'jucemat-redesim');
   const cor = { confirmado: NIVEL.nenhum, provavel: NIVEL.medio, nao_localizado: NIVEL.alto };
   return (
+    <div>
+      {jucemat && (
+        <CartaoFonte f={jucemat}>
+          {jucemat.status === 'consultada' && jucemat.dados && (
+            <div>
+              {jucemat.dados.empresas ? (
+                jucemat.dados.empresas.map((emp) => (
+                  <div key={emp.cnpj} style={{ borderTop: '1px solid var(--border, #E2DCCF)', paddingTop: 10, marginTop: 10 }}>
+                    <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                      <strong>NIRE {emp.nire}</strong>
+                      <Selo cfg={STATUS.ativa}>{emp.situacaoRegistro}</Selo>
+                    </div>
+                    <Kv itens={[
+                      ['Protocolo REDESIM', emp.protocoloRedesim],
+                      ['Órgão de Registro', emp.orgao],
+                      ['Viabilidade Cadastral', emp.viabilidadeCadastral],
+                      ['Último Ato Arquivado', `${emp.ultimoArquivamento.ato} (${emp.ultimoArquivamento.data})`],
+                      ['Chancela Digital', emp.ultimoArquivamento.chancelaDigital],
+                    ]} />
+                  </div>
+                ))
+              ) : (
+                <Kv itens={[
+                  ['Titular', jucemat.dados.titular],
+                  ['Situação Empresarial', jucemat.dados.situacaoEmpresarial],
+                  ['Base Mercantil', jucemat.dados.base],
+                  ['Observação', jucemat.dados.observacao],
+                ]} />
+              )}
+            </div>
+          )}
+        </CartaoFonte>
+      )}
     <CartaoFonte f={s}>
       {s.status === 'consultada' && (s.dados.empresas || []).map((e) => (
         <div key={e.cnpj} style={{ borderTop: '1px solid var(--border, #E2DCCF)', paddingTop: 10, marginTop: 10 }}>
@@ -269,6 +351,7 @@ function AbaSocietario({ d }) {
         </div>
       ))}
     </CartaoFonte>
+    </div>
   );
 }
 

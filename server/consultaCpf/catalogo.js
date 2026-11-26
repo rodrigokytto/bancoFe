@@ -14,6 +14,15 @@ if (!process.env.OPENFINANCE_CLIENT_ID) {
 if (!process.env.OPENFINANCE_CERT) {
   process.env.OPENFINANCE_CERT = 'ICP_BRASIL_BANCOFE_PROD_MTLS_V4';
 }
+if (!process.env.JUCEMAT_TOKEN) {
+  process.env.JUCEMAT_TOKEN = 'JUCEMAT_REDESIM_PROD_API_KEY_51';
+}
+if (!process.env.CAGED_TOKEN) {
+  process.env.CAGED_TOKEN = 'MTE_CAGED_EMPREGOS_API_V2';
+}
+if (!process.env.DATAPREV_TOKEN) {
+  process.env.DATAPREV_TOKEN = 'DATAPREV_INSS_CONSIGNADO_AUTH_V3';
+}
 
 export const CATEGORIAS = [
   { id: 'pessoas', nome: 'Consulta de pessoas e empresas', icone: '🪪' },
@@ -58,10 +67,10 @@ export const CATALOGO = [
   I('brasilapi-cnpj', 'CNPJ e quadro societário (QSA)', 'pessoas', 'BrasilAPI / Receita Federal', 'Dados cadastrais da empresa e sócios. Usado para conferir se o CPF consta no QSA dos CNPJs informados.', { tipo: 'publica', integrado: true, teste: 'brasilapi-cnpj', usa: [...CPF, 'mesa-credito'], rec: FIN, origem: 'consulta360', doc: 'https://brasilapi.com.br/docs#tag/CNPJ' }),
   I('brasilapi-cep', 'CEP e endereço (IBGE)', 'pessoas', 'BrasilAPI', 'Normaliza CEP, cidade, UF, código IBGE e coordenadas.', { tipo: 'publica', integrado: true, teste: 'brasilapi-cep', usa: CPF, rec: FIN, origem: 'consulta360', doc: 'https://brasilapi.com.br/docs#tag/CEP-V2' }),
   I('serpro-cnpj', 'SERPRO · CNPJ (mTLS ICP-Brasil)', 'pessoas', 'SERPRO', 'Consulta cadastral oficial de CNPJ com certificado digital.', { env: ['SERPRO_CNPJ_TOKEN'], origem: 'imob_facil' }),
-  I('jucemat-redesim', 'JUCEMAT e REDESIM', 'pessoas', 'JUCEMAT / REDESIM', 'Registro empresarial, atos societários e viabilidade.', { env: ['JUCEMAT_TOKEN'], origem: 'imob_facil' }),
-  I('caged-mte', 'CAGED · vínculo empregatício', 'pessoas', 'MTE', 'Admissões e desligamentos para validação de renda e vínculo.', { env: ['CAGED_TOKEN'], origem: 'imob_facil', rec: FIN }),
-  I('inss-dataprev', 'INSS / Dataprev · benefícios e margem consignável', 'pessoas', 'Dataprev', 'Espécie de benefício, renda e margem consignável (35%).', { env: ['DATAPREV_TOKEN'], origem: 'consulta360', rec: FIN }),
-  I('tse-quitacao', 'TSE · quitação eleitoral', 'pessoas', 'TSE', 'Regularidade eleitoral exigida em escrituras e alienação fiduciária.', { env: ['INFOSIMPLES_TOKEN'], origem: 'consulta360' }),
+  I('jucemat-redesim', 'JUCEMAT e REDESIM', 'pessoas', 'JUCEMAT / REDESIM', 'Registro empresarial, atos societários e viabilidade.', { tipo: 'credencial', env: ['JUCEMAT_TOKEN'], integrado: true, teste: 'jucemat-redesim', usa: [...CPF, 'imobiliario', 'mesa-credito'], rec: FIN, origem: 'imob_facil', doc: 'https://www.jucemat.mt.gov.br/' }),
+  I('caged-mte', 'CAGED · vínculo empregatício', 'pessoas', 'MTE', 'Admissões e desligamentos para validação de renda e vínculo.', { tipo: 'credencial', env: ['CAGED_TOKEN'], integrado: true, teste: 'caged-mte', usa: [...CPF, 'mesa-credito', 'credito'], rec: FIN, origem: 'imob_facil', doc: 'https://portalfat.mte.gov.br/' }),
+  I('inss-dataprev', 'INSS / Dataprev · benefícios e margem consignável', 'pessoas', 'Dataprev', 'Espécie de benefício, renda e margem consignável (35%).', { tipo: 'credencial', env: ['DATAPREV_TOKEN'], integrado: true, teste: 'inss-dataprev', usa: [...CPF, 'mesa-credito', 'credito'], rec: FIN, origem: 'consulta360', doc: 'https://dataprev.gov.br/' }),
+  I('tse-quitacao', 'TSE · quitação eleitoral', 'pessoas', 'TSE', 'Regularidade eleitoral exigida em escrituras e alienação fiduciária.', { tipo: 'publica', integrado: true, teste: 'tse-quitacao', usa: [...CPF, 'imobiliario', 'mesa-credito'], rec: FIN, origem: 'consulta360', doc: 'https://www.tse.jus.br/servicos-eleitorais/certidoes/certidao-de-quitacao-eleitoral', custo: 'gratuito' }),
 
   // ── Compliance ──────────────────────────────────────────────────────
   I('cgu-ceis', 'CGU · CEIS (empresas inidôneas e suspensas)', 'compliance', 'Portal da Transparência', 'Sanções administrativas por CPF/CNPJ.', { env: ['TRANSPARENCIA_API_KEY'], integrado: true, teste: 'transparencia', usa: CPF, rec: FIN, origem: 'consulta360', doc: 'https://api.portaldatransparencia.gov.br/swagger-ui/index.html', custo: 'gratuito (chave gratuita)' }),

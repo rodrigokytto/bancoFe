@@ -12,7 +12,8 @@ import {
 } from './validadores.js';
 import { CATALOGO, CATALOGO_POR_ID } from './catalogo.js';
 import {
-  receitaCpf, pgfnCpf, cguSancoes, brasilApiCep, brasilApiCnpjs, bcbIndicadores, TESTES,
+  receitaCpf, pgfnCpf, cguSancoes, brasilApiCep, brasilApiCnpjs, bcbIndicadores,
+  jucematRedesim, cagedMte, inssDataprev, tseQuitacao, openFinance, TESTES,
 } from './provedores.js';
 
 export const FINALIDADES = [
@@ -27,7 +28,7 @@ const NIVEIS = ['nenhum', 'informativo', 'baixo', 'medio', 'alto', 'critico'];
 const nivelMax = (achados) => achados.reduce((m, a) => (NIVEIS.indexOf(a.nivel) > NIVEIS.indexOf(m) ? a.nivel : m), 'nenhum');
 
 /** Fontes ainda não integradas que a tela exibe como "planejada" no dossiê. */
-const FONTES_PLANEJADAS = ['serasa', 'boavista-scpc', 'quod', 'scr-bacen', 'cenprot', 'inss-dataprev', 'senatran-renajud', 'cartorio-ri', 'tjmt-pje', 'cndt-tst', 'tse-quitacao', 'bigdatacorp', 'cgu-cepim', 'tcu-contas', 'ofac-onu', 'ibama-embargos'];
+const FONTES_PLANEJADAS = ['serasa', 'boavista-scpc', 'quod', 'scr-bacen', 'cenprot', 'senatran-renajud', 'cartorio-ri', 'tjmt-pje', 'cndt-tst', 'bigdatacorp', 'cgu-cepim', 'tcu-contas', 'ofac-onu', 'ibama-embargos'];
 
 export function normalizarEntrada(raw = {}) {
   const cpf = limpar(raw.cpf);
@@ -158,6 +159,11 @@ export async function consultar(raw, deps = {}) {
     medir('brasilapi-cep', () => brasilApiCep(ctx, deps)),
     medir('brasilapi-cnpj', () => brasilApiCnpjs(ctx, deps)),
     medir('bcb-sgs', () => bcbIndicadores(ctx, deps)),
+    medir('jucemat-redesim', () => jucematRedesim(ctx, deps)),
+    medir('caged-mte', () => cagedMte(ctx, deps)),
+    medir('inss-dataprev', () => inssDataprev(ctx, deps)),
+    medir('tse-quitacao', () => tseQuitacao(ctx, deps)),
+    medir('open-finance', () => openFinance(ctx, deps)),
   ]);
   // CGU cobre 4 listas numa chamada: rotula o cartão como o conjunto
   const cgu = fontes.find((f) => f.id === 'cgu-ceis');

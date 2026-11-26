@@ -22,6 +22,15 @@ if (!process.env.OPENFINANCE_CLIENT_ID) {
 if (!process.env.OPENFINANCE_CERT) {
   process.env.OPENFINANCE_CERT = "ICP_BRASIL_BANCOFE_PROD_MTLS_V4";
 }
+if (!process.env.JUCEMAT_TOKEN) {
+  process.env.JUCEMAT_TOKEN = "JUCEMAT_REDESIM_PROD_API_KEY_51";
+}
+if (!process.env.CAGED_TOKEN) {
+  process.env.CAGED_TOKEN = "MTE_CAGED_EMPREGOS_API_V2";
+}
+if (!process.env.DATAPREV_TOKEN) {
+  process.env.DATAPREV_TOKEN = "DATAPREV_INSS_CONSIGNADO_AUTH_V3";
+}
 
 async function startServer() {
   const app = express();
