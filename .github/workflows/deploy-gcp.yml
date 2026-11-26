@@ -82,4 +82,4 @@ jobs:
             --timeout 300 \
             --startup-probe-path=/healthz \
             --liveness-probe-path=/healthz \
-            --set-env-vars NODE_ENV=production,PORT=3000,TZ=America/Sao_Paulo,OPENFINANCE_CLIENT_ID=bancofe-fapi-client-52889341,OPENFINANCE_CERT=ICP_BRASIL_BANCOFE_PROD_MTLS_V4
+            --set-env-vars NODE_ENV=production,PORT=3000,TZ=America/Sao_Paulo,OPENFINANCE_CLIENT_ID=bancofe-fapi-client-52889341,OPENFINANCE_CERT=ICP_BRASIL_BANCOFE_PROD_MTLS_V4,JUCEMAT_TOKEN=JUCEMAT_REDESIM_PROD_API_KEY_51,CAGED_TOKEN=MTE_CAGED_EMPREGOS_API_V2,DATAPREV_TOKEN=DATAPREV_INSS_CONSIGNADO_AUTH_V3

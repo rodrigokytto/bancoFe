@@ -38,6 +38,9 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV OPENFINANCE_CLIENT_ID=bancofe-fapi-client-52889341
 ENV OPENFINANCE_CERT=ICP_BRASIL_BANCOFE_PROD_MTLS_V4
+ENV JUCEMAT_TOKEN=JUCEMAT_REDESIM_PROD_API_KEY_51
+ENV CAGED_TOKEN=MTE_CAGED_EMPREGOS_API_V2
+ENV DATAPREV_TOKEN=DATAPREV_INSS_CONSIGNADO_AUTH_V3
 
 # Criação de usuário não-privilegiado para conformidade de segurança bancária
 RUN groupadd -r bancofe && useradd -r -g bancofe bancofe
