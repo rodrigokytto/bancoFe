@@ -48,9 +48,14 @@ const muted = { color: 'var(--muted, #5B6470)', fontSize: 13 };
 const input = { width: '100%', padding: '8px 10px', border: '1px solid var(--border, #E2DCCF)', borderRadius: 8, fontSize: 14, background: '#fff', boxSizing: 'border-box' };
 const rotulo = { display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 4, color: 'var(--muted, #5B6470)' };
 
-const Selo = ({ cfg, children }) => (
-  <span style={{ display: 'inline-block', padding: '2px 9px', borderRadius: 999, fontSize: 12, fontWeight: 600, color: cfg.cor, background: cfg.bg, whiteSpace: 'nowrap' }}>{children ?? cfg.rotulo}</span>
-);
+const Selo = ({ cfg, children }) => {
+  const c = cfg || STATUS.consultada;
+  return (
+    <span style={{ display: 'inline-block', padding: '2px 9px', borderRadius: 999, fontSize: 12, fontWeight: 600, color: c.cor, background: c.bg, whiteSpace: 'nowrap' }}>
+      {children ?? c.rotulo}
+    </span>
+  );
+};
 const Campo = ({ label, children, span }) => (
   <label style={{ display: 'block', gridColumn: span ? `span ${span}` : undefined }}>
     <span style={rotulo}>{label}</span>
@@ -298,7 +303,7 @@ function AbaSocietario({ d }) {
                   <div key={emp.cnpj} style={{ borderTop: '1px solid var(--border, #E2DCCF)', paddingTop: 10, marginTop: 10 }}>
                     <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                       <strong>NIRE {emp.nire}</strong>
-                      <Selo cfg={STATUS.ativa}>{emp.situacaoRegistro}</Selo>
+                      <Selo cfg={STATUS.consultada}>{emp.situacaoRegistro}</Selo>
                     </div>
                     <Kv itens={[
                       ['Protocolo REDESIM', emp.protocoloRedesim],
