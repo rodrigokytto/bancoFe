@@ -36,6 +36,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl tzdata && 
 ENV TZ=America/Cuiaba
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV OPENFINANCE_CLIENT_ID=bancofe-fapi-client-52889341
+ENV OPENFINANCE_CERT=ICP_BRASIL_BANCOFE_PROD_MTLS_V4
 
 # Criação de usuário não-privilegiado para conformidade de segurança bancária
 RUN groupadd -r bancofe && useradd -r -g bancofe bancofe

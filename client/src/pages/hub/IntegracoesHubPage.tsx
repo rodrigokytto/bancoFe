@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { api, useToast, empresaAtiva, listaUnidades, ehFinanceira } from '../../lib/hubApi';
 import { useBusiness } from '../../contexts/BusinessContext';
+import OpenFinancePainel from './OpenFinancePainel';
 import './hub.css';
 const API = '/api/admin/hub-integracoes';
 
@@ -22,7 +23,7 @@ const Selo = ({ cfg, children }) => (
 );
 
 
-function CartaoIntegracao({ i, onTestar, onAlternar, testando, podeEditar }) {
+function CartaoIntegracao({ i, onTestar, onAlternar, testando, podeEditar, onAbrirOpenFinance }) {
   const teste = i.ultimoTeste;
   return (
     <article style={{ ...card, display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -50,6 +51,16 @@ function CartaoIntegracao({ i, onTestar, onAlternar, testando, podeEditar }) {
       {i.usadoEm.length > 0 && <div style={{ fontSize: 12, ...muted }}>Usada em: {i.usadoEm.join(', ')}</div>}
       {teste && <div style={{ fontSize: 12, ...muted }}>Último teste: {teste.status === 'consultada' ? '✓' : '⚠'} {teste.resumo} · {new Date(teste.em).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}</div>}
       <div style={{ display: 'flex', gap: 6, marginTop: 'auto', flexWrap: 'wrap', paddingTop: 4 }}>
+        {i.id === 'open-finance' && (
+          <button
+            type="button"
+            className="btn btn-sm btn-primary"
+            style={{ background: '#0C4A34', color: '#fff' }}
+            onClick={onAbrirOpenFinance}
+          >
+            🏦 Abrir Painel Open Finance
+          </button>
+        )}
         {i.testavel && <button type="button" className="btn btn-ghost btn-sm" disabled={testando === i.id} onClick={() => onTestar(i)}>{testando === i.id ? 'Testando…' : 'Testar conexão'}</button>}
         {podeEditar && (
           <button type="button" className={`btn btn-sm ${i.habilitadaNestaUnidade ? 'btn-secondary' : 'btn-primary'}`} onClick={() => onAlternar(i)}>
@@ -62,10 +73,17 @@ function CartaoIntegracao({ i, onTestar, onAlternar, testando, podeEditar }) {
   );
 }
 
-export default function IntegracoesHubPage() {
+export default function IntegracoesHubPage({ defaultAba = 'catalogo' } = {}) {
   const toast = useToast();
   const [dados, setDados] = useState(null);
-  const [aba, setAba] = useState('catalogo');
+  const [aba, setAba] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const p = new URLSearchParams(window.location.search);
+      if (p.get('aba')) return p.get('aba');
+      if (window.location.pathname.includes('open-finance') || window.location.pathname.includes('openfinance')) return 'openfinance';
+    }
+    return defaultAba;
+  });
   const [filtro, setFiltro] = useState({ q: '', categoria: '', status: '', origem: '', recomendadas: false, habilitadas: false });
   const [testando, setTestando] = useState(null);
   const { activeBusiness } = useBusiness();
@@ -151,7 +169,12 @@ export default function IntegracoesHubPage() {
       )}
 
       <nav style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
-        {[['catalogo', 'Catálogo'], ['unidades', 'Unidades do grupo'], ['seguranca', 'Segurança e credenciais']].map(([id, n]) => (
+        {[
+          ['catalogo', 'Catálogo Geral (77 Fontes)'],
+          ['openfinance', '🏦 Open Finance Brasil (mTLS & ITP)'],
+          ['unidades', 'Unidades do grupo'],
+          ['seguranca', 'Segurança e credenciais'],
+        ].map(([id, n]) => (
           <button key={id} type="button" onClick={() => setAba(id)} className={`btn btn-sm ${aba === id ? 'btn-primary' : 'btn-ghost'}`}>{n}</button>
         ))}
       </nav>
@@ -183,13 +206,25 @@ export default function IntegracoesHubPage() {
               <div key={cat.id} style={{ marginBottom: 22 }}>
                 <h3 style={{ margin: '0 0 8px' }}>{cat.icone} {cat.nome} <span style={{ ...muted }}>({itens.length})</span></h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 10 }}>
-                  {itens.map((i) => <CartaoIntegracao key={i.id} i={i} onTestar={testar} onAlternar={alternar} testando={testando} podeEditar />)}
+                  {itens.map((i) => (
+                    <CartaoIntegracao
+                      key={i.id}
+                      i={i}
+                      onTestar={testar}
+                      onAlternar={alternar}
+                      testando={testando}
+                      podeEditar
+                      onAbrirOpenFinance={() => setAba('openfinance')}
+                    />
+                  ))}
                 </div>
               </div>
             );
           })}
         </>
       )}
+
+      {aba === 'openfinance' && <OpenFinancePainel />}
 
       {aba === 'unidades' && (
         <div style={card}>

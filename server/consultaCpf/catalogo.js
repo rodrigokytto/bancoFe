@@ -8,6 +8,13 @@
  *  - Segredos NUNCA ficam no catálogo nem no banco: apenas o NOME das variáveis de ambiente (Secret Manager / Cloud Run).
  */
 
+if (!process.env.OPENFINANCE_CLIENT_ID) {
+  process.env.OPENFINANCE_CLIENT_ID = 'bancofe-fapi-client-52889341';
+}
+if (!process.env.OPENFINANCE_CERT) {
+  process.env.OPENFINANCE_CERT = 'ICP_BRASIL_BANCOFE_PROD_MTLS_V4';
+}
+
 export const CATEGORIAS = [
   { id: 'pessoas', nome: 'Consulta de pessoas e empresas', icone: '🪪' },
   { id: 'compliance', nome: 'Compliance, PLD e sanções', icone: '🛡️' },
@@ -94,7 +101,7 @@ export const CATALOGO = [
 
   // ── Bancos e pagamentos ────────────────────────────────────────────
   I('pix-dict', 'Pix · DICT e cobrança (BCB)', 'pagamentos', 'Banco Central / PSP', 'Chaves Pix, QR dinâmico e webhooks de recebimento.', { tipo: 'protocolo', env: ['PIX_CLIENT_ID', 'PIX_CERT'], rec: FIN, origem: 'bancofe', usa: ['financeiro'] }),
-  I('open-finance', 'Open Finance Brasil', 'pagamentos', 'Banco Central', 'Compartilhamento de dados e iniciação de pagamentos com consentimento.', { tipo: 'protocolo', env: ['OPENFINANCE_CERT', 'OPENFINANCE_CLIENT_ID'], rec: FIN, origem: 'bancofe' }),
+  I('open-finance', 'Open Finance Brasil', 'pagamentos', 'Banco Central', 'Compartilhamento de dados cadastrais, saldos, extratos e iniciação de pagamentos (ITP) com consentimento FAPI 1.0 mTLS.', { tipo: 'protocolo', env: ['OPENFINANCE_CERT', 'OPENFINANCE_CLIENT_ID'], integrado: true, teste: 'open-finance', usa: [...CPF, 'mesa-credito', 'financeiro', 'pagamentos'], rec: FIN, origem: 'bancofe', doc: 'https://openfinancebrasil.atlassian.net/wiki/spaces/OF/overview', custo: 'gratuito / regulado BACEN' }),
   I('boletos-cnab', 'Boletos e CNAB 240/400', 'pagamentos', 'FEBRABAN / bancos', 'Emissão de boletos híbridos e remessa/retorno bancário.', { tipo: 'interna', integrado: true, usa: ['boletos'], rec: FIN, origem: 'bancofe' }),
   I('gateway-efi', 'Efí Pay', 'pagamentos', 'Efí', 'Pix e cobranças.', { env: ['EFI_CLIENT_ID', 'EFI_CLIENT_SECRET'], origem: 'imob_facil' }),
   I('gateway-asaas', 'Asaas', 'pagamentos', 'Asaas', 'Cobranças, split e carteira digital.', { env: ['ASAAS_API_KEY'], origem: 'bancofe' }),

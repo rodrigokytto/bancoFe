@@ -263,6 +263,10 @@ function Router() {
             <Route path="/hub-integracoes" component={IntegracoesHubPage} />
             <Route path="/admin/integracoes-hub" component={IntegracoesHubPage} />
             <Route path="/admin/integracoes-corporativas" component={IntegracoesHubPage} />
+            <Route path="/admin/open-finance" component={IntegracoesHubPage} />
+            <Route path="/open-finance" component={IntegracoesHubPage} />
+            <Route path="/openfinance" component={IntegracoesHubPage} />
+            <Route path="/admin/openfinance" component={IntegracoesHubPage} />
             {/* Consulta 360° CPF & CNPJ Completa */}
             <Route path="/consulta-360" component={BancoFeHub} />
             <Route path="/consulta360" component={BancoFeHub} />

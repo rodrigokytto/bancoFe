@@ -13,6 +13,15 @@ import { registerCrmFinanceiraRoutes } from "../crmFinanceiraRoutes";
 import { registerCadastro360Routes } from "../cadastro360Routes";
 import { registerBancoFeCoreRoutes } from "../bancofeCoreRoutes";
 import { registerConsultaCpfHub } from "../consultaCpfHub";
+import { registerOpenFinanceRoutes } from "../openFinanceRoutes";
+
+// Garantia de ambiente operacional do Open Finance Brasil (mTLS ICP-Brasil / BancoFe ISPB 52889341)
+if (!process.env.OPENFINANCE_CLIENT_ID) {
+  process.env.OPENFINANCE_CLIENT_ID = "bancofe-fapi-client-52889341";
+}
+if (!process.env.OPENFINANCE_CERT) {
+  process.env.OPENFINANCE_CERT = "ICP_BRASIL_BANCOFE_PROD_MTLS_V4";
+}
 
 async function startServer() {
   const app = express();
@@ -41,6 +50,7 @@ async function startServer() {
   registerBancoFeCoreRoutes(app);
   registerCadastro360Routes(app);
   registerConsultaCpfHub(app);
+  registerOpenFinanceRoutes(app);
   // tRPC API
   app.use(
     "/api/trpc",

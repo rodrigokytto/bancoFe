@@ -1,0 +1,217 @@
+{
+  "consentimentos": [
+    {
+      "consentId": "urn:bancofe:consent:89a1c4e2-65f0-4528-9843-bancofe001",
+      "documentoTitular": "30587162813",
+      "documentoTitularMascarado": "***.871.628-**",
+      "nomeTitular": "Rodrigo Ribeiro Gonçalves",
+      "instituicaoTransmissora": {
+        "ispb": "00000000",
+        "nome": "Banco do Brasil S.A.",
+        "nomeFantasia": "Banco do Brasil",
+        "codigoCompensacao": "001",
+        "segmento": "S1",
+        "statusDiretorio": "ACTIVE",
+        "suportaItp": true,
+        "suportaCompartilhamento": true
+      },
+      "status": "AUTHORISED",
+      "permissoes": [
+        "CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ",
+        "RESOURCES_READ",
+        "ACCOUNTS_READ",
+        "ACCOUNTS_BALANCES_READ",
+        "ACCOUNTS_TRANSACTIONS_READ",
+        "CREDIT_CARDS_ACCOUNTS_READ",
+        "CREDIT_CARDS_ACCOUNTS_BILLS_READ",
+        "LOANS_READ",
+        "FINANCINGS_READ",
+        "PAYMENTS_INITIATE"
+      ],
+      "criadoEm": "2026-11-11T17:52:57.073Z",
+      "autorizadoEm": "2026-11-12T17:52:57.073Z",
+      "expiraEm": "2027-11-11T17:52:57.073Z",
+      "urlRedirecionamentoAuth": "https://auth.openfinance.bancofe.com.br/oauth/authorize?consent_id=urn:bancofe:consent:89a1c4e2-65f0-4528-9843-bancofe001"
+    },
+    {
+      "consentId": "urn:bancofe:consent:33e4b1a8-99d2-4318-8722-bancofe002",
+      "documentoTitular": "52889341000192",
+      "documentoTitularMascarado": "**.889.341/0001-**",
+      "nomeTitular": "BancoFe Holding & Operações Financeiras",
+      "instituicaoTransmissora": {
+        "ispb": "01181521",
+        "nome": "Banco Cooperativo Sicredi S.A.",
+        "nomeFantasia": "Sicredi",
+        "codigoCompensacao": "748",
+        "segmento": "S2",
+        "statusDiretorio": "ACTIVE",
+        "suportaItp": true,
+        "suportaCompartilhamento": true
+      },
+      "status": "AUTHORISED",
+      "permissoes": [
+        "CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ",
+        "RESOURCES_READ",
+        "ACCOUNTS_READ",
+        "ACCOUNTS_BALANCES_READ",
+        "ACCOUNTS_TRANSACTIONS_READ",
+        "CREDIT_CARDS_ACCOUNTS_READ",
+        "CREDIT_CARDS_ACCOUNTS_BILLS_READ",
+        "LOANS_READ",
+        "FINANCINGS_READ",
+        "PAYMENTS_INITIATE"
+      ],
+      "criadoEm": "2026-11-11T17:52:57.073Z",
+      "autorizadoEm": "2026-11-12T17:52:57.073Z",
+      "expiraEm": "2027-11-11T17:52:57.073Z",
+      "urlRedirecionamentoAuth": "https://auth.openfinance.bancofe.com.br/oauth/authorize?consent_id=urn:bancofe:consent:33e4b1a8-99d2-4318-8722-bancofe002"
+    }
+  ],
+  "contas": [
+    {
+      "id": "acc-bb-01",
+      "consentId": "urn:bancofe:consent:89a1c4e2-65f0-4528-9843-bancofe001",
+      "documentoTitular": "30587162813",
+      "instituicao": "Banco do Brasil S.A. (001)",
+      "codigoBanco": "001",
+      "tipoConta": "CONTA_CORRENTE",
+      "agencia": "1234-5",
+      "numeroConta": "98765-4",
+      "saldoDisponivelBrl": 48520.8,
+      "saldoBloqueadoBrl": 0,
+      "limiteChequeEspecialBrl": 15000,
+      "dataAtualizacao": "2026-11-26T17:52:57.073Z",
+      "status": "ATIVA"
+    },
+    {
+      "id": "acc-itau-02",
+      "consentId": "urn:bancofe:consent:89a1c4e2-65f0-4528-9843-bancofe001",
+      "documentoTitular": "30587162813",
+      "instituicao": "Itaú Unibanco S.A. (341)",
+      "codigoBanco": "341",
+      "tipoConta": "CONTA_PAGAMENTO",
+      "agencia": "0450",
+      "numeroConta": "11223-9",
+      "saldoDisponivelBrl": 72400,
+      "saldoBloqueadoBrl": 0,
+      "limiteChequeEspecialBrl": 30000,
+      "dataAtualizacao": "2026-11-26T17:52:57.073Z",
+      "status": "ATIVA"
+    },
+    {
+      "id": "acc-sicredi-03",
+      "consentId": "urn:bancofe:consent:33e4b1a8-99d2-4318-8722-bancofe002",
+      "documentoTitular": "52889341000192",
+      "instituicao": "Sicredi Tangará da Serra (748)",
+      "codigoBanco": "748",
+      "tipoConta": "CONTA_AGRO",
+      "agencia": "0810",
+      "numeroConta": "44556-8",
+      "saldoDisponivelBrl": 890450,
+      "saldoBloqueadoBrl": 25000,
+      "limiteChequeEspecialBrl": 2500000,
+      "dataAtualizacao": "2026-11-26T17:52:57.073Z",
+      "status": "ATIVA"
+    },
+    {
+      "id": "acc-bancofe-04",
+      "consentId": "urn:bancofe:consent:89a1c4e2-65f0-4528-9843-bancofe001",
+      "documentoTitular": "30587162813",
+      "instituicao": "BancoFe Instituição de Pagamento (799)",
+      "codigoBanco": "799",
+      "tipoConta": "CONTA_CORRENTE",
+      "agencia": "0001",
+      "numeroConta": "100234-5",
+      "saldoDisponivelBrl": 350210,
+      "saldoBloqueadoBrl": 0,
+      "limiteChequeEspecialBrl": 500000,
+      "dataAtualizacao": "2026-11-26T17:52:57.073Z",
+      "status": "ATIVA"
+    }
+  ],
+  "cartoes": [
+    {
+      "id": "card-bb-ouro",
+      "consentId": "urn:bancofe:consent:89a1c4e2-65f0-4528-9843-bancofe001",
+      "documentoTitular": "30587162813",
+      "instituicao": "Banco do Brasil S.A. (001)",
+      "bandeira": "Visa Infinite Agro",
+      "ultimosQuatroDigitos": "9082",
+      "nomeImpresso": "RODRIGO R GONCALVES",
+      "limiteTotalBrl": 80000,
+      "limiteDisponivelBrl": 62450,
+      "valorFaturaAtualBrl": 17550,
+      "vencimentoFatura": "15/12/2026"
+    },
+    {
+      "id": "card-itau-black",
+      "consentId": "urn:bancofe:consent:89a1c4e2-65f0-4528-9843-bancofe001",
+      "documentoTitular": "30587162813",
+      "instituicao": "Itaú Unibanco S.A. (341)",
+      "bandeira": "Mastercard Black Corporate",
+      "ultimosQuatroDigitos": "4120",
+      "nomeImpresso": "RODRIGO R GONCALVES",
+      "limiteTotalBrl": 120000,
+      "limiteDisponivelBrl": 104200,
+      "valorFaturaAtualBrl": 15800,
+      "vencimentoFatura": "20/12/2026"
+    }
+  ],
+  "operacoesCredito": [
+    {
+      "id": "op-cred-01",
+      "consentId": "urn:bancofe:consent:33e4b1a8-99d2-4318-8722-bancofe002",
+      "documentoTitular": "52889341000192",
+      "instituicao": "Sicredi (748)",
+      "modalidade": "FINANCIAMENTO_RURAL",
+      "numeroContrato": "CTR-SIC-2025-9988",
+      "valorContratadoBrl": 1200000,
+      "saldoDevedorBrl": 450000,
+      "taxaJurosMensalPercentual": 0.95,
+      "taxaJurosAnualPercentual": 12,
+      "dataContratacao": "10/01/2025",
+      "dataVencimento": "10/01/2028",
+      "quantidadeParcelas": 36,
+      "parcelasRestantes": 14
+    },
+    {
+      "id": "op-cred-02",
+      "consentId": "urn:bancofe:consent:89a1c4e2-65f0-4528-9843-bancofe001",
+      "documentoTitular": "30587162813",
+      "instituicao": "Banco do Brasil (001)",
+      "modalidade": "CAPITAL_GIRO",
+      "numeroContrato": "BB-GIRO-8841-A",
+      "valorContratadoBrl": 300000,
+      "saldoDevedorBrl": 85000,
+      "taxaJurosMensalPercentual": 1.18,
+      "taxaJurosAnualPercentual": 15.1,
+      "dataContratacao": "15/06/2025",
+      "dataVencimento": "15/06/2027",
+      "quantidadeParcelas": 24,
+      "parcelasRestantes": 7
+    }
+  ],
+  "pagamentosItp": [
+    {
+      "paymentId": "ITP_PIX_20261126_8841",
+      "consentId": "urn:bancofe:consent:89a1c4e2-65f0-4528-9843-bancofe001",
+      "endToEndId": "E5288934120261126173000998877661",
+      "documentoPagador": "30587162813",
+      "nomePagador": "Rodrigo Ribeiro Gonçalves",
+      "instituicaoOrigem": "Banco do Brasil S.A. (001)",
+      "agenciaOrigem": "1234",
+      "contaOrigem": "98765-4",
+      "instituicaoDestino": "BancoFe Instituição de Pagamento S.A. (799)",
+      "chavePixDestino": "pix@bancofe.com.br",
+      "nomeRecebedor": "BancoFe Holding & Operações Financeiras",
+      "documentoRecebedor": "52889341000192",
+      "valorBrl": 15000,
+      "status": "ACCP",
+      "statusDescricao": "Transação Pix Liquidada com Sucesso no SPI/BACEN via Open Finance ITP",
+      "iniciadoEm": "2026-11-26T17:52:57.073Z",
+      "liquidadoEm": "2026-11-26T17:52:57.073Z",
+      "chaveIdempotencia": "idemp-bcf-itp-994182",
+      "jwsSignature": "eyJhbGciOiJQUzI1NiIsImtpZCI6ImJjZi1pY3AtYnJhc2lsLTIwMjYifQ.eyJpc3MiOiJCYW5jb0ZlIn0.signature-valid"
+    }
+  ]
+}
