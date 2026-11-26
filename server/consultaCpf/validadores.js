@@ -43,6 +43,10 @@ export const formatarCnpj = (v) => {
   const c = limpar(v).padStart(14, '0').slice(0, 14);
   return `${c.slice(0, 2)}.${c.slice(2, 5)}.${c.slice(5, 8)}/${c.slice(8, 12)}-${c.slice(12)}`;
 };
+export const mascararCnpj = (v) => {
+  const c = limpar(v);
+  return c.length === 14 ? `${c.slice(0, 2)}.${c.slice(2, 5)}.***/${c.slice(8, 12)}-**` : '***';
+};
 /** Mascara no padrão LGPD: ***.456.789-** */
 export const mascararCpf = (v) => {
   const c = limpar(v);

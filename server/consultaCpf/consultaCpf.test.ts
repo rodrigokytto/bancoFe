@@ -57,6 +57,17 @@ test('consulta: exige CPF válido, finalidade e consentimento', async () => {
   assert.ok(r.erros.length >= 3);
 });
 
+test('consulta: aceita CNPJ válido com consentimento e finalidade', async () => {
+  const r = await consultar({
+    cpf: '00000000000191',
+    finalidade: 'analise_credito',
+    consentimento: true,
+  });
+  assert.equal(r.erro, undefined);
+  assert.equal(r.tipoDocumento, 'CNPJ');
+  assert.ok(r.cpfMascarado.includes('/0001-'));
+});
+
 function fetchFalso(rotas) {
   return async (url, opts = {}) => {
     for (const [padrao, resp] of rotas) {

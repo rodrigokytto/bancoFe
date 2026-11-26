@@ -13,6 +13,7 @@ import {
   FINALIDADES, consultar, resumirDossie, listarCatalogo, testarIntegracao,
 } from './motor.js';
 import { mascararCpf } from './validadores.js';
+import { executarBuscaAvancada } from './buscaAvancadaMotor.js';
 
 const RETENCAO_DIAS = Number(process.env.CONSULTA_CPF_RETENCAO_DIAS || 90);
 const MAX_HISTORICO = 1000;
@@ -99,6 +100,41 @@ export function createIntegracoesHubRouter({ db, save, audit, obterEmpresaId, pe
   });
 
   cpf.get('/finalidades', (_req, res) => res.json({ finalidades: FINALIDADES, retencaoDias: RETENCAO_DIAS }));
+
+  cpf.post('/busca-avancada', async (req, res) => {
+    try {
+      const empresaId = empresaDe(req);
+      const { dossieId, documento, nome, cnpjs, nascimento, cep, cidade, uf, dossiePrevia } = req.body || {};
+
+      const resultado = await executarBuscaAvancada({
+        documento: documento || dossiePrevia?.cpf || dossiePrevia?.cpfMascarado,
+        nome: nome || dossiePrevia?.nome,
+        nascimento: nascimento || dossiePrevia?.entrada?.nascimento,
+        cep: cep || dossiePrevia?.entrada?.cep,
+        cnpjs: cnpjs || dossiePrevia?.entrada?.cnpjs,
+        cidade,
+        uf,
+        dossiePrevia,
+        empresaId,
+      });
+
+      // Se fornecido dossieId, atualiza o histórico persistido
+      if (dossieId) {
+        const d = db();
+        const item = (d.consultasCpf || []).find((c) => c.id === dossieId);
+        if (item) {
+          item.buscaAvancada = resultado;
+          save();
+        }
+      }
+
+      audit?.(req, 'consulta-cpf-busca-avancada', `Busca avançada OSINT para ${resultado.nomeAlvo} (${resultado.tipoDocumento} ${resultado.documento})`);
+      res.json(resultado);
+    } catch (err) {
+      console.error('[busca-avancada-error]', err);
+      res.status(500).json({ error: 'Falha ao executar busca avançada', detalhe: err.message });
+    }
+  });
 
   cpf.post('/consultar', async (req, res) => {
     const empresaId = empresaDe(req);

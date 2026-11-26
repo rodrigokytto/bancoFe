@@ -117,7 +117,7 @@ export const SECTIONS: Record<string, NavSection> = {
     items: [
       { id: "bancofe_cadastro360", path: "/admin/cadastro-360", label: "Cadastro 360° & KYB Bancário", icon: ShieldCheck, badge: "Bacen", badgeColor: "bg-emerald-600 text-white", highlight: true },
       { id: "bancofe_consulta360", path: "/consulta-360", label: "Consulta 360° CPF/CNPJ (Bureaus)", icon: Search, badge: "48 Bureaus", badgeColor: "bg-cyan-600 text-white", highlight: true },
-      { id: "bancofe_consulta_cpf", path: "/admin/consulta-cpf", label: "Consulta CPF Completa", icon: Search, badge: "10 Abas", badgeColor: "bg-cyan-600 text-white", highlight: true },
+      { id: "bancofe_consulta_cpf", path: "/admin/consulta-cpf", label: "Consulta CPF/CNPJ Completa", icon: Search, badge: "11 Abas + OSINT", badgeColor: "bg-emerald-600 text-white", highlight: true },
       { id: "bancofe_termos", path: "/admin/termos", label: "Termos Regulatórios & Consentimentos", icon: FileText, badge: "Compliance", badgeColor: "bg-indigo-600 text-white" },
       { id: "bancofe_fechamento", path: "/admin/fechamento", label: "Fechamento Bancário & COSIF", icon: Receipt, badge: "COSIF", badgeColor: "bg-emerald-600 text-white" },
     ],

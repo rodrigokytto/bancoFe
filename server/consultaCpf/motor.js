@@ -7,6 +7,7 @@
 import { randomUUID } from 'node:crypto';
 import {
   limpar, validarCpf, formatarCpf, mascararCpf, regiaoFiscalDoCpf,
+  validarCnpj, formatarCnpj, mascararCnpj,
   validarDataNascimento, calcularCapacidade,
 } from './validadores.js';
 import { CATALOGO, CATALOGO_POR_ID } from './catalogo.js';
@@ -31,6 +32,9 @@ const FONTES_PLANEJADAS = ['serasa', 'boavista-scpc', 'quod', 'scr-bacen', 'cenp
 export function normalizarEntrada(raw = {}) {
   const cpf = limpar(raw.cpf);
   const cnpjs = String(raw.cnpjs ?? '').split(/[\s,;]+/).map(limpar).filter(Boolean);
+  if (cpf.length === 14 && !cnpjs.includes(cpf)) {
+    cnpjs.unshift(cpf);
+  }
   const num = (v) => (v === '' || v == null ? undefined : Number(String(v).replace(/\./g, '').replace(',', '.')));
   return {
     cpf,
@@ -52,7 +56,12 @@ export function normalizarEntrada(raw = {}) {
 
 export function validarEntrada(e) {
   const erros = [];
-  if (!validarCpf(e.cpf).valido) erros.push('CPF inválido (dígitos verificadores não conferem).');
+  const ehCnpj = e.cpf.length === 14;
+  if (ehCnpj) {
+    if (!validarCnpj(e.cpf).valido) erros.push('CNPJ inválido (dígitos verificadores não conferem).');
+  } else {
+    if (!validarCpf(e.cpf).valido) erros.push('CPF inválido (dígitos verificadores não conferem).');
+  }
   if (!FINALIDADES.some((f) => f.id === e.finalidade)) erros.push('Informe a finalidade da consulta (LGPD).');
   if (!e.consentimento) erros.push('Confirme a base legal/consentimento para consultar dados pessoais.');
   if (e.nascimento.informada && !e.nascimento.valido) erros.push(`Data de nascimento: ${e.nascimento.motivo}.`);
@@ -92,6 +101,18 @@ function statusPlanejada(id) {
 }
 
 function checagensLocais(e) {
+  if (e.cpf.length === 14) {
+    return {
+      id: 'validacao-cpf-cnpj', nome: 'Validação local de CNPJ', provedor: 'Algoritmo oficial (módulo 11 RFB)', categoria: 'empresas',
+      status: 'consultada', consultadoEm: new Date().toISOString(), latenciaMs: 0,
+      resumo: `CNPJ ${formatarCnpj(e.cpf)} válido`,
+      dados: {
+        cpfFormatado: formatarCnpj(e.cpf), digitosValidos: true, tipo: 'CNPJ',
+        observacao: 'Pessoa jurídica consultada em bases cadastrais da RFB e QSA.',
+      },
+      achados: [],
+    };
+  }
   const regiao = regiaoFiscalDoCpf(e.cpf);
   const achados = [];
   if (e.nascimento.valido && !e.nascimento.maiorDeIdade) achados.push({ nivel: 'alto', codigo: 'MENOR_DE_IDADE', texto: `Titular com ${e.nascimento.idadeAnos} anos — menor de idade (exige representação).` });
@@ -186,8 +207,9 @@ export async function consultar(raw, deps = {}) {
     id: randomUUID(),
     criadoEm: new Date().toISOString(),
     cpf: e.cpf,
-    cpfMascarado: mascararCpf(e.cpf),
-    nome: ctx.nome || fontes.find((f) => f.id === 'receita-cpf')?.dados?.nome || null,
+    cpfMascarado: e.cpf.length === 14 ? mascararCnpj(e.cpf) : mascararCpf(e.cpf),
+    tipoDocumento: e.cpf.length === 14 ? 'CNPJ' : 'CPF',
+    nome: ctx.nome || fontes.find((f) => f.id === 'receita-cpf')?.dados?.nome || fontes.find((f) => f.id === 'brasilapi-cnpj')?.dados?.empresas?.[0]?.razaoSocial || null,
     finalidade: e.finalidade,
     finalidadeNome: FINALIDADES.find((f) => f.id === e.finalidade)?.nome,
     nivelAlerta: nivel,

@@ -6,10 +6,18 @@ const API = '/api/admin/consulta-cpf';
 
 /* ───────── utilidades ───────── */
 const soDigitos = (v) => String(v || '').replace(/\D/g, '');
-const mascaraCpf = (v) => {
-  const d = soDigitos(v).slice(0, 11);
+const mascaraCpfCnpj = (v) => {
+  const d = soDigitos(v).slice(0, 14);
+  if (d.length > 11) {
+    return d
+      .replace(/^(\d{2})(\d)/, '$1.$2')
+      .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+      .replace(/\.(\d{3})(\d)/, '.$1/$2')
+      .replace(/(\d{4})(\d)/, '$1-$2');
+  }
   return d.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
 };
+const mascaraCpf = mascaraCpfCnpj;
 const mascaraData = (v) => {
   const d = soDigitos(v).slice(0, 8);
   return d.replace(/(\d{2})(\d)/, '$1/$2').replace(/(\d{2})(\d)/, '$1/$2');
@@ -349,8 +357,480 @@ function AbaHistorico({ aoAbrir }) {
   );
 }
 
+/* ───────── ABA BUSCA AVANÇADA (OSINT & IA) ───────── */
+function AbaBuscaAvancada({ d, aoExecutar, carregando }) {
+  const [copiado, setCopiado] = useState(false);
+  const ba = d?.buscaAvancada;
+
+  if (!ba) {
+    return (
+      <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+        <div style={{ fontSize: 48, marginBottom: 12 }}>🌐</div>
+        <h3 style={{ margin: '0 0 8px', fontSize: 20 }}>Busca Avançada OSINT & Mídias Sociais</h3>
+        <p style={{ ...muted, maxWidth: 640, margin: '0 auto 20px', fontSize: 14, lineHeight: 1.6 }}>
+          Realize uma varredura profunda e minuciosa na rede aberta da internet, motores de IA com Google Search Grounding (Gemini 2.5 Flash / GCP Vertex AI) e bases públicas da Receita Federal (BrasilAPI QSA).
+          Mapeia perfis em <strong>LinkedIn, Instagram, TikTok, Facebook, Twitter/X, YouTube</strong>, histórico profissional, envergadura patrimonial, Diários Oficiais e notícias de imprensa — <strong>sem inventar informações (Zero Alucinação)</strong>.
+        </p>
+        <button
+          type="button"
+          className="btn btn-primary"
+          style={{
+            background: 'linear-gradient(135deg, #126245 0%, #0c4a34 100%)',
+            color: '#fff',
+            padding: '12px 24px',
+            fontSize: 15,
+            fontWeight: 700,
+            borderRadius: 10,
+            boxShadow: '0 4px 14px rgba(18, 98, 69, 0.3)',
+          }}
+          disabled={carregando}
+          onClick={aoExecutar}
+        >
+          {carregando ? '⏳ Varrendo internet e mídias sociais...' : '🚀 Iniciar Busca Avançada Agora'}
+        </button>
+      </div>
+    );
+  }
+
+  const copiarRelatorio = () => {
+    const texto = `=== BANCOFÉ · DOSSIÊ DE BUSCA AVANÇADA OSINT & IA ===
+Alvo: ${ba.nomeAlvo} (${ba.tipoDocumento} ${ba.documento})
+Data da Varredura: ${dh(ba.executadoEm)}
+Consistência Cadastral: ${ba.consistenciaCadastral?.score}/100 (${ba.consistenciaCadastral?.nivel})
+
+--- RESUMO EXECUTIVO ---
+${ba.resumoExecutivo || '—'}
+
+--- REDES SOCIAIS AUDITADAS ---
+${(ba.perfilSocial?.redes || []).map((r) => `• ${r.rede}: [${r.status.toUpperCase()}] ${r.identificador || r.titulo || ''} ${r.url ? `(${r.url})` : ''} - Confiança: ${r.confianca}`).join('\n')}
+
+--- PERFIL PROFISSIONAL ---
+Cargo Atual: ${ba.perfilProfissional?.cargoAtual || '—'}
+Empresa Atual: ${ba.perfilProfissional?.empresaAtual || '—'}
+Tempo de Experiência: ${ba.perfilProfissional?.tempoExperiencia || '—'}
+
+--- PERFIL ECONÔMICO & EMPRESARIAL ---
+Total de Empresas: ${ba.perfilEconomico?.totalEmpresasVinculadas || 0}
+Capital Social Consolidado: ${brl(ba.perfilEconomico?.capitalSocialConsolidado || 0)}
+Porte Predominante: ${ba.perfilEconomico?.portePredominante || '—'}
+
+--- CONCLUSÃO DE IDONEIDADE ---
+${ba.conclusaoIdoneidade || '—'}
+===================================================`;
+
+    navigator.clipboard.writeText(texto).then(() => {
+      setCopiado(true);
+      setTimeout(() => setCopiado(false), 2500);
+    });
+  };
+
+  const exportarJsonOsint = () => {
+    const blob = new Blob([JSON.stringify(ba, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `busca-avancada-osint-${String(ba.documento || '').replace(/\W/g, '')}.json`;
+    a.click();
+  };
+
+  const stCor = {
+    confirmado: { bg: '#E8F5EC', cor: '#1B7F3A', rotulo: '✓ Confirmado' },
+    candidato_homonimo: { bg: '#FFF3D6', cor: '#9A6A00', rotulo: '⚠ Candidato / Homônimo' },
+    nao_localizado: { bg: '#EEF0F3', cor: '#5B6470', rotulo: '✕ Não localizado' },
+  };
+
+  const confCor = {
+    ALTA: { bg: '#E8F5EC', cor: '#1B7F3A', rotulo: 'Confiança Alta' },
+    MEDIA: { bg: '#FFF3D6', cor: '#9A6A00', rotulo: 'Confiança Média' },
+    BAIXA: { bg: '#FDECEA', cor: '#B42318', rotulo: 'Confiança Baixa' },
+  };
+
+  const iconeRede = {
+    LinkedIn: '💼',
+    Instagram: '📸',
+    TikTok: '🎵',
+    'Facebook / Meta': '👥',
+    Facebook: '👥',
+    'Twitter / X': '🐦',
+    'Twitter/X': '🐦',
+    YouTube: '▶️',
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+      {/* Cabeçalho da Busca Avançada */}
+      <div style={{ ...card, background: 'linear-gradient(180deg, #f8fdf9 0%, #ffffff 100%)', borderColor: '#b9dcc6' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+              <span style={{ fontSize: 20 }}>🌐</span>
+              <h3 style={{ margin: 0, fontSize: 18, color: '#0c4a34' }}>Dossiê Pericial de Busca Avançada & OSINT 360°</h3>
+            </div>
+            <div style={{ fontSize: 13, color: 'var(--muted, #5b6470)' }}>
+              Alvo: <strong>{ba.nomeAlvo}</strong> · {ba.tipoDocumento} <strong>{ba.documento}</strong> · Executado em {dh(ba.executadoEm)}{ba.latenciaMs ? ` (${ba.latenciaMs} ms)` : ''}
+            </div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ ...muted, marginBottom: 4 }}>Consistência Cadastral</div>
+            <span
+              style={{
+                display: 'inline-block',
+                padding: '4px 12px',
+                borderRadius: 999,
+                fontSize: 13,
+                fontWeight: 700,
+                color: ba.consistenciaCadastral?.score >= 80 ? '#1B7F3A' : '#9A6A00',
+                background: ba.consistenciaCadastral?.score >= 80 ? '#E8F5EC' : '#FFF3D6',
+                border: `1px solid ${ba.consistenciaCadastral?.score >= 80 ? '#1B7F3A' : '#9A6A00'}`,
+              }}
+            >
+              {ba.consistenciaCadastral?.score}% · Nível {ba.consistenciaCadastral?.nivel}
+            </span>
+          </div>
+        </div>
+
+        {ba.consistenciaCadastral?.justificativa && (
+          <p style={{ margin: '10px 0 0', fontSize: 13, color: '#245B8F', background: '#E8F1FA', padding: '8px 12px', borderRadius: 8 }}>
+            ℹ️ <strong>Correlação Cadastral:</strong> {ba.consistenciaCadastral.justificativa}
+          </p>
+        )}
+
+        {ba.resumoExecutivo && (
+          <div style={{ marginTop: 12, padding: '12px 14px', background: '#f8fafc', borderRadius: 8, borderLeft: '4px solid #126245' }}>
+            <strong style={{ fontSize: 13, color: '#126245', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Resumo Executivo da Inteligência OSINT:</strong>
+            <p style={{ margin: '6px 0 0', fontSize: 14, lineHeight: 1.6, color: '#1e293b' }}>{ba.resumoExecutivo}</p>
+          </div>
+        )}
+
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 12 }}>
+          {(ba.motoresUtilizados || []).map((m, idx) => (
+            <span key={idx} style={{ fontSize: 11, background: '#f1f5f9', color: '#475569', padding: '3px 8px', borderRadius: 6, fontWeight: 500 }}>
+              ⚡ {m}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Seção 1: Mídias Sociais & Presença Digital */}
+      <div style={card}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+          <h4 style={{ margin: 0, fontSize: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span>📱</span> Mídias Sociais Auditadas (LinkedIn, Instagram, TikTok, Facebook, Twitter/X, YouTube)
+          </h4>
+          <span style={{ fontSize: 12, color: 'var(--muted, #5b6470)' }}>Verificação pericial sem invenção de dados</span>
+        </div>
+
+        {ba.perfilSocial?.analisePresencaDigital && (
+          <p style={{ ...muted, margin: '0 0 14px', fontSize: 13 }}>
+            {ba.perfilSocial.analisePresencaDigital}
+          </p>
+        )}
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 12 }}>
+          {(ba.perfilSocial?.redes || []).map((r, i) => {
+            const st = stCor[r.status] || stCor.nao_localizado;
+            const cf = confCor[r.confianca] || confCor.ALTA;
+            const ic = iconeRede[r.rede] || '🌐';
+            return (
+              <div
+                key={i}
+                style={{
+                  padding: 12,
+                  borderRadius: 10,
+                  border: '1px solid var(--border, #E2DCCF)',
+                  background: r.status === 'confirmado' ? '#fbfdfb' : '#fff',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                    <span style={{ fontWeight: 700, fontSize: 14 }}>
+                      {ic} {r.rede}
+                    </span>
+                    <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 999, background: st.bg, color: st.cor }}>
+                      {st.rotulo}
+                    </span>
+                  </div>
+
+                  {r.identificador && (
+                    <div style={{ fontSize: 13, fontWeight: 600, color: '#0f172a', marginBottom: 4 }}>
+                      {r.identificador}
+                    </div>
+                  )}
+
+                  {r.titulo && (
+                    <div style={{ fontSize: 12, color: '#334155', marginBottom: 6, fontWeight: 500 }}>
+                      {r.titulo}
+                    </div>
+                  )}
+
+                  {r.detalhes && (
+                    <p style={{ margin: '4px 0 8px', fontSize: 12, color: '#64748b', lineHeight: 1.4 }}>
+                      {r.detalhes}
+                    </p>
+                  )}
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8, paddingTop: 6, borderTop: '1px dashed #e2e8f0' }}>
+                  <span style={{ fontSize: 10, fontWeight: 600, color: cf.cor }}>{cf.rotulo}</span>
+                  {r.url ? (
+                    <a
+                      href={r.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-sm btn-ghost"
+                      style={{ fontSize: 11, padding: '2px 8px', textDecoration: 'none' }}
+                    >
+                      Abrir link ↗
+                    </a>
+                  ) : (
+                    <span style={{ fontSize: 11, color: '#94a3b8' }}>Sem link público</span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Seção 2: Perfil Profissional, Executivo & Acadêmico */}
+      <div style={card}>
+        <h4 style={{ margin: '0 0 12px', fontSize: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span>💼</span> Perfil Profissional, Executivo & Acadêmico
+        </h4>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 10, marginBottom: 14 }}>
+          <div style={{ padding: 10, background: '#f8fafc', borderRadius: 8, border: '1px solid #e2e8f0' }}>
+            <div style={muted}>Cargo Atual / Principal</div>
+            <strong style={{ fontSize: 14, color: '#0f172a' }}>{ba.perfilProfissional?.cargoAtual || 'Não declarado'}</strong>
+          </div>
+          <div style={{ padding: 10, background: '#f8fafc', borderRadius: 8, border: '1px solid #e2e8f0' }}>
+            <div style={muted}>Empresa Atual / Instituição</div>
+            <strong style={{ fontSize: 14, color: '#0f172a' }}>{ba.perfilProfissional?.empresaAtual || 'Não declarada'}</strong>
+          </div>
+          <div style={{ padding: 10, background: '#f8fafc', borderRadius: 8, border: '1px solid #e2e8f0' }}>
+            <div style={muted}>Tempo de Experiência</div>
+            <strong style={{ fontSize: 14, color: '#0f172a' }}>{ba.perfilProfissional?.tempoExperiencia || '—'}</strong>
+          </div>
+        </div>
+
+        {/* Linha do tempo da trajetória */}
+        {ba.perfilProfissional?.trajetoria?.length > 0 && (
+          <div style={{ marginTop: 12 }}>
+            <strong style={{ fontSize: 13, color: '#334155' }}>Trajetória e Atuação Corporativa:</strong>
+            <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {ba.perfilProfissional.trajetoria.map((t, idx) => (
+                <div key={idx} style={{ padding: '8px 12px', background: '#fff', borderLeft: '3px solid #126245', border: '1px solid #e2e8f0', borderRadius: '0 8px 8px 0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <strong style={{ fontSize: 13 }}>{t.cargo}</strong>
+                    <span style={{ fontSize: 12, color: 'var(--muted, #5b6470)', fontWeight: 600 }}>{t.periodo || ''}</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: '#0c4a34', fontWeight: 500 }}>{t.empresa}</div>
+                  {t.descricao && <p style={{ margin: '4px 0 0', fontSize: 12, color: '#64748b' }}>{t.descricao}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Formação Acadêmica */}
+        {ba.perfilProfissional?.formacaoAcademica?.length > 0 && (
+          <div style={{ marginTop: 14 }}>
+            <strong style={{ fontSize: 13, color: '#334155' }}>Formação Acadêmica & Certificações:</strong>
+            <ul style={{ margin: '6px 0 0', paddingLeft: 18, fontSize: 13 }}>
+              {ba.perfilProfissional.formacaoAcademica.map((fa, idx) => (
+                <li key={idx} style={{ marginBottom: 4 }}>
+                  <strong>{fa.curso}</strong> — {fa.instituicao} {fa.grau ? `(${fa.grau})` : ''}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Prêmios e Reconhecimentos */}
+        {ba.perfilProfissional?.premiosEReconhecimentos?.length > 0 && (
+          <div style={{ marginTop: 12, padding: '10px 12px', background: '#fefce8', borderRadius: 8, border: '1px solid #fef08a' }}>
+            <strong style={{ fontSize: 13, color: '#854d0e' }}>🏆 Reconhecimentos & Premiações Setoriais:</strong>
+            <ul style={{ margin: '4px 0 0', paddingLeft: 18, fontSize: 13, color: '#713f12' }}>
+              {ba.perfilProfissional.premiosEReconhecimentos.map((pr, idx) => (
+                <li key={idx}>
+                  <strong>{pr.titulo}</strong> ({pr.ano || ''}) — {pr.entidade || ''}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      {/* Seção 3: Perfil Econômico, Empresarial & QSA Oficial RFB */}
+      <div style={card}>
+        <h4 style={{ margin: '0 0 12px', fontSize: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span>🏢</span> Perfil Econômico, Empresarial & Quadro Societário (RFB)
+        </h4>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 10, marginBottom: 14 }}>
+          <div style={{ padding: 10, background: '#f8fafc', borderRadius: 8, border: '1px solid #e2e8f0' }}>
+            <div style={muted}>Empresas Vinculadas</div>
+            <strong style={{ fontSize: 18, color: '#0c4a34' }}>{ba.perfilEconomico?.totalEmpresasVinculadas || 0}</strong>
+          </div>
+          <div style={{ padding: 10, background: '#f8fafc', borderRadius: 8, border: '1px solid #e2e8f0' }}>
+            <div style={muted}>Capital Social Consolidado</div>
+            <strong style={{ fontSize: 18, color: '#0c4a34' }}>{brl(ba.perfilEconomico?.capitalSocialConsolidado)}</strong>
+          </div>
+          <div style={{ padding: 10, background: '#f8fafc', borderRadius: 8, border: '1px solid #e2e8f0' }}>
+            <div style={muted}>Porte Predominante</div>
+            <strong style={{ fontSize: 14, color: '#0f172a' }}>{ba.perfilEconomico?.portePredominante || '—'}</strong>
+          </div>
+          <div style={{ padding: 10, background: '#f8fafc', borderRadius: 8, border: '1px solid #e2e8f0' }}>
+            <div style={muted}>Envergadura Patrimonial</div>
+            <strong style={{ fontSize: 14, color: '#0f172a' }}>{ba.perfilEconomico?.patrimonioEstimadoFaixa || '—'}</strong>
+          </div>
+        </div>
+
+        {ba.perfilEconomico?.capacidadeEconomicaResumo && (
+          <p style={{ margin: '0 0 14px', fontSize: 13, color: '#334155' }}>
+            {ba.perfilEconomico.capacidadeEconomicaResumo}
+          </p>
+        )}
+
+        {/* Empresas detalhadas da BrasilAPI */}
+        {(ba.perfilEconomico?.empresas || []).length > 0 && (
+          <div>
+            <strong style={{ fontSize: 13, color: '#334155' }}>Empresas Consultadas em Tempo Real na Receita Federal:</strong>
+            <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {ba.perfilEconomico.empresas.map((emp, i) => (
+                <div key={i} style={{ padding: 12, border: '1px solid var(--border, #E2DCCF)', borderRadius: 8, background: '#fff' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 6 }}>
+                    <div>
+                      <strong style={{ fontSize: 14 }}>{emp.razaoSocial}</strong>
+                      {emp.nomeFantasia && <span style={{ ...muted, marginLeft: 6 }}>({emp.nomeFantasia})</span>}
+                      <div style={{ fontSize: 12, color: 'var(--muted, #5b6470)' }}>CNPJ: {emp.cnpj} · {emp.naturezaJuridica}</div>
+                    </div>
+                    <span style={{ fontSize: 12, fontWeight: 600, padding: '2px 8px', borderRadius: 999, background: emp.situacao === 'ATIVA' ? '#E8F5EC' : '#FDECEA', color: emp.situacao === 'ATIVA' ? '#1B7F3A' : '#B42318' }}>
+                      {emp.situacao}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 6, fontSize: 12, marginTop: 8 }}>
+                    <div><span style={muted}>Capital Social:</span> <strong>{brl(emp.capitalSocial)}</strong></div>
+                    <div><span style={muted}>Abertura:</span> {emp.abertura}</div>
+                    <div><span style={muted}>CNAE:</span> {emp.cnaePrincipal}</div>
+                    <div><span style={muted}>Endereço:</span> {emp.endereco}</div>
+                  </div>
+
+                  {emp.socios?.length > 0 && (
+                    <details style={{ marginTop: 8, fontSize: 12 }}>
+                      <summary style={{ cursor: 'pointer', color: '#0c4a34', fontWeight: 600 }}>Quadro Societário ({emp.socios.length} sócios/diretores)</summary>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 6 }}>
+                        <tbody>
+                          {emp.socios.map((s, si) => (
+                            <tr key={si} style={{ borderTop: '1px solid #f1f5f9' }}>
+                              <td style={{ padding: 4, fontWeight: 500 }}>{s.nome}</td>
+                              <td style={{ padding: 4, color: '#64748b' }}>{s.qualificacao}</td>
+                              <td style={{ padding: 4, ...muted }}>{s.documentoMascarado || ''}</td>
+                              <td style={{ padding: 4, ...muted }}>{s.entrada || ''}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </details>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Seção 4: Presença Pública, Notícias & Diários Oficiais */}
+      <div style={card}>
+        <h4 style={{ margin: '0 0 12px', fontSize: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span>📰</span> Presença Pública, Notícias de Imprensa & Diários Oficiais
+        </h4>
+
+        {ba.presencaPublicaNoticias?.length > 0 ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {ba.presencaPublicaNoticias.map((n, i) => (
+              <div key={i} style={{ padding: 10, borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <strong style={{ fontSize: 13, color: '#0f172a' }}>{n.titulo}</strong>
+                  <span style={{ fontSize: 11, ...muted }}>{n.data || ''}</span>
+                </div>
+                <div style={{ fontSize: 12, color: '#0c4a34', fontWeight: 500, margin: '2px 0' }}>Fonte: {n.fonte}</div>
+                {n.trecho && <p style={{ margin: '4px 0', fontSize: 12, color: '#64748b' }}>{n.trecho}</p>}
+                {n.url && (
+                  <a href={n.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: '#0c4a34', textDecoration: 'underline' }}>
+                    Acessar matéria original ↗
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p style={{ ...muted, margin: '0 0 8px' }}>Nenhum artigo ou reportagem desabonadora identificado nas pesquisas de imprensa.</p>
+        )}
+
+        {ba.diariosOficiaisEAtos?.length > 0 && (
+          <div style={{ marginTop: 12 }}>
+            <strong style={{ fontSize: 13, color: '#334155' }}>Atos em Diários Oficiais e Juntas Comerciais:</strong>
+            <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {ba.diariosOficiaisEAtos.map((dof, idx) => (
+                <div key={idx} style={{ padding: '6px 10px', background: '#f8fafc', borderRadius: 6, fontSize: 12, border: '1px solid #e2e8f0' }}>
+                  <strong>{dof.orgao}</strong> · {dof.tipoAto}: {dof.resumo}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Seção 5: Parecer Pericial de Idoneidade & Governança LGPD */}
+      <div style={{ ...card, borderLeft: '4px solid #1B7F3A', background: '#f8fdf9' }}>
+        <h4 style={{ margin: '0 0 8px', fontSize: 16, color: '#0c4a34' }}>⚖️ Parecer Pericial de Idoneidade & Governança LGPD</h4>
+        <p style={{ margin: '0 0 10px', fontSize: 14, lineHeight: 1.6, color: '#1e293b' }}>
+          {ba.conclusaoIdoneidade || 'Titular sem apontamentos desabonadores em fontes públicas abertas.'}
+        </p>
+        {ba.alertasDiligenciais?.length > 0 && (
+          <div style={{ padding: 8, background: '#FFF3D6', borderRadius: 6, marginBottom: 8, fontSize: 13 }}>
+            <strong>Alertas Diligenciais:</strong>
+            <ul style={{ margin: '4px 0 0', paddingLeft: 18 }}>
+              {ba.alertasDiligenciais.map((al, idx) => (
+                <li key={idx}>{al}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <p style={{ ...muted, fontSize: 12, margin: 0 }}>
+          🛡️ {ba.avisoLegalLgpd}
+        </p>
+      </div>
+
+      {/* Barra de Ações Inferior */}
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end', paddingTop: 8 }}>
+        <button type="button" className="btn btn-secondary" disabled={carregando} onClick={aoExecutar}>
+          {carregando ? 'Atualizando varredura...' : '🔄 Reexecutar Busca Avançada'}
+        </button>
+        <button type="button" className="btn btn-ghost" onClick={copiarRelatorio}>
+          {copiado ? '✓ Relatório Copiado!' : '📋 Copiar Relatório OSINT'}
+        </button>
+        <button type="button" className="btn btn-ghost" onClick={exportarJsonOsint}>
+          💾 Exportar JSON OSINT
+        </button>
+        <button type="button" className="btn btn-ghost" onClick={() => window.print()}>
+          🖨️ Imprimir / PDF
+        </button>
+      </div>
+    </div>
+  );
+}
+
 const ABAS = [
-  ['resumo', 'Resumo e risco'], ['identificacao', 'Identificação'], ['compliance', 'Compliance'], ['fiscal', 'Receita e fiscal'],
+  ['resumo', 'Resumo e risco'],
+  ['buscaAvancada', '🌐 Busca Avançada & Redes'],
+  ['identificacao', 'Identificação'],
+  ['compliance', 'Compliance'],
+  ['fiscal', 'Receita e fiscal'],
   ['credito', 'Crédito e bureaus'], ['judicial', 'Judicial e patrimônio'], ['societario', 'Societário'],
   ['capacidade', 'Capacidade de pagamento'], ['fontes', 'Fontes e auditoria'], ['historico', 'Histórico'],
 ];
@@ -365,6 +845,7 @@ export default function ConsultaCpfPage() {
   const [dossie, setDossie] = useState(null);
   const [aba, setAba] = useState('resumo');
   const [carregando, setCarregando] = useState(false);
+  const [carregandoBusca, setCarregandoBusca] = useState(false);
   const set = (k) => (e) => {
     const v = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     const mask = { cpf: mascaraCpf, nascimento: mascaraData, cep: mascaraCep }[k];
@@ -373,7 +854,7 @@ export default function ConsultaCpfPage() {
 
   const preencherExemploRodrigo = () => {
     setForm({
-      cpf: '069.887.229-01',
+      cpf: '069.887.226-61',
       nome: 'RODRIGO RIBEIRO GONÇALVES',
       nascimento: '18/05/1984',
       nomeMae: 'MARIA HELENA RIBEIRO GONÇALVES',
@@ -407,6 +888,47 @@ export default function ConsultaCpfPage() {
     }
   }, [form, toast]);
 
+  const executarBuscaAvancada = async () => {
+    const doc = form.cpf || dossie?.cpf || dossie?.cpfMascarado;
+    if (!doc) {
+      toast('Informe um CPF ou CNPJ para iniciar a busca avançada', 'error');
+      return;
+    }
+    setCarregandoBusca(true);
+    toast('Iniciando Busca Avançada com motores de IA e varredura de mídias sociais...');
+    try {
+      const resp = await api.post(`${API}/busca-avancada`, {
+        dossieId: dossie?.id,
+        documento: doc,
+        nome: form.nome || dossie?.nome,
+        nascimento: form.nascimento,
+        cep: form.cep,
+        cnpjs: form.cnpjs,
+        dossiePrevia: dossie,
+      });
+      setDossie((prev) => ({
+        ...(prev || {
+          id: 'busca-avancada-temp',
+          criadoEm: new Date().toISOString(),
+          cpfMascarado: resp.documento,
+          nome: resp.nomeAlvo,
+          nivelAlerta: 'informativo',
+          cobertura: { percentual: 100, consultadas: 4, aplicaveis: 4 },
+          fontes: [],
+          achados: [],
+        }),
+        buscaAvancada: resp,
+        nome: resp.nomeAlvo || prev?.nome,
+      }));
+      setAba('buscaAvancada');
+      toast('Busca Avançada concluída! Dossiê OSINT e Mídias Sociais carregado.');
+    } catch (e) {
+      toast(e.message || 'Erro na busca avançada', 'error');
+    } finally {
+      setCarregandoBusca(false);
+    }
+  };
+
   const abrirHistorico = async (id) => {
     try { const r = await api.get(`${API}/${id}`); setDossie({ ...r, cpf: undefined }); setAba('resumo'); window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { toast(e.message, 'error'); }
   };
@@ -421,21 +943,24 @@ export default function ConsultaCpfPage() {
   const nivel = dossie ? NIVEL[dossie.nivelAlerta] || NIVEL.nenhum : null;
   const conteudo = useMemo(() => {
     if (!dossie) return null;
+    if (aba === 'buscaAvancada') {
+      return <AbaBuscaAvancada d={dossie} aoExecutar={executarBuscaAvancada} carregando={carregandoBusca} />;
+    }
     const mapa = { resumo: AbaResumo, identificacao: AbaIdentificacao, compliance: AbaCompliance, fiscal: AbaFiscal, credito: AbaCredito, judicial: AbaJudicial, societario: AbaSocietario, capacidade: AbaCapacidade, fontes: AbaFontes };
     const C = mapa[aba];
     return C ? <C d={dossie} /> : null;
-  }, [dossie, aba]);
+  }, [dossie, aba, carregandoBusca]);
 
   return (
     <section className="bf-tela" style={{ maxWidth: 1180, padding: '20px 24px' }}>
       <header style={{ marginBottom: 16 }}>
-        <h2 style={{ margin: 0 }}>🔎 Consulta CPF completa</h2>
-        <p style={{ ...muted, margin: '4px 0 0' }}>Dossiê de pessoa física para análise de crédito, KYC/PLD e prevenção à fraude. Cada fonte informa seu status real: consultada, aguardando credencial, planejada ou com erro. Nada é simulado.</p>
+        <h2 style={{ margin: 0 }}>🔎 Consulta CPF & CNPJ Completa</h2>
+        <p style={{ ...muted, margin: '4px 0 0' }}>Dossiê pericial para análise de crédito, KYC/PLD, prevenção à fraude e Busca Avançada OSINT com motores de IA e Mídias Sociais. Nada é simulado.</p>
       </header>
 
       <form onSubmit={(e) => { e.preventDefault(); consultar(false); }} style={{ ...card, marginBottom: 18 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: 12, alignItems: 'end' }}>
-          <Campo label="CPF *"><input style={input} value={form.cpf} onChange={set('cpf')} placeholder="000.000.000-00" inputMode="numeric" required /></Campo>
+          <Campo label="CPF ou CNPJ *"><input style={input} value={form.cpf} onChange={set('cpf')} placeholder="000.000.000-00 ou 00.000.000/0001-00" inputMode="numeric" required /></Campo>
           <Campo label="Nome completo"><input style={input} value={form.nome} onChange={set('nome')} /></Campo>
           <Campo label="Data de nascimento (exigida pela Receita)"><input style={input} value={form.nascimento} onChange={set('nascimento')} placeholder="dd/mm/aaaa" inputMode="numeric" /></Campo>
           <Campo label="Nome da mãe (conferência manual)"><input style={input} value={form.nomeMae} onChange={set('nomeMae')} /></Campo>
@@ -459,6 +984,9 @@ export default function ConsultaCpfPage() {
         </label>
         <div style={{ display: 'flex', gap: 8, marginTop: 14, flexWrap: 'wrap' }}>
           <button type="submit" className="btn btn-primary" disabled={carregando}>{carregando ? 'Consultando fontes…' : 'Consultar CPF'}</button>
+          <button type="button" className="btn btn-secondary" disabled={carregandoBusca} onClick={executarBuscaAvancada} style={{ background: '#e8f5ec', color: '#1B7F3A', border: '1px solid #1B7F3A', fontWeight: 600 }}>
+            {carregandoBusca ? 'Varrendo rede...' : '🌐 Busca Avançada'}
+          </button>
           <button type="button" className="btn btn-secondary" onClick={preencherExemploRodrigo} style={{ background: '#e8f5ec', color: '#1B7F3A', border: '1px solid #1B7F3A' }}>Exemplo Rodrigo</button>
           <button type="button" className="btn btn-ghost" onClick={() => { setForm(VAZIO); setDossie(null); }}>Limpar</button>
           {dossie && <button type="button" className="btn btn-ghost" disabled={carregando} onClick={() => consultar(true)}>Atualizar (ignorar cache)</button>}
@@ -488,6 +1016,15 @@ export default function ConsultaCpfPage() {
           </div>
           <p style={{ margin: '12px 0 0', fontSize: 14 }}>{dossie.recomendacao}</p>
           <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+            <button
+              type="button"
+              className="btn btn-primary btn-sm"
+              style={{ background: 'linear-gradient(135deg, #126245 0%, #0d4631 100%)', color: '#fff', border: 'none', fontWeight: 700 }}
+              disabled={carregandoBusca}
+              onClick={executarBuscaAvancada}
+            >
+              {carregandoBusca ? 'Varrendo internet & redes...' : '🌐 Busca Avançada (OSINT & IA)'}
+            </button>
             <button type="button" className="btn btn-ghost btn-sm" onClick={() => window.print()}>Imprimir / PDF</button>
             <button type="button" className="btn btn-ghost btn-sm" onClick={exportar}>Exportar JSON</button>
           </div>
